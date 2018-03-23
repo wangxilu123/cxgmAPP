@@ -27,7 +27,7 @@
   </dependencies>
   <packaging>pom</packaging>
   <modules>
-  	<module>cxgm-userService</module>
   	<module>cxgm-bussinessService</module>
+  	<module>cxgm-userService</module>
   </modules>
 </project>
