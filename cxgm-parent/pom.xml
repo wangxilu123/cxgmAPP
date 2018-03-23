@@ -1,0 +1,355 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>com.cxgm</groupId>
+  <artifactId>cxgm-parent</artifactId>
+  <version>1.0</version>
+  <packaging>pom</packaging>
+  <name>cxgm-parent</name>
+  
+  <parent>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>1.5.9.RELEASE</version>
+        <relativePath/> <!-- lookup parent from repository -->
+    </parent>
+
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+        <java.version>1.8</java.version>
+        <spring-cloud.version>Dalston.SR4</spring-cloud.version>
+        <spring-boot.version>1.5.9.RELEASE</spring-boot.version>
+        <cloud-detail.version>1.3.1.RELEASE</cloud-detail.version>
+        <!--  依赖版本  -->
+        <mybatis.version>3.4.1</mybatis.version>
+        <mybatis.spring.version>1.3.0</mybatis.spring.version>
+    </properties>
+    
+    <dependencyManagement>
+    <!-- 以下为子项目需要手动引入的jar包 -->
+        <dependencies>
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-starter-test</artifactId>
+                <version>${spring-boot.version}</version>
+                <scope>test</scope>
+            </dependency>
+            
+            <dependency>
+                <groupId>org.apache.tomcat</groupId>
+                <artifactId>tomcat-juli</artifactId>
+                <version>${tomcat.version}</version>
+            </dependency>
+            
+            <!--Mybatis-->
+            <dependency>
+                <groupId>org.mybatis</groupId>
+                <artifactId>mybatis</artifactId>
+                <version>${mybatis.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.mybatis</groupId>
+                <artifactId>mybatis-spring</artifactId>
+                <version>${mybatis.spring.version}</version>
+            </dependency>
+
+            <!-- https://mvnrepository.com/artifact/com.github.pagehelper/pagehelper -->
+            <dependency>
+                <groupId>com.github.pagehelper</groupId>
+                <artifactId>pagehelper</artifactId>
+                <version>4.1.6</version>
+            </dependency>
+            
+            <!-- swagger -->
+            <dependency>
+                <groupId>io.springfox</groupId>
+                <artifactId>springfox-swagger2</artifactId>
+                <version>2.7.0</version>
+            </dependency>
+
+            <dependency>
+                <groupId>io.springfox</groupId>
+                <artifactId>springfox-swagger-ui</artifactId>
+                <version>2.7.0</version>
+            </dependency>
+            
+            <!-- other -->
+            <dependency>
+                <groupId>com.alibaba</groupId>
+                <artifactId>druid</artifactId>
+                <version>1.1.6</version>
+            </dependency>
+            
+            <dependency>
+                 <groupId>com.alibaba</groupId>
+                 <artifactId>fastjson</artifactId>
+                 <version>1.2.41</version>
+            </dependency>
+            
+	        <dependency>
+	            <groupId>com.auth0</groupId>
+	            <artifactId>java-jwt</artifactId>
+	            <version>2.2.2</version>
+	        </dependency>
+             
+            <dependency>
+	            <groupId>commons-httpclient</groupId>
+	            <artifactId>commons-httpclient</artifactId>
+	            <version>3.1</version>
+	        </dependency>
+             
+            <dependency>
+               <groupId>org.dom4j</groupId>
+               <artifactId>dom4j</artifactId>
+               <version>2.0.0</version>
+               <scope>compile</scope>
+            </dependency>
+             
+            <dependency>
+	            <groupId>org.projectlombok</groupId>
+	            <artifactId>lombok</artifactId>
+	            <version>1.16.10</version>
+	            <scope>compile</scope>
+	        </dependency>
+	        
+	        <dependency>
+	          <groupId>commons-io</groupId>
+	          <artifactId>commons-io</artifactId>
+	          <version>2.4</version>
+	        </dependency>
+	        <dependency>
+	          <groupId>commons-logging</groupId>
+	          <artifactId>commons-logging</artifactId>
+	          <version>1.2</version>
+	        </dependency>
+	        <dependency>
+			    <groupId>org.bytedeco</groupId>
+			    <artifactId>javacv-platform</artifactId>
+			    <version>1.4</version>
+			</dependency>
+            
+            <!-- redis -->  
+	        <dependency>  
+	            <groupId>org.springframework.boot</groupId>  
+	            <artifactId>spring-boot-starter-redis</artifactId>  
+	            <version>1.4.2.RELEASE</version>
+	        </dependency>  
+	          
+	        <dependency>  
+	            <groupId>org.springframework.session</groupId>  
+	            <artifactId>spring-session-data-redis</artifactId>  
+	            <version>1.3.0.RELEASE</version>
+	        </dependency>
+	          
+	        <dependency>  
+	            <groupId>org.springframework.boot</groupId>  
+	            <artifactId>spring-boot-starter-cache</artifactId>  
+	            <version>${spring-boot.version}</version>
+	        </dependency>
+        
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-starter-mail</artifactId>
+                <version>${spring-boot.version}</version>
+            </dependency>
+    
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-starter-thymeleaf</artifactId>
+                <version>1.5.9.RELEASE</version>
+            </dependency>
+            
+            <dependency>
+		        <groupId>org.mybatis.spring.boot</groupId>
+		        <artifactId>mybatis-spring-boot-starter</artifactId>
+		        <version>1.3.1</version>
+		    </dependency>
+
+            <dependency>
+                <groupId>com.google.protobuf</groupId>
+                <artifactId>protobuf-java</artifactId>
+                <version>2.6.1</version>
+            </dependency>
+
+            <!-- cloud -->
+            <dependency>
+                <groupId>org.springframework.cloud</groupId>
+                <artifactId>spring-cloud-dependencies</artifactId>
+                <version>${spring-cloud.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+            
+            <dependency>
+	            <groupId>org.springframework.cloud</groupId>
+	            <artifactId>spring-cloud-config-server</artifactId>
+	            <version>${cloud-detail.version}</version>
+	        </dependency>
+	        <dependency>
+	            <groupId>org.springframework.cloud</groupId>
+	            <artifactId>spring-cloud-starter-eureka-server</artifactId>
+	            <version>${cloud-detail.version}</version>
+	        </dependency>
+	        <dependency>
+			    <groupId>org.springframework.cloud</groupId>
+			    <artifactId>spring-cloud-starter-zuul</artifactId>
+			    <version>${cloud-detail.version}</version>
+			</dependency>
+	        
+        </dependencies>
+    </dependencyManagement>
+    <!-- 以下为子项目需要自动继承的jar包 -->
+    <dependencies>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-devtools</artifactId>
+        </dependency>
+        
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-eureka</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-config</artifactId>
+        </dependency>
+    </dependencies>
+    
+    <build>
+        <plugins>
+            
+            <plugin>
+            <!-- surefire 插件用来在maven构建生命周期的test phase执行一个应用的单元测试。它会产生两种不同形式
+				的测试结果报告：
+				1）.纯文本
+				2）.xml文件格式的
+				默认情况下，这些文件生成在工程的${basedir}/target/surefire-reports，目录下（basedir指的是pom文件所在的目录）。
+				它可以运行任何testNG,Junit,pojo写的单元测试-->
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <configuration>
+                    <skip>true</skip>
+                </configuration>
+            </plugin>
+            
+            <plugin>    
+                 <groupId>org.apache.maven.plugins</groupId>    
+                 <artifactId>maven-resources-plugin</artifactId>    
+                 <configuration>    
+                     <encoding>UTF-8</encoding>    
+                 </configuration>    
+             </plugin>    
+  
+             <plugin>    
+                 <groupId>org.apache.maven.plugins</groupId>    
+                 <artifactId>maven-compiler-plugin</artifactId>    
+                 <configuration>    
+                     <encoding>UTF-8</encoding>  
+                     <source>1.8</source>  
+                     <target>1.8</target>    
+                 </configuration>    
+             </plugin>
+             
+             <plugin>
+	            <artifactId>maven-source-plugin</artifactId>
+	            <configuration>
+	                <attach>true</attach>
+	            </configuration>
+	            <executions>
+	                <execution>
+	                    <phase>compile</phase>
+	                    <goals>
+	                        <goal>jar</goal>
+	                    </goals>
+	                </execution>
+	            </executions>
+	        </plugin>
+	        <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>cobertura-maven-plugin</artifactId>
+                <version>2.7</version>
+                <configuration>
+                    <skip>false</skip>
+                    <formats>
+                        <format>html</format>
+                    </formats>
+                    <check>
+                        <!--每个类的分支覆盖率-->
+                        <branchRate>85</branchRate>
+                        <!--每个类的代码行覆盖率-->
+                        <lineRate>85</lineRate>
+                        <!--校验失败则中止.即为true时如果校验失败则打包执行失败,反之则只是打出告警日志-->
+                        <haltOnFailure>true</haltOnFailure>
+                        <!--整体的分支覆盖率-->
+                        <totalBranchRate>85</totalBranchRate>
+                        <!--整体的代码行覆盖率-->
+                        <totalLineRate>85</totalLineRate>
+                        <!--每个包的分支行覆盖率-->
+                        <packageBranchRate>85</packageBranchRate>
+                        <!--每个包的代码行覆盖率-->
+                        <packageLineRate>85</packageLineRate>
+                        <regexes>
+                            <!--通过表达式设定覆盖率伐值-->
+                            <regex>
+                                <pattern>com.cxgm.*.service.impl.*</pattern>
+                                <branchRate>90</branchRate>
+                                <lineRate>80</lineRate>
+                            </regex>
+                        </regexes>
+                    </check>
+                    <instrumentation>
+                        <!--忽略列表.根据class文件路径进行匹配-->
+                        <excludes>
+                            <exclude>com/cxgm/**/**/entity/*.class</exclude>
+                            <exclude>com/cxgm/**/**/mapper/*.class</exclude>
+                            <exclude>com/cxgm/**/**/*Controller.class</exclude>
+                        </excludes>
+                    </instrumentation>
+                </configuration>
+                <executions>
+                    <execution>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>cobertura</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+    
+    <distributionManagement>
+        <!-- <repository>
+          <id>release</id>
+          <name>maven-releases</name>
+          <url>http://192.168.10.121:8081/repository/maven-releases/</url>
+        </repository>
+        <snapshotRepository>
+          <id>snapshot</id>
+          <name>maven-snapshots</name>
+          <url>http://192.168.10.121:8081/repository/maven-snapshots/</url>
+        </snapshotRepository> -->
+    </distributionManagement>
+    
+    <repositories>
+        <!-- <repository>
+            <id>alimaven</id>  
+            <name>aliyun maven</name>  
+            <url>http://maven.aliyun.com/nexus/content/groups/public/</url>  
+            <releases>  
+                <enabled>true</enabled>  
+            </releases>  
+            <snapshots>  
+                <enabled>false</enabled>  
+            </snapshots>  
+        </repository> -->
+        
+    </repositories>
+    <modules>
+    	<module>cxgm-framework</module>
+    	<module>cxgm-web-partent</module>
+    	<module>cxgm-util</module>
+    </modules>
+</project>

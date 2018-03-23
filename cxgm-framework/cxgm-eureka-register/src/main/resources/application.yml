@@ -1,0 +1,21 @@
+server:
+    port: 41201
+spring:
+  application:
+    name: eureka-server
+logging:
+  level:
+    root: info
+eureka:
+    instance:
+        hostname: 192.168.10.56
+    server:
+        # eureka自我保护
+        enableSelfPreservation: false
+    client:
+        # 该服务为注册中心，所以都为false
+        registerWithEureka: false
+        fetchRegistry: false
+        serviceUrl:
+          defaultZone: http://${eureka.instance.hostname}:${server.port}/eureka/   
+ 

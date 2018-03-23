@@ -1,0 +1,99 @@
+foo: sfsaff
+server:
+    port: 41202
+
+eureka:
+    client:
+        serviceUrl:
+            defaultZone: http://192.168.10.56:41201/eureka/
+
+    instance:
+      lease-renewal-interval-in-seconds: 48
+      lease-expiration-duration-in-seconds: 28
+      instance-id: ${spring.cloud.client.ipAddress}:${server.port}
+      hostname: ${spring.cloud.client.ipAddress}
+      #注册时使用ip而不是主机名
+      prefer-ip-address: true
+      #如果是swagger 文档，直接写http://${spring.cloud.client.ipAddress}:${server.port}/swagger-ui.html
+      status-page-url: http://${spring.cloud.client.ipAddress}:${server.port}/
+      health-check-url: http://${spring.cloud.client.ipAddress}:${server.port}/
+
+upload:
+  filePath: /home/tomcat/uploadfile #（上传文件的路径）
+  returnurl: http://39.107.24.27:6760/ #（返回的http前缀）
+
+spring:
+    zipkin:
+      base-url: http://39.107.24.27:41202
+    # 如果是测试环境则dev_model=true 不做验证码校验
+    dev_model: true
+    jackson:
+      time-zone: GMT+8
+      date-format: yyyy-MM-dd HH:mm:ss
+
+    session:
+      store-type: redis
+
+    datasource:
+      readSize: 1
+        # 使用druid数据源
+      type: com.alibaba.druid.pool.DruidDataSource
+      write:
+        url: jdbc:mysql://39.107.15.181:43106/mc_user
+        username: niwolink_com
+        password: Neco.wosh666@8*$@
+        driver-class-name: com.mysql.jdbc.Driver
+        validationQuery: select 'x'
+
+      read:
+        url: jdbc:mysql://39.107.15.181:43106/mc_user
+        username: niwolink_com
+        password: Neco.wosh666@8*$@
+        driver-class-name: com.mysql.jdbc.Driver
+        validationQuery: select 'x'
+      # 下面为连接池的补充设置，应用到上面所有数据源中
+      # 初始化大小，最小，最大
+      initialSize: 1
+      minIdle: 3
+      maxActive: 20
+      # 配置获取连接等待超时的时间，单位是毫秒
+      maxWait: 60000
+      # 配置间隔多久才进行一次检测，检测需要关闭的空闲连接，单位是毫秒
+      timeBetweenEvictionRunsMillis: 60000
+      # 配置一个连接在池中最小生存的时间，单位是毫秒
+      minEvictableIdleTimeMillis: 30000
+      validationQuery: select 'x'        
+      
+    redis:
+      database: 0
+      host: 39.107.15.181
+      port: 43709
+      password: Neco.wosh77@0217*$%
+      pool:
+        max-active: 8
+        max-idle: 8
+        max-wait: -1
+        min-idle: 0
+block: 
+  account: 
+    default: 
+      password: 12345678
+hystrix:  
+    command:  
+        default:  
+            execution:  
+                isolation:  
+                    thread:  
+                        timeoutInMilliseconds: 60000  
+
+ribbon:  
+    ReadTimeout: 60000 
+    ConnectTimeout: 60000
+    
+product:
+    max-upload-count: 9999 #(上传个人产品数量限制)
+android: 
+  version: 4.03
+  version2: 4
+  url: http://10.0.12.83:888/ico/54234344433.apk
+  description: 更新描述1、设计费打卡机了房间啊。_2、三角阀发3333
