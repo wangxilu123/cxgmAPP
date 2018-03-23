@@ -1,11 +1,11 @@
 server:
-    port: 41204
+    port: 41206
     permitAllUrl: /center/home/list,/center/search
     
 eureka:
     client:
         serviceUrl:
-            defaultZone: http://172.0.0.1:41201/eureka/
+            defaultZone: http://192.168.10.56:41201/eureka/
     
     instance:
       lease-renewal-interval-in-seconds: 48
