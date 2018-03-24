@@ -10,7 +10,7 @@
   <name>cxgm-web-partent</name>
   <modules>
   	<module>cxgm-userService</module>
-  	<module>cxgm-orderService</module>
   	<module>cxgm-businessService</module>
+  	<module>cxgm-orderService</module>
   </modules>
 </project>
