@@ -38,7 +38,7 @@ public class BusinessServiceApplication {
 	            "    zipkin:\n" + 
 	            "        base-url: http://39.107.24.27:41202";
 	}*/
-
+	
 	private CorsConfiguration buildConfig() {
 		CorsConfiguration corsConfiguration = new CorsConfiguration();
 		corsConfiguration.addAllowedOrigin("*");
