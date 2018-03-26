@@ -4,7 +4,7 @@ server:
 eureka:
     client:
         serviceUrl:
-            defaultZone: http://39.107.24.27:41201/eureka/
+            defaultZone: http://192.168.10.56:41201/eureka/
 #            defaultZone: http://127.0.0.1:41201/eureka/
     
     instance:
