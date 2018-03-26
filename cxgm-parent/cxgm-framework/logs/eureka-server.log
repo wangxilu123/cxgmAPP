@@ -1006,3 +1006,11 @@ INFO | 2018-03-26 10:37:08,676 | [eureka-server,,,] | Eureka-EvictionTimer com.n
 WARN | 2018-03-26 10:37:24,648 | [eureka-server,,,] | http-nio-41201-exec-5 com.netflix.eureka.registry.AbstractInstanceRegistry | DS: Registry: lease doesn't exist, registering resource: ECO-ORDER - 192.168.10.56:41203
 WARN | 2018-03-26 10:37:24,648 | [eureka-server,,,] | http-nio-41201-exec-5 com.netflix.eureka.resources.InstanceResource | Not Found (Renew): ECO-ORDER - 192.168.10.56:41203
 INFO | 2018-03-26 10:37:24,653 | [eureka-server,,,] | http-nio-41201-exec-7 com.netflix.eureka.registry.AbstractInstanceRegistry | Registered instance ECO-ORDER/192.168.10.56:41203 with status UP (replication=false)
+INFO | 2018-03-26 10:38:08,676 | [eureka-server,,,] | Eureka-EvictionTimer com.netflix.eureka.registry.AbstractInstanceRegistry | Running the evict task with compensationTime 0ms
+INFO | 2018-03-26 10:38:08,676 | [eureka-server,,,] | Eureka-EvictionTimer com.netflix.eureka.registry.AbstractInstanceRegistry | Evicting 1 items (expired=1, evictionLimit=1)
+WARN | 2018-03-26 10:38:08,676 | [eureka-server,,,] | Eureka-EvictionTimer com.netflix.eureka.registry.AbstractInstanceRegistry | DS: Registry: expired lease for ECO-ORDER/192.168.10.56:41203
+INFO | 2018-03-26 10:38:08,677 | [eureka-server,,,] | Eureka-EvictionTimer com.netflix.eureka.registry.AbstractInstanceRegistry | Cancelled instance ECO-ORDER/192.168.10.56:41203 (replication=false)
+WARN | 2018-03-26 10:38:12,658 | [eureka-server,,,] | http-nio-41201-exec-4 com.netflix.eureka.registry.AbstractInstanceRegistry | DS: Registry: lease doesn't exist, registering resource: ECO-ORDER - 192.168.10.56:41203
+WARN | 2018-03-26 10:38:12,659 | [eureka-server,,,] | http-nio-41201-exec-4 com.netflix.eureka.resources.InstanceResource | Not Found (Renew): ECO-ORDER - 192.168.10.56:41203
+INFO | 2018-03-26 10:38:12,664 | [eureka-server,,,] | http-nio-41201-exec-5 com.netflix.eureka.registry.AbstractInstanceRegistry | Registered instance ECO-ORDER/192.168.10.56:41203 with status UP (replication=false)
+INFO | 2018-03-26 10:39:08,676 | [eureka-server,,,] | Eureka-EvictionTimer com.netflix.eureka.registry.AbstractInstanceRegistry | Running the evict task with compensationTime 0ms
