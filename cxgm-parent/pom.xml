@@ -350,5 +350,6 @@
     <modules>
     	<module>cxgm-framework</module>
     	<module>cxgm-web-partent</module>
+    	<module>cxgm-erp</module>
     </modules>
 </project>
