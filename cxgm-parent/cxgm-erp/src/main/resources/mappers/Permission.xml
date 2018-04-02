@@ -176,11 +176,8 @@
       delete_flag = #{deleteFlag,jdbcType=BIT}
     where id = #{id,jdbcType=BIGINT}
   </update>
-  <select id="findPermissionsByRoleValue"  parameterType="String"  resultMap="BaseResultMap2">
-   	select p.id as pid, p.name as pname, p.value as pvalue, p.url as purl, r.id as rid, r.name as rname, r.value as rvalue from permission p LEFT JOIN permission_role pr on p.id=pr.permissions LEFT JOIN role r on pr.roles=r.id where r.value=#{rolename}
-  </select>
   
-  <select id="findAll"  parameterType="String"  resultMap="BaseResultMap2">
+  <select id="findAll" resultMap="BaseResultMap2">
    	select p.id as pid, p.name as pname, p.value as pvalue, p.url as purl, r.id as rid, r.name as rname, r.value as rvalue from permission p LEFT JOIN permission_role pr on p.id=pr.permissions LEFT JOIN role r on pr.roles=r.id
   </select>
   
