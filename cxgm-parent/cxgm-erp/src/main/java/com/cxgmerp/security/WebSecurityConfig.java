@@ -40,6 +40,7 @@ import org.springframework.security.web.session.SessionInformationExpiredStrateg
 import org.springframework.security.web.session.SimpleRedirectSessionInformationExpiredStrategy;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
+import com.cxgmerp.domain.Admin;
 import com.cxgmerp.security.login.CustomProvider;
 import com.cxgmerp.security.login.CustomUsernamePasswordAuthenticationFilter;
 import com.cxgmerp.security.url.MyFilterSecurityInterceptor;
@@ -174,7 +175,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	                                        Authentication authentication) throws ServletException, IOException {
 	        
 	        //更新用户信息，充值密码错误次数
-            SecurityUser securityUser = (SecurityUser) authentication.getPrincipal();
+            Admin securityUser = (Admin) authentication.getPrincipal();
             
 //            AclUser aclUser = aclUserService.findAclUserByName(securityUser.getUsername());
 //            
