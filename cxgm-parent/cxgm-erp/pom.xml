@@ -96,6 +96,12 @@
             <artifactId>spring-boot-starter-thymeleaf</artifactId>
         </dependency>
         
+        <!-- https://mvnrepository.com/artifact/net.sourceforge.nekohtml/nekohtml -->
+		<dependency>
+		    <groupId>net.sourceforge.nekohtml</groupId>
+		    <artifactId>nekohtml</artifactId>
+		    </dependency>
+        
 	</dependencies>
 
 	<build>
@@ -106,7 +112,6 @@
 			</plugin>
 		</plugins>
 	</build>
-
 	<repositories>
 		<repository>
 			<id>spring-milestones</id>
@@ -116,5 +121,6 @@
 				<enabled>false</enabled>
 			</snapshots>
 		</repository>
+		
 	</repositories>
 </project>

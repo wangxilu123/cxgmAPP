@@ -1,22 +1,7 @@
 <!doctype html>
-<html class="no-js fixed-layout" xmlns:th="http://www.thymeleaf.org">
-<head th:include="/views/common/head :: commonHead('后台登陆')">
-  
-  <script>
-$(function() {
-  //刷新验证码图片(登录)
-  function loginCaptchaImageRefresh() {
-    $("#loginCaptchaImage").attr("src", "/captcha?timestamp=" + (new Date()).valueOf());
-  }
-  	
-  // 点击刷新验证码图片
-  $("#loginCaptchaImage").click( function() {
-	  loginCaptchaImageRefresh();
-  });
-  
-  loginCaptchaImageRefresh();
-});
-</script>
+<html class="no-js fixed-layout" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"  
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head th:include="/views/common/head :: commonHead('菜鲜果美')">
 </head>
 <body>
   <!-- content start -->
@@ -29,19 +14,19 @@ $(function() {
           <div class="am-form-group">
             <label for="doc-ipt-3" class="am-u-sm-3 am-form-label">用户名</label>
             <div class="am-u-sm-9">
-              <input type="text" name="member.username" required>
+              <input type="text" name="member.username" required="required" />
             </div>
           </div>
           <div class="am-form-group">
             <label for="doc-ipt-pwd-2" class="am-u-sm-3 am-form-label">密码</label>
             <div class="am-u-sm-9">
-              <input type="password" id="doc-ipt-pwd-2" name="member.password" required>
+              <input type="password" id="doc-ipt-pwd-2" name="member.password" required="required" />
             </div>
           </div>
           <div class="am-form-group">
             <label for="captcha" class="am-u-sm-3 am-form-label">验证码</label>
             <div class="am-u-sm-5">
-              <input type="text" name="captchaToken" placeholder="验证码 →" value="" required>
+              <input type="text" name="captchaToken" placeholder="验证码 →" value="" required="required" />
             </div>
             <div class="am-u-sm-4 am-padding-left-0">
               <img id="loginCaptchaImage" src="/captcha" alt="换一张" />
@@ -64,7 +49,6 @@ $(function() {
       </div>
     </div>
     <footer class="shop-content-footer">
-      <hr>
       <div class="am-text-center am-text-xs am-margin-0"><p>Copyright &nbsp;© 2016 sun.ao. All rights reserved.</p></div>
     </footer>
   </div>

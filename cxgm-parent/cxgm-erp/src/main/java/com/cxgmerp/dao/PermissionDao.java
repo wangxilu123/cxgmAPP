@@ -7,7 +7,7 @@ import com.cxgmerp.domain.PermissionAndRole;
 
 public interface PermissionDao {
 	
-    List<PermissionAndRole> findAll();
+    List<PermissionAndRole> findAllPermissions();
     
     List<Permission> findByRole(Long roleid);
 }
