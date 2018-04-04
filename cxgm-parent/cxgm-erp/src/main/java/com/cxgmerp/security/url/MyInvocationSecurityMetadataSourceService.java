@@ -39,7 +39,7 @@ public class MyInvocationSecurityMetadataSourceService implements FilterInvocati
 		for(PermissionAndRole permissionAndRole : pars) {
 			matcher = new AntPathRequestMatcher(permissionAndRole.getPurl());
 			if(matcher.matches(request)) {
-				roles.add(permissionAndRole.getPurl());
+				roles.add(permissionAndRole.getRvalue());
 			}
 		}
 		Collection<ConfigAttribute> cas = new ArrayList<ConfigAttribute>();   

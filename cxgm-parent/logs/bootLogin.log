@@ -192,3 +192,1079 @@ INFO | 2018-03-31 13:01:23,802 | bootLogin | restartedMain org.apache.coyote.htt
 INFO | 2018-03-31 13:01:23,817 | bootLogin | restartedMain org.apache.tomcat.util.net.NioSelectorPool | Using a shared selector for servlet write/read
 INFO | 2018-03-31 13:01:23,841 | bootLogin | restartedMain org.springframework.boot.context.embedded.tomcat.TomcatEmbeddedServletContainer | Tomcat started on port(s): 8076 (http)
 INFO | 2018-03-31 13:01:23,845 | bootLogin | restartedMain com.cxgmerp.CxgmApplication | Started CxgmApplication in 10.034 seconds (JVM running for 10.77)
+INFO | 2018-04-02 10:37:42,076 | bootLogin | restartedMain org.springframework.context.annotation.AnnotationConfigApplicationContext | Refreshing org.springframework.context.annotation.AnnotationConfigApplicationContext@20ed8f05: startup date [Mon Apr 02 10:37:42 CST 2018]; root of context hierarchy
+INFO | 2018-04-02 10:37:42,282 | bootLogin | background-preinit org.hibernate.validator.internal.util.Version | HV000001: Hibernate Validator 5.3.6.Final
+INFO | 2018-04-02 10:37:42,382 | bootLogin | restartedMain org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor | JSR-330 'javax.inject.Inject' annotation found and supported for autowiring
+INFO | 2018-04-02 10:37:42,548 | bootLogin | restartedMain org.springframework.context.support.PostProcessorRegistrationDelegate$BeanPostProcessorChecker | Bean 'configurationPropertiesRebinderAutoConfiguration' of type [org.springframework.cloud.autoconfigure.ConfigurationPropertiesRebinderAutoConfiguration$$EnhancerBySpringCGLIB$$5cb1cf85] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+INFO | 2018-04-02 10:37:43,135 | bootLogin | restartedMain org.springframework.cloud.config.client.ConfigServicePropertySourceLocator | Fetching config from server at: http://localhost:8888
+WARN | 2018-04-02 10:37:44,229 | bootLogin | restartedMain org.springframework.cloud.config.client.ConfigServicePropertySourceLocator | Could not locate PropertySource: I/O error on GET request for "http://localhost:8888/application/default": Connection refused: connect; nested exception is java.net.ConnectException: Connection refused: connect
+INFO | 2018-04-02 10:37:44,231 | bootLogin | restartedMain com.cxgmerp.CxgmApplication | No active profile set, falling back to default profiles: default
+INFO | 2018-04-02 10:37:44,246 | bootLogin | restartedMain org.springframework.boot.context.embedded.AnnotationConfigEmbeddedWebApplicationContext | Refreshing org.springframework.boot.context.embedded.AnnotationConfigEmbeddedWebApplicationContext@2c3fc326: startup date [Mon Apr 02 10:37:44 CST 2018]; parent: org.springframework.context.annotation.AnnotationConfigApplicationContext@20ed8f05
+WARN | 2018-04-02 10:37:45,246 | bootLogin | restartedMain org.mybatis.spring.mapper.ClassPathMapperScanner | No MyBatis mapper was found in '[com.cxgmerp.config, com.cxgmerp]' package. Please check your configuration.
+INFO | 2018-04-02 10:37:45,275 | bootLogin | restartedMain org.springframework.data.repository.config.RepositoryConfigurationDelegate | Multiple Spring Data modules found, entering strict repository configuration mode!
+WARN | 2018-04-02 10:37:45,451 | bootLogin | restartedMain org.springframework.context.annotation.ConfigurationClassPostProcessor | Cannot enhance @Configuration bean definition 'myBatisMapperScannerConfig' since its singleton instance has been created too early. The typical cause is a non-static @Bean method with a BeanDefinitionRegistryPostProcessor return type: Consider declaring such methods as 'static'.
+INFO | 2018-04-02 10:37:45,608 | bootLogin | restartedMain org.springframework.cloud.context.scope.GenericScope | BeanFactory id=a9728500-ac32-3ee1-bfdb-a747fe271154
+INFO | 2018-04-02 10:37:45,619 | bootLogin | restartedMain org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor | JSR-330 'javax.inject.Inject' annotation found and supported for autowiring
+INFO | 2018-04-02 10:37:45,719 | bootLogin | restartedMain org.springframework.context.support.PostProcessorRegistrationDelegate$BeanPostProcessorChecker | Bean 'org.springframework.transaction.annotation.ProxyTransactionManagementConfiguration' of type [org.springframework.transaction.annotation.ProxyTransactionManagementConfiguration$$EnhancerBySpringCGLIB$$4097cc88] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+INFO | 2018-04-02 10:37:45,757 | bootLogin | restartedMain org.springframework.context.support.PostProcessorRegistrationDelegate$BeanPostProcessorChecker | Bean 'org.springframework.security.config.annotation.configuration.ObjectPostProcessorConfiguration' of type [org.springframework.security.config.annotation.configuration.ObjectPostProcessorConfiguration$$EnhancerBySpringCGLIB$$d94594c2] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+INFO | 2018-04-02 10:37:45,765 | bootLogin | restartedMain org.springframework.context.support.PostProcessorRegistrationDelegate$BeanPostProcessorChecker | Bean 'objectPostProcessor' of type [org.springframework.security.config.annotation.configuration.AutowireBeanFactoryObjectPostProcessor] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+INFO | 2018-04-02 10:37:45,766 | bootLogin | restartedMain org.springframework.context.support.PostProcessorRegistrationDelegate$BeanPostProcessorChecker | Bean 'org.springframework.security.access.expression.method.DefaultMethodSecurityExpressionHandler@4e806c8d' of type [org.springframework.security.access.expression.method.DefaultMethodSecurityExpressionHandler] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+INFO | 2018-04-02 10:37:45,771 | bootLogin | restartedMain org.springframework.context.support.PostProcessorRegistrationDelegate$BeanPostProcessorChecker | Bean 'org.springframework.security.config.annotation.method.configuration.GlobalMethodSecurityConfiguration' of type [org.springframework.security.config.annotation.method.configuration.GlobalMethodSecurityConfiguration$$EnhancerBySpringCGLIB$$fe1a3774] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+INFO | 2018-04-02 10:37:45,778 | bootLogin | restartedMain org.springframework.context.support.PostProcessorRegistrationDelegate$BeanPostProcessorChecker | Bean 'methodSecurityMetadataSource' of type [org.springframework.security.access.method.DelegatingMethodSecurityMetadataSource] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+INFO | 2018-04-02 10:37:45,794 | bootLogin | restartedMain org.springframework.context.support.PostProcessorRegistrationDelegate$BeanPostProcessorChecker | Bean 'redisConfig' of type [com.cxgmerp.config.RedisConfig$$EnhancerBySpringCGLIB$$aa5fd911] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+INFO | 2018-04-02 10:37:45,800 | bootLogin | restartedMain org.springframework.context.support.PostProcessorRegistrationDelegate$BeanPostProcessorChecker | Bean 'org.springframework.cache.annotation.ProxyCachingConfiguration' of type [org.springframework.cache.annotation.ProxyCachingConfiguration$$EnhancerBySpringCGLIB$$89aa02a6] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+INFO | 2018-04-02 10:37:45,835 | bootLogin | restartedMain org.springframework.context.support.PostProcessorRegistrationDelegate$BeanPostProcessorChecker | Bean 'org.springframework.cloud.autoconfigure.ConfigurationPropertiesRebinderAutoConfiguration' of type [org.springframework.cloud.autoconfigure.ConfigurationPropertiesRebinderAutoConfiguration$$EnhancerBySpringCGLIB$$5cb1cf85] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+INFO | 2018-04-02 10:37:46,563 | bootLogin | restartedMain org.springframework.boot.context.embedded.tomcat.TomcatEmbeddedServletContainer | Tomcat initialized with port(s): 8076 (http)
+INFO | 2018-04-02 10:37:46,574 | bootLogin | restartedMain org.apache.catalina.core.StandardService | Starting service [Tomcat]
+INFO | 2018-04-02 10:37:46,575 | bootLogin | restartedMain org.apache.catalina.core.StandardEngine | Starting Servlet Engine: Apache Tomcat/8.5.23
+INFO | 2018-04-02 10:37:46,694 | bootLogin | localhost-startStop-1 org.apache.catalina.core.ContainerBase.[Tomcat].[localhost].[/] | Initializing Spring embedded WebApplicationContext
+INFO | 2018-04-02 10:37:46,694 | bootLogin | localhost-startStop-1 org.springframework.web.context.ContextLoader | Root WebApplicationContext: initialization completed in 2448 ms
+WARN | 2018-04-02 10:37:48,344 | bootLogin | localhost-startStop-1 com.cxgmerp.security.url.MyFilterSecurityInterceptor | Could not validate configuration attributes as the SecurityMetadataSource did not return any attributes from getAllConfigAttributes()
+INFO | 2018-04-02 10:37:48,585 | bootLogin | localhost-startStop-1 org.springframework.boot.web.servlet.FilterRegistrationBean | Mapping filter: 'characterEncodingFilter' to: [/*]
+INFO | 2018-04-02 10:37:48,586 | bootLogin | localhost-startStop-1 org.springframework.boot.web.servlet.FilterRegistrationBean | Mapping filter: 'springSessionRepositoryFilter' to: [/*]
+INFO | 2018-04-02 10:37:48,586 | bootLogin | localhost-startStop-1 org.springframework.boot.web.servlet.FilterRegistrationBean | Mapping filter: 'hiddenHttpMethodFilter' to: [/*]
+INFO | 2018-04-02 10:37:48,586 | bootLogin | localhost-startStop-1 org.springframework.boot.web.servlet.FilterRegistrationBean | Mapping filter: 'httpPutFormContentFilter' to: [/*]
+INFO | 2018-04-02 10:37:48,586 | bootLogin | localhost-startStop-1 org.springframework.boot.web.servlet.FilterRegistrationBean | Mapping filter: 'requestContextFilter' to: [/*]
+INFO | 2018-04-02 10:37:48,588 | bootLogin | localhost-startStop-1 org.springframework.boot.web.servlet.DelegatingFilterProxyRegistrationBean | Mapping filter: 'springSecurityFilterChain' to: [/*]
+INFO | 2018-04-02 10:37:48,588 | bootLogin | localhost-startStop-1 org.springframework.boot.web.servlet.FilterRegistrationBean | Mapping filter: 'myFilterSecurityInterceptor' to: [/*]
+INFO | 2018-04-02 10:37:48,588 | bootLogin | localhost-startStop-1 org.springframework.boot.web.servlet.FilterRegistrationBean | Mapping filter: 'customUsernamePasswordAuthenticationFilter' to: [/*]
+INFO | 2018-04-02 10:37:48,588 | bootLogin | localhost-startStop-1 org.springframework.boot.web.servlet.FilterRegistrationBean | Mapping filter: 'concurrentSessionFilter' to: [/*]
+INFO | 2018-04-02 10:37:48,588 | bootLogin | localhost-startStop-1 org.springframework.boot.web.servlet.ServletRegistrationBean | Mapping servlet: 'dispatcherServlet' to [/]
+INFO | 2018-04-02 10:37:48,780 | bootLogin | restartedMain org.springframework.security.web.DefaultSecurityFilterChain | Creating filter chain: Ant [pattern='/js/**'], []
+INFO | 2018-04-02 10:37:48,780 | bootLogin | restartedMain org.springframework.security.web.DefaultSecurityFilterChain | Creating filter chain: Ant [pattern='/css/**'], []
+INFO | 2018-04-02 10:37:48,780 | bootLogin | restartedMain org.springframework.security.web.DefaultSecurityFilterChain | Creating filter chain: Ant [pattern='/images/**'], []
+INFO | 2018-04-02 10:37:48,780 | bootLogin | restartedMain org.springframework.security.web.DefaultSecurityFilterChain | Creating filter chain: Ant [pattern='/**/favicon.ico'], []
+INFO | 2018-04-02 10:37:48,872 | bootLogin | restartedMain org.springframework.security.web.DefaultSecurityFilterChain | Creating filter chain: org.springframework.security.web.util.matcher.AnyRequestMatcher@1, [org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@78131d0c, org.springframework.security.web.context.SecurityContextPersistenceFilter@63b4a024, org.springframework.security.web.header.HeaderWriterFilter@53b44f75, org.springframework.security.web.authentication.logout.LogoutFilter@70f7e79c, com.cxgmerp.security.login.CustomUsernamePasswordAuthenticationFilter@15636285, org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter@5b5162e, org.springframework.security.web.session.ConcurrentSessionFilter@2652623b, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@464272c3, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@3ae2f47d, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@77640938, org.springframework.security.web.session.SessionManagementFilter@597c5e2e, org.springframework.security.web.access.ExceptionTranslationFilter@295f7216, com.cxgmerp.security.url.MyFilterSecurityInterceptor@42ba5355, org.springframework.security.web.access.intercept.FilterSecurityInterceptor@3926dbc5]
+WARN | 2018-04-02 10:37:50,922 | bootLogin | restartedMain org.springframework.boot.context.embedded.AnnotationConfigEmbeddedWebApplicationContext | Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'enableRedisKeyspaceNotificationsInitializer' defined in org.springframework.session.data.redis.config.annotation.web.http.RedisHttpSessionConfiguration: Invocation of init method failed; nested exception is org.springframework.data.redis.RedisConnectionFailureException: Cannot get Jedis connection; nested exception is redis.clients.jedis.exceptions.JedisConnectionException: Could not get a resource from the pool
+INFO | 2018-04-02 10:37:50,925 | bootLogin | restartedMain org.apache.catalina.core.StandardService | Stopping service [Tomcat]
+INFO | 2018-04-02 10:37:50,961 | bootLogin | restartedMain org.springframework.boot.autoconfigure.logging.AutoConfigurationReportLoggingInitializer | 
+
+Error starting ApplicationContext. To display the auto-configuration report re-run your application with 'debug' enabled.
+ERROR | 2018-04-02 10:37:50,967 | bootLogin | restartedMain org.springframework.boot.SpringApplication | Application startup failed
+org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'enableRedisKeyspaceNotificationsInitializer' defined in org.springframework.session.data.redis.config.annotation.web.http.RedisHttpSessionConfiguration: Invocation of init method failed; nested exception is org.springframework.data.redis.RedisConnectionFailureException: Cannot get Jedis connection; nested exception is redis.clients.jedis.exceptions.JedisConnectionException: Could not get a resource from the pool
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.initializeBean(AbstractAutowireCapableBeanFactory.java:1628)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:555)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:483)
+	at org.springframework.beans.factory.support.AbstractBeanFactory$1.getObject(AbstractBeanFactory.java:306)
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:230)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:302)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:197)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.preInstantiateSingletons(DefaultListableBeanFactory.java:761)
+	at org.springframework.context.support.AbstractApplicationContext.finishBeanFactoryInitialization(AbstractApplicationContext.java:867)
+	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:543)
+	at org.springframework.boot.context.embedded.EmbeddedWebApplicationContext.refresh(EmbeddedWebApplicationContext.java:122)
+	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:693)
+	at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:360)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:303)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1118)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1107)
+	at com.cxgmerp.CxgmApplication.main(CxgmApplication.java:12)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:498)
+	at org.springframework.boot.devtools.restart.RestartLauncher.run(RestartLauncher.java:49)
+Caused by: org.springframework.data.redis.RedisConnectionFailureException: Cannot get Jedis connection; nested exception is redis.clients.jedis.exceptions.JedisConnectionException: Could not get a resource from the pool
+	at org.springframework.data.redis.connection.jedis.JedisConnectionFactory.fetchJedisConnector(JedisConnectionFactory.java:204)
+	at org.springframework.data.redis.connection.jedis.JedisConnectionFactory.getConnection(JedisConnectionFactory.java:348)
+	at org.springframework.session.data.redis.config.annotation.web.http.RedisHttpSessionConfiguration$EnableRedisKeyspaceNotificationsInitializer.afterPropertiesSet(RedisHttpSessionConfiguration.java:249)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.invokeInitMethods(AbstractAutowireCapableBeanFactory.java:1687)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.initializeBean(AbstractAutowireCapableBeanFactory.java:1624)
+	... 21 common frames omitted
+Caused by: redis.clients.jedis.exceptions.JedisConnectionException: Could not get a resource from the pool
+	at redis.clients.util.Pool.getResource(Pool.java:53)
+	at redis.clients.jedis.JedisPool.getResource(JedisPool.java:226)
+	at redis.clients.jedis.JedisPool.getResource(JedisPool.java:16)
+	at org.springframework.data.redis.connection.jedis.JedisConnectionFactory.fetchJedisConnector(JedisConnectionFactory.java:194)
+	... 25 common frames omitted
+Caused by: redis.clients.jedis.exceptions.JedisConnectionException: java.net.SocketTimeoutException: connect timed out
+	at redis.clients.jedis.Connection.connect(Connection.java:207)
+	at redis.clients.jedis.BinaryClient.connect(BinaryClient.java:93)
+	at redis.clients.jedis.BinaryJedis.connect(BinaryJedis.java:1767)
+	at redis.clients.jedis.JedisFactory.makeObject(JedisFactory.java:106)
+	at org.apache.commons.pool2.impl.GenericObjectPool.create(GenericObjectPool.java:888)
+	at org.apache.commons.pool2.impl.GenericObjectPool.borrowObject(GenericObjectPool.java:432)
+	at org.apache.commons.pool2.impl.GenericObjectPool.borrowObject(GenericObjectPool.java:361)
+	at redis.clients.util.Pool.getResource(Pool.java:49)
+	... 28 common frames omitted
+Caused by: java.net.SocketTimeoutException: connect timed out
+	at java.net.DualStackPlainSocketImpl.waitForConnect(Native Method)
+	at java.net.DualStackPlainSocketImpl.socketConnect(DualStackPlainSocketImpl.java:85)
+	at java.net.AbstractPlainSocketImpl.doConnect(AbstractPlainSocketImpl.java:350)
+	at java.net.AbstractPlainSocketImpl.connectToAddress(AbstractPlainSocketImpl.java:206)
+	at java.net.AbstractPlainSocketImpl.connect(AbstractPlainSocketImpl.java:188)
+	at java.net.PlainSocketImpl.connect(PlainSocketImpl.java:172)
+	at java.net.SocksSocketImpl.connect(SocksSocketImpl.java:392)
+	at java.net.Socket.connect(Socket.java:589)
+	at redis.clients.jedis.Connection.connect(Connection.java:184)
+	... 35 common frames omitted
+INFO | 2018-04-02 10:40:13,367 | bootLogin | restartedMain org.springframework.context.annotation.AnnotationConfigApplicationContext | Refreshing org.springframework.context.annotation.AnnotationConfigApplicationContext@20ed8f05: startup date [Mon Apr 02 10:40:13 CST 2018]; root of context hierarchy
+INFO | 2018-04-02 10:40:13,465 | bootLogin | background-preinit org.hibernate.validator.internal.util.Version | HV000001: Hibernate Validator 5.3.6.Final
+INFO | 2018-04-02 10:40:13,616 | bootLogin | restartedMain org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor | JSR-330 'javax.inject.Inject' annotation found and supported for autowiring
+INFO | 2018-04-02 10:40:13,642 | bootLogin | restartedMain org.springframework.context.support.PostProcessorRegistrationDelegate$BeanPostProcessorChecker | Bean 'configurationPropertiesRebinderAutoConfiguration' of type [org.springframework.cloud.autoconfigure.ConfigurationPropertiesRebinderAutoConfiguration$$EnhancerBySpringCGLIB$$5cb1cf85] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+ERROR | 2018-04-02 10:40:14,089 | bootLogin | restartedMain org.springframework.boot.SpringApplication | Application startup failed
+java.lang.IllegalStateException: Failed to load property source from location 'classpath:/application.yml'
+	at org.springframework.boot.context.config.ConfigFileApplicationListener$Loader.loadIntoGroup(ConfigFileApplicationListener.java:476)
+	at org.springframework.boot.context.config.ConfigFileApplicationListener$Loader.load(ConfigFileApplicationListener.java:465)
+	at org.springframework.boot.context.config.ConfigFileApplicationListener$Loader.load(ConfigFileApplicationListener.java:386)
+	at org.springframework.boot.context.config.ConfigFileApplicationListener.addPropertySources(ConfigFileApplicationListener.java:225)
+	at org.springframework.boot.context.config.ConfigFileApplicationListener.postProcessEnvironment(ConfigFileApplicationListener.java:195)
+	at org.springframework.boot.context.config.ConfigFileApplicationListener.onApplicationEnvironmentPreparedEvent(ConfigFileApplicationListener.java:182)
+	at org.springframework.boot.context.config.ConfigFileApplicationListener.onApplicationEvent(ConfigFileApplicationListener.java:168)
+	at org.springframework.context.event.SimpleApplicationEventMulticaster.doInvokeListener(SimpleApplicationEventMulticaster.java:172)
+	at org.springframework.context.event.SimpleApplicationEventMulticaster.invokeListener(SimpleApplicationEventMulticaster.java:165)
+	at org.springframework.context.event.SimpleApplicationEventMulticaster.multicastEvent(SimpleApplicationEventMulticaster.java:139)
+	at org.springframework.context.event.SimpleApplicationEventMulticaster.multicastEvent(SimpleApplicationEventMulticaster.java:122)
+	at org.springframework.boot.context.event.EventPublishingRunListener.environmentPrepared(EventPublishingRunListener.java:74)
+	at org.springframework.boot.SpringApplicationRunListeners.environmentPrepared(SpringApplicationRunListeners.java:54)
+	at org.springframework.boot.SpringApplication.prepareEnvironment(SpringApplication.java:325)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:296)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1118)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1107)
+	at com.cxgmerp.CxgmApplication.main(CxgmApplication.java:12)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:498)
+	at org.springframework.boot.devtools.restart.RestartLauncher.run(RestartLauncher.java:49)
+Caused by: org.yaml.snakeyaml.parser.ParserException: while parsing a block mapping
+ in 'reader', line 1, column 1:
+    server:
+    ^
+expected <block end>, but found BlockMappingStart
+ in 'reader', line 36, column 4:
+       redis:
+       ^
+
+	at org.yaml.snakeyaml.parser.ParserImpl$ParseBlockMappingKey.produce(ParserImpl.java:569)
+	at org.yaml.snakeyaml.parser.ParserImpl.peekEvent(ParserImpl.java:157)
+	at org.yaml.snakeyaml.parser.ParserImpl.checkEvent(ParserImpl.java:147)
+	at org.yaml.snakeyaml.composer.Composer.composeMappingNode(Composer.java:224)
+	at org.yaml.snakeyaml.composer.Composer.composeNode(Composer.java:155)
+	at org.yaml.snakeyaml.composer.Composer.composeDocument(Composer.java:122)
+	at org.yaml.snakeyaml.composer.Composer.getNode(Composer.java:84)
+	at org.yaml.snakeyaml.constructor.BaseConstructor.getData(BaseConstructor.java:104)
+	at org.yaml.snakeyaml.Yaml$1.next(Yaml.java:471)
+	at org.springframework.beans.factory.config.YamlProcessor.process(YamlProcessor.java:160)
+	at org.springframework.beans.factory.config.YamlProcessor.process(YamlProcessor.java:138)
+	at org.springframework.boot.env.YamlPropertySourceLoader$Processor.process(YamlPropertySourceLoader.java:101)
+	at org.springframework.boot.env.YamlPropertySourceLoader.load(YamlPropertySourceLoader.java:58)
+	at org.springframework.boot.env.PropertySourcesLoader.load(PropertySourcesLoader.java:127)
+	at org.springframework.boot.context.config.ConfigFileApplicationListener$Loader.doLoadIntoGroup(ConfigFileApplicationListener.java:490)
+	at org.springframework.boot.context.config.ConfigFileApplicationListener$Loader.loadIntoGroup(ConfigFileApplicationListener.java:473)
+	... 22 common frames omitted
+INFO | 2018-04-02 10:41:44,687 | bootLogin | restartedMain org.springframework.context.annotation.AnnotationConfigApplicationContext | Refreshing org.springframework.context.annotation.AnnotationConfigApplicationContext@20ed8f05: startup date [Mon Apr 02 10:41:44 CST 2018]; root of context hierarchy
+INFO | 2018-04-02 10:41:44,768 | bootLogin | background-preinit org.hibernate.validator.internal.util.Version | HV000001: Hibernate Validator 5.3.6.Final
+INFO | 2018-04-02 10:41:44,926 | bootLogin | restartedMain org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor | JSR-330 'javax.inject.Inject' annotation found and supported for autowiring
+INFO | 2018-04-02 10:41:44,951 | bootLogin | restartedMain org.springframework.context.support.PostProcessorRegistrationDelegate$BeanPostProcessorChecker | Bean 'configurationPropertiesRebinderAutoConfiguration' of type [org.springframework.cloud.autoconfigure.ConfigurationPropertiesRebinderAutoConfiguration$$EnhancerBySpringCGLIB$$5cb1cf85] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+INFO | 2018-04-02 10:41:45,463 | bootLogin | restartedMain org.springframework.cloud.config.client.ConfigServicePropertySourceLocator | Fetching config from server at: http://localhost:8888
+WARN | 2018-04-02 10:41:46,571 | bootLogin | restartedMain org.springframework.cloud.config.client.ConfigServicePropertySourceLocator | Could not locate PropertySource: I/O error on GET request for "http://localhost:8888/application/default": Connection refused: connect; nested exception is java.net.ConnectException: Connection refused: connect
+INFO | 2018-04-02 10:41:46,576 | bootLogin | restartedMain com.cxgmerp.CxgmApplication | No active profile set, falling back to default profiles: default
+INFO | 2018-04-02 10:41:46,589 | bootLogin | restartedMain org.springframework.boot.context.embedded.AnnotationConfigEmbeddedWebApplicationContext | Refreshing org.springframework.boot.context.embedded.AnnotationConfigEmbeddedWebApplicationContext@f425267: startup date [Mon Apr 02 10:41:46 CST 2018]; parent: org.springframework.context.annotation.AnnotationConfigApplicationContext@20ed8f05
+WARN | 2018-04-02 10:41:47,555 | bootLogin | restartedMain org.mybatis.spring.mapper.ClassPathMapperScanner | No MyBatis mapper was found in '[com.cxgmerp.config, com.cxgmerp]' package. Please check your configuration.
+INFO | 2018-04-02 10:41:47,583 | bootLogin | restartedMain org.springframework.data.repository.config.RepositoryConfigurationDelegate | Multiple Spring Data modules found, entering strict repository configuration mode!
+WARN | 2018-04-02 10:41:47,769 | bootLogin | restartedMain org.springframework.context.annotation.ConfigurationClassPostProcessor | Cannot enhance @Configuration bean definition 'myBatisMapperScannerConfig' since its singleton instance has been created too early. The typical cause is a non-static @Bean method with a BeanDefinitionRegistryPostProcessor return type: Consider declaring such methods as 'static'.
+INFO | 2018-04-02 10:41:47,943 | bootLogin | restartedMain org.springframework.cloud.context.scope.GenericScope | BeanFactory id=a9728500-ac32-3ee1-bfdb-a747fe271154
+INFO | 2018-04-02 10:41:47,955 | bootLogin | restartedMain org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor | JSR-330 'javax.inject.Inject' annotation found and supported for autowiring
+INFO | 2018-04-02 10:41:48,061 | bootLogin | restartedMain org.springframework.context.support.PostProcessorRegistrationDelegate$BeanPostProcessorChecker | Bean 'org.springframework.transaction.annotation.ProxyTransactionManagementConfiguration' of type [org.springframework.transaction.annotation.ProxyTransactionManagementConfiguration$$EnhancerBySpringCGLIB$$4097cc88] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+INFO | 2018-04-02 10:41:48,100 | bootLogin | restartedMain org.springframework.context.support.PostProcessorRegistrationDelegate$BeanPostProcessorChecker | Bean 'org.springframework.security.config.annotation.configuration.ObjectPostProcessorConfiguration' of type [org.springframework.security.config.annotation.configuration.ObjectPostProcessorConfiguration$$EnhancerBySpringCGLIB$$d94594c2] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+INFO | 2018-04-02 10:41:48,111 | bootLogin | restartedMain org.springframework.context.support.PostProcessorRegistrationDelegate$BeanPostProcessorChecker | Bean 'objectPostProcessor' of type [org.springframework.security.config.annotation.configuration.AutowireBeanFactoryObjectPostProcessor] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+INFO | 2018-04-02 10:41:48,112 | bootLogin | restartedMain org.springframework.context.support.PostProcessorRegistrationDelegate$BeanPostProcessorChecker | Bean 'org.springframework.security.access.expression.method.DefaultMethodSecurityExpressionHandler@34f26efa' of type [org.springframework.security.access.expression.method.DefaultMethodSecurityExpressionHandler] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+INFO | 2018-04-02 10:41:48,119 | bootLogin | restartedMain org.springframework.context.support.PostProcessorRegistrationDelegate$BeanPostProcessorChecker | Bean 'org.springframework.security.config.annotation.method.configuration.GlobalMethodSecurityConfiguration' of type [org.springframework.security.config.annotation.method.configuration.GlobalMethodSecurityConfiguration$$EnhancerBySpringCGLIB$$fe1a3774] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+INFO | 2018-04-02 10:41:48,130 | bootLogin | restartedMain org.springframework.context.support.PostProcessorRegistrationDelegate$BeanPostProcessorChecker | Bean 'methodSecurityMetadataSource' of type [org.springframework.security.access.method.DelegatingMethodSecurityMetadataSource] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+INFO | 2018-04-02 10:41:48,144 | bootLogin | restartedMain org.springframework.context.support.PostProcessorRegistrationDelegate$BeanPostProcessorChecker | Bean 'redisConfig' of type [com.cxgmerp.config.RedisConfig$$EnhancerBySpringCGLIB$$aa5fd911] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+INFO | 2018-04-02 10:41:48,149 | bootLogin | restartedMain org.springframework.context.support.PostProcessorRegistrationDelegate$BeanPostProcessorChecker | Bean 'org.springframework.cache.annotation.ProxyCachingConfiguration' of type [org.springframework.cache.annotation.ProxyCachingConfiguration$$EnhancerBySpringCGLIB$$89aa02a6] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+INFO | 2018-04-02 10:41:48,178 | bootLogin | restartedMain org.springframework.context.support.PostProcessorRegistrationDelegate$BeanPostProcessorChecker | Bean 'org.springframework.cloud.autoconfigure.ConfigurationPropertiesRebinderAutoConfiguration' of type [org.springframework.cloud.autoconfigure.ConfigurationPropertiesRebinderAutoConfiguration$$EnhancerBySpringCGLIB$$5cb1cf85] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+INFO | 2018-04-02 10:41:48,814 | bootLogin | restartedMain org.springframework.boot.context.embedded.tomcat.TomcatEmbeddedServletContainer | Tomcat initialized with port(s): 8076 (http)
+INFO | 2018-04-02 10:41:48,824 | bootLogin | restartedMain org.apache.catalina.core.StandardService | Starting service [Tomcat]
+INFO | 2018-04-02 10:41:48,826 | bootLogin | restartedMain org.apache.catalina.core.StandardEngine | Starting Servlet Engine: Apache Tomcat/8.5.23
+INFO | 2018-04-02 10:41:48,944 | bootLogin | localhost-startStop-1 org.apache.catalina.core.ContainerBase.[Tomcat].[localhost].[/] | Initializing Spring embedded WebApplicationContext
+INFO | 2018-04-02 10:41:48,944 | bootLogin | localhost-startStop-1 org.springframework.web.context.ContextLoader | Root WebApplicationContext: initialization completed in 2355 ms
+WARN | 2018-04-02 10:41:50,646 | bootLogin | localhost-startStop-1 com.cxgmerp.security.url.MyFilterSecurityInterceptor | Could not validate configuration attributes as the SecurityMetadataSource did not return any attributes from getAllConfigAttributes()
+INFO | 2018-04-02 10:41:50,889 | bootLogin | localhost-startStop-1 org.springframework.boot.web.servlet.FilterRegistrationBean | Mapping filter: 'characterEncodingFilter' to: [/*]
+INFO | 2018-04-02 10:41:50,890 | bootLogin | localhost-startStop-1 org.springframework.boot.web.servlet.FilterRegistrationBean | Mapping filter: 'springSessionRepositoryFilter' to: [/*]
+INFO | 2018-04-02 10:41:50,890 | bootLogin | localhost-startStop-1 org.springframework.boot.web.servlet.FilterRegistrationBean | Mapping filter: 'hiddenHttpMethodFilter' to: [/*]
+INFO | 2018-04-02 10:41:50,890 | bootLogin | localhost-startStop-1 org.springframework.boot.web.servlet.FilterRegistrationBean | Mapping filter: 'httpPutFormContentFilter' to: [/*]
+INFO | 2018-04-02 10:41:50,890 | bootLogin | localhost-startStop-1 org.springframework.boot.web.servlet.FilterRegistrationBean | Mapping filter: 'requestContextFilter' to: [/*]
+INFO | 2018-04-02 10:41:50,891 | bootLogin | localhost-startStop-1 org.springframework.boot.web.servlet.DelegatingFilterProxyRegistrationBean | Mapping filter: 'springSecurityFilterChain' to: [/*]
+INFO | 2018-04-02 10:41:50,891 | bootLogin | localhost-startStop-1 org.springframework.boot.web.servlet.FilterRegistrationBean | Mapping filter: 'myFilterSecurityInterceptor' to: [/*]
+INFO | 2018-04-02 10:41:50,891 | bootLogin | localhost-startStop-1 org.springframework.boot.web.servlet.FilterRegistrationBean | Mapping filter: 'customUsernamePasswordAuthenticationFilter' to: [/*]
+INFO | 2018-04-02 10:41:50,891 | bootLogin | localhost-startStop-1 org.springframework.boot.web.servlet.FilterRegistrationBean | Mapping filter: 'concurrentSessionFilter' to: [/*]
+INFO | 2018-04-02 10:41:50,891 | bootLogin | localhost-startStop-1 org.springframework.boot.web.servlet.ServletRegistrationBean | Mapping servlet: 'dispatcherServlet' to [/]
+INFO | 2018-04-02 10:41:51,066 | bootLogin | restartedMain org.springframework.security.web.DefaultSecurityFilterChain | Creating filter chain: Ant [pattern='/js/**'], []
+INFO | 2018-04-02 10:41:51,067 | bootLogin | restartedMain org.springframework.security.web.DefaultSecurityFilterChain | Creating filter chain: Ant [pattern='/css/**'], []
+INFO | 2018-04-02 10:41:51,067 | bootLogin | restartedMain org.springframework.security.web.DefaultSecurityFilterChain | Creating filter chain: Ant [pattern='/images/**'], []
+INFO | 2018-04-02 10:41:51,067 | bootLogin | restartedMain org.springframework.security.web.DefaultSecurityFilterChain | Creating filter chain: Ant [pattern='/**/favicon.ico'], []
+INFO | 2018-04-02 10:41:51,145 | bootLogin | restartedMain org.springframework.security.web.DefaultSecurityFilterChain | Creating filter chain: org.springframework.security.web.util.matcher.AnyRequestMatcher@1, [org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@325b0e9, org.springframework.security.web.context.SecurityContextPersistenceFilter@34530e50, org.springframework.security.web.header.HeaderWriterFilter@4936f649, org.springframework.security.web.authentication.logout.LogoutFilter@597c5e2e, com.cxgmerp.security.login.CustomUsernamePasswordAuthenticationFilter@2ae32348, org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter@3b79c522, org.springframework.security.web.session.ConcurrentSessionFilter@1697f652, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@40f2e60f, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@490eaf17, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@53206817, org.springframework.security.web.session.SessionManagementFilter@6e002e49, org.springframework.security.web.access.ExceptionTranslationFilter@37f141f, com.cxgmerp.security.url.MyFilterSecurityInterceptor@4b1b6eda, org.springframework.security.web.access.intercept.FilterSecurityInterceptor@39fd3517]
+WARN | 2018-04-02 10:41:52,197 | bootLogin | restartedMain org.springframework.boot.context.embedded.AnnotationConfigEmbeddedWebApplicationContext | Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'enableRedisKeyspaceNotificationsInitializer' defined in org.springframework.session.data.redis.config.annotation.web.http.RedisHttpSessionConfiguration: Invocation of init method failed; nested exception is org.springframework.data.redis.RedisConnectionFailureException: Cannot get Jedis connection; nested exception is redis.clients.jedis.exceptions.JedisConnectionException: Could not get a resource from the pool
+INFO | 2018-04-02 10:41:52,200 | bootLogin | restartedMain org.apache.catalina.core.StandardService | Stopping service [Tomcat]
+INFO | 2018-04-02 10:41:52,229 | bootLogin | restartedMain org.springframework.boot.autoconfigure.logging.AutoConfigurationReportLoggingInitializer | 
+
+Error starting ApplicationContext. To display the auto-configuration report re-run your application with 'debug' enabled.
+ERROR | 2018-04-02 10:41:52,236 | bootLogin | restartedMain org.springframework.boot.SpringApplication | Application startup failed
+org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'enableRedisKeyspaceNotificationsInitializer' defined in org.springframework.session.data.redis.config.annotation.web.http.RedisHttpSessionConfiguration: Invocation of init method failed; nested exception is org.springframework.data.redis.RedisConnectionFailureException: Cannot get Jedis connection; nested exception is redis.clients.jedis.exceptions.JedisConnectionException: Could not get a resource from the pool
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.initializeBean(AbstractAutowireCapableBeanFactory.java:1628)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:555)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:483)
+	at org.springframework.beans.factory.support.AbstractBeanFactory$1.getObject(AbstractBeanFactory.java:306)
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:230)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:302)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:197)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.preInstantiateSingletons(DefaultListableBeanFactory.java:761)
+	at org.springframework.context.support.AbstractApplicationContext.finishBeanFactoryInitialization(AbstractApplicationContext.java:867)
+	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:543)
+	at org.springframework.boot.context.embedded.EmbeddedWebApplicationContext.refresh(EmbeddedWebApplicationContext.java:122)
+	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:693)
+	at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:360)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:303)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1118)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1107)
+	at com.cxgmerp.CxgmApplication.main(CxgmApplication.java:12)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:498)
+	at org.springframework.boot.devtools.restart.RestartLauncher.run(RestartLauncher.java:49)
+Caused by: org.springframework.data.redis.RedisConnectionFailureException: Cannot get Jedis connection; nested exception is redis.clients.jedis.exceptions.JedisConnectionException: Could not get a resource from the pool
+	at org.springframework.data.redis.connection.jedis.JedisConnectionFactory.fetchJedisConnector(JedisConnectionFactory.java:204)
+	at org.springframework.data.redis.connection.jedis.JedisConnectionFactory.getConnection(JedisConnectionFactory.java:348)
+	at org.springframework.session.data.redis.config.annotation.web.http.RedisHttpSessionConfiguration$EnableRedisKeyspaceNotificationsInitializer.afterPropertiesSet(RedisHttpSessionConfiguration.java:249)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.invokeInitMethods(AbstractAutowireCapableBeanFactory.java:1687)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.initializeBean(AbstractAutowireCapableBeanFactory.java:1624)
+	... 21 common frames omitted
+Caused by: redis.clients.jedis.exceptions.JedisConnectionException: Could not get a resource from the pool
+	at redis.clients.util.Pool.getResource(Pool.java:53)
+	at redis.clients.jedis.JedisPool.getResource(JedisPool.java:226)
+	at redis.clients.jedis.JedisPool.getResource(JedisPool.java:16)
+	at org.springframework.data.redis.connection.jedis.JedisConnectionFactory.fetchJedisConnector(JedisConnectionFactory.java:194)
+	... 25 common frames omitted
+Caused by: redis.clients.jedis.exceptions.JedisConnectionException: java.net.ConnectException: Connection refused: connect
+	at redis.clients.jedis.Connection.connect(Connection.java:207)
+	at redis.clients.jedis.BinaryClient.connect(BinaryClient.java:93)
+	at redis.clients.jedis.BinaryJedis.connect(BinaryJedis.java:1767)
+	at redis.clients.jedis.JedisFactory.makeObject(JedisFactory.java:106)
+	at org.apache.commons.pool2.impl.GenericObjectPool.create(GenericObjectPool.java:888)
+	at org.apache.commons.pool2.impl.GenericObjectPool.borrowObject(GenericObjectPool.java:432)
+	at org.apache.commons.pool2.impl.GenericObjectPool.borrowObject(GenericObjectPool.java:361)
+	at redis.clients.util.Pool.getResource(Pool.java:49)
+	... 28 common frames omitted
+Caused by: java.net.ConnectException: Connection refused: connect
+	at java.net.DualStackPlainSocketImpl.waitForConnect(Native Method)
+	at java.net.DualStackPlainSocketImpl.socketConnect(DualStackPlainSocketImpl.java:85)
+	at java.net.AbstractPlainSocketImpl.doConnect(AbstractPlainSocketImpl.java:350)
+	at java.net.AbstractPlainSocketImpl.connectToAddress(AbstractPlainSocketImpl.java:206)
+	at java.net.AbstractPlainSocketImpl.connect(AbstractPlainSocketImpl.java:188)
+	at java.net.PlainSocketImpl.connect(PlainSocketImpl.java:172)
+	at java.net.SocksSocketImpl.connect(SocksSocketImpl.java:392)
+	at java.net.Socket.connect(Socket.java:589)
+	at redis.clients.jedis.Connection.connect(Connection.java:184)
+	... 35 common frames omitted
+INFO | 2018-04-02 11:07:06,321 | bootLogin | main net.sourceforge.cobertura.coveragedata.CoverageDataFileHandler | Cobertura: Saved information on 66 classes.
+INFO | 2018-04-02 11:07:06,413 | bootLogin | main net.sourceforge.cobertura.coveragedata.CoverageDataFileHandler | Cobertura: Saved information on 66 classes.
+INFO | 2018-04-02 11:26:54,008 | bootLogin | restartedMain org.springframework.context.annotation.AnnotationConfigApplicationContext | Refreshing org.springframework.context.annotation.AnnotationConfigApplicationContext@20ed8f05: startup date [Mon Apr 02 11:26:54 CST 2018]; root of context hierarchy
+INFO | 2018-04-02 11:26:54,095 | bootLogin | background-preinit org.hibernate.validator.internal.util.Version | HV000001: Hibernate Validator 5.3.6.Final
+INFO | 2018-04-02 11:26:54,249 | bootLogin | restartedMain org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor | JSR-330 'javax.inject.Inject' annotation found and supported for autowiring
+INFO | 2018-04-02 11:26:54,277 | bootLogin | restartedMain org.springframework.context.support.PostProcessorRegistrationDelegate$BeanPostProcessorChecker | Bean 'configurationPropertiesRebinderAutoConfiguration' of type [org.springframework.cloud.autoconfigure.ConfigurationPropertiesRebinderAutoConfiguration$$EnhancerBySpringCGLIB$$5cb1cf85] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+INFO | 2018-04-02 11:26:54,832 | bootLogin | restartedMain org.springframework.cloud.config.client.ConfigServicePropertySourceLocator | Fetching config from server at: http://localhost:8888
+WARN | 2018-04-02 11:26:55,926 | bootLogin | restartedMain org.springframework.cloud.config.client.ConfigServicePropertySourceLocator | Could not locate PropertySource: I/O error on GET request for "http://localhost:8888/application/default": Connection refused: connect; nested exception is java.net.ConnectException: Connection refused: connect
+INFO | 2018-04-02 11:26:55,929 | bootLogin | restartedMain com.cxgmerp.CxgmApplication | No active profile set, falling back to default profiles: default
+INFO | 2018-04-02 11:26:55,941 | bootLogin | restartedMain org.springframework.boot.context.embedded.AnnotationConfigEmbeddedWebApplicationContext | Refreshing org.springframework.boot.context.embedded.AnnotationConfigEmbeddedWebApplicationContext@f425267: startup date [Mon Apr 02 11:26:55 CST 2018]; parent: org.springframework.context.annotation.AnnotationConfigApplicationContext@20ed8f05
+WARN | 2018-04-02 11:26:56,884 | bootLogin | restartedMain org.mybatis.spring.mapper.ClassPathMapperScanner | No MyBatis mapper was found in '[com.cxgmerp.config, com.cxgmerp]' package. Please check your configuration.
+INFO | 2018-04-02 11:26:56,915 | bootLogin | restartedMain org.springframework.data.repository.config.RepositoryConfigurationDelegate | Multiple Spring Data modules found, entering strict repository configuration mode!
+WARN | 2018-04-02 11:26:57,105 | bootLogin | restartedMain org.springframework.context.annotation.ConfigurationClassPostProcessor | Cannot enhance @Configuration bean definition 'myBatisMapperScannerConfig' since its singleton instance has been created too early. The typical cause is a non-static @Bean method with a BeanDefinitionRegistryPostProcessor return type: Consider declaring such methods as 'static'.
+INFO | 2018-04-02 11:26:57,282 | bootLogin | restartedMain org.springframework.cloud.context.scope.GenericScope | BeanFactory id=a9728500-ac32-3ee1-bfdb-a747fe271154
+INFO | 2018-04-02 11:26:57,296 | bootLogin | restartedMain org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor | JSR-330 'javax.inject.Inject' annotation found and supported for autowiring
+INFO | 2018-04-02 11:26:57,412 | bootLogin | restartedMain org.springframework.context.support.PostProcessorRegistrationDelegate$BeanPostProcessorChecker | Bean 'org.springframework.transaction.annotation.ProxyTransactionManagementConfiguration' of type [org.springframework.transaction.annotation.ProxyTransactionManagementConfiguration$$EnhancerBySpringCGLIB$$4097cc88] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+INFO | 2018-04-02 11:26:57,456 | bootLogin | restartedMain org.springframework.context.support.PostProcessorRegistrationDelegate$BeanPostProcessorChecker | Bean 'org.springframework.security.config.annotation.configuration.ObjectPostProcessorConfiguration' of type [org.springframework.security.config.annotation.configuration.ObjectPostProcessorConfiguration$$EnhancerBySpringCGLIB$$d94594c2] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+INFO | 2018-04-02 11:26:57,466 | bootLogin | restartedMain org.springframework.context.support.PostProcessorRegistrationDelegate$BeanPostProcessorChecker | Bean 'objectPostProcessor' of type [org.springframework.security.config.annotation.configuration.AutowireBeanFactoryObjectPostProcessor] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+INFO | 2018-04-02 11:26:57,467 | bootLogin | restartedMain org.springframework.context.support.PostProcessorRegistrationDelegate$BeanPostProcessorChecker | Bean 'org.springframework.security.access.expression.method.DefaultMethodSecurityExpressionHandler@34f26efa' of type [org.springframework.security.access.expression.method.DefaultMethodSecurityExpressionHandler] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+INFO | 2018-04-02 11:26:57,475 | bootLogin | restartedMain org.springframework.context.support.PostProcessorRegistrationDelegate$BeanPostProcessorChecker | Bean 'org.springframework.security.config.annotation.method.configuration.GlobalMethodSecurityConfiguration' of type [org.springframework.security.config.annotation.method.configuration.GlobalMethodSecurityConfiguration$$EnhancerBySpringCGLIB$$fe1a3774] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+INFO | 2018-04-02 11:26:57,485 | bootLogin | restartedMain org.springframework.context.support.PostProcessorRegistrationDelegate$BeanPostProcessorChecker | Bean 'methodSecurityMetadataSource' of type [org.springframework.security.access.method.DelegatingMethodSecurityMetadataSource] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+INFO | 2018-04-02 11:26:57,500 | bootLogin | restartedMain org.springframework.context.support.PostProcessorRegistrationDelegate$BeanPostProcessorChecker | Bean 'redisConfig' of type [com.cxgmerp.config.RedisConfig$$EnhancerBySpringCGLIB$$aa5fd911] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+INFO | 2018-04-02 11:26:57,506 | bootLogin | restartedMain org.springframework.context.support.PostProcessorRegistrationDelegate$BeanPostProcessorChecker | Bean 'org.springframework.cache.annotation.ProxyCachingConfiguration' of type [org.springframework.cache.annotation.ProxyCachingConfiguration$$EnhancerBySpringCGLIB$$89aa02a6] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+INFO | 2018-04-02 11:26:57,534 | bootLogin | restartedMain org.springframework.context.support.PostProcessorRegistrationDelegate$BeanPostProcessorChecker | Bean 'org.springframework.cloud.autoconfigure.ConfigurationPropertiesRebinderAutoConfiguration' of type [org.springframework.cloud.autoconfigure.ConfigurationPropertiesRebinderAutoConfiguration$$EnhancerBySpringCGLIB$$5cb1cf85] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+INFO | 2018-04-02 11:26:58,180 | bootLogin | restartedMain org.springframework.boot.context.embedded.tomcat.TomcatEmbeddedServletContainer | Tomcat initialized with port(s): 8076 (http)
+INFO | 2018-04-02 11:26:58,190 | bootLogin | restartedMain org.apache.catalina.core.StandardService | Starting service [Tomcat]
+INFO | 2018-04-02 11:26:58,191 | bootLogin | restartedMain org.apache.catalina.core.StandardEngine | Starting Servlet Engine: Apache Tomcat/8.5.23
+INFO | 2018-04-02 11:26:58,295 | bootLogin | localhost-startStop-1 org.apache.catalina.core.ContainerBase.[Tomcat].[localhost].[/] | Initializing Spring embedded WebApplicationContext
+INFO | 2018-04-02 11:26:58,296 | bootLogin | localhost-startStop-1 org.springframework.web.context.ContextLoader | Root WebApplicationContext: initialization completed in 2355 ms
+WARN | 2018-04-02 11:27:00,122 | bootLogin | localhost-startStop-1 com.cxgmerp.security.url.MyFilterSecurityInterceptor | Could not validate configuration attributes as the SecurityMetadataSource did not return any attributes from getAllConfigAttributes()
+INFO | 2018-04-02 11:27:00,347 | bootLogin | localhost-startStop-1 org.springframework.boot.web.servlet.FilterRegistrationBean | Mapping filter: 'characterEncodingFilter' to: [/*]
+INFO | 2018-04-02 11:27:00,348 | bootLogin | localhost-startStop-1 org.springframework.boot.web.servlet.FilterRegistrationBean | Mapping filter: 'springSessionRepositoryFilter' to: [/*]
+INFO | 2018-04-02 11:27:00,348 | bootLogin | localhost-startStop-1 org.springframework.boot.web.servlet.FilterRegistrationBean | Mapping filter: 'hiddenHttpMethodFilter' to: [/*]
+INFO | 2018-04-02 11:27:00,348 | bootLogin | localhost-startStop-1 org.springframework.boot.web.servlet.FilterRegistrationBean | Mapping filter: 'httpPutFormContentFilter' to: [/*]
+INFO | 2018-04-02 11:27:00,348 | bootLogin | localhost-startStop-1 org.springframework.boot.web.servlet.FilterRegistrationBean | Mapping filter: 'requestContextFilter' to: [/*]
+INFO | 2018-04-02 11:27:00,349 | bootLogin | localhost-startStop-1 org.springframework.boot.web.servlet.DelegatingFilterProxyRegistrationBean | Mapping filter: 'springSecurityFilterChain' to: [/*]
+INFO | 2018-04-02 11:27:00,349 | bootLogin | localhost-startStop-1 org.springframework.boot.web.servlet.FilterRegistrationBean | Mapping filter: 'myFilterSecurityInterceptor' to: [/*]
+INFO | 2018-04-02 11:27:00,349 | bootLogin | localhost-startStop-1 org.springframework.boot.web.servlet.FilterRegistrationBean | Mapping filter: 'customUsernamePasswordAuthenticationFilter' to: [/*]
+INFO | 2018-04-02 11:27:00,349 | bootLogin | localhost-startStop-1 org.springframework.boot.web.servlet.FilterRegistrationBean | Mapping filter: 'concurrentSessionFilter' to: [/*]
+INFO | 2018-04-02 11:27:00,350 | bootLogin | localhost-startStop-1 org.springframework.boot.web.servlet.ServletRegistrationBean | Mapping servlet: 'dispatcherServlet' to [/]
+INFO | 2018-04-02 11:27:00,528 | bootLogin | restartedMain org.springframework.security.web.DefaultSecurityFilterChain | Creating filter chain: Ant [pattern='/js/**'], []
+INFO | 2018-04-02 11:27:00,528 | bootLogin | restartedMain org.springframework.security.web.DefaultSecurityFilterChain | Creating filter chain: Ant [pattern='/css/**'], []
+INFO | 2018-04-02 11:27:00,528 | bootLogin | restartedMain org.springframework.security.web.DefaultSecurityFilterChain | Creating filter chain: Ant [pattern='/images/**'], []
+INFO | 2018-04-02 11:27:00,528 | bootLogin | restartedMain org.springframework.security.web.DefaultSecurityFilterChain | Creating filter chain: Ant [pattern='/**/favicon.ico'], []
+INFO | 2018-04-02 11:27:00,617 | bootLogin | restartedMain org.springframework.security.web.DefaultSecurityFilterChain | Creating filter chain: org.springframework.security.web.util.matcher.AnyRequestMatcher@1, [org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@325b0e9, org.springframework.security.web.context.SecurityContextPersistenceFilter@34530e50, org.springframework.security.web.header.HeaderWriterFilter@4936f649, org.springframework.security.web.authentication.logout.LogoutFilter@597c5e2e, com.cxgmerp.security.login.CustomUsernamePasswordAuthenticationFilter@728710bb, org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter@3b79c522, org.springframework.security.web.session.ConcurrentSessionFilter@1557fb93, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@40f2e60f, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@490eaf17, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@53206817, org.springframework.security.web.session.SessionManagementFilter@6e002e49, org.springframework.security.web.access.ExceptionTranslationFilter@37f141f, com.cxgmerp.security.url.MyFilterSecurityInterceptor@43ea505c, org.springframework.security.web.access.intercept.FilterSecurityInterceptor@39fd3517]
+WARN | 2018-04-02 11:27:01,672 | bootLogin | restartedMain org.springframework.boot.context.embedded.AnnotationConfigEmbeddedWebApplicationContext | Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'enableRedisKeyspaceNotificationsInitializer' defined in org.springframework.session.data.redis.config.annotation.web.http.RedisHttpSessionConfiguration: Invocation of init method failed; nested exception is org.springframework.data.redis.RedisConnectionFailureException: Cannot get Jedis connection; nested exception is redis.clients.jedis.exceptions.JedisConnectionException: Could not get a resource from the pool
+INFO | 2018-04-02 11:27:01,674 | bootLogin | restartedMain org.apache.catalina.core.StandardService | Stopping service [Tomcat]
+INFO | 2018-04-02 11:27:01,706 | bootLogin | restartedMain org.springframework.boot.autoconfigure.logging.AutoConfigurationReportLoggingInitializer | 
+
+Error starting ApplicationContext. To display the auto-configuration report re-run your application with 'debug' enabled.
+ERROR | 2018-04-02 11:27:01,712 | bootLogin | restartedMain org.springframework.boot.SpringApplication | Application startup failed
+org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'enableRedisKeyspaceNotificationsInitializer' defined in org.springframework.session.data.redis.config.annotation.web.http.RedisHttpSessionConfiguration: Invocation of init method failed; nested exception is org.springframework.data.redis.RedisConnectionFailureException: Cannot get Jedis connection; nested exception is redis.clients.jedis.exceptions.JedisConnectionException: Could not get a resource from the pool
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.initializeBean(AbstractAutowireCapableBeanFactory.java:1628)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:555)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:483)
+	at org.springframework.beans.factory.support.AbstractBeanFactory$1.getObject(AbstractBeanFactory.java:306)
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:230)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:302)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:197)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.preInstantiateSingletons(DefaultListableBeanFactory.java:761)
+	at org.springframework.context.support.AbstractApplicationContext.finishBeanFactoryInitialization(AbstractApplicationContext.java:867)
+	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:543)
+	at org.springframework.boot.context.embedded.EmbeddedWebApplicationContext.refresh(EmbeddedWebApplicationContext.java:122)
+	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:693)
+	at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:360)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:303)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1118)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1107)
+	at com.cxgmerp.CxgmApplication.main(CxgmApplication.java:12)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:498)
+	at org.springframework.boot.devtools.restart.RestartLauncher.run(RestartLauncher.java:49)
+Caused by: org.springframework.data.redis.RedisConnectionFailureException: Cannot get Jedis connection; nested exception is redis.clients.jedis.exceptions.JedisConnectionException: Could not get a resource from the pool
+	at org.springframework.data.redis.connection.jedis.JedisConnectionFactory.fetchJedisConnector(JedisConnectionFactory.java:204)
+	at org.springframework.data.redis.connection.jedis.JedisConnectionFactory.getConnection(JedisConnectionFactory.java:348)
+	at org.springframework.session.data.redis.config.annotation.web.http.RedisHttpSessionConfiguration$EnableRedisKeyspaceNotificationsInitializer.afterPropertiesSet(RedisHttpSessionConfiguration.java:249)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.invokeInitMethods(AbstractAutowireCapableBeanFactory.java:1687)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.initializeBean(AbstractAutowireCapableBeanFactory.java:1624)
+	... 21 common frames omitted
+Caused by: redis.clients.jedis.exceptions.JedisConnectionException: Could not get a resource from the pool
+	at redis.clients.util.Pool.getResource(Pool.java:53)
+	at redis.clients.jedis.JedisPool.getResource(JedisPool.java:226)
+	at redis.clients.jedis.JedisPool.getResource(JedisPool.java:16)
+	at org.springframework.data.redis.connection.jedis.JedisConnectionFactory.fetchJedisConnector(JedisConnectionFactory.java:194)
+	... 25 common frames omitted
+Caused by: redis.clients.jedis.exceptions.JedisConnectionException: java.net.ConnectException: Connection refused: connect
+	at redis.clients.jedis.Connection.connect(Connection.java:207)
+	at redis.clients.jedis.BinaryClient.connect(BinaryClient.java:93)
+	at redis.clients.jedis.BinaryJedis.connect(BinaryJedis.java:1767)
+	at redis.clients.jedis.JedisFactory.makeObject(JedisFactory.java:106)
+	at org.apache.commons.pool2.impl.GenericObjectPool.create(GenericObjectPool.java:888)
+	at org.apache.commons.pool2.impl.GenericObjectPool.borrowObject(GenericObjectPool.java:432)
+	at org.apache.commons.pool2.impl.GenericObjectPool.borrowObject(GenericObjectPool.java:361)
+	at redis.clients.util.Pool.getResource(Pool.java:49)
+	... 28 common frames omitted
+Caused by: java.net.ConnectException: Connection refused: connect
+	at java.net.DualStackPlainSocketImpl.waitForConnect(Native Method)
+	at java.net.DualStackPlainSocketImpl.socketConnect(DualStackPlainSocketImpl.java:85)
+	at java.net.AbstractPlainSocketImpl.doConnect(AbstractPlainSocketImpl.java:350)
+	at java.net.AbstractPlainSocketImpl.connectToAddress(AbstractPlainSocketImpl.java:206)
+	at java.net.AbstractPlainSocketImpl.connect(AbstractPlainSocketImpl.java:188)
+	at java.net.PlainSocketImpl.connect(PlainSocketImpl.java:172)
+	at java.net.SocksSocketImpl.connect(SocksSocketImpl.java:392)
+	at java.net.Socket.connect(Socket.java:589)
+	at redis.clients.jedis.Connection.connect(Connection.java:184)
+	... 35 common frames omitted
+INFO | 2018-04-02 11:28:30,930 | bootLogin | restartedMain org.springframework.context.annotation.AnnotationConfigApplicationContext | Refreshing org.springframework.context.annotation.AnnotationConfigApplicationContext@20ed8f05: startup date [Mon Apr 02 11:28:30 CST 2018]; root of context hierarchy
+INFO | 2018-04-02 11:28:31,034 | bootLogin | background-preinit org.hibernate.validator.internal.util.Version | HV000001: Hibernate Validator 5.3.6.Final
+INFO | 2018-04-02 11:28:31,176 | bootLogin | restartedMain org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor | JSR-330 'javax.inject.Inject' annotation found and supported for autowiring
+INFO | 2018-04-02 11:28:31,203 | bootLogin | restartedMain org.springframework.context.support.PostProcessorRegistrationDelegate$BeanPostProcessorChecker | Bean 'configurationPropertiesRebinderAutoConfiguration' of type [org.springframework.cloud.autoconfigure.ConfigurationPropertiesRebinderAutoConfiguration$$EnhancerBySpringCGLIB$$5cb1cf85] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+INFO | 2018-04-02 11:28:31,752 | bootLogin | restartedMain org.springframework.cloud.config.client.ConfigServicePropertySourceLocator | Fetching config from server at: http://localhost:8888
+WARN | 2018-04-02 11:28:32,849 | bootLogin | restartedMain org.springframework.cloud.config.client.ConfigServicePropertySourceLocator | Could not locate PropertySource: I/O error on GET request for "http://localhost:8888/application/default": Connection refused: connect; nested exception is java.net.ConnectException: Connection refused: connect
+INFO | 2018-04-02 11:28:32,851 | bootLogin | restartedMain com.cxgmerp.CxgmApplication | No active profile set, falling back to default profiles: default
+INFO | 2018-04-02 11:28:32,864 | bootLogin | restartedMain org.springframework.boot.context.embedded.AnnotationConfigEmbeddedWebApplicationContext | Refreshing org.springframework.boot.context.embedded.AnnotationConfigEmbeddedWebApplicationContext@2a6d6c: startup date [Mon Apr 02 11:28:32 CST 2018]; parent: org.springframework.context.annotation.AnnotationConfigApplicationContext@20ed8f05
+WARN | 2018-04-02 11:28:33,846 | bootLogin | restartedMain org.mybatis.spring.mapper.ClassPathMapperScanner | No MyBatis mapper was found in '[com.cxgmerp.config, com.cxgmerp]' package. Please check your configuration.
+INFO | 2018-04-02 11:28:33,878 | bootLogin | restartedMain org.springframework.data.repository.config.RepositoryConfigurationDelegate | Multiple Spring Data modules found, entering strict repository configuration mode!
+WARN | 2018-04-02 11:28:34,064 | bootLogin | restartedMain org.springframework.context.annotation.ConfigurationClassPostProcessor | Cannot enhance @Configuration bean definition 'myBatisMapperScannerConfig' since its singleton instance has been created too early. The typical cause is a non-static @Bean method with a BeanDefinitionRegistryPostProcessor return type: Consider declaring such methods as 'static'.
+INFO | 2018-04-02 11:28:34,229 | bootLogin | restartedMain org.springframework.cloud.context.scope.GenericScope | BeanFactory id=a9728500-ac32-3ee1-bfdb-a747fe271154
+INFO | 2018-04-02 11:28:34,241 | bootLogin | restartedMain org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor | JSR-330 'javax.inject.Inject' annotation found and supported for autowiring
+INFO | 2018-04-02 11:28:34,354 | bootLogin | restartedMain org.springframework.context.support.PostProcessorRegistrationDelegate$BeanPostProcessorChecker | Bean 'org.springframework.transaction.annotation.ProxyTransactionManagementConfiguration' of type [org.springframework.transaction.annotation.ProxyTransactionManagementConfiguration$$EnhancerBySpringCGLIB$$4097cc88] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+INFO | 2018-04-02 11:28:34,400 | bootLogin | restartedMain org.springframework.context.support.PostProcessorRegistrationDelegate$BeanPostProcessorChecker | Bean 'org.springframework.security.config.annotation.configuration.ObjectPostProcessorConfiguration' of type [org.springframework.security.config.annotation.configuration.ObjectPostProcessorConfiguration$$EnhancerBySpringCGLIB$$d94594c2] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+INFO | 2018-04-02 11:28:34,409 | bootLogin | restartedMain org.springframework.context.support.PostProcessorRegistrationDelegate$BeanPostProcessorChecker | Bean 'objectPostProcessor' of type [org.springframework.security.config.annotation.configuration.AutowireBeanFactoryObjectPostProcessor] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+INFO | 2018-04-02 11:28:34,410 | bootLogin | restartedMain org.springframework.context.support.PostProcessorRegistrationDelegate$BeanPostProcessorChecker | Bean 'org.springframework.security.access.expression.method.DefaultMethodSecurityExpressionHandler@21a7ebf4' of type [org.springframework.security.access.expression.method.DefaultMethodSecurityExpressionHandler] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+INFO | 2018-04-02 11:28:34,416 | bootLogin | restartedMain org.springframework.context.support.PostProcessorRegistrationDelegate$BeanPostProcessorChecker | Bean 'org.springframework.security.config.annotation.method.configuration.GlobalMethodSecurityConfiguration' of type [org.springframework.security.config.annotation.method.configuration.GlobalMethodSecurityConfiguration$$EnhancerBySpringCGLIB$$fe1a3774] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+INFO | 2018-04-02 11:28:34,425 | bootLogin | restartedMain org.springframework.context.support.PostProcessorRegistrationDelegate$BeanPostProcessorChecker | Bean 'methodSecurityMetadataSource' of type [org.springframework.security.access.method.DelegatingMethodSecurityMetadataSource] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+INFO | 2018-04-02 11:28:34,438 | bootLogin | restartedMain org.springframework.context.support.PostProcessorRegistrationDelegate$BeanPostProcessorChecker | Bean 'redisConfig' of type [com.cxgmerp.config.RedisConfig$$EnhancerBySpringCGLIB$$aa5fd911] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+INFO | 2018-04-02 11:28:34,445 | bootLogin | restartedMain org.springframework.context.support.PostProcessorRegistrationDelegate$BeanPostProcessorChecker | Bean 'org.springframework.cache.annotation.ProxyCachingConfiguration' of type [org.springframework.cache.annotation.ProxyCachingConfiguration$$EnhancerBySpringCGLIB$$89aa02a6] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+INFO | 2018-04-02 11:28:34,475 | bootLogin | restartedMain org.springframework.context.support.PostProcessorRegistrationDelegate$BeanPostProcessorChecker | Bean 'org.springframework.cloud.autoconfigure.ConfigurationPropertiesRebinderAutoConfiguration' of type [org.springframework.cloud.autoconfigure.ConfigurationPropertiesRebinderAutoConfiguration$$EnhancerBySpringCGLIB$$5cb1cf85] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+INFO | 2018-04-02 11:28:35,136 | bootLogin | restartedMain org.springframework.boot.context.embedded.tomcat.TomcatEmbeddedServletContainer | Tomcat initialized with port(s): 8076 (http)
+INFO | 2018-04-02 11:28:35,146 | bootLogin | restartedMain org.apache.catalina.core.StandardService | Starting service [Tomcat]
+INFO | 2018-04-02 11:28:35,147 | bootLogin | restartedMain org.apache.catalina.core.StandardEngine | Starting Servlet Engine: Apache Tomcat/8.5.23
+INFO | 2018-04-02 11:28:35,264 | bootLogin | localhost-startStop-1 org.apache.catalina.core.ContainerBase.[Tomcat].[localhost].[/] | Initializing Spring embedded WebApplicationContext
+INFO | 2018-04-02 11:28:35,264 | bootLogin | localhost-startStop-1 org.springframework.web.context.ContextLoader | Root WebApplicationContext: initialization completed in 2400 ms
+WARN | 2018-04-02 11:28:36,860 | bootLogin | localhost-startStop-1 com.cxgmerp.security.url.MyFilterSecurityInterceptor | Could not validate configuration attributes as the SecurityMetadataSource did not return any attributes from getAllConfigAttributes()
+INFO | 2018-04-02 11:28:37,128 | bootLogin | localhost-startStop-1 org.springframework.boot.web.servlet.FilterRegistrationBean | Mapping filter: 'characterEncodingFilter' to: [/*]
+INFO | 2018-04-02 11:28:37,129 | bootLogin | localhost-startStop-1 org.springframework.boot.web.servlet.FilterRegistrationBean | Mapping filter: 'springSessionRepositoryFilter' to: [/*]
+INFO | 2018-04-02 11:28:37,129 | bootLogin | localhost-startStop-1 org.springframework.boot.web.servlet.FilterRegistrationBean | Mapping filter: 'hiddenHttpMethodFilter' to: [/*]
+INFO | 2018-04-02 11:28:37,130 | bootLogin | localhost-startStop-1 org.springframework.boot.web.servlet.FilterRegistrationBean | Mapping filter: 'httpPutFormContentFilter' to: [/*]
+INFO | 2018-04-02 11:28:37,130 | bootLogin | localhost-startStop-1 org.springframework.boot.web.servlet.FilterRegistrationBean | Mapping filter: 'requestContextFilter' to: [/*]
+INFO | 2018-04-02 11:28:37,131 | bootLogin | localhost-startStop-1 org.springframework.boot.web.servlet.DelegatingFilterProxyRegistrationBean | Mapping filter: 'springSecurityFilterChain' to: [/*]
+INFO | 2018-04-02 11:28:37,131 | bootLogin | localhost-startStop-1 org.springframework.boot.web.servlet.FilterRegistrationBean | Mapping filter: 'myFilterSecurityInterceptor' to: [/*]
+INFO | 2018-04-02 11:28:37,131 | bootLogin | localhost-startStop-1 org.springframework.boot.web.servlet.FilterRegistrationBean | Mapping filter: 'customUsernamePasswordAuthenticationFilter' to: [/*]
+INFO | 2018-04-02 11:28:37,131 | bootLogin | localhost-startStop-1 org.springframework.boot.web.servlet.FilterRegistrationBean | Mapping filter: 'concurrentSessionFilter' to: [/*]
+INFO | 2018-04-02 11:28:37,131 | bootLogin | localhost-startStop-1 org.springframework.boot.web.servlet.ServletRegistrationBean | Mapping servlet: 'dispatcherServlet' to [/]
+INFO | 2018-04-02 11:28:37,319 | bootLogin | restartedMain org.springframework.security.web.DefaultSecurityFilterChain | Creating filter chain: Ant [pattern='/js/**'], []
+INFO | 2018-04-02 11:28:37,320 | bootLogin | restartedMain org.springframework.security.web.DefaultSecurityFilterChain | Creating filter chain: Ant [pattern='/css/**'], []
+INFO | 2018-04-02 11:28:37,320 | bootLogin | restartedMain org.springframework.security.web.DefaultSecurityFilterChain | Creating filter chain: Ant [pattern='/images/**'], []
+INFO | 2018-04-02 11:28:37,320 | bootLogin | restartedMain org.springframework.security.web.DefaultSecurityFilterChain | Creating filter chain: Ant [pattern='/**/favicon.ico'], []
+INFO | 2018-04-02 11:28:37,413 | bootLogin | restartedMain org.springframework.security.web.DefaultSecurityFilterChain | Creating filter chain: org.springframework.security.web.util.matcher.AnyRequestMatcher@1, [org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@525040ba, org.springframework.security.web.context.SecurityContextPersistenceFilter@69301ac4, org.springframework.security.web.header.HeaderWriterFilter@7739c379, org.springframework.security.web.authentication.logout.LogoutFilter@488d258b, com.cxgmerp.security.login.CustomUsernamePasswordAuthenticationFilter@2fa29a3e, org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter@772c285e, org.springframework.security.web.session.ConcurrentSessionFilter@4b92aefd, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@5b8ee7f9, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@770f1455, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@725a0fb7, org.springframework.security.web.session.SessionManagementFilter@6e81085f, org.springframework.security.web.access.ExceptionTranslationFilter@71a304eb, com.cxgmerp.security.url.MyFilterSecurityInterceptor@6560cffa, org.springframework.security.web.access.intercept.FilterSecurityInterceptor@3dd3bf38]
+WARN | 2018-04-02 11:28:38,472 | bootLogin | restartedMain org.springframework.boot.context.embedded.AnnotationConfigEmbeddedWebApplicationContext | Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'enableRedisKeyspaceNotificationsInitializer' defined in org.springframework.session.data.redis.config.annotation.web.http.RedisHttpSessionConfiguration: Invocation of init method failed; nested exception is org.springframework.data.redis.RedisConnectionFailureException: Cannot get Jedis connection; nested exception is redis.clients.jedis.exceptions.JedisConnectionException: Could not get a resource from the pool
+INFO | 2018-04-02 11:28:38,475 | bootLogin | restartedMain org.apache.catalina.core.StandardService | Stopping service [Tomcat]
+INFO | 2018-04-02 11:28:38,502 | bootLogin | restartedMain org.springframework.boot.autoconfigure.logging.AutoConfigurationReportLoggingInitializer | 
+
+Error starting ApplicationContext. To display the auto-configuration report re-run your application with 'debug' enabled.
+ERROR | 2018-04-02 11:28:38,507 | bootLogin | restartedMain org.springframework.boot.SpringApplication | Application startup failed
+org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'enableRedisKeyspaceNotificationsInitializer' defined in org.springframework.session.data.redis.config.annotation.web.http.RedisHttpSessionConfiguration: Invocation of init method failed; nested exception is org.springframework.data.redis.RedisConnectionFailureException: Cannot get Jedis connection; nested exception is redis.clients.jedis.exceptions.JedisConnectionException: Could not get a resource from the pool
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.initializeBean(AbstractAutowireCapableBeanFactory.java:1628)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:555)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:483)
+	at org.springframework.beans.factory.support.AbstractBeanFactory$1.getObject(AbstractBeanFactory.java:306)
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:230)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:302)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:197)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.preInstantiateSingletons(DefaultListableBeanFactory.java:761)
+	at org.springframework.context.support.AbstractApplicationContext.finishBeanFactoryInitialization(AbstractApplicationContext.java:867)
+	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:543)
+	at org.springframework.boot.context.embedded.EmbeddedWebApplicationContext.refresh(EmbeddedWebApplicationContext.java:122)
+	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:693)
+	at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:360)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:303)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1118)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1107)
+	at com.cxgmerp.CxgmApplication.main(CxgmApplication.java:12)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:498)
+	at org.springframework.boot.devtools.restart.RestartLauncher.run(RestartLauncher.java:49)
+Caused by: org.springframework.data.redis.RedisConnectionFailureException: Cannot get Jedis connection; nested exception is redis.clients.jedis.exceptions.JedisConnectionException: Could not get a resource from the pool
+	at org.springframework.data.redis.connection.jedis.JedisConnectionFactory.fetchJedisConnector(JedisConnectionFactory.java:204)
+	at org.springframework.data.redis.connection.jedis.JedisConnectionFactory.getConnection(JedisConnectionFactory.java:348)
+	at org.springframework.session.data.redis.config.annotation.web.http.RedisHttpSessionConfiguration$EnableRedisKeyspaceNotificationsInitializer.afterPropertiesSet(RedisHttpSessionConfiguration.java:249)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.invokeInitMethods(AbstractAutowireCapableBeanFactory.java:1687)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.initializeBean(AbstractAutowireCapableBeanFactory.java:1624)
+	... 21 common frames omitted
+Caused by: redis.clients.jedis.exceptions.JedisConnectionException: Could not get a resource from the pool
+	at redis.clients.util.Pool.getResource(Pool.java:53)
+	at redis.clients.jedis.JedisPool.getResource(JedisPool.java:226)
+	at redis.clients.jedis.JedisPool.getResource(JedisPool.java:16)
+	at org.springframework.data.redis.connection.jedis.JedisConnectionFactory.fetchJedisConnector(JedisConnectionFactory.java:194)
+	... 25 common frames omitted
+Caused by: redis.clients.jedis.exceptions.JedisConnectionException: java.net.ConnectException: Connection refused: connect
+	at redis.clients.jedis.Connection.connect(Connection.java:207)
+	at redis.clients.jedis.BinaryClient.connect(BinaryClient.java:93)
+	at redis.clients.jedis.BinaryJedis.connect(BinaryJedis.java:1767)
+	at redis.clients.jedis.JedisFactory.makeObject(JedisFactory.java:106)
+	at org.apache.commons.pool2.impl.GenericObjectPool.create(GenericObjectPool.java:888)
+	at org.apache.commons.pool2.impl.GenericObjectPool.borrowObject(GenericObjectPool.java:432)
+	at org.apache.commons.pool2.impl.GenericObjectPool.borrowObject(GenericObjectPool.java:361)
+	at redis.clients.util.Pool.getResource(Pool.java:49)
+	... 28 common frames omitted
+Caused by: java.net.ConnectException: Connection refused: connect
+	at java.net.DualStackPlainSocketImpl.waitForConnect(Native Method)
+	at java.net.DualStackPlainSocketImpl.socketConnect(DualStackPlainSocketImpl.java:85)
+	at java.net.AbstractPlainSocketImpl.doConnect(AbstractPlainSocketImpl.java:350)
+	at java.net.AbstractPlainSocketImpl.connectToAddress(AbstractPlainSocketImpl.java:206)
+	at java.net.AbstractPlainSocketImpl.connect(AbstractPlainSocketImpl.java:188)
+	at java.net.PlainSocketImpl.connect(PlainSocketImpl.java:172)
+	at java.net.SocksSocketImpl.connect(SocksSocketImpl.java:392)
+	at java.net.Socket.connect(Socket.java:589)
+	at redis.clients.jedis.Connection.connect(Connection.java:184)
+	... 35 common frames omitted
+INFO | 2018-04-02 11:29:41,311 | bootLogin | restartedMain org.springframework.context.annotation.AnnotationConfigApplicationContext | Refreshing org.springframework.context.annotation.AnnotationConfigApplicationContext@20ed8f05: startup date [Mon Apr 02 11:29:41 CST 2018]; root of context hierarchy
+INFO | 2018-04-02 11:29:41,411 | bootLogin | background-preinit org.hibernate.validator.internal.util.Version | HV000001: Hibernate Validator 5.3.6.Final
+INFO | 2018-04-02 11:29:41,547 | bootLogin | restartedMain org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor | JSR-330 'javax.inject.Inject' annotation found and supported for autowiring
+INFO | 2018-04-02 11:29:41,579 | bootLogin | restartedMain org.springframework.context.support.PostProcessorRegistrationDelegate$BeanPostProcessorChecker | Bean 'configurationPropertiesRebinderAutoConfiguration' of type [org.springframework.cloud.autoconfigure.ConfigurationPropertiesRebinderAutoConfiguration$$EnhancerBySpringCGLIB$$5cb1cf85] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+INFO | 2018-04-02 11:29:42,125 | bootLogin | restartedMain org.springframework.cloud.config.client.ConfigServicePropertySourceLocator | Fetching config from server at: http://localhost:8888
+WARN | 2018-04-02 11:29:43,210 | bootLogin | restartedMain org.springframework.cloud.config.client.ConfigServicePropertySourceLocator | Could not locate PropertySource: I/O error on GET request for "http://localhost:8888/application/default": Connection refused: connect; nested exception is java.net.ConnectException: Connection refused: connect
+INFO | 2018-04-02 11:29:43,213 | bootLogin | restartedMain com.cxgmerp.CxgmApplication | No active profile set, falling back to default profiles: default
+INFO | 2018-04-02 11:29:43,225 | bootLogin | restartedMain org.springframework.boot.context.embedded.AnnotationConfigEmbeddedWebApplicationContext | Refreshing org.springframework.boot.context.embedded.AnnotationConfigEmbeddedWebApplicationContext@41f8eac5: startup date [Mon Apr 02 11:29:43 CST 2018]; parent: org.springframework.context.annotation.AnnotationConfigApplicationContext@20ed8f05
+WARN | 2018-04-02 11:29:44,164 | bootLogin | restartedMain org.mybatis.spring.mapper.ClassPathMapperScanner | No MyBatis mapper was found in '[com.cxgmerp.config, com.cxgmerp]' package. Please check your configuration.
+INFO | 2018-04-02 11:29:44,189 | bootLogin | restartedMain org.springframework.data.repository.config.RepositoryConfigurationDelegate | Multiple Spring Data modules found, entering strict repository configuration mode!
+WARN | 2018-04-02 11:29:44,369 | bootLogin | restartedMain org.springframework.context.annotation.ConfigurationClassPostProcessor | Cannot enhance @Configuration bean definition 'myBatisMapperScannerConfig' since its singleton instance has been created too early. The typical cause is a non-static @Bean method with a BeanDefinitionRegistryPostProcessor return type: Consider declaring such methods as 'static'.
+INFO | 2018-04-02 11:29:44,540 | bootLogin | restartedMain org.springframework.cloud.context.scope.GenericScope | BeanFactory id=a9728500-ac32-3ee1-bfdb-a747fe271154
+INFO | 2018-04-02 11:29:44,551 | bootLogin | restartedMain org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor | JSR-330 'javax.inject.Inject' annotation found and supported for autowiring
+INFO | 2018-04-02 11:29:44,675 | bootLogin | restartedMain org.springframework.context.support.PostProcessorRegistrationDelegate$BeanPostProcessorChecker | Bean 'org.springframework.transaction.annotation.ProxyTransactionManagementConfiguration' of type [org.springframework.transaction.annotation.ProxyTransactionManagementConfiguration$$EnhancerBySpringCGLIB$$4097cc88] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+INFO | 2018-04-02 11:29:44,721 | bootLogin | restartedMain org.springframework.context.support.PostProcessorRegistrationDelegate$BeanPostProcessorChecker | Bean 'org.springframework.security.config.annotation.configuration.ObjectPostProcessorConfiguration' of type [org.springframework.security.config.annotation.configuration.ObjectPostProcessorConfiguration$$EnhancerBySpringCGLIB$$d94594c2] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+INFO | 2018-04-02 11:29:44,732 | bootLogin | restartedMain org.springframework.context.support.PostProcessorRegistrationDelegate$BeanPostProcessorChecker | Bean 'objectPostProcessor' of type [org.springframework.security.config.annotation.configuration.AutowireBeanFactoryObjectPostProcessor] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+INFO | 2018-04-02 11:29:44,734 | bootLogin | restartedMain org.springframework.context.support.PostProcessorRegistrationDelegate$BeanPostProcessorChecker | Bean 'org.springframework.security.access.expression.method.DefaultMethodSecurityExpressionHandler@6b97936a' of type [org.springframework.security.access.expression.method.DefaultMethodSecurityExpressionHandler] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+INFO | 2018-04-02 11:29:44,740 | bootLogin | restartedMain org.springframework.context.support.PostProcessorRegistrationDelegate$BeanPostProcessorChecker | Bean 'org.springframework.security.config.annotation.method.configuration.GlobalMethodSecurityConfiguration' of type [org.springframework.security.config.annotation.method.configuration.GlobalMethodSecurityConfiguration$$EnhancerBySpringCGLIB$$fe1a3774] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+INFO | 2018-04-02 11:29:44,749 | bootLogin | restartedMain org.springframework.context.support.PostProcessorRegistrationDelegate$BeanPostProcessorChecker | Bean 'methodSecurityMetadataSource' of type [org.springframework.security.access.method.DelegatingMethodSecurityMetadataSource] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+INFO | 2018-04-02 11:29:44,760 | bootLogin | restartedMain org.springframework.context.support.PostProcessorRegistrationDelegate$BeanPostProcessorChecker | Bean 'redisConfig' of type [com.cxgmerp.config.RedisConfig$$EnhancerBySpringCGLIB$$aa5fd911] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+INFO | 2018-04-02 11:29:44,765 | bootLogin | restartedMain org.springframework.context.support.PostProcessorRegistrationDelegate$BeanPostProcessorChecker | Bean 'org.springframework.cache.annotation.ProxyCachingConfiguration' of type [org.springframework.cache.annotation.ProxyCachingConfiguration$$EnhancerBySpringCGLIB$$89aa02a6] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+INFO | 2018-04-02 11:29:44,795 | bootLogin | restartedMain org.springframework.context.support.PostProcessorRegistrationDelegate$BeanPostProcessorChecker | Bean 'org.springframework.cloud.autoconfigure.ConfigurationPropertiesRebinderAutoConfiguration' of type [org.springframework.cloud.autoconfigure.ConfigurationPropertiesRebinderAutoConfiguration$$EnhancerBySpringCGLIB$$5cb1cf85] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+INFO | 2018-04-02 11:29:45,427 | bootLogin | restartedMain org.springframework.boot.context.embedded.tomcat.TomcatEmbeddedServletContainer | Tomcat initialized with port(s): 41203 (http)
+INFO | 2018-04-02 11:29:45,437 | bootLogin | restartedMain org.apache.catalina.core.StandardService | Starting service [Tomcat]
+INFO | 2018-04-02 11:29:45,437 | bootLogin | restartedMain org.apache.catalina.core.StandardEngine | Starting Servlet Engine: Apache Tomcat/8.5.23
+INFO | 2018-04-02 11:29:45,541 | bootLogin | localhost-startStop-1 org.apache.catalina.core.ContainerBase.[Tomcat].[localhost].[/] | Initializing Spring embedded WebApplicationContext
+INFO | 2018-04-02 11:29:45,542 | bootLogin | localhost-startStop-1 org.springframework.web.context.ContextLoader | Root WebApplicationContext: initialization completed in 2317 ms
+WARN | 2018-04-02 11:29:47,102 | bootLogin | localhost-startStop-1 com.cxgmerp.security.url.MyFilterSecurityInterceptor | Could not validate configuration attributes as the SecurityMetadataSource did not return any attributes from getAllConfigAttributes()
+INFO | 2018-04-02 11:29:47,343 | bootLogin | localhost-startStop-1 org.springframework.boot.web.servlet.FilterRegistrationBean | Mapping filter: 'characterEncodingFilter' to: [/*]
+INFO | 2018-04-02 11:29:47,344 | bootLogin | localhost-startStop-1 org.springframework.boot.web.servlet.FilterRegistrationBean | Mapping filter: 'springSessionRepositoryFilter' to: [/*]
+INFO | 2018-04-02 11:29:47,344 | bootLogin | localhost-startStop-1 org.springframework.boot.web.servlet.FilterRegistrationBean | Mapping filter: 'hiddenHttpMethodFilter' to: [/*]
+INFO | 2018-04-02 11:29:47,344 | bootLogin | localhost-startStop-1 org.springframework.boot.web.servlet.FilterRegistrationBean | Mapping filter: 'httpPutFormContentFilter' to: [/*]
+INFO | 2018-04-02 11:29:47,344 | bootLogin | localhost-startStop-1 org.springframework.boot.web.servlet.FilterRegistrationBean | Mapping filter: 'requestContextFilter' to: [/*]
+INFO | 2018-04-02 11:29:47,345 | bootLogin | localhost-startStop-1 org.springframework.boot.web.servlet.DelegatingFilterProxyRegistrationBean | Mapping filter: 'springSecurityFilterChain' to: [/*]
+INFO | 2018-04-02 11:29:47,345 | bootLogin | localhost-startStop-1 org.springframework.boot.web.servlet.FilterRegistrationBean | Mapping filter: 'myFilterSecurityInterceptor' to: [/*]
+INFO | 2018-04-02 11:29:47,345 | bootLogin | localhost-startStop-1 org.springframework.boot.web.servlet.FilterRegistrationBean | Mapping filter: 'customUsernamePasswordAuthenticationFilter' to: [/*]
+INFO | 2018-04-02 11:29:47,345 | bootLogin | localhost-startStop-1 org.springframework.boot.web.servlet.FilterRegistrationBean | Mapping filter: 'concurrentSessionFilter' to: [/*]
+INFO | 2018-04-02 11:29:47,345 | bootLogin | localhost-startStop-1 org.springframework.boot.web.servlet.ServletRegistrationBean | Mapping servlet: 'dispatcherServlet' to [/]
+INFO | 2018-04-02 11:29:47,531 | bootLogin | restartedMain org.springframework.security.web.DefaultSecurityFilterChain | Creating filter chain: Ant [pattern='/js/**'], []
+INFO | 2018-04-02 11:29:47,531 | bootLogin | restartedMain org.springframework.security.web.DefaultSecurityFilterChain | Creating filter chain: Ant [pattern='/css/**'], []
+INFO | 2018-04-02 11:29:47,532 | bootLogin | restartedMain org.springframework.security.web.DefaultSecurityFilterChain | Creating filter chain: Ant [pattern='/images/**'], []
+INFO | 2018-04-02 11:29:47,532 | bootLogin | restartedMain org.springframework.security.web.DefaultSecurityFilterChain | Creating filter chain: Ant [pattern='/**/favicon.ico'], []
+INFO | 2018-04-02 11:29:47,628 | bootLogin | restartedMain org.springframework.security.web.DefaultSecurityFilterChain | Creating filter chain: org.springframework.security.web.util.matcher.AnyRequestMatcher@1, [org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@464e4981, org.springframework.security.web.context.SecurityContextPersistenceFilter@76d4083, org.springframework.security.web.header.HeaderWriterFilter@4ad79a1f, org.springframework.security.web.authentication.logout.LogoutFilter@42811ede, com.cxgmerp.security.login.CustomUsernamePasswordAuthenticationFilter@51d30680, org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter@1ac16370, org.springframework.security.web.session.ConcurrentSessionFilter@66ba3cfe, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@7b11d55b, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@1ad64738, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@51202b17, org.springframework.security.web.session.SessionManagementFilter@29328e0, org.springframework.security.web.access.ExceptionTranslationFilter@541dce09, com.cxgmerp.security.url.MyFilterSecurityInterceptor@7508e819, org.springframework.security.web.access.intercept.FilterSecurityInterceptor@ce3734c]
+WARN | 2018-04-02 11:29:47,866 | bootLogin | restartedMain org.springframework.cloud.netflix.archaius.ArchaiusAutoConfiguration | No spring.application.name found, defaulting to 'application'
+WARN | 2018-04-02 11:29:47,870 | bootLogin | restartedMain com.netflix.config.sources.URLConfigurationSource | No URLs will be polled as dynamic configuration sources.
+INFO | 2018-04-02 11:29:47,870 | bootLogin | restartedMain com.netflix.config.sources.URLConfigurationSource | To enable URLs as dynamic configuration sources, define System property archaius.configurationSource.additionalUrls or make config.properties available on classpath.
+WARN | 2018-04-02 11:29:47,880 | bootLogin | restartedMain com.netflix.config.sources.URLConfigurationSource | No URLs will be polled as dynamic configuration sources.
+INFO | 2018-04-02 11:29:47,880 | bootLogin | restartedMain com.netflix.config.sources.URLConfigurationSource | To enable URLs as dynamic configuration sources, define System property archaius.configurationSource.additionalUrls or make config.properties available on classpath.
+INFO | 2018-04-02 11:29:48,077 | bootLogin | restartedMain org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter | Looking for @ControllerAdvice: org.springframework.boot.context.embedded.AnnotationConfigEmbeddedWebApplicationContext@41f8eac5: startup date [Mon Apr 02 11:29:43 CST 2018]; parent: org.springframework.context.annotation.AnnotationConfigApplicationContext@20ed8f05
+INFO | 2018-04-02 11:29:48,170 | bootLogin | restartedMain org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping | Mapped "{[/error]}" onto public org.springframework.http.ResponseEntity<java.util.Map<java.lang.String, java.lang.Object>> org.springframework.boot.autoconfigure.web.BasicErrorController.error(javax.servlet.http.HttpServletRequest)
+INFO | 2018-04-02 11:29:48,171 | bootLogin | restartedMain org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping | Mapped "{[/error],produces=[text/html]}" onto public org.springframework.web.servlet.ModelAndView org.springframework.boot.autoconfigure.web.BasicErrorController.errorHtml(javax.servlet.http.HttpServletRequest,javax.servlet.http.HttpServletResponse)
+INFO | 2018-04-02 11:29:48,221 | bootLogin | restartedMain org.springframework.web.servlet.handler.SimpleUrlHandlerMapping | Mapped URL path [/webjars/**] onto handler of type [class org.springframework.web.servlet.resource.ResourceHttpRequestHandler]
+INFO | 2018-04-02 11:29:48,221 | bootLogin | restartedMain org.springframework.web.servlet.handler.SimpleUrlHandlerMapping | Mapped URL path [/**] onto handler of type [class org.springframework.web.servlet.resource.ResourceHttpRequestHandler]
+INFO | 2018-04-02 11:29:48,242 | bootLogin | restartedMain org.springframework.web.servlet.mvc.method.annotation.ExceptionHandlerExceptionResolver | Detected @ExceptionHandler methods in globalExceptionController
+INFO | 2018-04-02 11:29:48,279 | bootLogin | restartedMain org.springframework.web.servlet.handler.SimpleUrlHandlerMapping | Mapped URL path [/**/favicon.ico] onto handler of type [class org.springframework.web.servlet.resource.ResourceHttpRequestHandler]
+INFO | 2018-04-02 11:29:49,111 | bootLogin | restartedMain org.springframework.boot.devtools.autoconfigure.OptionalLiveReloadServer | LiveReload server is running on port 35729
+WARN | 2018-04-02 11:29:49,117 | bootLogin | restartedMain org.springframework.boot.starter.redis.RedisStarterDeprecationWarningAutoConfiguration | spring-boot-starter-redis is deprecated as of Spring Boot 1.4, please migrate to spring-boot-starter-data-redis
+INFO | 2018-04-02 11:29:49,541 | bootLogin | restartedMain org.springframework.jmx.export.annotation.AnnotationMBeanExporter | Registering beans for JMX exposure on startup
+INFO | 2018-04-02 11:29:49,542 | bootLogin | restartedMain org.springframework.jmx.export.annotation.AnnotationMBeanExporter | Bean with name 'MASTER' has been autodetected for JMX exposure
+INFO | 2018-04-02 11:29:49,542 | bootLogin | restartedMain org.springframework.jmx.export.annotation.AnnotationMBeanExporter | Bean with name 'SLAVE' has been autodetected for JMX exposure
+INFO | 2018-04-02 11:29:49,550 | bootLogin | restartedMain org.springframework.jmx.export.annotation.AnnotationMBeanExporter | Bean with name 'environmentManager' has been autodetected for JMX exposure
+INFO | 2018-04-02 11:29:49,552 | bootLogin | restartedMain org.springframework.jmx.export.annotation.AnnotationMBeanExporter | Bean with name 'configurationPropertiesRebinder' has been autodetected for JMX exposure
+INFO | 2018-04-02 11:29:49,552 | bootLogin | restartedMain org.springframework.jmx.export.annotation.AnnotationMBeanExporter | Bean with name 'refreshScope' has been autodetected for JMX exposure
+INFO | 2018-04-02 11:29:49,555 | bootLogin | restartedMain org.springframework.jmx.export.annotation.AnnotationMBeanExporter | Located managed bean 'environmentManager': registering with JMX server as MBean [org.springframework.cloud.context.environment:name=environmentManager,type=EnvironmentManager]
+INFO | 2018-04-02 11:29:49,572 | bootLogin | restartedMain org.springframework.jmx.export.annotation.AnnotationMBeanExporter | Located MBean 'MASTER': registering with JMX server as MBean [com.alibaba.druid.pool:name=MASTER,type=DruidDataSource]
+INFO | 2018-04-02 11:29:49,574 | bootLogin | restartedMain org.springframework.jmx.export.annotation.AnnotationMBeanExporter | Located MBean 'SLAVE': registering with JMX server as MBean [com.alibaba.druid.pool:name=SLAVE,type=DruidDataSource]
+INFO | 2018-04-02 11:29:49,576 | bootLogin | restartedMain org.springframework.jmx.export.annotation.AnnotationMBeanExporter | Located managed bean 'refreshScope': registering with JMX server as MBean [org.springframework.cloud.context.scope.refresh:name=refreshScope,type=RefreshScope]
+INFO | 2018-04-02 11:29:49,590 | bootLogin | restartedMain org.springframework.jmx.export.annotation.AnnotationMBeanExporter | Located managed bean 'configurationPropertiesRebinder': registering with JMX server as MBean [org.springframework.cloud.context.properties:name=configurationPropertiesRebinder,context=41f8eac5,type=ConfigurationPropertiesRebinder]
+INFO | 2018-04-02 11:29:50,331 | bootLogin | restartedMain org.springframework.context.support.DefaultLifecycleProcessor | Starting beans in phase 2147483647
+INFO | 2018-04-02 11:29:50,343 | bootLogin | restartedMain org.springframework.scheduling.annotation.ScheduledAnnotationBeanPostProcessor | No TaskScheduler/ScheduledExecutorService bean found for scheduled processing
+INFO | 2018-04-02 11:29:50,354 | bootLogin | restartedMain org.apache.coyote.http11.Http11NioProtocol | Initializing ProtocolHandler ["http-nio-41203"]
+INFO | 2018-04-02 11:29:50,371 | bootLogin | restartedMain org.apache.coyote.http11.Http11NioProtocol | Starting ProtocolHandler ["http-nio-41203"]
+INFO | 2018-04-02 11:29:50,391 | bootLogin | restartedMain org.apache.tomcat.util.net.NioSelectorPool | Using a shared selector for servlet write/read
+INFO | 2018-04-02 11:29:50,413 | bootLogin | restartedMain org.springframework.boot.context.embedded.tomcat.TomcatEmbeddedServletContainer | Tomcat started on port(s): 41203 (http)
+INFO | 2018-04-02 11:29:50,418 | bootLogin | restartedMain com.cxgmerp.CxgmApplication | Started CxgmApplication in 9.789 seconds (JVM running for 10.369)
+INFO | 2018-04-02 11:30:42,959 | bootLogin | http-nio-41203-exec-1 org.apache.catalina.core.ContainerBase.[Tomcat].[localhost].[/] | Initializing Spring FrameworkServlet 'dispatcherServlet'
+INFO | 2018-04-02 11:30:42,959 | bootLogin | http-nio-41203-exec-1 org.springframework.web.servlet.DispatcherServlet | FrameworkServlet 'dispatcherServlet': initialization started
+INFO | 2018-04-02 11:30:42,975 | bootLogin | http-nio-41203-exec-1 org.springframework.web.servlet.DispatcherServlet | FrameworkServlet 'dispatcherServlet': initialization completed in 16 ms
+ERROR | 2018-04-02 11:30:43,057 | bootLogin | http-nio-41203-exec-1 org.apache.catalina.core.ContainerBase.[Tomcat].[localhost].[/].[dispatcherServlet] | Servlet.service() for servlet [dispatcherServlet] in context with path [] threw exception
+org.mybatis.spring.MyBatisSystemException: nested exception is org.apache.ibatis.exceptions.PersistenceException: 
+### Error querying database.  Cause: java.lang.NullPointerException
+### Cause: java.lang.NullPointerException
+	at org.mybatis.spring.MyBatisExceptionTranslator.translateExceptionIfPossible(MyBatisExceptionTranslator.java:79)
+	at org.mybatis.spring.SqlSessionTemplate$SqlSessionInterceptor.invoke(SqlSessionTemplate.java:447)
+	at com.sun.proxy.$Proxy93.selectList(Unknown Source)
+	at org.mybatis.spring.SqlSessionTemplate.selectList(SqlSessionTemplate.java:231)
+	at org.apache.ibatis.binding.MapperMethod.executeForMany(MapperMethod.java:137)
+	at org.apache.ibatis.binding.MapperMethod.execute(MapperMethod.java:75)
+	at org.apache.ibatis.binding.MapperProxy.invoke(MapperProxy.java:53)
+	at com.sun.proxy.$Proxy94.findAll(Unknown Source)
+	at com.cxgmerp.security.url.MyInvocationSecurityMetadataSourceService.loadResourceDefine(MyInvocationSecurityMetadataSourceService.java:69)
+	at com.cxgmerp.security.url.MyInvocationSecurityMetadataSourceService.getAttributes(MyInvocationSecurityMetadataSourceService.java:36)
+	at org.springframework.security.access.intercept.AbstractSecurityInterceptor.beforeInvocation(AbstractSecurityInterceptor.java:197)
+	at com.cxgmerp.security.url.MyFilterSecurityInterceptor.invoke(MyFilterSecurityInterceptor.java:64)
+	at com.cxgmerp.security.url.MyFilterSecurityInterceptor.doFilter(MyFilterSecurityInterceptor.java:50)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:331)
+	at org.springframework.security.web.access.ExceptionTranslationFilter.doFilter(ExceptionTranslationFilter.java:114)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:331)
+	at org.springframework.security.web.session.SessionManagementFilter.doFilter(SessionManagementFilter.java:137)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:331)
+	at org.springframework.security.web.authentication.AnonymousAuthenticationFilter.doFilter(AnonymousAuthenticationFilter.java:111)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:331)
+	at org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter.doFilter(SecurityContextHolderAwareRequestFilter.java:170)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:331)
+	at org.springframework.security.web.savedrequest.RequestCacheAwareFilter.doFilter(RequestCacheAwareFilter.java:63)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:331)
+	at org.springframework.security.web.session.ConcurrentSessionFilter.doFilter(ConcurrentSessionFilter.java:155)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:331)
+	at org.springframework.security.web.authentication.AbstractAuthenticationProcessingFilter.doFilter(AbstractAuthenticationProcessingFilter.java:200)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:331)
+	at org.springframework.security.web.authentication.AbstractAuthenticationProcessingFilter.doFilter(AbstractAuthenticationProcessingFilter.java:200)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:331)
+	at org.springframework.security.web.authentication.logout.LogoutFilter.doFilter(LogoutFilter.java:116)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:331)
+	at org.springframework.security.web.header.HeaderWriterFilter.doFilterInternal(HeaderWriterFilter.java:64)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:107)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:331)
+	at org.springframework.security.web.context.SecurityContextPersistenceFilter.doFilter(SecurityContextPersistenceFilter.java:105)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:331)
+	at org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter.doFilterInternal(WebAsyncManagerIntegrationFilter.java:56)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:107)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:331)
+	at org.springframework.security.web.FilterChainProxy.doFilterInternal(FilterChainProxy.java:214)
+	at org.springframework.security.web.FilterChainProxy.doFilter(FilterChainProxy.java:177)
+	at org.springframework.web.filter.DelegatingFilterProxy.invokeDelegate(DelegatingFilterProxy.java:347)
+	at org.springframework.web.filter.DelegatingFilterProxy.doFilter(DelegatingFilterProxy.java:263)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:193)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:166)
+	at org.springframework.web.filter.RequestContextFilter.doFilterInternal(RequestContextFilter.java:99)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:107)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:193)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:166)
+	at org.springframework.web.filter.HttpPutFormContentFilter.doFilterInternal(HttpPutFormContentFilter.java:108)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:107)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:193)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:166)
+	at org.springframework.web.filter.HiddenHttpMethodFilter.doFilterInternal(HiddenHttpMethodFilter.java:81)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:107)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:193)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:166)
+	at org.springframework.session.web.http.SessionRepositoryFilter.doFilterInternal(SessionRepositoryFilter.java:167)
+	at org.springframework.session.web.http.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:80)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:193)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:166)
+	at org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:197)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:107)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:193)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:166)
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:199)
+	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:96)
+	at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:478)
+	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:140)
+	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:81)
+	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:87)
+	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:342)
+	at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:803)
+	at org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:66)
+	at org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:868)
+	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1459)
+	at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:49)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
+	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:61)
+	at java.lang.Thread.run(Thread.java:748)
+Caused by: org.apache.ibatis.exceptions.PersistenceException: 
+### Error querying database.  Cause: java.lang.NullPointerException
+### Cause: java.lang.NullPointerException
+	at org.apache.ibatis.exceptions.ExceptionFactory.wrapException(ExceptionFactory.java:30)
+	at org.apache.ibatis.session.defaults.DefaultSqlSession.selectList(DefaultSqlSession.java:150)
+	at org.apache.ibatis.session.defaults.DefaultSqlSession.selectList(DefaultSqlSession.java:141)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:498)
+	at org.mybatis.spring.SqlSessionTemplate$SqlSessionInterceptor.invoke(SqlSessionTemplate.java:434)
+	... 80 common frames omitted
+Caused by: java.lang.NullPointerException: null
+	at org.apache.catalina.loader.WebappClassLoaderBase.binaryNameToPath(WebappClassLoaderBase.java:2300)
+	at org.apache.catalina.loader.WebappClassLoaderBase.findLoadedClass0(WebappClassLoaderBase.java:2358)
+	at org.springframework.boot.context.embedded.tomcat.TomcatEmbeddedWebappClassLoader.findExistingLoadedClass(TomcatEmbeddedWebappClassLoader.java:58)
+	at org.springframework.boot.context.embedded.tomcat.TomcatEmbeddedWebappClassLoader.loadClass(TomcatEmbeddedWebappClassLoader.java:49)
+	at org.apache.catalina.loader.WebappClassLoaderBase.loadClass(WebappClassLoaderBase.java:1119)
+	at com.alibaba.druid.util.JdbcUtils.createDriver(JdbcUtils.java:549)
+	at com.alibaba.druid.pool.DruidDataSource.init(DruidDataSource.java:642)
+	at com.alibaba.druid.pool.DruidDataSource.getConnection(DruidDataSource.java:988)
+	at com.alibaba.druid.pool.DruidDataSource.getConnection(DruidDataSource.java:984)
+	at com.alibaba.druid.pool.DruidDataSource.getConnection(DruidDataSource.java:103)
+	at org.springframework.jdbc.datasource.lookup.AbstractRoutingDataSource.getConnection(AbstractRoutingDataSource.java:164)
+	at com.github.pagehelper.PageHelper.getUrl(PageHelper.java:284)
+	at com.github.pagehelper.PageHelper.getSqlUtil(PageHelper.java:310)
+	at com.github.pagehelper.PageHelper.initSqlUtil(PageHelper.java:266)
+	at com.github.pagehelper.PageHelper.intercept(PageHelper.java:253)
+	at org.apache.ibatis.plugin.Plugin.invoke(Plugin.java:61)
+	at com.sun.proxy.$Proxy112.query(Unknown Source)
+	at org.apache.ibatis.session.defaults.DefaultSqlSession.selectList(DefaultSqlSession.java:148)
+	... 86 common frames omitted
+WARN | 2018-04-02 11:33:20,623 | bootLogin | redisMessageListenerContainer-7 org.springframework.data.redis.listener.RedisMessageListenerContainer | Execution of message listener failed, and no ErrorHandler has been set.
+org.springframework.data.redis.serializer.SerializationException: Cannot deserialize; nested exception is org.springframework.core.serializer.support.SerializationFailedException: Failed to deserialize payload. Is the byte array a result of corresponding serialization for DefaultDeserializer?; nested exception is org.springframework.core.NestedIOException: Failed to deserialize object type; nested exception is java.lang.ClassNotFoundException: com.fzj.user.entity.AclUser
+	at org.springframework.data.redis.serializer.JdkSerializationRedisSerializer.deserialize(JdkSerializationRedisSerializer.java:82)
+	at org.springframework.data.redis.core.AbstractOperations.deserializeHashValue(AbstractOperations.java:338)
+	at org.springframework.data.redis.core.AbstractOperations.deserializeHashMap(AbstractOperations.java:282)
+	at org.springframework.data.redis.core.DefaultHashOperations.entries(DefaultHashOperations.java:227)
+	at org.springframework.data.redis.core.DefaultBoundHashOperations.entries(DefaultBoundHashOperations.java:102)
+	at org.springframework.session.data.redis.RedisOperationsSessionRepository.getSession(RedisOperationsSessionRepository.java:432)
+	at org.springframework.session.data.redis.RedisOperationsSessionRepository.onMessage(RedisOperationsSessionRepository.java:519)
+	at org.springframework.data.redis.listener.RedisMessageListenerContainer.executeListener(RedisMessageListenerContainer.java:249)
+	at org.springframework.data.redis.listener.RedisMessageListenerContainer.processMessage(RedisMessageListenerContainer.java:239)
+	at org.springframework.data.redis.listener.RedisMessageListenerContainer$1.run(RedisMessageListenerContainer.java:967)
+	at java.lang.Thread.run(Thread.java:748)
+Caused by: org.springframework.core.serializer.support.SerializationFailedException: Failed to deserialize payload. Is the byte array a result of corresponding serialization for DefaultDeserializer?; nested exception is org.springframework.core.NestedIOException: Failed to deserialize object type; nested exception is java.lang.ClassNotFoundException: com.fzj.user.entity.AclUser
+	at org.springframework.core.serializer.support.DeserializingConverter.convert(DeserializingConverter.java:78)
+	at org.springframework.core.serializer.support.DeserializingConverter.convert(DeserializingConverter.java:36)
+	at org.springframework.data.redis.serializer.JdkSerializationRedisSerializer.deserialize(JdkSerializationRedisSerializer.java:80)
+	... 10 common frames omitted
+Caused by: org.springframework.core.NestedIOException: Failed to deserialize object type; nested exception is java.lang.ClassNotFoundException: com.fzj.user.entity.AclUser
+	at org.springframework.core.serializer.DefaultDeserializer.deserialize(DefaultDeserializer.java:73)
+	at org.springframework.core.serializer.support.DeserializingConverter.convert(DeserializingConverter.java:73)
+	... 12 common frames omitted
+Caused by: java.lang.ClassNotFoundException: com.fzj.user.entity.AclUser
+	at java.net.URLClassLoader.findClass(URLClassLoader.java:381)
+	at java.lang.ClassLoader.loadClass(ClassLoader.java:424)
+	at sun.misc.Launcher$AppClassLoader.loadClass(Launcher.java:335)
+	at java.lang.ClassLoader.loadClass(ClassLoader.java:357)
+	at org.springframework.boot.devtools.restart.classloader.RestartClassLoader.loadClass(RestartClassLoader.java:151)
+	at java.lang.ClassLoader.loadClass(ClassLoader.java:357)
+	at org.springframework.util.ClassUtils.forName(ClassUtils.java:250)
+	at org.springframework.core.ConfigurableObjectInputStream.resolveClass(ConfigurableObjectInputStream.java:74)
+	at java.io.ObjectInputStream.readNonProxyDesc(ObjectInputStream.java:1863)
+	at java.io.ObjectInputStream.readClassDesc(ObjectInputStream.java:1746)
+	at java.io.ObjectInputStream.readOrdinaryObject(ObjectInputStream.java:2037)
+	at java.io.ObjectInputStream.readObject0(ObjectInputStream.java:1568)
+	at java.io.ObjectInputStream.readObject(ObjectInputStream.java:428)
+	at org.springframework.core.serializer.DefaultDeserializer.deserialize(DefaultDeserializer.java:70)
+	... 13 common frames omitted
+WARN | 2018-04-02 11:36:55,862 | bootLogin | redisMessageListenerContainer-10 org.springframework.data.redis.listener.RedisMessageListenerContainer | Execution of message listener failed, and no ErrorHandler has been set.
+org.springframework.data.redis.serializer.SerializationException: Cannot deserialize; nested exception is org.springframework.core.serializer.support.SerializationFailedException: Failed to deserialize payload. Is the byte array a result of corresponding serialization for DefaultDeserializer?; nested exception is org.springframework.core.NestedIOException: Failed to deserialize object type; nested exception is java.lang.ClassNotFoundException: com.fzj.user.security.SecurityUser
+	at org.springframework.data.redis.serializer.JdkSerializationRedisSerializer.deserialize(JdkSerializationRedisSerializer.java:82)
+	at org.springframework.data.redis.core.AbstractOperations.deserializeHashValue(AbstractOperations.java:338)
+	at org.springframework.data.redis.core.AbstractOperations.deserializeHashMap(AbstractOperations.java:282)
+	at org.springframework.data.redis.core.DefaultHashOperations.entries(DefaultHashOperations.java:227)
+	at org.springframework.data.redis.core.DefaultBoundHashOperations.entries(DefaultBoundHashOperations.java:102)
+	at org.springframework.session.data.redis.RedisOperationsSessionRepository.getSession(RedisOperationsSessionRepository.java:432)
+	at org.springframework.session.data.redis.RedisOperationsSessionRepository.onMessage(RedisOperationsSessionRepository.java:519)
+	at org.springframework.data.redis.listener.RedisMessageListenerContainer.executeListener(RedisMessageListenerContainer.java:249)
+	at org.springframework.data.redis.listener.RedisMessageListenerContainer.processMessage(RedisMessageListenerContainer.java:239)
+	at org.springframework.data.redis.listener.RedisMessageListenerContainer$1.run(RedisMessageListenerContainer.java:967)
+	at java.lang.Thread.run(Thread.java:748)
+Caused by: org.springframework.core.serializer.support.SerializationFailedException: Failed to deserialize payload. Is the byte array a result of corresponding serialization for DefaultDeserializer?; nested exception is org.springframework.core.NestedIOException: Failed to deserialize object type; nested exception is java.lang.ClassNotFoundException: com.fzj.user.security.SecurityUser
+	at org.springframework.core.serializer.support.DeserializingConverter.convert(DeserializingConverter.java:78)
+	at org.springframework.core.serializer.support.DeserializingConverter.convert(DeserializingConverter.java:36)
+	at org.springframework.data.redis.serializer.JdkSerializationRedisSerializer.deserialize(JdkSerializationRedisSerializer.java:80)
+	... 10 common frames omitted
+Caused by: org.springframework.core.NestedIOException: Failed to deserialize object type; nested exception is java.lang.ClassNotFoundException: com.fzj.user.security.SecurityUser
+	at org.springframework.core.serializer.DefaultDeserializer.deserialize(DefaultDeserializer.java:73)
+	at org.springframework.core.serializer.support.DeserializingConverter.convert(DeserializingConverter.java:73)
+	... 12 common frames omitted
+Caused by: java.lang.ClassNotFoundException: com.fzj.user.security.SecurityUser
+	at java.net.URLClassLoader.findClass(URLClassLoader.java:381)
+	at java.lang.ClassLoader.loadClass(ClassLoader.java:424)
+	at sun.misc.Launcher$AppClassLoader.loadClass(Launcher.java:335)
+	at java.lang.ClassLoader.loadClass(ClassLoader.java:357)
+	at org.springframework.boot.devtools.restart.classloader.RestartClassLoader.loadClass(RestartClassLoader.java:151)
+	at java.lang.ClassLoader.loadClass(ClassLoader.java:357)
+	at org.springframework.util.ClassUtils.forName(ClassUtils.java:250)
+	at org.springframework.core.ConfigurableObjectInputStream.resolveClass(ConfigurableObjectInputStream.java:74)
+	at java.io.ObjectInputStream.readNonProxyDesc(ObjectInputStream.java:1863)
+	at java.io.ObjectInputStream.readClassDesc(ObjectInputStream.java:1746)
+	at java.io.ObjectInputStream.readOrdinaryObject(ObjectInputStream.java:2037)
+	at java.io.ObjectInputStream.readObject0(ObjectInputStream.java:1568)
+	at java.io.ObjectInputStream.defaultReadFields(ObjectInputStream.java:2282)
+	at java.io.ObjectInputStream.readSerialData(ObjectInputStream.java:2206)
+	at java.io.ObjectInputStream.readOrdinaryObject(ObjectInputStream.java:2064)
+	at java.io.ObjectInputStream.readObject0(ObjectInputStream.java:1568)
+	at java.io.ObjectInputStream.defaultReadFields(ObjectInputStream.java:2282)
+	at java.io.ObjectInputStream.readSerialData(ObjectInputStream.java:2206)
+	at java.io.ObjectInputStream.readOrdinaryObject(ObjectInputStream.java:2064)
+	at java.io.ObjectInputStream.readObject0(ObjectInputStream.java:1568)
+	at java.io.ObjectInputStream.readObject(ObjectInputStream.java:428)
+	at org.springframework.core.serializer.DefaultDeserializer.deserialize(DefaultDeserializer.java:70)
+	... 13 common frames omitted
+WARN | 2018-04-02 11:43:10,870 | bootLogin | redisMessageListenerContainer-15 org.springframework.data.redis.listener.RedisMessageListenerContainer | Execution of message listener failed, and no ErrorHandler has been set.
+org.springframework.data.redis.serializer.SerializationException: Cannot deserialize; nested exception is org.springframework.core.serializer.support.SerializationFailedException: Failed to deserialize payload. Is the byte array a result of corresponding serialization for DefaultDeserializer?; nested exception is org.springframework.core.NestedIOException: Failed to deserialize object type; nested exception is java.lang.ClassNotFoundException: com.fzj.user.security.SecurityUser
+	at org.springframework.data.redis.serializer.JdkSerializationRedisSerializer.deserialize(JdkSerializationRedisSerializer.java:82)
+	at org.springframework.data.redis.core.AbstractOperations.deserializeHashValue(AbstractOperations.java:338)
+	at org.springframework.data.redis.core.AbstractOperations.deserializeHashMap(AbstractOperations.java:282)
+	at org.springframework.data.redis.core.DefaultHashOperations.entries(DefaultHashOperations.java:227)
+	at org.springframework.data.redis.core.DefaultBoundHashOperations.entries(DefaultBoundHashOperations.java:102)
+	at org.springframework.session.data.redis.RedisOperationsSessionRepository.getSession(RedisOperationsSessionRepository.java:432)
+	at org.springframework.session.data.redis.RedisOperationsSessionRepository.onMessage(RedisOperationsSessionRepository.java:519)
+	at org.springframework.data.redis.listener.RedisMessageListenerContainer.executeListener(RedisMessageListenerContainer.java:249)
+	at org.springframework.data.redis.listener.RedisMessageListenerContainer.processMessage(RedisMessageListenerContainer.java:239)
+	at org.springframework.data.redis.listener.RedisMessageListenerContainer$1.run(RedisMessageListenerContainer.java:967)
+	at java.lang.Thread.run(Thread.java:748)
+Caused by: org.springframework.core.serializer.support.SerializationFailedException: Failed to deserialize payload. Is the byte array a result of corresponding serialization for DefaultDeserializer?; nested exception is org.springframework.core.NestedIOException: Failed to deserialize object type; nested exception is java.lang.ClassNotFoundException: com.fzj.user.security.SecurityUser
+	at org.springframework.core.serializer.support.DeserializingConverter.convert(DeserializingConverter.java:78)
+	at org.springframework.core.serializer.support.DeserializingConverter.convert(DeserializingConverter.java:36)
+	at org.springframework.data.redis.serializer.JdkSerializationRedisSerializer.deserialize(JdkSerializationRedisSerializer.java:80)
+	... 10 common frames omitted
+Caused by: org.springframework.core.NestedIOException: Failed to deserialize object type; nested exception is java.lang.ClassNotFoundException: com.fzj.user.security.SecurityUser
+	at org.springframework.core.serializer.DefaultDeserializer.deserialize(DefaultDeserializer.java:73)
+	at org.springframework.core.serializer.support.DeserializingConverter.convert(DeserializingConverter.java:73)
+	... 12 common frames omitted
+Caused by: java.lang.ClassNotFoundException: com.fzj.user.security.SecurityUser
+	at java.net.URLClassLoader.findClass(URLClassLoader.java:381)
+	at java.lang.ClassLoader.loadClass(ClassLoader.java:424)
+	at sun.misc.Launcher$AppClassLoader.loadClass(Launcher.java:335)
+	at java.lang.ClassLoader.loadClass(ClassLoader.java:357)
+	at org.springframework.boot.devtools.restart.classloader.RestartClassLoader.loadClass(RestartClassLoader.java:151)
+	at java.lang.ClassLoader.loadClass(ClassLoader.java:357)
+	at org.springframework.util.ClassUtils.forName(ClassUtils.java:250)
+	at org.springframework.core.ConfigurableObjectInputStream.resolveClass(ConfigurableObjectInputStream.java:74)
+	at java.io.ObjectInputStream.readNonProxyDesc(ObjectInputStream.java:1863)
+	at java.io.ObjectInputStream.readClassDesc(ObjectInputStream.java:1746)
+	at java.io.ObjectInputStream.readOrdinaryObject(ObjectInputStream.java:2037)
+	at java.io.ObjectInputStream.readObject0(ObjectInputStream.java:1568)
+	at java.io.ObjectInputStream.readObject(ObjectInputStream.java:428)
+	at org.springframework.core.serializer.DefaultDeserializer.deserialize(DefaultDeserializer.java:70)
+	... 13 common frames omitted
+WARN | 2018-04-02 11:45:54,583 | bootLogin | redisMessageListenerContainer-24 org.springframework.data.redis.listener.RedisMessageListenerContainer | Execution of message listener failed, and no ErrorHandler has been set.
+org.springframework.data.redis.serializer.SerializationException: Cannot deserialize; nested exception is org.springframework.core.serializer.support.SerializationFailedException: Failed to deserialize payload. Is the byte array a result of corresponding serialization for DefaultDeserializer?; nested exception is org.springframework.core.NestedIOException: Failed to deserialize object type; nested exception is java.lang.ClassNotFoundException: com.fzj.user.security.SecurityUser
+	at org.springframework.data.redis.serializer.JdkSerializationRedisSerializer.deserialize(JdkSerializationRedisSerializer.java:82)
+	at org.springframework.data.redis.core.AbstractOperations.deserializeHashValue(AbstractOperations.java:338)
+	at org.springframework.data.redis.core.AbstractOperations.deserializeHashMap(AbstractOperations.java:282)
+	at org.springframework.data.redis.core.DefaultHashOperations.entries(DefaultHashOperations.java:227)
+	at org.springframework.data.redis.core.DefaultBoundHashOperations.entries(DefaultBoundHashOperations.java:102)
+	at org.springframework.session.data.redis.RedisOperationsSessionRepository.getSession(RedisOperationsSessionRepository.java:432)
+	at org.springframework.session.data.redis.RedisOperationsSessionRepository.onMessage(RedisOperationsSessionRepository.java:519)
+	at org.springframework.data.redis.listener.RedisMessageListenerContainer.executeListener(RedisMessageListenerContainer.java:249)
+	at org.springframework.data.redis.listener.RedisMessageListenerContainer.processMessage(RedisMessageListenerContainer.java:239)
+	at org.springframework.data.redis.listener.RedisMessageListenerContainer$1.run(RedisMessageListenerContainer.java:967)
+	at java.lang.Thread.run(Thread.java:748)
+Caused by: org.springframework.core.serializer.support.SerializationFailedException: Failed to deserialize payload. Is the byte array a result of corresponding serialization for DefaultDeserializer?; nested exception is org.springframework.core.NestedIOException: Failed to deserialize object type; nested exception is java.lang.ClassNotFoundException: com.fzj.user.security.SecurityUser
+	at org.springframework.core.serializer.support.DeserializingConverter.convert(DeserializingConverter.java:78)
+	at org.springframework.core.serializer.support.DeserializingConverter.convert(DeserializingConverter.java:36)
+	at org.springframework.data.redis.serializer.JdkSerializationRedisSerializer.deserialize(JdkSerializationRedisSerializer.java:80)
+	... 10 common frames omitted
+Caused by: org.springframework.core.NestedIOException: Failed to deserialize object type; nested exception is java.lang.ClassNotFoundException: com.fzj.user.security.SecurityUser
+	at org.springframework.core.serializer.DefaultDeserializer.deserialize(DefaultDeserializer.java:73)
+	at org.springframework.core.serializer.support.DeserializingConverter.convert(DeserializingConverter.java:73)
+	... 12 common frames omitted
+Caused by: java.lang.ClassNotFoundException: com.fzj.user.security.SecurityUser
+	at java.net.URLClassLoader.findClass(URLClassLoader.java:381)
+	at java.lang.ClassLoader.loadClass(ClassLoader.java:424)
+	at sun.misc.Launcher$AppClassLoader.loadClass(Launcher.java:335)
+	at java.lang.ClassLoader.loadClass(ClassLoader.java:357)
+	at org.springframework.boot.devtools.restart.classloader.RestartClassLoader.loadClass(RestartClassLoader.java:151)
+	at java.lang.ClassLoader.loadClass(ClassLoader.java:357)
+	at org.springframework.util.ClassUtils.forName(ClassUtils.java:250)
+	at org.springframework.core.ConfigurableObjectInputStream.resolveClass(ConfigurableObjectInputStream.java:74)
+	at java.io.ObjectInputStream.readNonProxyDesc(ObjectInputStream.java:1863)
+	at java.io.ObjectInputStream.readClassDesc(ObjectInputStream.java:1746)
+	at java.io.ObjectInputStream.readOrdinaryObject(ObjectInputStream.java:2037)
+	at java.io.ObjectInputStream.readObject0(ObjectInputStream.java:1568)
+	at java.io.ObjectInputStream.defaultReadFields(ObjectInputStream.java:2282)
+	at java.io.ObjectInputStream.readSerialData(ObjectInputStream.java:2206)
+	at java.io.ObjectInputStream.readOrdinaryObject(ObjectInputStream.java:2064)
+	at java.io.ObjectInputStream.readObject0(ObjectInputStream.java:1568)
+	at java.io.ObjectInputStream.defaultReadFields(ObjectInputStream.java:2282)
+	at java.io.ObjectInputStream.readSerialData(ObjectInputStream.java:2206)
+	at java.io.ObjectInputStream.readOrdinaryObject(ObjectInputStream.java:2064)
+	at java.io.ObjectInputStream.readObject0(ObjectInputStream.java:1568)
+	at java.io.ObjectInputStream.readObject(ObjectInputStream.java:428)
+	at org.springframework.core.serializer.DefaultDeserializer.deserialize(DefaultDeserializer.java:70)
+	... 13 common frames omitted
+INFO | 2018-04-02 18:48:51,202 | bootLogin | restartedMain org.springframework.context.annotation.AnnotationConfigApplicationContext | Refreshing org.springframework.context.annotation.AnnotationConfigApplicationContext@68f16c4: startup date [Mon Apr 02 18:48:51 CST 2018]; root of context hierarchy
+INFO | 2018-04-02 18:48:51,294 | bootLogin | background-preinit org.hibernate.validator.internal.util.Version | HV000001: Hibernate Validator 5.3.6.Final
+INFO | 2018-04-02 18:48:51,450 | bootLogin | restartedMain org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor | JSR-330 'javax.inject.Inject' annotation found and supported for autowiring
+INFO | 2018-04-02 18:48:51,476 | bootLogin | restartedMain org.springframework.context.support.PostProcessorRegistrationDelegate$BeanPostProcessorChecker | Bean 'configurationPropertiesRebinderAutoConfiguration' of type [org.springframework.cloud.autoconfigure.ConfigurationPropertiesRebinderAutoConfiguration$$EnhancerBySpringCGLIB$$b2006f7c] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+INFO | 2018-04-02 18:48:52,072 | bootLogin | restartedMain org.springframework.cloud.config.client.ConfigServicePropertySourceLocator | Fetching config from server at: http://localhost:8888
+WARN | 2018-04-02 18:48:53,163 | bootLogin | restartedMain org.springframework.cloud.config.client.ConfigServicePropertySourceLocator | Could not locate PropertySource: I/O error on GET request for "http://localhost:8888/application/default": Connection refused: connect; nested exception is java.net.ConnectException: Connection refused: connect
+INFO | 2018-04-02 18:48:53,166 | bootLogin | restartedMain com.cxgmerp.CxgmApplication | No active profile set, falling back to default profiles: default
+INFO | 2018-04-02 18:48:53,178 | bootLogin | restartedMain org.springframework.boot.context.embedded.AnnotationConfigEmbeddedWebApplicationContext | Refreshing org.springframework.boot.context.embedded.AnnotationConfigEmbeddedWebApplicationContext@1939ae7c: startup date [Mon Apr 02 18:48:53 CST 2018]; parent: org.springframework.context.annotation.AnnotationConfigApplicationContext@68f16c4
+WARN | 2018-04-02 18:48:54,175 | bootLogin | restartedMain org.mybatis.spring.mapper.ClassPathMapperScanner | No MyBatis mapper was found in '[com.cxgmerp.config, com.cxgmerp]' package. Please check your configuration.
+INFO | 2018-04-02 18:48:54,202 | bootLogin | restartedMain org.springframework.data.repository.config.RepositoryConfigurationDelegate | Multiple Spring Data modules found, entering strict repository configuration mode!
+WARN | 2018-04-02 18:48:54,373 | bootLogin | restartedMain org.springframework.context.annotation.ConfigurationClassPostProcessor | Cannot enhance @Configuration bean definition 'myBatisMapperScannerConfig' since its singleton instance has been created too early. The typical cause is a non-static @Bean method with a BeanDefinitionRegistryPostProcessor return type: Consider declaring such methods as 'static'.
+INFO | 2018-04-02 18:48:54,548 | bootLogin | restartedMain org.springframework.cloud.context.scope.GenericScope | BeanFactory id=42b2bec5-cf27-3c10-b417-782ad2dd589d
+INFO | 2018-04-02 18:48:54,559 | bootLogin | restartedMain org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor | JSR-330 'javax.inject.Inject' annotation found and supported for autowiring
+INFO | 2018-04-02 18:48:54,670 | bootLogin | restartedMain org.springframework.context.support.PostProcessorRegistrationDelegate$BeanPostProcessorChecker | Bean 'org.springframework.transaction.annotation.ProxyTransactionManagementConfiguration' of type [org.springframework.transaction.annotation.ProxyTransactionManagementConfiguration$$EnhancerBySpringCGLIB$$95e66c7f] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+INFO | 2018-04-02 18:48:54,714 | bootLogin | restartedMain org.springframework.context.support.PostProcessorRegistrationDelegate$BeanPostProcessorChecker | Bean 'org.springframework.security.config.annotation.configuration.ObjectPostProcessorConfiguration' of type [org.springframework.security.config.annotation.configuration.ObjectPostProcessorConfiguration$$EnhancerBySpringCGLIB$$2e9434b9] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+INFO | 2018-04-02 18:48:54,723 | bootLogin | restartedMain org.springframework.context.support.PostProcessorRegistrationDelegate$BeanPostProcessorChecker | Bean 'objectPostProcessor' of type [org.springframework.security.config.annotation.configuration.AutowireBeanFactoryObjectPostProcessor] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+INFO | 2018-04-02 18:48:54,724 | bootLogin | restartedMain org.springframework.context.support.PostProcessorRegistrationDelegate$BeanPostProcessorChecker | Bean 'org.springframework.security.access.expression.method.DefaultMethodSecurityExpressionHandler@84dff06' of type [org.springframework.security.access.expression.method.DefaultMethodSecurityExpressionHandler] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+INFO | 2018-04-02 18:48:54,733 | bootLogin | restartedMain org.springframework.context.support.PostProcessorRegistrationDelegate$BeanPostProcessorChecker | Bean 'org.springframework.security.config.annotation.method.configuration.GlobalMethodSecurityConfiguration' of type [org.springframework.security.config.annotation.method.configuration.GlobalMethodSecurityConfiguration$$EnhancerBySpringCGLIB$$5368d76b] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+INFO | 2018-04-02 18:48:54,742 | bootLogin | restartedMain org.springframework.context.support.PostProcessorRegistrationDelegate$BeanPostProcessorChecker | Bean 'methodSecurityMetadataSource' of type [org.springframework.security.access.method.DelegatingMethodSecurityMetadataSource] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+INFO | 2018-04-02 18:48:54,756 | bootLogin | restartedMain org.springframework.context.support.PostProcessorRegistrationDelegate$BeanPostProcessorChecker | Bean 'redisConfig' of type [com.cxgmerp.config.RedisConfig$$EnhancerBySpringCGLIB$$ffae7908] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+INFO | 2018-04-02 18:48:54,761 | bootLogin | restartedMain org.springframework.context.support.PostProcessorRegistrationDelegate$BeanPostProcessorChecker | Bean 'org.springframework.cache.annotation.ProxyCachingConfiguration' of type [org.springframework.cache.annotation.ProxyCachingConfiguration$$EnhancerBySpringCGLIB$$def8a29d] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+INFO | 2018-04-02 18:48:54,788 | bootLogin | restartedMain org.springframework.context.support.PostProcessorRegistrationDelegate$BeanPostProcessorChecker | Bean 'org.springframework.cloud.autoconfigure.ConfigurationPropertiesRebinderAutoConfiguration' of type [org.springframework.cloud.autoconfigure.ConfigurationPropertiesRebinderAutoConfiguration$$EnhancerBySpringCGLIB$$b2006f7c] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+INFO | 2018-04-02 18:48:55,417 | bootLogin | restartedMain org.springframework.boot.context.embedded.tomcat.TomcatEmbeddedServletContainer | Tomcat initialized with port(s): 41203 (http)
+INFO | 2018-04-02 18:48:55,426 | bootLogin | restartedMain org.apache.catalina.core.StandardService | Starting service [Tomcat]
+INFO | 2018-04-02 18:48:55,427 | bootLogin | restartedMain org.apache.catalina.core.StandardEngine | Starting Servlet Engine: Apache Tomcat/8.5.23
+INFO | 2018-04-02 18:48:55,544 | bootLogin | localhost-startStop-1 org.apache.catalina.core.ContainerBase.[Tomcat].[localhost].[/] | Initializing Spring embedded WebApplicationContext
+INFO | 2018-04-02 18:48:55,544 | bootLogin | localhost-startStop-1 org.springframework.web.context.ContextLoader | Root WebApplicationContext: initialization completed in 2366 ms
+WARN | 2018-04-02 18:48:56,981 | bootLogin | localhost-startStop-1 com.cxgmerp.security.url.MyFilterSecurityInterceptor | Could not validate configuration attributes as the SecurityMetadataSource did not return any attributes from getAllConfigAttributes()
+INFO | 2018-04-02 18:48:57,213 | bootLogin | localhost-startStop-1 org.springframework.boot.web.servlet.FilterRegistrationBean | Mapping filter: 'characterEncodingFilter' to: [/*]
+INFO | 2018-04-02 18:48:57,214 | bootLogin | localhost-startStop-1 org.springframework.boot.web.servlet.FilterRegistrationBean | Mapping filter: 'springSessionRepositoryFilter' to: [/*]
+INFO | 2018-04-02 18:48:57,215 | bootLogin | localhost-startStop-1 org.springframework.boot.web.servlet.DelegatingFilterProxyRegistrationBean | Mapping filter: 'springSecurityFilterChain' to: [/*]
+INFO | 2018-04-02 18:48:57,216 | bootLogin | localhost-startStop-1 org.springframework.boot.web.servlet.FilterRegistrationBean | Mapping filter: 'myFilterSecurityInterceptor' to: [/*]
+INFO | 2018-04-02 18:48:57,216 | bootLogin | localhost-startStop-1 org.springframework.boot.web.servlet.FilterRegistrationBean | Mapping filter: 'customUsernamePasswordAuthenticationFilter' to: [/*]
+INFO | 2018-04-02 18:48:57,216 | bootLogin | localhost-startStop-1 org.springframework.boot.web.servlet.FilterRegistrationBean | Mapping filter: 'concurrentSessionFilter' to: [/*]
+INFO | 2018-04-02 18:48:57,216 | bootLogin | localhost-startStop-1 org.springframework.boot.web.servlet.ServletRegistrationBean | Mapping servlet: 'dispatcherServlet' to [/]
+INFO | 2018-04-02 18:48:57,411 | bootLogin | restartedMain org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping | Mapped "{[/home],methods=[GET]}" onto public org.springframework.web.servlet.ModelAndView com.cxgmerp.controller.LoginController.home() throws java.sql.SQLException
+INFO | 2018-04-02 18:48:57,412 | bootLogin | restartedMain org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping | Mapped "{[/hello],methods=[GET]}" onto public org.springframework.web.servlet.ModelAndView com.cxgmerp.controller.LoginController.getHello() throws java.sql.SQLException
+INFO | 2018-04-02 18:48:57,413 | bootLogin | restartedMain org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping | Mapped "{[/index],methods=[GET]}" onto public org.springframework.web.servlet.ModelAndView com.cxgmerp.controller.LoginController.getLogin() throws java.sql.SQLException
+INFO | 2018-04-02 18:48:57,413 | bootLogin | restartedMain org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping | Mapped "{[/changeLang],methods=[GET]}" onto public java.lang.String com.cxgmerp.controller.LoginController.changeLang(java.lang.String)
+INFO | 2018-04-02 18:48:57,413 | bootLogin | restartedMain org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping | Mapped "{[/loginexpired],methods=[GET]}" onto public java.lang.String com.cxgmerp.controller.LoginController.loginexpired() throws java.sql.SQLException
+INFO | 2018-04-02 18:48:57,413 | bootLogin | restartedMain org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping | Mapped "{[/safetyOfficers]}" onto public org.springframework.web.servlet.ModelAndView com.cxgmerp.controller.LoginController.safetyOfficers() throws java.sql.SQLException
+INFO | 2018-04-02 18:48:57,416 | bootLogin | restartedMain org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping | Mapped "{[/error]}" onto public org.springframework.http.ResponseEntity<java.util.Map<java.lang.String, java.lang.Object>> org.springframework.boot.autoconfigure.web.BasicErrorController.error(javax.servlet.http.HttpServletRequest)
+INFO | 2018-04-02 18:48:57,417 | bootLogin | restartedMain org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping | Mapped "{[/error],produces=[text/html]}" onto public org.springframework.web.servlet.ModelAndView org.springframework.boot.autoconfigure.web.BasicErrorController.errorHtml(javax.servlet.http.HttpServletRequest,javax.servlet.http.HttpServletResponse)
+INFO | 2018-04-02 18:48:57,483 | bootLogin | restartedMain org.springframework.web.servlet.handler.SimpleUrlHandlerMapping | Mapped URL path [/templates/**] onto handler of type [class org.springframework.web.servlet.resource.ResourceHttpRequestHandler]
+INFO | 2018-04-02 18:48:57,483 | bootLogin | restartedMain org.springframework.web.servlet.handler.SimpleUrlHandlerMapping | Mapped URL path [/static/**] onto handler of type [class org.springframework.web.servlet.resource.ResourceHttpRequestHandler]
+INFO | 2018-04-02 18:48:57,558 | bootLogin | restartedMain org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter | Looking for @ControllerAdvice: org.springframework.boot.context.embedded.AnnotationConfigEmbeddedWebApplicationContext@1939ae7c: startup date [Mon Apr 02 18:48:53 CST 2018]; parent: org.springframework.context.annotation.AnnotationConfigApplicationContext@68f16c4
+INFO | 2018-04-02 18:48:57,623 | bootLogin | restartedMain org.springframework.web.servlet.mvc.method.annotation.ExceptionHandlerExceptionResolver | Detected @ExceptionHandler methods in globalExceptionController
+INFO | 2018-04-02 18:48:57,734 | bootLogin | restartedMain org.springframework.security.web.DefaultSecurityFilterChain | Creating filter chain: Ant [pattern='/js/**'], []
+INFO | 2018-04-02 18:48:57,735 | bootLogin | restartedMain org.springframework.security.web.DefaultSecurityFilterChain | Creating filter chain: Ant [pattern='/css/**'], []
+INFO | 2018-04-02 18:48:57,735 | bootLogin | restartedMain org.springframework.security.web.DefaultSecurityFilterChain | Creating filter chain: Ant [pattern='/images/**'], []
+INFO | 2018-04-02 18:48:57,735 | bootLogin | restartedMain org.springframework.security.web.DefaultSecurityFilterChain | Creating filter chain: Ant [pattern='/**/favicon.ico'], []
+INFO | 2018-04-02 18:48:57,844 | bootLogin | restartedMain org.springframework.security.web.DefaultSecurityFilterChain | Creating filter chain: org.springframework.security.web.util.matcher.AnyRequestMatcher@1, [org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@7b038dee, org.springframework.security.web.context.SecurityContextPersistenceFilter@77497de3, org.springframework.security.web.header.HeaderWriterFilter@fe9cc32, org.springframework.security.web.authentication.logout.LogoutFilter@4bf752ca, com.cxgmerp.security.login.CustomUsernamePasswordAuthenticationFilter@6ab9df17, org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter@62006bd9, org.springframework.security.web.session.ConcurrentSessionFilter@3b465811, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@397521ce, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@4634a63c, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@18ab5df3, org.springframework.security.web.session.SessionManagementFilter@6de8b02a, org.springframework.security.web.access.ExceptionTranslationFilter@36a03056, com.cxgmerp.security.url.MyFilterSecurityInterceptor@4b5392bb, org.springframework.security.web.access.intercept.FilterSecurityInterceptor@25a8cc79]
+WARN | 2018-04-02 18:48:58,069 | bootLogin | restartedMain org.springframework.cloud.netflix.archaius.ArchaiusAutoConfiguration | No spring.application.name found, defaulting to 'application'
+WARN | 2018-04-02 18:48:58,073 | bootLogin | restartedMain com.netflix.config.sources.URLConfigurationSource | No URLs will be polled as dynamic configuration sources.
+INFO | 2018-04-02 18:48:58,074 | bootLogin | restartedMain com.netflix.config.sources.URLConfigurationSource | To enable URLs as dynamic configuration sources, define System property archaius.configurationSource.additionalUrls or make config.properties available on classpath.
+WARN | 2018-04-02 18:48:58,081 | bootLogin | restartedMain com.netflix.config.sources.URLConfigurationSource | No URLs will be polled as dynamic configuration sources.
+INFO | 2018-04-02 18:48:58,082 | bootLogin | restartedMain com.netflix.config.sources.URLConfigurationSource | To enable URLs as dynamic configuration sources, define System property archaius.configurationSource.additionalUrls or make config.properties available on classpath.
+INFO | 2018-04-02 18:48:59,020 | bootLogin | restartedMain org.springframework.boot.devtools.autoconfigure.OptionalLiveReloadServer | LiveReload server is running on port 35729
+WARN | 2018-04-02 18:48:59,026 | bootLogin | restartedMain org.springframework.boot.starter.redis.RedisStarterDeprecationWarningAutoConfiguration | spring-boot-starter-redis is deprecated as of Spring Boot 1.4, please migrate to spring-boot-starter-data-redis
+INFO | 2018-04-02 18:48:59,400 | bootLogin | restartedMain org.springframework.jmx.export.annotation.AnnotationMBeanExporter | Registering beans for JMX exposure on startup
+INFO | 2018-04-02 18:48:59,402 | bootLogin | restartedMain org.springframework.jmx.export.annotation.AnnotationMBeanExporter | Bean with name 'MASTER' has been autodetected for JMX exposure
+INFO | 2018-04-02 18:48:59,402 | bootLogin | restartedMain org.springframework.jmx.export.annotation.AnnotationMBeanExporter | Bean with name 'SLAVE' has been autodetected for JMX exposure
+INFO | 2018-04-02 18:48:59,408 | bootLogin | restartedMain org.springframework.jmx.export.annotation.AnnotationMBeanExporter | Bean with name 'environmentManager' has been autodetected for JMX exposure
+INFO | 2018-04-02 18:48:59,409 | bootLogin | restartedMain org.springframework.jmx.export.annotation.AnnotationMBeanExporter | Bean with name 'configurationPropertiesRebinder' has been autodetected for JMX exposure
+INFO | 2018-04-02 18:48:59,410 | bootLogin | restartedMain org.springframework.jmx.export.annotation.AnnotationMBeanExporter | Bean with name 'refreshScope' has been autodetected for JMX exposure
+INFO | 2018-04-02 18:48:59,413 | bootLogin | restartedMain org.springframework.jmx.export.annotation.AnnotationMBeanExporter | Located managed bean 'environmentManager': registering with JMX server as MBean [org.springframework.cloud.context.environment:name=environmentManager,type=EnvironmentManager]
+INFO | 2018-04-02 18:48:59,425 | bootLogin | restartedMain org.springframework.jmx.export.annotation.AnnotationMBeanExporter | Located MBean 'MASTER': registering with JMX server as MBean [com.alibaba.druid.pool:name=MASTER,type=DruidDataSource]
+INFO | 2018-04-02 18:48:59,427 | bootLogin | restartedMain org.springframework.jmx.export.annotation.AnnotationMBeanExporter | Located MBean 'SLAVE': registering with JMX server as MBean [com.alibaba.druid.pool:name=SLAVE,type=DruidDataSource]
+INFO | 2018-04-02 18:48:59,430 | bootLogin | restartedMain org.springframework.jmx.export.annotation.AnnotationMBeanExporter | Located managed bean 'refreshScope': registering with JMX server as MBean [org.springframework.cloud.context.scope.refresh:name=refreshScope,type=RefreshScope]
+INFO | 2018-04-02 18:48:59,440 | bootLogin | restartedMain org.springframework.jmx.export.annotation.AnnotationMBeanExporter | Located managed bean 'configurationPropertiesRebinder': registering with JMX server as MBean [org.springframework.cloud.context.properties:name=configurationPropertiesRebinder,context=1939ae7c,type=ConfigurationPropertiesRebinder]
+INFO | 2018-04-02 18:49:00,216 | bootLogin | restartedMain org.springframework.context.support.DefaultLifecycleProcessor | Starting beans in phase 2147483647
+INFO | 2018-04-02 18:49:00,227 | bootLogin | restartedMain org.springframework.scheduling.annotation.ScheduledAnnotationBeanPostProcessor | No TaskScheduler/ScheduledExecutorService bean found for scheduled processing
+INFO | 2018-04-02 18:49:00,238 | bootLogin | restartedMain org.apache.coyote.http11.Http11NioProtocol | Initializing ProtocolHandler ["http-nio-41203"]
+INFO | 2018-04-02 18:49:00,251 | bootLogin | restartedMain org.apache.coyote.http11.Http11NioProtocol | Starting ProtocolHandler ["http-nio-41203"]
+INFO | 2018-04-02 18:49:00,261 | bootLogin | restartedMain org.apache.tomcat.util.net.NioSelectorPool | Using a shared selector for servlet write/read
+INFO | 2018-04-02 18:49:00,279 | bootLogin | restartedMain org.springframework.boot.context.embedded.tomcat.TomcatEmbeddedServletContainer | Tomcat started on port(s): 41203 (http)
+INFO | 2018-04-02 18:49:00,283 | bootLogin | restartedMain com.cxgmerp.CxgmApplication | Started CxgmApplication in 9.798 seconds (JVM running for 10.48)
+INFO | 2018-04-02 18:49:30,736 | bootLogin | http-nio-41203-exec-1 org.apache.catalina.core.ContainerBase.[Tomcat].[localhost].[/] | Initializing Spring FrameworkServlet 'dispatcherServlet'
+INFO | 2018-04-02 18:49:30,737 | bootLogin | http-nio-41203-exec-1 org.springframework.web.servlet.DispatcherServlet | FrameworkServlet 'dispatcherServlet': initialization started
+INFO | 2018-04-02 18:49:30,758 | bootLogin | http-nio-41203-exec-1 org.springframework.web.servlet.DispatcherServlet | FrameworkServlet 'dispatcherServlet': initialization completed in 21 ms
+ERROR | 2018-04-02 18:49:30,821 | bootLogin | http-nio-41203-exec-1 org.apache.catalina.core.ContainerBase.[Tomcat].[localhost].[/].[dispatcherServlet] | Servlet.service() for servlet [dispatcherServlet] in context with path [] threw exception
+org.mybatis.spring.MyBatisSystemException: nested exception is org.apache.ibatis.exceptions.PersistenceException: 
+### Error querying database.  Cause: java.lang.NullPointerException
+### Cause: java.lang.NullPointerException
+	at org.mybatis.spring.MyBatisExceptionTranslator.translateExceptionIfPossible(MyBatisExceptionTranslator.java:79)
+	at org.mybatis.spring.SqlSessionTemplate$SqlSessionInterceptor.invoke(SqlSessionTemplate.java:447)
+	at com.sun.proxy.$Proxy95.selectList(Unknown Source)
+	at org.mybatis.spring.SqlSessionTemplate.selectList(SqlSessionTemplate.java:231)
+	at org.apache.ibatis.binding.MapperMethod.executeForMany(MapperMethod.java:137)
+	at org.apache.ibatis.binding.MapperMethod.execute(MapperMethod.java:75)
+	at org.apache.ibatis.binding.MapperProxy.invoke(MapperProxy.java:53)
+	at com.sun.proxy.$Proxy96.findAllPermissions(Unknown Source)
+	at com.cxgmerp.security.url.MyInvocationSecurityMetadataSourceService.getAttributes(MyInvocationSecurityMetadataSourceService.java:33)
+	at org.springframework.security.access.intercept.AbstractSecurityInterceptor.beforeInvocation(AbstractSecurityInterceptor.java:197)
+	at com.cxgmerp.security.url.MyFilterSecurityInterceptor.invoke(MyFilterSecurityInterceptor.java:64)
+	at com.cxgmerp.security.url.MyFilterSecurityInterceptor.doFilter(MyFilterSecurityInterceptor.java:50)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:331)
+	at org.springframework.security.web.access.ExceptionTranslationFilter.doFilter(ExceptionTranslationFilter.java:114)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:331)
+	at org.springframework.security.web.session.SessionManagementFilter.doFilter(SessionManagementFilter.java:137)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:331)
+	at org.springframework.security.web.authentication.AnonymousAuthenticationFilter.doFilter(AnonymousAuthenticationFilter.java:111)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:331)
+	at org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter.doFilter(SecurityContextHolderAwareRequestFilter.java:170)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:331)
+	at org.springframework.security.web.savedrequest.RequestCacheAwareFilter.doFilter(RequestCacheAwareFilter.java:63)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:331)
+	at org.springframework.security.web.session.ConcurrentSessionFilter.doFilter(ConcurrentSessionFilter.java:155)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:331)
+	at org.springframework.security.web.authentication.AbstractAuthenticationProcessingFilter.doFilter(AbstractAuthenticationProcessingFilter.java:200)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:331)
+	at org.springframework.security.web.authentication.AbstractAuthenticationProcessingFilter.doFilter(AbstractAuthenticationProcessingFilter.java:200)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:331)
+	at org.springframework.security.web.authentication.logout.LogoutFilter.doFilter(LogoutFilter.java:116)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:331)
+	at org.springframework.security.web.header.HeaderWriterFilter.doFilterInternal(HeaderWriterFilter.java:64)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:107)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:331)
+	at org.springframework.security.web.context.SecurityContextPersistenceFilter.doFilter(SecurityContextPersistenceFilter.java:105)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:331)
+	at org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter.doFilterInternal(WebAsyncManagerIntegrationFilter.java:56)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:107)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:331)
+	at org.springframework.security.web.FilterChainProxy.doFilterInternal(FilterChainProxy.java:214)
+	at org.springframework.security.web.FilterChainProxy.doFilter(FilterChainProxy.java:177)
+	at org.springframework.web.filter.DelegatingFilterProxy.invokeDelegate(DelegatingFilterProxy.java:347)
+	at org.springframework.web.filter.DelegatingFilterProxy.doFilter(DelegatingFilterProxy.java:263)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:193)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:166)
+	at org.springframework.session.web.http.SessionRepositoryFilter.doFilterInternal(SessionRepositoryFilter.java:167)
+	at org.springframework.session.web.http.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:80)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:193)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:166)
+	at org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:197)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:107)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:193)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:166)
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:199)
+	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:96)
+	at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:478)
+	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:140)
+	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:81)
+	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:87)
+	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:342)
+	at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:803)
+	at org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:66)
+	at org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:868)
+	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1459)
+	at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:49)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
+	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:61)
+	at java.lang.Thread.run(Thread.java:748)
+Caused by: org.apache.ibatis.exceptions.PersistenceException: 
+### Error querying database.  Cause: java.lang.NullPointerException
+### Cause: java.lang.NullPointerException
+	at org.apache.ibatis.exceptions.ExceptionFactory.wrapException(ExceptionFactory.java:30)
+	at org.apache.ibatis.session.defaults.DefaultSqlSession.selectList(DefaultSqlSession.java:150)
+	at org.apache.ibatis.session.defaults.DefaultSqlSession.selectList(DefaultSqlSession.java:141)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:498)
+	at org.mybatis.spring.SqlSessionTemplate$SqlSessionInterceptor.invoke(SqlSessionTemplate.java:434)
+	... 67 common frames omitted
+Caused by: java.lang.NullPointerException: null
+	at org.apache.catalina.loader.WebappClassLoaderBase.binaryNameToPath(WebappClassLoaderBase.java:2300)
+	at org.apache.catalina.loader.WebappClassLoaderBase.findLoadedClass0(WebappClassLoaderBase.java:2358)
+	at org.springframework.boot.context.embedded.tomcat.TomcatEmbeddedWebappClassLoader.findExistingLoadedClass(TomcatEmbeddedWebappClassLoader.java:58)
+	at org.springframework.boot.context.embedded.tomcat.TomcatEmbeddedWebappClassLoader.loadClass(TomcatEmbeddedWebappClassLoader.java:49)
+	at org.apache.catalina.loader.WebappClassLoaderBase.loadClass(WebappClassLoaderBase.java:1119)
+	at com.alibaba.druid.util.JdbcUtils.createDriver(JdbcUtils.java:549)
+	at com.alibaba.druid.pool.DruidDataSource.init(DruidDataSource.java:642)
+	at com.alibaba.druid.pool.DruidDataSource.getConnection(DruidDataSource.java:988)
+	at com.alibaba.druid.pool.DruidDataSource.getConnection(DruidDataSource.java:984)
+	at com.alibaba.druid.pool.DruidDataSource.getConnection(DruidDataSource.java:103)
+	at org.springframework.jdbc.datasource.lookup.AbstractRoutingDataSource.getConnection(AbstractRoutingDataSource.java:164)
+	at com.github.pagehelper.PageHelper.getUrl(PageHelper.java:284)
+	at com.github.pagehelper.PageHelper.getSqlUtil(PageHelper.java:310)
+	at com.github.pagehelper.PageHelper.initSqlUtil(PageHelper.java:266)
+	at com.github.pagehelper.PageHelper.intercept(PageHelper.java:253)
+	at org.apache.ibatis.plugin.Plugin.invoke(Plugin.java:61)
+	at com.sun.proxy.$Proxy117.query(Unknown Source)
+	at org.apache.ibatis.session.defaults.DefaultSqlSession.selectList(DefaultSqlSession.java:148)
+	... 73 common frames omitted
+WARN | 2018-04-02 18:53:21,923 | bootLogin | redisMessageListenerContainer-5 org.springframework.data.redis.listener.RedisMessageListenerContainer | Execution of message listener failed, and no ErrorHandler has been set.
+org.springframework.data.redis.serializer.SerializationException: Cannot deserialize; nested exception is org.springframework.core.serializer.support.SerializationFailedException: Failed to deserialize payload. Is the byte array a result of corresponding serialization for DefaultDeserializer?; nested exception is org.springframework.core.NestedIOException: Failed to deserialize object type; nested exception is java.lang.ClassNotFoundException: com.fzj.user.security.SecurityUser
+	at org.springframework.data.redis.serializer.JdkSerializationRedisSerializer.deserialize(JdkSerializationRedisSerializer.java:82)
+	at org.springframework.data.redis.core.AbstractOperations.deserializeHashValue(AbstractOperations.java:338)
+	at org.springframework.data.redis.core.AbstractOperations.deserializeHashMap(AbstractOperations.java:282)
+	at org.springframework.data.redis.core.DefaultHashOperations.entries(DefaultHashOperations.java:227)
+	at org.springframework.data.redis.core.DefaultBoundHashOperations.entries(DefaultBoundHashOperations.java:102)
+	at org.springframework.session.data.redis.RedisOperationsSessionRepository.getSession(RedisOperationsSessionRepository.java:432)
+	at org.springframework.session.data.redis.RedisOperationsSessionRepository.onMessage(RedisOperationsSessionRepository.java:519)
+	at org.springframework.data.redis.listener.RedisMessageListenerContainer.executeListener(RedisMessageListenerContainer.java:249)
+	at org.springframework.data.redis.listener.RedisMessageListenerContainer.processMessage(RedisMessageListenerContainer.java:239)
+	at org.springframework.data.redis.listener.RedisMessageListenerContainer$1.run(RedisMessageListenerContainer.java:967)
+	at java.lang.Thread.run(Thread.java:748)
+Caused by: org.springframework.core.serializer.support.SerializationFailedException: Failed to deserialize payload. Is the byte array a result of corresponding serialization for DefaultDeserializer?; nested exception is org.springframework.core.NestedIOException: Failed to deserialize object type; nested exception is java.lang.ClassNotFoundException: com.fzj.user.security.SecurityUser
+	at org.springframework.core.serializer.support.DeserializingConverter.convert(DeserializingConverter.java:78)
+	at org.springframework.core.serializer.support.DeserializingConverter.convert(DeserializingConverter.java:36)
+	at org.springframework.data.redis.serializer.JdkSerializationRedisSerializer.deserialize(JdkSerializationRedisSerializer.java:80)
+	... 10 common frames omitted
+Caused by: org.springframework.core.NestedIOException: Failed to deserialize object type; nested exception is java.lang.ClassNotFoundException: com.fzj.user.security.SecurityUser
+	at org.springframework.core.serializer.DefaultDeserializer.deserialize(DefaultDeserializer.java:73)
+	at org.springframework.core.serializer.support.DeserializingConverter.convert(DeserializingConverter.java:73)
+	... 12 common frames omitted
+Caused by: java.lang.ClassNotFoundException: com.fzj.user.security.SecurityUser
+	at java.net.URLClassLoader.findClass(URLClassLoader.java:381)
+	at java.lang.ClassLoader.loadClass(ClassLoader.java:424)
+	at sun.misc.Launcher$AppClassLoader.loadClass(Launcher.java:335)
+	at java.lang.ClassLoader.loadClass(ClassLoader.java:357)
+	at org.springframework.boot.devtools.restart.classloader.RestartClassLoader.loadClass(RestartClassLoader.java:151)
+	at java.lang.ClassLoader.loadClass(ClassLoader.java:357)
+	at org.springframework.util.ClassUtils.forName(ClassUtils.java:250)
+	at org.springframework.core.ConfigurableObjectInputStream.resolveClass(ConfigurableObjectInputStream.java:74)
+	at java.io.ObjectInputStream.readNonProxyDesc(ObjectInputStream.java:1863)
+	at java.io.ObjectInputStream.readClassDesc(ObjectInputStream.java:1746)
+	at java.io.ObjectInputStream.readOrdinaryObject(ObjectInputStream.java:2037)
+	at java.io.ObjectInputStream.readObject0(ObjectInputStream.java:1568)
+	at java.io.ObjectInputStream.defaultReadFields(ObjectInputStream.java:2282)
+	at java.io.ObjectInputStream.readSerialData(ObjectInputStream.java:2206)
+	at java.io.ObjectInputStream.readOrdinaryObject(ObjectInputStream.java:2064)
+	at java.io.ObjectInputStream.readObject0(ObjectInputStream.java:1568)
+	at java.io.ObjectInputStream.defaultReadFields(ObjectInputStream.java:2282)
+	at java.io.ObjectInputStream.readSerialData(ObjectInputStream.java:2206)
+	at java.io.ObjectInputStream.readOrdinaryObject(ObjectInputStream.java:2064)
+	at java.io.ObjectInputStream.readObject0(ObjectInputStream.java:1568)
+	at java.io.ObjectInputStream.readObject(ObjectInputStream.java:428)
+	at org.springframework.core.serializer.DefaultDeserializer.deserialize(DefaultDeserializer.java:70)
+	... 13 common frames omitted

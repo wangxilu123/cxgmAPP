@@ -1,115 +1,139 @@
 package com.cxgmerp.domain;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class Permission {
-    private Long id;
+public class Permission implements Serializable{
+	private static final long serialVersionUID = -7526150743688102557L;
 
-    private String name;
+	private Long id;
 
-    private String value;
+	private String name;
 
-    private String url;
+	private String value;
 
-    private String module;
+	private String url;
 
-    private String description;
+	private String module;
 
-    private String createBy;
+	private String description;
 
-    private Date creationDate;
+	private String createBy;
 
-    private String lastUpdatedBy;
+	private Date creationDate;
 
-    private Date lastUpdatedDate;
+	private String lastUpdatedBy;
 
-    private Boolean deleteFlag;
+	private Date lastUpdatedDate;
 
-    public Long getId() {
-        return id;
-    }
+	private Boolean deleteFlag;
 
-    public void setId(Long id) {
-        this.id = id;
-    }
+	public Long getId() {
+		return id;
+	}
 
-    public String getName() {
-        return name;
-    }
+	public void setId(Long id) {
+		this.id = id;
+	}
 
-    public void setName(String name) {
-        this.name = name == null ? null : name.trim();
-    }
+	public String getName() {
+		return name;
+	}
 
-    public String getValue() {
-        return value;
-    }
+	public void setName(String name) {
+		this.name = name == null ? null : name.trim();
+	}
 
-    public void setValue(String value) {
-        this.value = value == null ? null : value.trim();
-    }
+	public String getValue() {
+		return value;
+	}
 
-    public String getUrl() {
-        return url;
-    }
+	public void setValue(String value) {
+		this.value = value == null ? null : value.trim();
+	}
 
-    public void setUrl(String url) {
-        this.url = url == null ? null : url.trim();
-    }
+	public String getUrl() {
+		return url;
+	}
 
-    public String getModule() {
-        return module;
-    }
+	public void setUrl(String url) {
+		this.url = url == null ? null : url.trim();
+	}
 
-    public void setModule(String module) {
-        this.module = module == null ? null : module.trim();
-    }
+	public String getModule() {
+		return module;
+	}
 
-    public String getDescription() {
-        return description;
-    }
+	public void setModule(String module) {
+		this.module = module == null ? null : module.trim();
+	}
 
-    public void setDescription(String description) {
-        this.description = description == null ? null : description.trim();
-    }
+	public String getDescription() {
+		return description;
+	}
 
-    public String getCreateBy() {
-        return createBy;
-    }
+	public void setDescription(String description) {
+		this.description = description == null ? null : description.trim();
+	}
 
-    public void setCreateBy(String createBy) {
-        this.createBy = createBy == null ? null : createBy.trim();
-    }
+	public String getCreateBy() {
+		return createBy;
+	}
 
-    public Date getCreationDate() {
-        return creationDate;
-    }
+	public void setCreateBy(String createBy) {
+		this.createBy = createBy == null ? null : createBy.trim();
+	}
 
-    public void setCreationDate(Date creationDate) {
-        this.creationDate = creationDate;
-    }
+	public Date getCreationDate() {
+		return creationDate;
+	}
 
-    public String getLastUpdatedBy() {
-        return lastUpdatedBy;
-    }
+	public void setCreationDate(Date creationDate) {
+		this.creationDate = creationDate;
+	}
 
-    public void setLastUpdatedBy(String lastUpdatedBy) {
-        this.lastUpdatedBy = lastUpdatedBy == null ? null : lastUpdatedBy.trim();
-    }
+	public String getLastUpdatedBy() {
+		return lastUpdatedBy;
+	}
 
-    public Date getLastUpdatedDate() {
-        return lastUpdatedDate;
-    }
+	public void setLastUpdatedBy(String lastUpdatedBy) {
+		this.lastUpdatedBy = lastUpdatedBy == null ? null : lastUpdatedBy.trim();
+	}
 
-    public void setLastUpdatedDate(Date lastUpdatedDate) {
-        this.lastUpdatedDate = lastUpdatedDate;
-    }
+	public Date getLastUpdatedDate() {
+		return lastUpdatedDate;
+	}
 
-    public Boolean getDeleteFlag() {
-        return deleteFlag;
-    }
+	public void setLastUpdatedDate(Date lastUpdatedDate) {
+		this.lastUpdatedDate = lastUpdatedDate;
+	}
 
-    public void setDeleteFlag(Boolean deleteFlag) {
-        this.deleteFlag = deleteFlag;
-    }
+	public Boolean getDeleteFlag() {
+		return deleteFlag;
+	}
+
+	public void setDeleteFlag(Boolean deleteFlag) {
+		this.deleteFlag = deleteFlag;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (obj == null)
+			return false;
+		if (this == obj)
+			return true;
+		if (obj instanceof Permission) {
+			Permission user = (Permission) obj;
+			if (user.id == this.id)
+				return true; // 只比较id
+		}
+		return false;
+	}
+
+	@Override
+	public int hashCode() {
+		int result = 17;
+		result = (int) (31 * result + this.id.hashCode());
+		return result;
+	}
 }

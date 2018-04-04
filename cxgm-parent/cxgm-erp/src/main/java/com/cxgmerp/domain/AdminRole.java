@@ -1,7 +1,11 @@
 package com.cxgmerp.domain;
 
-public class AdminRole {
-    private Long id;
+import java.io.Serializable;
+
+public class AdminRole implements Serializable {
+	private static final long serialVersionUID = 3455647327017720767L;
+
+	private Long id;
 
     private Long admins;
 

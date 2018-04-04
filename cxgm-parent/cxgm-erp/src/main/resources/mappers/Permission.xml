@@ -189,7 +189,7 @@
     where id = #{id,jdbcType=BIGINT}
   </update>
   
-  <select id="findByRole" parameterType="String" resultMap="BaseResultMap">
+  <select id="findByRole" parameterType="long" resultMap="BaseResultMap">
        select p.* from permission p 
        LEFT JOIN permission_role pr on p.id=pr.permissions 
        LEFT JOIN role r on pr.roles=r.id 

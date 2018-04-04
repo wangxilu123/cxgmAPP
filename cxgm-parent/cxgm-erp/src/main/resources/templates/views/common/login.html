@@ -1,7 +1,7 @@
 <!doctype html>
 <html class="no-js fixed-layout" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"  
       xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
-<head th:include="/views/common/head :: commonHead('菜鲜果美')">
+<head th:include ="/views/common/head :: commonHead('菜鲜果美')">
 </head>
 <body>
   <!-- content start -->
@@ -10,20 +10,20 @@
       <div class="am-panel am-panel-default">
         <div class="am-panel-hd am-text-center">会员登录</div>
         <div class="am-panel-bd">
-          <form id="loginForm" class="am-form am-form-horizontal" action="/shop/member/login"  method="post">
+          <form id="loginForm" class="am-form am-form-horizontal" th:action="@{/login}"  method="post">
           <div class="am-form-group">
             <label for="doc-ipt-3" class="am-u-sm-3 am-form-label">用户名</label>
             <div class="am-u-sm-9">
-              <input type="text" name="member.username" required="required" />
+              <input type="text" name="username" required="required" />
             </div>
           </div>
           <div class="am-form-group">
             <label for="doc-ipt-pwd-2" class="am-u-sm-3 am-form-label">密码</label>
             <div class="am-u-sm-9">
-              <input type="password" id="doc-ipt-pwd-2" name="member.password" required="required" />
+              <input type="password" id="doc-ipt-pwd-2" name="password" required="required" />
             </div>
           </div>
-          <div class="am-form-group">
+         <!--  <div class="am-form-group">
             <label for="captcha" class="am-u-sm-3 am-form-label">验证码</label>
             <div class="am-u-sm-5">
               <input type="text" name="captchaToken" placeholder="验证码 →" value="" required="required" />
@@ -31,7 +31,7 @@
             <div class="am-u-sm-4 am-padding-left-0">
               <img id="loginCaptchaImage" src="/captcha" alt="换一张" />
             </div>
-          </div>
+          </div> -->
   
           <div class="am-form-group">
             <div class="am-u-sm-offset-3 am-u-sm-9 am-text-xs">

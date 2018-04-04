@@ -19,12 +19,10 @@ public class LoginController{
     @Autowired
     private CoreMessageSource messageSource;
     
-    
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_MANAGER')")
     @RequestMapping(value = "/hello", method = RequestMethod.GET)
     public ModelAndView getHello() throws SQLException{
-        
-        return new ModelAndView("views/common/login");
+        return new ModelAndView("views/common/index");
     }
     
     @RequestMapping(value = "/index", method = RequestMethod.GET)
@@ -33,11 +31,11 @@ public class LoginController{
         return new ModelAndView("views/common/login");
     }
     
-    @PreAuthorize("isAuthenticated()")
-    @RequestMapping(value = "/home", method = RequestMethod.GET)
+    /*@PreAuthorize("isAuthenticated()")*/
+    @RequestMapping(value = "/login", method = RequestMethod.GET)
     public ModelAndView home() throws SQLException{
         
-        return new ModelAndView("home");
+        return new ModelAndView("views/common/login");
         
     }
     

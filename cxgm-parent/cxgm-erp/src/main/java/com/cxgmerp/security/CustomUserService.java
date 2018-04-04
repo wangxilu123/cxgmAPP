@@ -42,25 +42,18 @@ public class CustomUserService implements UserDetailsService {
 		List<Role> roles = roleDao.findByUserName(username);//获取用户对应的角色
 		
 		Set<Permission> permissionset = new HashSet<Permission>();//保存用户的所有权限
-		Iterator<Permission> it = permissionset.iterator();
-		Permission perm;
 		if(roles.size()>0) {
 			for(Role role:roles) {
 				List<Permission> ps = permissionDao.findByRole(role.getId());//根据角色获取对应的权限
 				for(Permission p:ps) {
-					while(it.hasNext()) {
-						perm = it.next();
-						if(perm.getId()!=p.getId()) {
-							permissionset.add(p);
-						}
-					}
+					permissionset.add(p);
 				}
 			}
 		}
 		if(permissionset.size()>0) {
 			List<GrantedAuthority> grantedAuthorities = new ArrayList<>();
-			for(Permission permission : permissionset) {
-				GrantedAuthority grantedAuthority = new SimpleGrantedAuthority(permission.getUrl());
+			for(Role role : roles) {
+				GrantedAuthority grantedAuthority = new SimpleGrantedAuthority(role.getValue());
 				grantedAuthorities.add(grantedAuthority);
 			}
 			admin.setAuthorities(grantedAuthorities);

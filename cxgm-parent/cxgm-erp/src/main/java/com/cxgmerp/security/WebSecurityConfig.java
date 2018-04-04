@@ -2,7 +2,6 @@ package com.cxgmerp.security;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
@@ -74,6 +73,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		        .addFilterBefore(customUsernamePasswordAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class)
 		        .addFilterBefore(myFilterSecurityInterceptor, FilterSecurityInterceptor.class)//在正确的位置添加我们自定义的过滤器  
 				.authorizeRequests()
+					.antMatchers("/static/js/**", "/static/shop/**", "/static/img/**", "/**/favicon.ico","/static/AmazeUI/**","/static/UEditor/**").permitAll()
 	                .regexMatchers("/login\\?invalid", "/login\\?expired",
 	                        "/index", "/home", "/getToken", "/accessDenied"
 	                        , "/changeLang.*")//".*"表示任意字符
@@ -106,7 +106,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	@Override
 	public void configure(WebSecurity web) throws Exception {
 		// js 、 css 、等不做权限验证
-		web.ignoring().antMatchers("/js/**", "/css/**", "/images/**", "/**/favicon.ico");
+		web.ignoring().antMatchers("/static/js/**", "/static/shop/**", "/static/img/**", "/**/favicon.ico","/static/AmazeUI/**","/static/UEditor/**");
 	}
 
 	@Bean

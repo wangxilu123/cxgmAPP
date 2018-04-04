@@ -34,7 +34,8 @@
 	    <result column="delete_flag" jdbcType="BIT" property="deleteFlag" />
     </collection>
     
-    <collection property="permissions" ofType="com.cxgmerp.domain.Permission">
+    <collection property="permission" ofType="com.cxgmerp.domain.Permission">
+    	<result column="id" jdbcType="BIGINT" property="id" />
     	 <result column="name" jdbcType="VARCHAR" property="name" />
 	    <result column="value" jdbcType="VARCHAR" property="value" />
 	    <result column="url" jdbcType="VARCHAR" property="url" />
