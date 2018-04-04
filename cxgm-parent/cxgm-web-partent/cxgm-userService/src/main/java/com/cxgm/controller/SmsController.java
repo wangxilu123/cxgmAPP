@@ -1,6 +1,21 @@
 package com.cxgm.controller;
 
+import javax.servlet.http.HttpServletRequest;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+
+import com.alibaba.fastjson.JSON;
+import com.cxgm.common.ResultDto;
+import com.cxgm.common.ValidationCodeUtil;
+import com.cxgm.domain.HttpSender;
+import com.cxgm.domain.SmsSendRequest;
+import com.cxgm.service.RedisService;
 
 /**
  * 手机短信发送服务
@@ -8,7 +23,7 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController
 public class SmsController {
-/*
+
     public static final String charset = "utf-8";
     // 用户平台API账号(非登录账号,示例:N1234567)
     public static String account = "N2136353";
@@ -29,14 +44,12 @@ public class SmsController {
 
         logger.info(" sendMessage---- "+phone);
 
-        String ipAddr = MySystemUtils.getIpAddr(request);
-
         //请求地址请登录253云通讯自助通平台查看或者询问您的商务负责人获取
         String smsSingleRequestServerUrl = "http://zapi.253.com/msg/";
 
         logger.info(" sendMessage--smsSingleRequestServerUrl--"+smsSingleRequestServerUrl);
 
-        String key = ipAddr+"_"+phone;
+        String key = phone;
 
         //同一个用户一个小时只能发15次，24小时之内只能发30次。
         int countHours = redisService.get(key+"_counts_1_hours")==null?0:(Integer)redisService.get(key+"_counts_1_hours");
@@ -110,7 +123,7 @@ public class SmsController {
 
         return ResultDto.OK();
 
-    }*/
+    }
 
 
 }

@@ -15,6 +15,9 @@ public class AppUser implements Serializable{
 
     @ApiModelProperty(name = "userName",value = "用户名称")
     private String userName;
+    
+    @ApiModelProperty(name = "userPwd",value = "用户密码")
+    private String userPwd;
 
     @ApiModelProperty(name = "mobile",value = "手机号码")
     private String mobile;
