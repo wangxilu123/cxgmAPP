@@ -3,6 +3,9 @@ server:
     
     
 spring:
+    #thymeleaf
+    thymeleaf:
+      mode: LEGACYHTML5
     #AOP
     aop:
       auto: true
@@ -18,14 +21,14 @@ spring:
         # 使用druid数据源
       type: com.alibaba.druid.pool.DruidDataSource
       MASTER:
-        url: jdbc:mysql://192.168.3.82:3306/mc_user
+        url: jdbc:mysql://192.168.3.82:3306/cxgm
         username: root
         password: root
         driver-class-name: com.mysql.jdbc.Driver
         validationQuery: select 'x'
 
       SLAVE:
-        url: jdbc:mysql://192.168.3.82:3306/mc_user
+        url: jdbc:mysql://192.168.3.82:3306/cxgm
         username: root
         password: root
         # 使用druid数据源

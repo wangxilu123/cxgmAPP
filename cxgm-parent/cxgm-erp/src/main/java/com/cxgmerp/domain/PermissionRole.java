@@ -1,7 +1,11 @@
 package com.cxgmerp.domain;
 
-public class PermissionRole {
-    private Long id;
+import java.io.Serializable;
+
+public class PermissionRole implements Serializable{
+	private static final long serialVersionUID = -6303360743986015371L;
+
+	private Long id;
 
     private Long permissions;
 

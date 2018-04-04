@@ -1,9 +1,12 @@
 package com.cxgmerp.domain;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class Role {
-    private Long id;
+public class Role implements Serializable{
+	private static final long serialVersionUID = -5589647687206224156L;
+
+	private Long id;
 
     private String name;
 
