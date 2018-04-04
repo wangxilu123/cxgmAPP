@@ -8,7 +8,7 @@ import lombok.ToString;
 
 @Data
 @ToString
-public class User implements Serializable{
+public class AppUser implements Serializable{
 
     @ApiModelProperty(name = "主键ID",value = "id")
     private Integer id;
@@ -21,9 +21,6 @@ public class User implements Serializable{
 
     @ApiModelProperty(name = "email",value = "邮箱地址")
     private String email;
-
-    @ApiModelProperty(name = "idCard",value = "身份证号码")
-    private String idCard;
 
     @ApiModelProperty(name = "realName",value = "真实姓名")
     private String realName;

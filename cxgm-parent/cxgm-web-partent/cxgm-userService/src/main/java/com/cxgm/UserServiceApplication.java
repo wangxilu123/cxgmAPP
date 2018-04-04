@@ -2,7 +2,6 @@ package com.cxgm;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.loadbalancer.LoadBalanced;
@@ -34,18 +33,10 @@ import org.springframework.web.filter.CorsFilter;
 @EnableAsync
 public class UserServiceApplication {
     
-    @Value("${foo}")
-    String foo;
-    
-    @Value("${name.word: lisi}")
-    String word;
-    
     private static Logger log = LoggerFactory.getLogger(UserServiceApplication.class);
     
     public static void main(String[] args) {
         SpringApplication.run(UserServiceApplication.class, args);
-        UserServiceApplication u = new UserServiceApplication();
-        log.info("user-Service  started " + u.foo);
     }
     
     @Bean
