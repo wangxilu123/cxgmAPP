@@ -1,7 +1,5 @@
-foo: sfsaff
 server:
     port: 41207
-    permitAllUrl: /center/home/list,/center/search
 
 eureka:
     client:
@@ -18,10 +16,6 @@ eureka:
       #如果是swagger 文档，直接写http://${spring.cloud.client.ipAddress}:${server.port}/swagger-ui.html
       status-page-url: http://${spring.cloud.client.ipAddress}:${server.port}/
       health-check-url: http://${spring.cloud.client.ipAddress}:${server.port}/
-
-upload:
-  filePath: /home/tomcat/uploadfile #（上传文件的路径）
-  returnurl: http://39.107.24.27:6760/ #（返回的http前缀）
 
 spring:
     zipkin:
@@ -75,10 +69,6 @@ spring:
         max-idle: 8
         max-wait: -1
         min-idle: 0
-block: 
-  account: 
-    default: 
-      password: 12345678
 hystrix:  
     command:  
         default:  
