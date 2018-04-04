@@ -16,7 +16,6 @@ public class CustomUsernamePasswordAuthenticationFilter extends UsernamePassword
 		String username = obtainUsername(request);
 		String password = obtainPassword(request);
 
-		String token = request.getParameter("token");// 自定义参数
 		UsernamePasswordAuthenticationToken authRequest = new CustomUsernamePasswordAuthenticationToken(username,
 				password);
 		Authentication authentication = this.getAuthenticationManager().authenticate(authRequest);

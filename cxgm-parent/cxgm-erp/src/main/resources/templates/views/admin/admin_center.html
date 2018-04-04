@@ -5,7 +5,7 @@
 $().ready(function() {
   if(self.location==top.location){
   }else{
-    top.location.href='${base}/admin/center';
+    top.location.href='@{/templates/views/admin/center}';
   }
 });
 </script>
@@ -16,13 +16,12 @@ $().ready(function() {
   以获得更好的体验！</p>
 <![endif]-->
 
-<!-- HEADER -->
-<%include("admin_header.html"){}%>
-<!-- END HEADER -->
+<head th:include ="/views/common/head::commonHead(菜鲜果美)">
+</head>
 
 <div class="am-cf admin-main">
   <!--LEFT PANEL: Navigation area-->
-  <%include("admin_navigation.html"){}%>    
+  <div th:replace="@{/templates/views/common/admin_navigation::admin_navigation"}></div>
   <!-- END LEFT PANEL -->
   
   <!-- content start -->

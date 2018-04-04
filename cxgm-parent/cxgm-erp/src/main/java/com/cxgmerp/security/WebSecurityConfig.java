@@ -73,7 +73,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		        .addFilterBefore(customUsernamePasswordAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class)
 		        .addFilterBefore(myFilterSecurityInterceptor, FilterSecurityInterceptor.class)//在正确的位置添加我们自定义的过滤器  
 				.authorizeRequests()
-					.antMatchers("/static/js/**", "/static/shop/**", "/static/img/**", "/**/favicon.ico","/static/AmazeUI/**","/static/UEditor/**").permitAll()
+				.antMatchers("/static/js/**", "/static/shop/**", "/static/img/**", "/**/favicon.ico","/static/AmazeUI/**","/static/UEditor/**").permitAll()
 	                .regexMatchers("/login\\?invalid", "/login\\?expired",
 	                        "/index", "/home", "/getToken", "/accessDenied"
 	                        , "/changeLang.*")//".*"表示任意字符
@@ -157,7 +157,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         filter.setPasswordParameter("password");
         filter.setMessageSource(messageSource);
         //登录成功或登录失败对应的链接或handler
-        filter.setAuthenticationSuccessHandler(new CustomAuthenticationSuccessHandler("/hello", true));
+        filter.setAuthenticationSuccessHandler(new CustomAuthenticationSuccessHandler("/center", true));
         filter.setAuthenticationFailureHandler(simpleUrlAuthenticationFailureHandler());
         filter.setSessionAuthenticationStrategy(sessionAuthenticationStrategy());
         return filter;

@@ -20,30 +20,15 @@ public class LoginController{
     private CoreMessageSource messageSource;
     
     @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_MANAGER')")
-    @RequestMapping(value = "/hello", method = RequestMethod.GET)
-    public ModelAndView getHello() throws SQLException{
-        return new ModelAndView("views/common/index");
+    @RequestMapping(value = "/center", method = RequestMethod.GET)
+    public ModelAndView getCenter() throws SQLException{
+        return new ModelAndView("views/admin/admin_navigation");
     }
     
-    @RequestMapping(value = "/index", method = RequestMethod.GET)
+    @RequestMapping(value = "/login", method = RequestMethod.GET)
     public ModelAndView getLogin() throws SQLException{
         
         return new ModelAndView("views/common/login");
-    }
-    
-    /*@PreAuthorize("isAuthenticated()")*/
-    @RequestMapping(value = "/login", method = RequestMethod.GET)
-    public ModelAndView home() throws SQLException{
-        
-        return new ModelAndView("views/common/login");
-        
-    }
-    
-    @RequestMapping("/safetyOfficers")
-    public ModelAndView safetyOfficers() throws SQLException{
-        
-        return new ModelAndView("home");
-        
     }
     
     @RequestMapping(value = "/loginexpired", method = RequestMethod.GET)

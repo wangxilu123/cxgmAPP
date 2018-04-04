@@ -1,1 +1,10 @@
-/target/
+#Maven#
+target/
+#Eclipse#
+.settings/
+.metadata/
+.classpath
+.project
+Users/
+
+logs/
