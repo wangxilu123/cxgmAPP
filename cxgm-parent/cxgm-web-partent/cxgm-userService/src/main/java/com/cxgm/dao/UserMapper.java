@@ -16,5 +16,5 @@ public interface UserMapper {
 
 	    List<AppUser> selectByExample(AppUserExample example);
 
-
+	    int updateByPrimaryKey(AppUser record); 
 }

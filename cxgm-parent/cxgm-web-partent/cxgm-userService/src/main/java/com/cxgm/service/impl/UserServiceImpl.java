@@ -1,16 +1,21 @@
 package com.cxgm.service.impl;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.cxgm.common.ResultDto;
+import com.cxgm.common.TokenUtils;
+import com.cxgm.dao.UserLoginMapper;
 import com.cxgm.dao.UserMapper;
 import com.cxgm.domain.AppUser;
 import com.cxgm.domain.AppUserExample;
 import com.cxgm.domain.LoginEntity;
 import com.cxgm.domain.RegisterEntity;
+import com.cxgm.domain.UserLogin;
+import com.cxgm.domain.UserLoginExample;
 import com.cxgm.service.RedisService;
 import com.cxgm.service.UserService;
 
@@ -18,14 +23,16 @@ import com.cxgm.service.UserService;
 public class UserServiceImpl implements UserService {
 
 	@Autowired
-
 	private UserMapper userMapper;
+	
+	@Autowired
+	private UserLoginMapper userLoginMapper;
 
 	@Autowired
 	private RedisService redisService;
 
 	@Override
-	public ResultDto<AppUser> addUser(RegisterEntity register) {
+	public ResultDto<Integer> addUser(RegisterEntity register) {
 
 		AppUserExample example = new AppUserExample();
 
@@ -53,7 +60,7 @@ public class UserServiceImpl implements UserService {
 				
 				userMapper.insert(user);
 				
-				return  new ResultDto<>(200,"注册成功！",user);
+				return  new ResultDto<>(200,"注册成功！",user.getId());
 			}
 		}
 	}
@@ -71,6 +78,30 @@ public class UserServiceImpl implements UserService {
 
 			AppUser appUser = userList.get(0);
 			if (appUser.getUserPwd().equals(loginUser.getPassword())) {
+				//根据用户名查询用户登录信息
+				
+				UserLoginExample example1 = new UserLoginExample();
+				
+				example1.createCriteria().andUserAccountEqualTo(loginUser.getUserAccount());
+				
+				List<UserLogin> userLogins = userLoginMapper.selectByExample(example1);
+				
+				UserLogin userLogin = userLogins.get(0);
+				
+				String newToken = TokenUtils.createToken(loginUser);
+				if (userLogins.size() != 0){
+					userLogin.setToken(newToken);
+					userLogin.setLastLogin(new Date());
+					//token保鲜
+					userLoginMapper.updateByPrimaryKey(userLogin);
+				}else{
+					userLogin = new UserLogin();
+					userLogin.setToken(newToken);
+					userLogin.setUserAccount(loginUser.getUserAccount());
+					userLogin.setLastLogin(new Date());
+					
+					userLoginMapper.insert(userLogin);
+				}
 
 				return new ResultDto<>(200, "登录成功！", appUser);
 			} else {

@@ -13,7 +13,7 @@ public interface UserService {
      * @param RegisterEntity
      * @return
      */
-	ResultDto<AppUser> addUser(RegisterEntity register);
+	ResultDto<Integer> addUser(RegisterEntity register);
 	
     /**
      * 用户登录
