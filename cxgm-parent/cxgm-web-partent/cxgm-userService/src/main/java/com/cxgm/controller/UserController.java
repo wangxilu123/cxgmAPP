@@ -6,12 +6,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.cxgm.common.ResultDto;
 import com.cxgm.domain.AppUser;
+import com.cxgm.domain.LoginEntity;
 import com.cxgm.domain.RegisterEntity;
-import com.cxgm.service.RedisService;
 import com.cxgm.service.UserService;
 
 import io.swagger.annotations.Api;
@@ -29,29 +30,27 @@ public class UserController {
 	@Autowired
 	private UserService userService;
 
-	@Autowired
-	private RedisService redisService;
-
 	@ApiOperation(value = "用户注册", nickname = "用户注册")
 	@PostMapping("/register")
-	public ResultDto register(HttpServletRequest request, @RequestBody RegisterEntity registerEntity)
+	public ResultDto<AppUser> register(HttpServletRequest request, @RequestBody RegisterEntity registerEntity)
 			throws InterruptedException {
+		ResultDto<AppUser> result = userService.addUser(registerEntity);
+		return result;
+	}
 
-		AppUser user = userService.selectByMobile(registerEntity.getMobile());
-		if (user != null) {
-			return ResultDto.error("该手机号已注册，请重试！");
-		}
+	@ApiOperation(value = "用户登录接口", nickname = "用户登录接口")
+	@PostMapping("/login")
+	public ResultDto<AppUser> login(HttpServletRequest request, @RequestBody LoginEntity user) {
 
-		// 校验短信验证码
-		String code = (String) redisService.get(registerEntity.getMobile());
+		ResultDto<AppUser> result = userService.login(user);
+		
+		return result;
+	}
 
-		if ("".equals(code) == false && code.equals(registerEntity.getMobileValidCode())) {
-			return ResultDto.error("验证码有误，请重新输入！");
-		} else {
-			// 删除键值对
-			redisService.remove(registerEntity.getMobile());
-		}
-		userService.addUser(registerEntity);
-		return ResultDto.ok("注册成功！");
+	@ApiOperation(value = "版本控制接口", nickname = "版本控制接口")
+	@PostMapping("/visionControl")
+	public ResultDto visionControl(HttpServletRequest request, @RequestParam String visionCode) {
+
+		return ResultDto.ok("200");
 	}
 }

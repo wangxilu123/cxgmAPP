@@ -1,4 +1,4 @@
-package com.cxgm.domain;
+package com.cxgm.service;
 
 import java.io.ByteArrayOutputStream;
 import java.io.InputStream;

@@ -8,7 +8,7 @@ import lombok.ToString;
 
 @Data
 @ToString
-public class RegisterEntity implements Serializable{
+public class LoginEntity implements Serializable{
     private static final long serialVersionUID = 6031854054753338431L;
     
     @ApiModelProperty(name = "password",value = "用户密码")

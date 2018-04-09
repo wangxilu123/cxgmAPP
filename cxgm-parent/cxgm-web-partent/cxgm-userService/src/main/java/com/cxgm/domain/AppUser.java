@@ -9,8 +9,9 @@ import lombok.ToString;
 @Data
 @ToString
 public class AppUser implements Serializable{
+	private static final long serialVersionUID = 6031854054753338431L;
 
-    @ApiModelProperty(name = "主键ID",value = "id")
+    @ApiModelProperty(name = "id",value = "主键ID",hidden = true)
     private Integer id;
 
     @ApiModelProperty(name = "userName",value = "用户名称")
@@ -22,12 +23,7 @@ public class AppUser implements Serializable{
     @ApiModelProperty(name = "mobile",value = "手机号码")
     private String mobile;
 
-    @ApiModelProperty(name = "email",value = "邮箱地址")
-    private String email;
+    @ApiModelProperty(name = "headUrl",value = "头像")
+    private String headUrl;
 
-    @ApiModelProperty(name = "realName",value = "真实姓名")
-    private String realName;
-
-    @ApiModelProperty(name = "peopleType",value = "用户类型")
-    private String peopleType;
 }

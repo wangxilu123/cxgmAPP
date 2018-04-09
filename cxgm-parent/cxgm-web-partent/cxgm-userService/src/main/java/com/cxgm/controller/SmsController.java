@@ -13,8 +13,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.alibaba.fastjson.JSON;
 import com.cxgm.common.ResultDto;
 import com.cxgm.common.ValidationCodeUtil;
-import com.cxgm.domain.HttpSender;
 import com.cxgm.domain.SmsSendRequest;
+import com.cxgm.service.HttpSender;
 import com.cxgm.service.RedisService;
 
 /**
