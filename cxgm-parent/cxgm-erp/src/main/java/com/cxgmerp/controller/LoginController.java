@@ -2,8 +2,13 @@ package com.cxgmerp.controller;
 
 import java.sql.SQLException;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -12,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.cxgmerp.config.CoreMessageSource;
+import com.cxgmerp.domain.Admin;
 
 @RestController
 public class LoginController{
@@ -21,20 +27,18 @@ public class LoginController{
     
     @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_MANAGER')")
     @RequestMapping(value = "/center", method = RequestMethod.GET)
-    public ModelAndView getCenter() throws SQLException{
-        return new ModelAndView("views/admin/admin_navigation");
+    public ModelAndView getCenter(HttpServletRequest request) throws SQLException{
+        SecurityContext ctx = SecurityContextHolder.getContext();  
+        Authentication auth = ctx.getAuthentication(); 
+    	 Admin admin = (Admin) auth.getPrincipal();
+         request.setAttribute("admin", admin);
+        return new ModelAndView("index");
     }
     
     @RequestMapping(value = "/login", method = RequestMethod.GET)
     public ModelAndView getLogin() throws SQLException{
         
-        return new ModelAndView("views/common/login");
-    }
-    
-    @RequestMapping(value = "/loginexpired", method = RequestMethod.GET)
-    public String loginexpired() throws SQLException{
-        
-        return "被踢出了";
+        return new ModelAndView("login");
     }
     
     /**  

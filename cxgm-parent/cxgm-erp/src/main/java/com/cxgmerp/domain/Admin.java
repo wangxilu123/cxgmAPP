@@ -1,12 +1,14 @@
 package com.cxgmerp.domain;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 import java.util.List;
-import java.util.Set;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 
 public class Admin implements UserDetails{
 
@@ -50,9 +52,17 @@ public class Admin implements UserDetails{
 
     private Boolean deleteFlag;
     
-    private List<Role> roles;
-    
-    private Set<Permission> permission;
+
+    /**
+	 * 角色集合
+	 */
+	@JsonDeserialize
+	private List<Integer> roleIds = new ArrayList<Integer>();
+	
+	/**
+	 * 分层次授权资源
+	 */
+	private List<Permission> permissionList = new ArrayList<Permission>();
     
     private Collection<? extends GrantedAuthority> authorities;
     
@@ -91,8 +101,7 @@ public class Admin implements UserDetails{
 		return isEnabled;
 	}
     
-
-    public Long getId() {
+	public Long getId() {
         return id;
     }
 
@@ -236,20 +245,20 @@ public class Admin implements UserDetails{
         this.deleteFlag = deleteFlag;
     }
 
-	public List<Role> getRoles() {
-		return roles;
+	public List<Integer> getRoleIds() {
+		return roleIds;
 	}
 
-	public void setRoles(List<Role> roles) {
-		this.roles = roles;
+	public void setRoleIds(List<Integer> roleIds) {
+		this.roleIds = roleIds;
 	}
 
-	public Set<Permission> getPermission() {
-		return permission;
+	public List<Permission> getPermissionList() {
+		return permissionList;
 	}
 
-	public void setPermission(Set<Permission> permission) {
-		this.permission = permission;
+	public void setPermissionList(List<Permission> permissionList) {
+		this.permissionList = permissionList;
 	}
 
 	public void setAuthorities(Collection<? extends GrantedAuthority> authorities) {

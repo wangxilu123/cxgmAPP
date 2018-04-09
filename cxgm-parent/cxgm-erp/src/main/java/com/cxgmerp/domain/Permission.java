@@ -1,7 +1,9 @@
 package com.cxgmerp.domain;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 public class Permission implements Serializable{
 	private static final long serialVersionUID = -7526150743688102557L;
@@ -27,7 +29,13 @@ public class Permission implements Serializable{
 	private Date lastUpdatedDate;
 
 	private Boolean deleteFlag;
-
+	
+	private Integer pid;
+	
+	private Integer type;
+	
+	private List<Permission> childList = new ArrayList<>();
+	
 	public Long getId() {
 		return id;
 	}
@@ -116,24 +124,47 @@ public class Permission implements Serializable{
 		this.deleteFlag = deleteFlag;
 	}
 
-	@Override
-	public boolean equals(Object obj) {
-		if (obj == null)
-			return false;
-		if (this == obj)
-			return true;
-		if (obj instanceof Permission) {
-			Permission user = (Permission) obj;
-			if (user.id == this.id)
-				return true; // 只比较id
-		}
-		return false;
+	public List<Permission> getChildList() {
+		return childList;
 	}
 
-	@Override
-	public int hashCode() {
-		int result = 17;
-		result = (int) (31 * result + this.id.hashCode());
-		return result;
+	public void setChildList(List<Permission> childList) {
+		this.childList = childList;
 	}
+	public Integer getPid() {
+		return pid;
+	}
+
+	public void setPid(Integer pid) {
+		this.pid = pid;
+	}
+
+	public Integer getType() {
+		return type;
+	}
+
+	public void setType(Integer type) {
+		this.type = type;
+	}
+
+//	@Override
+//	public boolean equals(Object obj) {
+//		if (obj == null)
+//			return false;
+//		if (this == obj)
+//			return true;
+//		if (obj instanceof Permission) {
+//			Permission user = (Permission) obj;
+//			if (user.id == this.id)
+//				return true; // 只比较id
+//		}
+//		return false;
+//	}
+//
+//	@Override
+//	public int hashCode() {
+//		int result = 17;
+//		result = (int) (31 * result + this.id.hashCode());
+//		return result;
+//	}
 }

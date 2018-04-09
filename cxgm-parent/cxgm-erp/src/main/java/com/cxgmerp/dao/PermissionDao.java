@@ -2,12 +2,28 @@ package com.cxgmerp.dao;
 
 import java.util.List;
 
+import org.mybatis.spring.SqlSessionTemplate;
+import org.springframework.stereotype.Component;
+
 import com.cxgmerp.domain.Permission;
 import com.cxgmerp.domain.PermissionAndRole;
+@Component
+public class PermissionDao extends BaseDaoImpl<Permission,Integer>{
 
-public interface PermissionDao {
+	@Override
+	public String getNameSpace() {
+		return "sql.Permission";
+	}
 	
-    List<PermissionAndRole> findAllPermissions();
-    
-    List<Permission> findByRole(Long roleid);
+	public SqlSessionTemplate getSqlSessionTemplate(){
+		return super.getSqlSessionTemplate();
+	}
+	
+	 public List<PermissionAndRole> findAllPermissions(){
+		 return this.getSqlSessionTemplate().selectList(getNameSpace()+".findAllPermissions");
+	 }
+	    
+	 public List<Permission> findByRole(Long roleid){
+		return this.getSqlSessionTemplate().selectList(getNameSpace()+".findByRole",roleid);
+	 }
 }

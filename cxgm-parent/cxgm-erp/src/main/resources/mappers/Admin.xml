@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.cxgmerp.dao.AdminDao">
+<mapper namespace="sql.Admin">
   <resultMap id="BaseResultMap" type="com.cxgmerp.domain.Admin">
     <id column="id" jdbcType="BIGINT" property="id" />
     <result column="name" jdbcType="VARCHAR" property="name" />
@@ -22,7 +22,7 @@
     <result column="last_updated_date" jdbcType="TIMESTAMP" property="lastUpdatedDate" />
     <result column="delete_flag" jdbcType="BIT" property="deleteFlag" />
     
-    <collection property="roles" ofType="com.cxgmerp.domain.Role">
+   <!--  <collection property="roles" ofType="com.cxgmerp.domain.Role">
     	 <result column="name" jdbcType="VARCHAR" property="name" />
 	    <result column="value" jdbcType="VARCHAR" property="value" />
 	    <result column="description" jdbcType="VARCHAR" property="description" />
@@ -32,21 +32,7 @@
 	    <result column="last_updated_by" jdbcType="VARCHAR" property="lastUpdatedBy" />
 	    <result column="last_updated_date" jdbcType="TIMESTAMP" property="lastUpdatedDate" />
 	    <result column="delete_flag" jdbcType="BIT" property="deleteFlag" />
-    </collection>
-    
-    <collection property="permission" ofType="com.cxgmerp.domain.Permission">
-    	<result column="id" jdbcType="BIGINT" property="id" />
-    	 <result column="name" jdbcType="VARCHAR" property="name" />
-	    <result column="value" jdbcType="VARCHAR" property="value" />
-	    <result column="url" jdbcType="VARCHAR" property="url" />
-	    <result column="module" jdbcType="VARCHAR" property="module" />
-	    <result column="description" jdbcType="VARCHAR" property="description" />
-	    <result column="create_by" jdbcType="VARCHAR" property="createBy" />
-	    <result column="creation_date" jdbcType="TIMESTAMP" property="creationDate" />
-	    <result column="last_updated_by" jdbcType="VARCHAR" property="lastUpdatedBy" />
-	    <result column="last_updated_date" jdbcType="TIMESTAMP" property="lastUpdatedDate" />
-	    <result column="delete_flag" jdbcType="BIT" property="deleteFlag" />
-    </collection>
+    </collection> -->
     
   </resultMap>
   <sql id="Base_Column_List">
@@ -54,16 +40,23 @@
     locked_date, login_date, login_ip, login_failure_count, create_by, creation_date, 
     last_updated_by, last_updated_date, delete_flag
   </sql>
-  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
-    select 
-    <include refid="Base_Column_List" />
-    from admin
-    where id = #{id,jdbcType=BIGINT}
-  </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
-    delete from admin
-    where id = #{id,jdbcType=BIGINT}
-  </delete>
+  
+  
+  	<!--查询列参数 -->
+	<sql id="queryMap">
+		<if test="startDate !=null and startDate != ''">
+    		<![CDATA[and DATE_FORMAT(createTime, '%Y-%m-%d') >=  DATE_FORMAT(#{startDate}, '%Y-%m-%d')]]>
+		</if>
+		<if test="endDate !=null and endDate != ''">
+    		<![CDATA[and DATE_FORMAT(createTime, '%Y-%m-%d') <=  DATE_FORMAT(#{endDate}, '%Y-%m-%d')]]>
+		</if>
+		<if test="account != null">
+			and account like concat('%', #{account,jdbcType=VARCHAR},
+			'%')
+		</if>
+	</sql>
+  
+  
   <insert id="insert" parameterType="com.cxgmerp.domain.Admin">
     insert into admin (id, name, username, 
       password, hasher, salt, 
@@ -80,128 +73,8 @@
       #{creationDate,jdbcType=TIMESTAMP}, #{lastUpdatedBy,jdbcType=VARCHAR}, #{lastUpdatedDate,jdbcType=TIMESTAMP}, 
       #{deleteFlag,jdbcType=BIT})
   </insert>
-  <insert id="insertSelective" parameterType="com.cxgmerp.domain.Admin">
-    insert into admin
-    <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="id != null">
-        id,
-      </if>
-      <if test="name != null">
-        name,
-      </if>
-      <if test="username != null">
-        username,
-      </if>
-      <if test="password != null">
-        password,
-      </if>
-      <if test="hasher != null">
-        hasher,
-      </if>
-      <if test="salt != null">
-        salt,
-      </if>
-      <if test="department != null">
-        department,
-      </if>
-      <if test="email != null">
-        email,
-      </if>
-      <if test="isEnabled != null">
-        is_enabled,
-      </if>
-      <if test="isLocked != null">
-        is_locked,
-      </if>
-      <if test="lockedDate != null">
-        locked_date,
-      </if>
-      <if test="loginDate != null">
-        login_date,
-      </if>
-      <if test="loginIp != null">
-        login_ip,
-      </if>
-      <if test="loginFailureCount != null">
-        login_failure_count,
-      </if>
-      <if test="createBy != null">
-        create_by,
-      </if>
-      <if test="creationDate != null">
-        creation_date,
-      </if>
-      <if test="lastUpdatedBy != null">
-        last_updated_by,
-      </if>
-      <if test="lastUpdatedDate != null">
-        last_updated_date,
-      </if>
-      <if test="deleteFlag != null">
-        delete_flag,
-      </if>
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="id != null">
-        #{id,jdbcType=BIGINT},
-      </if>
-      <if test="name != null">
-        #{name,jdbcType=VARCHAR},
-      </if>
-      <if test="username != null">
-        #{username,jdbcType=VARCHAR},
-      </if>
-      <if test="password != null">
-        #{password,jdbcType=VARCHAR},
-      </if>
-      <if test="hasher != null">
-        #{hasher,jdbcType=VARCHAR},
-      </if>
-      <if test="salt != null">
-        #{salt,jdbcType=VARCHAR},
-      </if>
-      <if test="department != null">
-        #{department,jdbcType=VARCHAR},
-      </if>
-      <if test="email != null">
-        #{email,jdbcType=VARCHAR},
-      </if>
-      <if test="isEnabled != null">
-        #{isEnabled,jdbcType=BIT},
-      </if>
-      <if test="isLocked != null">
-        #{isLocked,jdbcType=BIT},
-      </if>
-      <if test="lockedDate != null">
-        #{lockedDate,jdbcType=TIMESTAMP},
-      </if>
-      <if test="loginDate != null">
-        #{loginDate,jdbcType=TIMESTAMP},
-      </if>
-      <if test="loginIp != null">
-        #{loginIp,jdbcType=VARCHAR},
-      </if>
-      <if test="loginFailureCount != null">
-        #{loginFailureCount,jdbcType=INTEGER},
-      </if>
-      <if test="createBy != null">
-        #{createBy,jdbcType=VARCHAR},
-      </if>
-      <if test="creationDate != null">
-        #{creationDate,jdbcType=TIMESTAMP},
-      </if>
-      <if test="lastUpdatedBy != null">
-        #{lastUpdatedBy,jdbcType=VARCHAR},
-      </if>
-      <if test="lastUpdatedDate != null">
-        #{lastUpdatedDate,jdbcType=TIMESTAMP},
-      </if>
-      <if test="deleteFlag != null">
-        #{deleteFlag,jdbcType=BIT},
-      </if>
-    </trim>
-  </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.cxgmerp.domain.Admin">
+ 
+  <update id="update" parameterType="com.cxgmerp.domain.Admin">
     update admin
     <set>
       <if test="name != null">
@@ -261,32 +134,55 @@
     </set>
     where id = #{id,jdbcType=BIGINT}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.cxgmerp.domain.Admin">
-    update admin
-    set name = #{name,jdbcType=VARCHAR},
-      username = #{username,jdbcType=VARCHAR},
-      password = #{password,jdbcType=VARCHAR},
-      hasher = #{hasher,jdbcType=VARCHAR},
-      salt = #{salt,jdbcType=VARCHAR},
-      department = #{department,jdbcType=VARCHAR},
-      email = #{email,jdbcType=VARCHAR},
-      is_enabled = #{isEnabled,jdbcType=BIT},
-      is_locked = #{isLocked,jdbcType=BIT},
-      locked_date = #{lockedDate,jdbcType=TIMESTAMP},
-      login_date = #{loginDate,jdbcType=TIMESTAMP},
-      login_ip = #{loginIp,jdbcType=VARCHAR},
-      login_failure_count = #{loginFailureCount,jdbcType=INTEGER},
-      create_by = #{createBy,jdbcType=VARCHAR},
-      creation_date = #{creationDate,jdbcType=TIMESTAMP},
-      last_updated_by = #{lastUpdatedBy,jdbcType=VARCHAR},
-      last_updated_date = #{lastUpdatedDate,jdbcType=TIMESTAMP},
-      delete_flag = #{deleteFlag,jdbcType=BIT}
-    where id = #{id,jdbcType=BIGINT}
-  </update>
+  
+  <!-- 总记录数 -->
+	<select id="findListCount" parameterType="map" resultType="int">
+		select count(1)
+		from admin
+		where 1 = 1
+		<include refid="queryMap" />
+		order by id desc
+	</select>
+	<!-- 查询列表 -->
+	<select id="findList" parameterType="map" resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from admin
+		where 1 = 1
+		<include refid="queryMap" />
+		order by id desc
+	</select>
+	<!-- 查询所有 -->
+	<select id="findListAll" resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from admin
+		where 1 = 1
+		order by id asc
+	</select>
+	<!-- 查询所有 -->
+	<select id="findListAllWithMap" parameterType="map" resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from admin
+		where 1=1
+		order by id asc
+	</select>
+	<!--查询一个 -->
+	<select id="findById" parameterType="java.lang.Integer"
+		resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from admin
+		where id = #{id,jdbcType=INTEGER}
+	</select>
+  
   
   <select id="findByUserName" parameterType="String" resultMap="BaseResultMap">
         select *
         from admin
         where username= #{username}
+        order by id
+		desc
     </select>
 </mapper>

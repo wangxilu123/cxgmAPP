@@ -2,7 +2,6 @@ package com.cxgmerp.security;
 
 import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
@@ -14,55 +13,73 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-import com.cxgmerp.dao.AdminDao;
-import com.cxgmerp.dao.PermissionDao;
-import com.cxgmerp.dao.RoleDao;
 import com.cxgmerp.domain.Admin;
 import com.cxgmerp.domain.Permission;
 import com.cxgmerp.domain.Role;
+import com.cxgmerp.service.AdminService;
+import com.cxgmerp.service.PermissionService;
+import com.cxgmerp.service.RoleService;
 
 @Service
 public class CustomUserService implements UserDetailsService {
 
 	
 	@Autowired
-	RoleDao roleDao;
+	RoleService roleService;
 	
 	@Autowired
-	AdminDao adminDao;
+	AdminService adminService;
 	
 	@Autowired
-    private PermissionDao permissionDao;
+    PermissionService permissionService;
 	
 	
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-		Admin admin = adminDao.findByUserName(username);//获取用户信息
+		Admin admin = adminService.findByUserName(username);//获取用户信息
 		
-		List<Role> roles = roleDao.findByUserName(username);//获取用户对应的角色
+		List<Role> roles = roleService.findByUserName(username);//获取用户对应的角色
 		
-		Set<Permission> permissionset = new HashSet<Permission>();//保存用户的所有权限
+		List<Permission> permissionSet = new ArrayList<>();
+		
+		List<Permission> menuPermissionList = new ArrayList<>();
+		
+		Set<Integer> permissionIDset = new HashSet<Integer>();//保存用户的所有权限
 		if(roles.size()>0) {
 			for(Role role:roles) {
-				List<Permission> ps = permissionDao.findByRole(role.getId());//根据角色获取对应的权限
+				List<Permission> ps = permissionService.findByRole(role.getId());//根据角色获取对应的权限
 				for(Permission p:ps) {
-					permissionset.add(p);
+					permissionIDset.add(p.getId().intValue());
 				}
 			}
 		}
-		if(permissionset.size()>0) {
-			List<GrantedAuthority> grantedAuthorities = new ArrayList<>();
-			for(Role role : roles) {
-				GrantedAuthority grantedAuthority = new SimpleGrantedAuthority(role.getValue());
-				grantedAuthorities.add(grantedAuthority);
-			}
-			admin.setAuthorities(grantedAuthorities);
-			admin.setRoles(roles);
-			admin.setPermission(permissionset);
-			return admin;
-		}else {
-			throw new UsernameNotFoundException("admin: " + username + " do not exist!");
+		
+		permissionSet = permissionService.findListByIds(new ArrayList<Integer>(permissionIDset));
+		
+		List<GrantedAuthority> grantedAuthorities = new ArrayList<>();
+		for(Role role : roles) {
+			GrantedAuthority grantedAuthority = new SimpleGrantedAuthority(role.getValue());
+			grantedAuthorities.add(grantedAuthority);
 		}
+		admin.setAuthorities(grantedAuthorities);
+		
+		if(permissionSet.size()>0) {
+			for(Permission p: permissionSet) {
+				if(null!= p.getPid()&& p.getPid()==0) {
+					menuPermissionList.add(p);
+				}
+			}
+			for(Permission per:menuPermissionList) {
+				for(Permission pe:permissionSet) {
+					if(null!= pe.getPid() && pe.getPid() == per.getId().intValue()) {
+						per.getChildList().add(pe);
+					}
+				}
+			}
+			admin.setPermissionList(menuPermissionList);
+			return admin;
+		}
+		throw new UsernameNotFoundException("admin: " + username + " do not exist!");
 	}
 
 }

@@ -23,6 +23,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.session.SessionRegistry;
 import org.springframework.security.core.session.SessionRegistryImpl;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.web.access.AccessDeniedHandler;
 import org.springframework.security.web.access.intercept.FilterSecurityInterceptor;
 import org.springframework.security.web.authentication.AbstractAuthenticationTargetUrlRequestHandler;
 import org.springframework.security.web.authentication.SavedRequestAwareAuthenticationSuccessHandler;
@@ -53,6 +54,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	@Autowired
 	private MyFilterSecurityInterceptor myFilterSecurityInterceptor;
 	
+	@Autowired  
+    private AccessDeniedHandler accessDeniedHandler;  
 
 	// messageSource 在MessageSource里定义的
 	@Autowired
@@ -73,7 +76,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		        .addFilterBefore(customUsernamePasswordAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class)
 		        .addFilterBefore(myFilterSecurityInterceptor, FilterSecurityInterceptor.class)//在正确的位置添加我们自定义的过滤器  
 				.authorizeRequests()
-				.antMatchers("/static/js/**", "/static/shop/**", "/static/img/**", "/**/favicon.ico","/static/AmazeUI/**","/static/UEditor/**").permitAll()
+				.antMatchers("/static/js/**", "/static/img/**", "/**/favicon.ico","/static/css/**","/static/fonts/**","/static/plugins/**").permitAll()
 	                .regexMatchers("/login\\?invalid", "/login\\?expired",
 	                        "/index", "/home", "/getToken", "/accessDenied"
 	                        , "/changeLang.*")//".*"表示任意字符
@@ -83,13 +86,13 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 				.and()
 					.formLogin()
 						.loginPage("/login")
-						.failureUrl("/login?error")
+						.failureUrl("/login?error=true")
 						.permitAll()// 登陆页面用户任意访问
 				.and()
-                	.sessionManagement()
-                	.invalidSessionUrl("/login?invalid")//sessoin超时的响应url
+                	.sessionManagement()//.sessionManagement().maximumSessions(2).expiredUrl("/login?expired").sessionRegistry(sessionRegistry());
+					.invalidSessionUrl("/login?invalid")//sessoin超时的响应url
                 .and()
-                	.exceptionHandling().accessDeniedPage("/accessDenied")
+                	.exceptionHandling().accessDeniedHandler(accessDeniedHandler)
                 .and()
                 	.logout()
                     	.invalidateHttpSession(false)
@@ -106,7 +109,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	@Override
 	public void configure(WebSecurity web) throws Exception {
 		// js 、 css 、等不做权限验证
-		web.ignoring().antMatchers("/static/js/**", "/static/shop/**", "/static/img/**", "/**/favicon.ico","/static/AmazeUI/**","/static/UEditor/**");
+		web.ignoring().antMatchers("/static/js/**", "/static/img/**", "/**/favicon.ico","/static/css/**","/static/fonts/**","/static/plugins/**");
 	}
 
 	@Bean
@@ -174,9 +177,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	                                        HttpServletResponse response,
 	                                        Authentication authentication) throws ServletException, IOException {
 	        
-	        //更新用户信息，充值密码错误次数
-            Admin securityUser = (Admin) authentication.getPrincipal();
-            
 //            AclUser aclUser = aclUserService.findAclUserByName(securityUser.getUsername());
 //            
 //            aclUser.setLastModifyTime(new Date());
