@@ -1,6 +1,7 @@
 package com.cxgm.controller;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -47,7 +48,7 @@ public class UserController {
 
 	@ApiOperation(value = "用户登录接口", nickname = "用户登录接口")
 	@PostMapping("/login")
-	public ResultDto<AppUser> login(HttpServletRequest request, @RequestBody LoginEntity user) {
+	public ResultDto<AppUser> login(HttpServletRequest request,HttpServletResponse response, @RequestBody LoginEntity user) {
 
 		ResultDto<AppUser> result = userService.login(user);
 		

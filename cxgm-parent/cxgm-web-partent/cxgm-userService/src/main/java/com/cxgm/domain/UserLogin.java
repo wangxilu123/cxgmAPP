@@ -3,6 +3,8 @@ package com.cxgm.domain;
 import java.io.Serializable;
 import java.util.Date;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.ToString;    
@@ -25,6 +27,7 @@ public class UserLogin implements Serializable{
     private String deviceToken;
     
 	@ApiModelProperty(name = "lastLogin",value = "最近登录时间")
+	@JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
     private Date lastLogin;
     
 }

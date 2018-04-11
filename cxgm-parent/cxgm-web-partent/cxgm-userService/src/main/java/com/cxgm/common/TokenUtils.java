@@ -2,8 +2,7 @@ package com.cxgm.common;
 
 import com.cxgm.domain.LoginEntity;
 
-public class TokenUtils
-{
+public class TokenUtils{
 
     public static String createToken(LoginEntity user)
     {
@@ -18,4 +17,6 @@ public class TokenUtils
         
         return token;
     }
+    
+    
 }
