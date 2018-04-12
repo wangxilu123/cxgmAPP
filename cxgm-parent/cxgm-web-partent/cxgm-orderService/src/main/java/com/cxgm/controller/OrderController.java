@@ -13,7 +13,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.cxgm.common.CheckToken;
 import com.cxgm.common.ResultDto;
+import com.cxgm.domain.AppUser;
 import com.cxgm.domain.Order;
 import com.cxgm.service.OrderService;
 import com.github.pagehelper.PageInfo;
@@ -39,7 +41,7 @@ public class OrderController {
     @ApiOperation(value = "用户下单接口",nickname = "用户下单接口")
     @ApiImplicitParam(name = "order", value = "用户实体order", required = true, dataType = "Order")
     @PostMapping("/addOrder")
-    public ResultDto<Integer> addGood(HttpServletRequest request, @Valid @RequestBody  Order order){
+    public ResultDto<Integer> addOrder(HttpServletRequest request, @Valid @RequestBody  Order order){
     	
     	Integer orderId = orderService.addOrder(order);
     	
@@ -55,10 +57,35 @@ public class OrderController {
     public ResultDto<PageInfo<Order>> homeList(HttpServletRequest request,
             @RequestParam(value = "pageNum", defaultValue = "1" , required = false) Integer pageNum,
             @RequestParam(value = "pageSize", defaultValue = "10" , required = false) Integer pageSize){
-    	request.getHeader("token");
     	
-        
-        return new ResultDto(null);
+    	AppUser appUser = new CheckToken().check(request.getHeader("token"));
+    	
+    	if(appUser!=null){
+    		
+    		PageInfo<Order> result = orderService.orderList(pageNum, pageSize, appUser.getId());
+    		
+    		return new ResultDto<>(200,"查询成功！",result);
+    	}else{
+    		return new ResultDto<>(403,"token失效请重新登录！");
+    	}
+    }
+    
+    @ApiOperation(value = "删除订单接口",nickname = "删除订单接口")
+    @ApiImplicitParam(name = "orderId", value = "订单ID", required = true, dataType = "Integer")
+    @PostMapping("/deleteOrder")
+    public ResultDto<Integer> deleteOrder(HttpServletRequest request, 
+    		@RequestParam(value = "orderId", required = false) Integer orderId){
+    	
+        AppUser appUser = new CheckToken().check(request.getHeader("token"));
+    	
+    	if(appUser!=null){
+    		
+    		Integer result = orderService.deleteOrder(orderId, appUser.getId());
+    		
+    		return new ResultDto<>(200,"删除成功！",result);
+    	}else{
+    		return new ResultDto<>(403,"token失效请重新登录！");
+    	}
     }
 
 }

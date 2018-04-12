@@ -7,7 +7,11 @@ import java.util.Date;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 import io.swagger.annotations.ApiModelProperty;
+import lombok.Data;
+import lombok.ToString;
 
+@Data
+@ToString
 public class Order implements Serializable{
 	
     private static final long serialVersionUID = 6031854054753338431L;
