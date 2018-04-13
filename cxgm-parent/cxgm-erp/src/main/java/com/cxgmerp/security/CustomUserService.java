@@ -54,15 +54,16 @@ public class CustomUserService implements UserDetailsService {
 			}
 		}
 		
-		permissionSet = permissionService.findListByIds(new ArrayList<Integer>(permissionIDset));
-		
 		List<GrantedAuthority> grantedAuthorities = new ArrayList<>();
 		for(Role role : roles) {
 			GrantedAuthority grantedAuthority = new SimpleGrantedAuthority(role.getValue());
 			grantedAuthorities.add(grantedAuthority);
 		}
 		admin.setAuthorities(grantedAuthorities);
-		
+		if(permissionIDset.size()==0) {
+			return admin;
+		}
+		permissionSet = permissionService.findListByIds(new ArrayList<Integer>(permissionIDset));
 		if(permissionSet.size()>0) {
 			for(Permission p: permissionSet) {
 				if(null!= p.getPid()&& p.getPid()==0) {
@@ -71,7 +72,7 @@ public class CustomUserService implements UserDetailsService {
 			}
 			for(Permission per:menuPermissionList) {
 				for(Permission pe:permissionSet) {
-					if(null!= pe.getPid() && pe.getPid() == per.getId().intValue()) {
+					if(null!= pe.getPid() && pe.getPid() == per.getId().intValue() && null != pe.getType() && pe.getType() == 0) {
 						per.getChildList().add(pe);
 					}
 				}

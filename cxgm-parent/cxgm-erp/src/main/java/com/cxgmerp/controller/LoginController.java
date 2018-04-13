@@ -32,13 +32,13 @@ public class LoginController{
         Authentication auth = ctx.getAuthentication(); 
     	 Admin admin = (Admin) auth.getPrincipal();
          request.setAttribute("admin", admin);
-        return new ModelAndView("index");
+        return new ModelAndView("admin/admin_center");
     }
     
     @RequestMapping(value = "/login", method = RequestMethod.GET)
     public ModelAndView getLogin() throws SQLException{
         
-        return new ModelAndView("login");
+        return new ModelAndView("admin/admin_login");
     }
     
     /**  

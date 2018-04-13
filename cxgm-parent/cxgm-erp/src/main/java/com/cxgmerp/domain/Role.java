@@ -2,6 +2,7 @@ package com.cxgmerp.domain;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 public class Role implements Serializable{
 	private static final long serialVersionUID = -5589647687206224156L;
@@ -25,6 +26,8 @@ public class Role implements Serializable{
     private Date lastUpdatedDate;
 
     private Boolean deleteFlag;
+    
+    private List<Permission> resourceList;
 
     public Long getId() {
         return id;
@@ -105,4 +108,12 @@ public class Role implements Serializable{
     public void setDeleteFlag(Boolean deleteFlag) {
         this.deleteFlag = deleteFlag;
     }
+
+	public List<Permission> getResourceList() {
+		return resourceList;
+	}
+
+	public void setResourceList(List<Permission> resourceList) {
+		this.resourceList = resourceList;
+	}
 }

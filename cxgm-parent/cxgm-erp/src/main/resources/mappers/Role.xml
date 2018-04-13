@@ -17,17 +17,28 @@
     id, name, value, description, is_system, create_by, creation_date, last_updated_by, 
     last_updated_date, delete_flag
   </sql>
-  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+  <select id="findById" parameterType="java.lang.Long" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
     from role
     where id = #{id,jdbcType=BIGINT}
   </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+  
+  <select id="selectByName" parameterType="String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from role
+    where name = #{rolename,jdbcType=VARCHAR}
+  </select>
+  
+  <delete id="delete" parameterType="java.lang.Long">
     delete from role
     where id = #{id,jdbcType=BIGINT}
   </delete>
   <insert id="insert" parameterType="com.cxgmerp.domain.Role">
+   <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">  
+        SELECT LAST_INSERT_ID()  
+    </selectKey>  
     insert into role (id, name, value, 
       description, is_system, create_by, 
       creation_date, last_updated_by, last_updated_date, 
@@ -37,74 +48,8 @@
       #{creationDate,jdbcType=TIMESTAMP}, #{lastUpdatedBy,jdbcType=VARCHAR}, #{lastUpdatedDate,jdbcType=TIMESTAMP}, 
       #{deleteFlag,jdbcType=BIT})
   </insert>
-  <insert id="insertSelective" parameterType="com.cxgmerp.domain.Role">
-    insert into role
-    <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="id != null">
-        id,
-      </if>
-      <if test="name != null">
-        name,
-      </if>
-      <if test="value != null">
-        value,
-      </if>
-      <if test="description != null">
-        description,
-      </if>
-      <if test="isSystem != null">
-        is_system,
-      </if>
-      <if test="createBy != null">
-        create_by,
-      </if>
-      <if test="creationDate != null">
-        creation_date,
-      </if>
-      <if test="lastUpdatedBy != null">
-        last_updated_by,
-      </if>
-      <if test="lastUpdatedDate != null">
-        last_updated_date,
-      </if>
-      <if test="deleteFlag != null">
-        delete_flag,
-      </if>
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="id != null">
-        #{id,jdbcType=BIGINT},
-      </if>
-      <if test="name != null">
-        #{name,jdbcType=VARCHAR},
-      </if>
-      <if test="value != null">
-        #{value,jdbcType=VARCHAR},
-      </if>
-      <if test="description != null">
-        #{description,jdbcType=VARCHAR},
-      </if>
-      <if test="isSystem != null">
-        #{isSystem,jdbcType=BIT},
-      </if>
-      <if test="createBy != null">
-        #{createBy,jdbcType=VARCHAR},
-      </if>
-      <if test="creationDate != null">
-        #{creationDate,jdbcType=TIMESTAMP},
-      </if>
-      <if test="lastUpdatedBy != null">
-        #{lastUpdatedBy,jdbcType=VARCHAR},
-      </if>
-      <if test="lastUpdatedDate != null">
-        #{lastUpdatedDate,jdbcType=TIMESTAMP},
-      </if>
-      <if test="deleteFlag != null">
-        #{deleteFlag,jdbcType=BIT},
-      </if>
-    </trim>
-  </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.cxgmerp.domain.Role">
+  
+  <update id="update" parameterType="com.cxgmerp.domain.Role">
     update role
     <set>
       <if test="name != null">
@@ -137,19 +82,7 @@
     </set>
     where id = #{id,jdbcType=BIGINT}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.cxgmerp.domain.Role">
-    update role
-    set name = #{name,jdbcType=VARCHAR},
-      value = #{value,jdbcType=VARCHAR},
-      description = #{description,jdbcType=VARCHAR},
-      is_system = #{isSystem,jdbcType=BIT},
-      create_by = #{createBy,jdbcType=VARCHAR},
-      creation_date = #{creationDate,jdbcType=TIMESTAMP},
-      last_updated_by = #{lastUpdatedBy,jdbcType=VARCHAR},
-      last_updated_date = #{lastUpdatedDate,jdbcType=TIMESTAMP},
-      delete_flag = #{deleteFlag,jdbcType=BIT}
-    where id = #{id,jdbcType=BIGINT}
-  </update>
+  
   <select id="findByUserName" parameterType="String" resultMap="BaseResultMap">
         select r.*
         from admin a
@@ -157,4 +90,13 @@
         LEFT JOIN role r on ar.roles=r.id
         where username= #{username}
     </select>
+    <!-- 查询所有 -->
+	<select id="findListAll" resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from role
+		where 1 = 1
+		order by id asc
+	</select>
+    
 </mapper>

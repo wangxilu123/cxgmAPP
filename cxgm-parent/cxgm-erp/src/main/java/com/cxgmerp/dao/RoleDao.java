@@ -8,7 +8,7 @@ import org.springframework.stereotype.Component;
 import com.cxgmerp.domain.Role;
 
 @Component
-public class RoleDao extends BaseDaoImpl<Role,Integer>{
+public class RoleDao extends BaseDaoImpl<Role,Long>{
 
 	@Override
 	public String getNameSpace() {
@@ -19,6 +19,10 @@ public class RoleDao extends BaseDaoImpl<Role,Integer>{
 	}
 	public List<Role> findByUserName(String username){
 		return selectList(getNameSpace()+".findByUserName",username);
+	}
+	
+	public Role selectByName(String rolename) {
+		return selectOne(getNameSpace()+".selectByName",rolename);
 	}
     
 }

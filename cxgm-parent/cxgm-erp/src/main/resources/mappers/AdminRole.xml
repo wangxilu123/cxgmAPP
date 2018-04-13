@@ -9,15 +9,20 @@
   <sql id="Base_Column_List">
     id, admins, roles
   </sql>
-  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+  <select id="findById" parameterType="java.lang.Long" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
     from admin_role
     where id = #{id,jdbcType=BIGINT}
   </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+  <delete id="delete" parameterType="java.lang.Long">
     delete from admin_role
     where id = #{id,jdbcType=BIGINT}
+  </delete>
+  
+   <delete id="deleteByAdmins" parameterType="java.lang.Long">
+    delete from admin_role
+    where admins = #{admins,jdbcType=BIGINT}
   </delete>
   <insert id="insert" parameterType="com.cxgmerp.domain.AdminRole">
     insert into admin_role (id, admins, roles
@@ -25,32 +30,8 @@
     values (#{id,jdbcType=BIGINT}, #{admins,jdbcType=BIGINT}, #{roles,jdbcType=BIGINT}
       )
   </insert>
-  <insert id="insertSelective" parameterType="com.cxgmerp.domain.AdminRole">
-    insert into admin_role
-    <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="id != null">
-        id,
-      </if>
-      <if test="admins != null">
-        admins,
-      </if>
-      <if test="roles != null">
-        roles,
-      </if>
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="id != null">
-        #{id,jdbcType=BIGINT},
-      </if>
-      <if test="admins != null">
-        #{admins,jdbcType=BIGINT},
-      </if>
-      <if test="roles != null">
-        #{roles,jdbcType=BIGINT},
-      </if>
-    </trim>
-  </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.cxgmerp.domain.AdminRole">
+  
+  <update id="update" parameterType="com.cxgmerp.domain.AdminRole">
     update admin_role
     <set>
       <if test="admins != null">
@@ -62,10 +43,38 @@
     </set>
     where id = #{id,jdbcType=BIGINT}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.cxgmerp.domain.AdminRole">
-    update admin_role
-    set admins = #{admins,jdbcType=BIGINT},
-      roles = #{roles,jdbcType=BIGINT}
-    where id = #{id,jdbcType=BIGINT}
-  </update>
+ <select id="findByRoles" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from admin_role
+    where roles = #{roles,jdbcType=BIGINT}
+  </select>
+  
+  <select id="findByAdmins" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from admin_role
+    where admins = #{admins,jdbcType=BIGINT}
+  </select>
+  
+  
+  <insert id="insertAdminRolesBatch" parameterType="java.util.List">
+		<selectKey resultType="java.lang.Integer" keyProperty="id"
+			order="AFTER">
+			SELECT LAST_INSERT_ID()
+		</selectKey>
+		insert into admin_role
+		(admins, roles)
+		values
+		<foreach collection="list" item="adminRoles" index="index"
+			separator=",">
+			(
+			#{adminRoles.admins},#{adminRoles.roles}
+			)
+		</foreach>
+	</insert>
+  
+  
+  
+  
 </mapper>

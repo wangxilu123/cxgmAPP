@@ -76,7 +76,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		        .addFilterBefore(customUsernamePasswordAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class)
 		        .addFilterBefore(myFilterSecurityInterceptor, FilterSecurityInterceptor.class)//在正确的位置添加我们自定义的过滤器  
 				.authorizeRequests()
-				.antMatchers("/static/js/**", "/static/img/**", "/**/favicon.ico","/static/css/**","/static/fonts/**","/static/plugins/**").permitAll()
+				.antMatchers("/static/js/**", "/static/shop/**", "/static/img/**", "/**/favicon.ico","/static/AmazeUI/**","/static/UEditor/**").permitAll()
 	                .regexMatchers("/login\\?invalid", "/login\\?expired",
 	                        "/index", "/home", "/getToken", "/accessDenied"
 	                        , "/changeLang.*")//".*"表示任意字符
@@ -92,6 +92,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 	.sessionManagement()//.sessionManagement().maximumSessions(2).expiredUrl("/login?expired").sessionRegistry(sessionRegistry());
 					.invalidSessionUrl("/login?invalid")//sessoin超时的响应url
                 .and()
+                .headers().frameOptions().disable()
+				.and()
                 	.exceptionHandling().accessDeniedHandler(accessDeniedHandler)
                 .and()
                 	.logout()
@@ -108,8 +110,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
 	@Override
 	public void configure(WebSecurity web) throws Exception {
-		// js 、 css 、等不做权限验证
-		web.ignoring().antMatchers("/static/js/**", "/static/img/**", "/**/favicon.ico","/static/css/**","/static/fonts/**","/static/plugins/**");
+		// js 、 css 、等不做权限验证///static/js/**", "/static/img/**", "/**/favicon.ico","/static/css/**","/static/fonts/**","/static/plugins/**",
+		web.ignoring().antMatchers("/static/js/**", "/static/shop/**", "/static/img/**", "/**/favicon.ico","/static/AmazeUI/**","/static/UEditor/**");
 	}
 
 	@Bean

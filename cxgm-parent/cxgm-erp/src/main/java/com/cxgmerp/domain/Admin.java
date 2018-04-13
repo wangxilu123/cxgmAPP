@@ -52,6 +52,7 @@ public class Admin implements UserDetails{
 
     private Boolean deleteFlag;
     
+    private List<Role> roleList;
 
     /**
 	 * 角色集合
@@ -116,8 +117,15 @@ public class Admin implements UserDetails{
     public void setName(String name) {
         this.name = name == null ? null : name.trim();
     }
+    public List<Role> getRoleList() {
+		return roleList;
+	}
 
-    public void setUsername(String username) {
+	public void setRoleList(List<Role> roleList) {
+		this.roleList = roleList;
+	}
+
+	public void setUsername(String username) {
         this.username = username == null ? null : username.trim();
     }
 

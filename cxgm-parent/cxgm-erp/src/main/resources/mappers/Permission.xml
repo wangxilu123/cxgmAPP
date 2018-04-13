@@ -60,11 +60,11 @@
     insert into permission (id, name, value, 
       url, module, description, 
       create_by, creation_date, last_updated_by, 
-      last_updated_date, delete_flag)
+      last_updated_date, delete_flag,pid,type)
     values (#{id,jdbcType=BIGINT}, #{name,jdbcType=VARCHAR}, #{value,jdbcType=VARCHAR}, 
       #{url,jdbcType=VARCHAR}, #{module,jdbcType=VARCHAR}, #{description,jdbcType=VARCHAR}, 
       #{createBy,jdbcType=VARCHAR}, #{creationDate,jdbcType=TIMESTAMP}, #{lastUpdatedBy,jdbcType=VARCHAR}, 
-      #{lastUpdatedDate,jdbcType=TIMESTAMP}, #{deleteFlag,jdbcType=BIT})
+      #{lastUpdatedDate,jdbcType=TIMESTAMP}, #{deleteFlag,jdbcType=BIT},#{pid,jdbcType=INTEGER},#{type,jdbcType=INTEGER})
   </insert>
   
   <update id="update" parameterType="com.cxgmerp.domain.Permission">
@@ -75,6 +75,12 @@
       </if>
       <if test="value != null">
         value = #{value,jdbcType=VARCHAR},
+      </if>
+       <if test="pid != null">
+        pid = #{pid,jdbcType=INTEGER},
+      </if>
+       <if test="type != null">
+        type = #{type,jdbcType=INTEGER},
       </if>
       <if test="url != null">
         url = #{url,jdbcType=VARCHAR},
@@ -108,17 +114,15 @@
     <!-- 查询菜单类型资源 -->
 	<select id="findListType0" resultMap="BaseResultMapType0">
 		select
-		id,name,url,pId
+		id,name,url,pId,type
 		from permission
 		where 1 = 1
-		and type = 0
-		order
-		by sortNum asc
+		and pid = 0
 	</select>
 	<!-- 查询动作类型资源 -->
 	<select id="findListType1" resultMap="BaseResultMapType0">
 		select
-		id,name,url,pId
+		id,name,url,pId,type
 		from permission
 		where 1 = 1
 		and type = 1
@@ -141,6 +145,34 @@
        LEFT JOIN permission_role pr on p.id=pr.permissions 
        LEFT JOIN role r on pr.roles=r.id 
        where r.id=#{roleid}
+    </select>
+     <!-- 查询所有 -->
+	<select id="findListAll" resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from permission
+		where pid is not null ORDER BY pid asc
+	</select>
+    
+    <!--查询一个 -->
+	<select id="findById" parameterType="java.lang.Long"
+		resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from permission
+		where id = #{id,jdbcType=BIGINT}
+	</select>
+    <select id="findByName" parameterType="String" resultMap="BaseResultMap">
+        select *
+        from permission
+        where name= #{name}
+        order by id
+		desc
+    </select>
+    <select id="findByPid" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        select *
+        from permission
+        where pid= #{pid}
     </select>
     
 </mapper>

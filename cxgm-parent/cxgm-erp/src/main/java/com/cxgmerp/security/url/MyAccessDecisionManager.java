@@ -32,7 +32,7 @@ public class MyAccessDecisionManager implements AccessDecisionManager {
 			throws AccessDeniedException, InsufficientAuthenticationException {
 
 		if(null == configAttributes || configAttributes.size()<=0) {
-			return;
+			throw new AccessDeniedException("no right");   
 		}
 		ConfigAttribute config ; 
 		String needRole;

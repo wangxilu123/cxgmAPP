@@ -22,18 +22,6 @@
     <result column="last_updated_date" jdbcType="TIMESTAMP" property="lastUpdatedDate" />
     <result column="delete_flag" jdbcType="BIT" property="deleteFlag" />
     
-   <!--  <collection property="roles" ofType="com.cxgmerp.domain.Role">
-    	 <result column="name" jdbcType="VARCHAR" property="name" />
-	    <result column="value" jdbcType="VARCHAR" property="value" />
-	    <result column="description" jdbcType="VARCHAR" property="description" />
-	    <result column="is_system" jdbcType="BIT" property="isSystem" />
-	    <result column="create_by" jdbcType="VARCHAR" property="createBy" />
-	    <result column="creation_date" jdbcType="TIMESTAMP" property="creationDate" />
-	    <result column="last_updated_by" jdbcType="VARCHAR" property="lastUpdatedBy" />
-	    <result column="last_updated_date" jdbcType="TIMESTAMP" property="lastUpdatedDate" />
-	    <result column="delete_flag" jdbcType="BIT" property="deleteFlag" />
-    </collection> -->
-    
   </resultMap>
   <sql id="Base_Column_List">
     id, name, username, password, hasher, salt, department, email, is_enabled, is_locked, 
@@ -58,6 +46,9 @@
   
   
   <insert id="insert" parameterType="com.cxgmerp.domain.Admin">
+  <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">  
+        SELECT LAST_INSERT_ID()  
+    </selectKey>  
     insert into admin (id, name, username, 
       password, hasher, salt, 
       department, email, is_enabled, 
@@ -73,7 +64,10 @@
       #{creationDate,jdbcType=TIMESTAMP}, #{lastUpdatedBy,jdbcType=VARCHAR}, #{lastUpdatedDate,jdbcType=TIMESTAMP}, 
       #{deleteFlag,jdbcType=BIT})
   </insert>
- 
+  <delete id="delete" parameterType="java.lang.Long">
+    delete from admin
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
   <update id="update" parameterType="com.cxgmerp.domain.Admin">
     update admin
     <set>
@@ -169,12 +163,12 @@
 		order by id asc
 	</select>
 	<!--查询一个 -->
-	<select id="findById" parameterType="java.lang.Integer"
+	<select id="findById" parameterType="java.lang.Long"
 		resultMap="BaseResultMap">
 		select
 		<include refid="Base_Column_List" />
 		from admin
-		where id = #{id,jdbcType=INTEGER}
+		where id = #{id,jdbcType=BIGINT}
 	</select>
   
   
@@ -182,6 +176,14 @@
         select *
         from admin
         where username= #{username}
+        order by id
+		desc
+    </select>
+    
+    <select id="findByName" parameterType="String" resultMap="BaseResultMap">
+        select *
+        from admin
+        where name= #{name}
         order by id
 		desc
     </select>

@@ -1,87 +1,122 @@
 package com.cxgmerp.service;
 
+import java.util.Date;
 import java.util.List;
-import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-import com.cxgmerp.common.WebPage;
+import com.cxgmerp.common.DateKit;
 import com.cxgmerp.dao.PermissionDao;
+import com.cxgmerp.dao.PermissionRoleDao;
 import com.cxgmerp.domain.Permission;
 import com.cxgmerp.domain.PermissionAndRole;
+import com.cxgmerp.domain.PermissionRole;
+import com.cxgmerp.exception.TipException;
 
 @Service
-public class PermissionService implements BaseService<Permission, Integer> {
+public class PermissionService {
 
 	@Autowired
 	PermissionDao permissionDao;
 	
-	public List<Permission> findListType0(){
+	@Autowired
+	PermissionRoleDao permissionRoleDao;
+
+	public List<Permission> findFatherResource() {
 		return this.permissionDao.getSqlSessionTemplate().selectList(this.permissionDao.getStatement("findListType0"));
 	}
-	
-	public List<Permission> findListType1(){
+
+	public List<Permission> findActionResource() {
 		return this.permissionDao.getSqlSessionTemplate().selectList(this.permissionDao.getStatement("findListType1"));
 	}
-	
-	public List<Permission> findListByIds(List<Integer> list){
-		return this.permissionDao.getSqlSessionTemplate().selectList(this.permissionDao.getNameSpace() + ".findListByIds", list);
+
+	public List<Permission> findListByIds(List<Integer> list) {
+		return this.permissionDao.getSqlSessionTemplate()
+				.selectList(this.permissionDao.getNameSpace() + ".findListByIds", list);
 	}
-	
-	public List<PermissionAndRole> findAllPermissions(){
-		 return permissionDao.findAllPermissions();
-	 }
-	    
-	 public List<Permission> findByRole(Long roleid){
+
+	public List<PermissionAndRole> findAllPermissions() {
+		return permissionDao.findAllPermissions();
+	}
+
+	public List<Permission> findByRole(Long roleid) {
 		return permissionDao.findByRole(roleid);
-	 }
-	@Override
-	public Integer insert(Permission t) {
-		// TODO Auto-generated method stub
-		return null;
 	}
 
-	@Override
-	public Integer update(Permission t) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public Integer delete(Integer id) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public Permission findById(Integer id) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
 	public List<Permission> findListAll() {
-		// TODO Auto-generated method stub
-		return null;
+		return permissionDao.findListAll();
 	}
 
-	@Override
-	public WebPage<Permission> findPage(Map<String, Object> map) {
-		// TODO Auto-generated method stub
-		return null;
+	public List<Permission> findByName(String name) {
+		return permissionDao.findByName(name);
 	}
 
-	@Override
-	public List<Permission> findListAllWithMap(Map<String, Object> paramsMap) {
-		// TODO Auto-generated method stub
-		return null;
+	public Permission findById(Long id) {
+		return permissionDao.findById(id);
 	}
 
-	@Override
-	public boolean existsEntity(Map<String, Object> paramsMap) {
-		// TODO Auto-generated method stub
-		return false;
+	@Transactional
+	public void insert(Integer pid, String description, String name, Integer type, String url) {
+		List<Permission> permissions = permissionDao.findByName(name);
+		if (permissions.size()>0) {
+			throw new TipException("资源名已经存在");
+		}
+		Permission permission = new Permission();
+		permission.setCreationDate(DateKit.dateFormat(DateKit.dateFormat(new Date())));
+		permission.setDeleteFlag(false);
+		if (pid != 0) {
+			Permission p = permissionDao.findById(pid.longValue());
+			permission.setDescription(p.getName() + " (" + description + ") ");
+		} else {
+			permission.setDescription(name + " (" + description + ") ");
+		}
+		permission.setName(name);
+		permission.setUrl(url);
+		permission.setPid(pid);
+		permission.setType(type);
+		permission.setValue("Admin");
+		permissionDao.insert(permission);
 	}
 
+	@Transactional
+	public void update(Long id, Integer pid, String description, String name, Integer type, String url) {
+		Permission permission = permissionDao.findById(id);
+		if (null == permission) {
+			throw new TipException("资源不存在");
+		}
+		permission.setLastUpdatedDate(DateKit.dateFormat(DateKit.dateFormat(new Date())));
+		if (permission.getPid() == 0) {
+			throw new TipException("资源是一级资源,不能添为此添加父类资源");
+		}
+		Permission p = permissionDao.findById(pid.longValue());
+		if (description.contains(p.getName())) {
+			permission.setDescription(description);
+		} else {
+			permission.setDescription(p.getName() + " (" + description + ") ");
+		}
+		permission.setName(name);
+		permission.setUrl(url);
+		permission.setPid(pid);
+		permission.setType(type);
+		permissionDao.update(permission);
+	}
+	
+	@Transactional
+	public int delete(String[] resourceIds) {
+		int resultDelete = 0;
+		if (resourceIds != null && resourceIds.length > 0) {
+			for(String resourceId : resourceIds) {
+				List<PermissionRole> prs = permissionRoleDao.findByPermissions(Long.valueOf(resourceId));
+				if(prs.size()>0) {
+					return Integer.valueOf(resourceId);
+				}else {
+					permissionDao.delete(Long.valueOf(resourceId));
+				}
+			}
+		}
+		resultDelete = 1;
+		return resultDelete;
+	}
 }
