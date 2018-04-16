@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.cxgm.dao.AppUserMapper">
+<mapper namespace="com.cxgm.dao.UserMapper">
   <resultMap id="BaseResultMap" type="com.cxgm.domain.AppUser">
     <result column="id" jdbcType="INTEGER" property="id" />
     <result column="user_name" jdbcType="VARCHAR" property="userName" />
@@ -167,7 +167,7 @@
     </if>
   </update>
   
-   <update id="updateByPrimaryKey" parameterType="com.fzj.domain.OrderPartner">
+   <update id="updateByPrimaryKey" parameterType="com.cxgm.domain.AppUser">
     update app_user
     set user_name = #{userName,jdbcType=VARCHAR},
       user_pwd = #{userPwd,jdbcType=VARCHAR},

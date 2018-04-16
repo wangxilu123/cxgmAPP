@@ -172,7 +172,7 @@
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.fzj.domain.OrderPartner">
+  <update id="updateByPrimaryKey" parameterType="com.cxgm.domain.UserLogin">
     update user_login
     set user_account = #{userAccount,jdbcType=VARCHAR},
       token = #{token,jdbcType=VARCHAR},

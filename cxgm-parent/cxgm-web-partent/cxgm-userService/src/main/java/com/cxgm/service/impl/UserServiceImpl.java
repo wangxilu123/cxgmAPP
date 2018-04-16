@@ -4,6 +4,7 @@ import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
 
 import com.cxgm.common.ResultDto;
@@ -19,6 +20,7 @@ import com.cxgm.domain.UserLoginExample;
 import com.cxgm.service.RedisService;
 import com.cxgm.service.UserService;
 
+@Primary
 @Service
 public class UserServiceImpl implements UserService {
 

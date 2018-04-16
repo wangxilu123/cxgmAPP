@@ -351,5 +351,6 @@
     	<module>cxgm-framework</module>
     	<module>cxgm-web-partent</module>
     	<module>cxgm-erp</module>
+    	<module>cxgm-mybites</module>
     </modules>
 </project>

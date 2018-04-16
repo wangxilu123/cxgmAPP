@@ -178,7 +178,7 @@
   </update>
   
   
-   <update id="updateByPrimaryKey" parameterType="com.fzj.domain.OrderPartner">
+   <update id="updateByPrimaryKey" parameterType="com.cxgm.domain.UserAddress">
     update user_address
     set user_id = #{record.userId,jdbcType=INTEGER},
       address = #{record.address,jdbcType=VARCHAR},
