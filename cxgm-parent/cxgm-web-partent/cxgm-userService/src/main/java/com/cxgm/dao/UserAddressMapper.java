@@ -2,7 +2,7 @@ package com.cxgm.dao;
 
 import java.util.List;
 
-import org.springframework.data.repository.query.Param;
+import org.apache.ibatis.annotations.Param;
 
 import com.cxgm.domain.UserAddress;
 import com.cxgm.domain.UserAddressExample;

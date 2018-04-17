@@ -1,6 +1,7 @@
 package com.cxgm.service.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
 
 import com.cxgm.dao.UserAddressMapper;
@@ -8,6 +9,7 @@ import com.cxgm.domain.UserAddress;
 import com.cxgm.domain.UserAddressExample;
 import com.cxgm.service.UserAddressService;
 
+@Primary
 @Service
 public class UserAddressServiceImpl implements UserAddressService {
 

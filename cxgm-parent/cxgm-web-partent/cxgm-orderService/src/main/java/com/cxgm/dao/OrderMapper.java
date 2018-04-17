@@ -2,11 +2,14 @@ package com.cxgm.dao;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Mapper;
 import org.springframework.data.repository.query.Param;
 
 import com.cxgm.domain.Order;
 import com.cxgm.domain.OrderExample;
 
+
+@Mapper
 public interface OrderMapper {
     long countByExample(OrderExample example);
 
