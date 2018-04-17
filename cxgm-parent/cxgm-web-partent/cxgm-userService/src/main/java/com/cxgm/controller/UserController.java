@@ -1,5 +1,7 @@
 package com.cxgm.controller;
 
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -14,7 +16,10 @@ import com.cxgm.common.ResultDto;
 import com.cxgm.domain.AppUser;
 import com.cxgm.domain.LoginEntity;
 import com.cxgm.domain.RegisterEntity;
+import com.cxgm.domain.Shop;
+import com.cxgm.domain.ShopResponse;
 import com.cxgm.domain.UserAddress;
+import com.cxgm.service.ShopService;
 import com.cxgm.service.UserAddressService;
 import com.cxgm.service.UserService;
 
@@ -37,6 +42,9 @@ public class UserController {
 	
 	@Autowired
 	private UserAddressService addressService;
+	
+	@Autowired
+	private ShopService shopService;
 
 	@ApiOperation(value = "用户注册", nickname = "用户注册")
 	@PostMapping("/register")
@@ -64,7 +72,23 @@ public class UserController {
 		return new ResultDto<>(200,"添加成功！",addressId);
 	}
 	
+	@ApiOperation(value = "判断用户配送地址是否在配送范围", nickname = "判断用户配送地址是否在配送范围")
+    @ApiImplicitParams({
+        @ApiImplicitParam(name = "longitude", value = "经度", required = false, paramType = "query", dataType = "String"),
+        @ApiImplicitParam(name = "dimension", value = "维度", required = false, paramType = "query", dataType = "String"),
+    })
+	@PostMapping("/checkAddress")
+	public ResultDto<List<ShopResponse>> checkAddress(HttpServletRequest request,
+			@RequestParam(value = "longitude", required = false) String longitude,
+            @RequestParam(value = "dimension", required = false) String dimension) {
+
+		List<ShopResponse> list= shopService.findShopByPoint(longitude,dimension);
+		
+		return new ResultDto<>(200,"成功！",list);
+	}
+	
 	@ApiOperation(value = "修改用户地址接口", nickname = "修改用户地址接口")
+	
 	@PostMapping("/updateAddress")
 	public ResultDto<Integer> updateAddress(HttpServletRequest request, @RequestBody UserAddress address) {
 

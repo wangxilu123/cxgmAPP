@@ -1,0 +1,272 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cxgm.dao.ShopMapper">
+  <resultMap id="BaseResultMap" type="com.cxgm.domain.Shop">
+    <result column="id" jdbcType="INTEGER" property="id" />
+    <result column="shop_name" jdbcType="VARCHAR" property="shopName" />
+    <result column="shop_address" jdbcType="VARCHAR" property="shopAddress" />
+    <result column="longitude" jdbcType="VARCHAR" property="longitude" />
+    <result column="dimension" jdbcType="VARCHAR" property="dimension" />
+    <result column="image_url" jdbcType="VARCHAR" property="imageUrl" />
+    <result column="description" jdbcType="VARCHAR" property="description" />
+    <result column="owner" jdbcType="VARCHAR" property="owner" />
+    <result column="electronic_fence" jdbcType="VARCHAR" property="electronicFence" />
+    <result column="weixin_mchid" jdbcType="VARCHAR" property="weixinMchid" />
+    <result column="weixin_apikey" jdbcType="VARCHAR" property="weixinApikey" />
+    <result column="ali_partnerid" jdbcType="VARCHAR" property="aliPartnerid" />
+    <result column="ali_privatekey" jdbcType="VARCHAR" property="aliPrivatekey" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, shop_name, shop_address, longitude, dimension, image_url, description, owner, 
+    electronic_fence, weixin_mchid, weixin_apikey, ali_partnerid, ali_privatekey
+  </sql>
+  <select id="selectByExample" parameterType="com.cxgm.domain.ShopExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from tbl_shop
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from tbl_shop
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  
+  <delete id="deleteByExample" parameterType="com.cxgm.domain.ShopExample">
+    delete from tbl_shop
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.cxgm.domain.Shop" useGeneratedKeys="true">
+    insert into tbl_shop (shop_name, shop_address, longitude, 
+      dimension, image_url, description, 
+      owner, electronic_fence, weixin_mchid, 
+      weixin_apikey, ali_partnerid, ali_privatekey
+      )
+    values (#{shopName,jdbcType=VARCHAR}, #{shopAddress,jdbcType=VARCHAR}, #{longitude,jdbcType=VARCHAR}, 
+      #{dimension,jdbcType=VARCHAR}, #{imageUrl,jdbcType=VARCHAR}, #{description,jdbcType=VARCHAR}, 
+      #{owner,jdbcType=VARCHAR}, #{electronicFence,jdbcType=VARCHAR}, #{weixinMchid,jdbcType=VARCHAR}, 
+      #{weixinApikey,jdbcType=VARCHAR}, #{aliPartnerid,jdbcType=VARCHAR}, #{aliPrivatekey,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="com.cxgm.domain.Shop" useGeneratedKeys="true">
+    insert into tbl_shop
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="shopName != null">
+        shop_name,
+      </if>
+      <if test="shopAddress != null">
+        shop_address,
+      </if>
+      <if test="longitude != null">
+        longitude,
+      </if>
+      <if test="dimension != null">
+        dimension,
+      </if>
+      <if test="imageUrl != null">
+        image_url,
+      </if>
+      <if test="description != null">
+        description,
+      </if>
+      <if test="owner != null">
+        owner,
+      </if>
+      <if test="electronicFence != null">
+        electronic_fence,
+      </if>
+      <if test="weixinMchid != null">
+        weixin_mchid,
+      </if>
+      <if test="weixinApikey != null">
+        weixin_apikey,
+      </if>
+      <if test="aliPartnerid != null">
+        ali_partnerid,
+      </if>
+      <if test="aliPrivatekey != null">
+        ali_privatekey,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="shopName != null">
+        #{shopName,jdbcType=VARCHAR},
+      </if>
+      <if test="shopAddress != null">
+        #{shopAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="longitude != null">
+        #{longitude,jdbcType=VARCHAR},
+      </if>
+      <if test="dimension != null">
+        #{dimension,jdbcType=VARCHAR},
+      </if>
+      <if test="imageUrl != null">
+        #{imageUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="description != null">
+        #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="owner != null">
+        #{owner,jdbcType=VARCHAR},
+      </if>
+      <if test="electronicFence != null">
+        #{electronicFence,jdbcType=VARCHAR},
+      </if>
+      <if test="weixinMchid != null">
+        #{weixinMchid,jdbcType=VARCHAR},
+      </if>
+      <if test="weixinApikey != null">
+        #{weixinApikey,jdbcType=VARCHAR},
+      </if>
+      <if test="aliPartnerid != null">
+        #{aliPartnerid,jdbcType=VARCHAR},
+      </if>
+      <if test="aliPrivatekey != null">
+        #{aliPrivatekey,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.cxgm.domain.ShopExample" resultType="java.lang.Long">
+    select count(*) from tbl_shop
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update tbl_shop
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.shopName != null">
+        shop_name = #{record.shopName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.shopAddress != null">
+        shop_address = #{record.shopAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="record.longitude != null">
+        longitude = #{record.longitude,jdbcType=VARCHAR},
+      </if>
+      <if test="record.dimension != null">
+        dimension = #{record.dimension,jdbcType=VARCHAR},
+      </if>
+      <if test="record.imageUrl != null">
+        image_url = #{record.imageUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="record.description != null">
+        description = #{record.description,jdbcType=VARCHAR},
+      </if>
+      <if test="record.owner != null">
+        owner = #{record.owner,jdbcType=VARCHAR},
+      </if>
+      <if test="record.electronicFence != null">
+        electronic_fence = #{record.electronicFence,jdbcType=VARCHAR},
+      </if>
+      <if test="record.weixinMchid != null">
+        weixin_mchid = #{record.weixinMchid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.weixinApikey != null">
+        weixin_apikey = #{record.weixinApikey,jdbcType=VARCHAR},
+      </if>
+      <if test="record.aliPartnerid != null">
+        ali_partnerid = #{record.aliPartnerid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.aliPrivatekey != null">
+        ali_privatekey = #{record.aliPrivatekey,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update tbl_shop
+    set id = #{record.id,jdbcType=INTEGER},
+      shop_name = #{record.shopName,jdbcType=VARCHAR},
+      shop_address = #{record.shopAddress,jdbcType=VARCHAR},
+      longitude = #{record.longitude,jdbcType=VARCHAR},
+      dimension = #{record.dimension,jdbcType=VARCHAR},
+      image_url = #{record.imageUrl,jdbcType=VARCHAR},
+      description = #{record.description,jdbcType=VARCHAR},
+      owner = #{record.owner,jdbcType=VARCHAR},
+      electronic_fence = #{record.electronicFence,jdbcType=VARCHAR},
+      weixin_mchid = #{record.weixinMchid,jdbcType=VARCHAR},
+      weixin_apikey = #{record.weixinApikey,jdbcType=VARCHAR},
+      ali_partnerid = #{record.aliPartnerid,jdbcType=VARCHAR},
+      ali_privatekey = #{record.aliPrivatekey,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+</mapper>
