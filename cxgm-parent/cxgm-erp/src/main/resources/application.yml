@@ -1,8 +1,12 @@
 server:
     port: 8076
-    
-    
+beetlsql:
+  enabled: false  
+  
 spring:
+    #thymeleaf
+    thymeleaf:
+      mode: LEGACYHTML5
     #AOP
     aop:
       auto: true
@@ -10,20 +14,22 @@ spring:
     # 如果是测试环境则dev_model=true 不做验证码校验
     dev_model: false
     #开启redis 缓存session的两种方法一个是session.store 另外一个是注解 @EnableRedisHttpSession
+    session:
+      store-type: redis
       
     datasource:
       readSize: 1
         # 使用druid数据源
       type: com.alibaba.druid.pool.DruidDataSource
       MASTER:
-        url: jdbc:mysql://47.104.226.173:3306/cxgm
+        url: jdbc:mysql://47.104.226.173:3306/cxgm?useUnicode=true&characterEncoding=UTF-8
         username: root
         password: '*Cxgm@App2018*'
         driver-class-name: com.mysql.jdbc.Driver
         validationQuery: select 'x'
 
       SLAVE:
-        url: jdbc:mysql://47.104.226.173:3306/cxgm
+        url: jdbc:mysql://47.104.226.173:3306/cxgm?useUnicode=true&characterEncoding=UTF-8
         username: root
         password: '*Cxgm@App2018*'
         # 使用druid数据源
@@ -31,9 +37,17 @@ spring:
         driver-class-name: com.mysql.jdbc.Driver
         validationQuery: select 'x'
 
+    redis:
+        database: 0
+        host: 47.104.226.173
+#        password: isanjie123
+        port: 6379
 
 #指定log的配置文件，以及记录Spring Boot的log级别  
 logging:
-    config: classpath:logback.xml     
+    config: classpath:logback.xml
+mybatis:
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl     
  
     
