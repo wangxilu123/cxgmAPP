@@ -71,9 +71,6 @@ public class RoleService {
 		if(role==null) {
 			throw new TipException("角色不存在");
 		}
-		if(role.getIsSystem()) {
-			throw new TipException("系统内置角色不允许修改!");
-		}
 		if (resourceIds != null && resourceIds.length > 0) {
 			permissionRoleDao.deleteByRoles(role.getId());
 			for(String resouce : resourceIds) {

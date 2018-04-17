@@ -1,0 +1,259 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="sql.Product">
+  <resultMap id="BaseResultMap" type="com.cxgmerp.domain.Product">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="sn" jdbcType="VARCHAR" property="sn" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="full_name" jdbcType="VARCHAR" property="fullName" />
+    <result column="price" jdbcType="DECIMAL" property="price" />
+    <result column="cost" jdbcType="DECIMAL" property="cost" />
+    <result column="market_price" jdbcType="DECIMAL" property="marketPrice" />
+    <result column="image" jdbcType="VARCHAR" property="image" />
+    <result column="unit" jdbcType="VARCHAR" property="unit" />
+    <result column="weight" jdbcType="INTEGER" property="weight" />
+    <result column="stock" jdbcType="INTEGER" property="stock" />
+    <result column="allocated_stock" jdbcType="INTEGER" property="allocatedStock" />
+    <result column="stock_memo" jdbcType="VARCHAR" property="stockMemo" />
+    <result column="point" jdbcType="BIGINT" property="point" />
+    <result column="is_marketable" jdbcType="BIT" property="isMarketable" />
+    <result column="is_list" jdbcType="BIT" property="isList" />
+    <result column="is_top" jdbcType="BIT" property="isTop" />
+    <result column="is_gift" jdbcType="BIT" property="isGift" />
+    <result column="memo" jdbcType="VARCHAR" property="memo" />
+    <result column="keyword" jdbcType="VARCHAR" property="keyword" />
+    <result column="seo_title" jdbcType="VARCHAR" property="seoTitle" />
+    <result column="seo_keywords" jdbcType="VARCHAR" property="seoKeywords" />
+    <result column="seo_description" jdbcType="VARCHAR" property="seoDescription" />
+    <result column="score" jdbcType="REAL" property="score" />
+    <result column="total_score" jdbcType="BIGINT" property="totalScore" />
+    <result column="score_count" jdbcType="BIGINT" property="scoreCount" />
+    <result column="hits" jdbcType="BIGINT" property="hits" />
+    <result column="week_hits" jdbcType="BIGINT" property="weekHits" />
+    <result column="month_hits" jdbcType="BIGINT" property="monthHits" />
+    <result column="sales" jdbcType="BIGINT" property="sales" />
+    <result column="week_sales" jdbcType="BIGINT" property="weekSales" />
+    <result column="month_sales" jdbcType="BIGINT" property="monthSales" />
+    <result column="week_hits_date" jdbcType="TIMESTAMP" property="weekHitsDate" />
+    <result column="month_hits_date" jdbcType="TIMESTAMP" property="monthHitsDate" />
+    <result column="week_sales_date" jdbcType="TIMESTAMP" property="weekSalesDate" />
+    <result column="month_sales_date" jdbcType="TIMESTAMP" property="monthSalesDate" />
+    <result column="attribute_value0" jdbcType="VARCHAR" property="attributeValue0" />
+    <result column="origin_place" jdbcType="VARCHAR" property="originPlace" />
+    <result column="storage_condition" jdbcType="VARCHAR" property="storageCondition" />
+    <result column="product_category_id" jdbcType="BIGINT" property="productCategoryId" />
+    <result column="create_by" jdbcType="VARCHAR" property="createBy" />
+    <result column="creation_date" jdbcType="TIMESTAMP" property="creationDate" />
+    <result column="last_updated_by" jdbcType="VARCHAR" property="lastUpdatedBy" />
+    <result column="last_updated_date" jdbcType="TIMESTAMP" property="lastUpdatedDate" />
+    <result column="delete_flag" jdbcType="BIT" property="deleteFlag" />
+    <result column="brand_name" jdbcType="VARCHAR" property="brandName" />
+  </resultMap>
+  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.cxgmerp.domain.Product">
+    <result column="introduction" jdbcType="LONGVARCHAR" property="introduction" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, sn, name, full_name, price, cost, market_price, image, unit, weight, stock, allocated_stock, 
+    stock_memo, point, is_marketable, is_list, is_top, is_gift, memo, keyword, seo_title, 
+    seo_keywords, seo_description, score, total_score, score_count, hits, week_hits, 
+    month_hits, sales, week_sales, month_sales, week_hits_date, month_hits_date, week_sales_date, 
+    month_sales_date, attribute_value0, origin_place, storage_condition, product_category_id, 
+    create_by, creation_date, last_updated_by, last_updated_date, delete_flag, brand_name
+  </sql>
+  <sql id="Blob_Column_List">
+    introduction
+  </sql>
+  <select id="findById" parameterType="java.lang.Long" resultMap="ResultMapWithBLOBs">
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from product
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="delete" parameterType="java.lang.Long">
+    delete from product
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.cxgmerp.domain.Product">
+    insert into product (id, sn, name, 
+      full_name, price, cost, 
+      market_price, image, unit, 
+      weight, stock, allocated_stock, 
+      stock_memo, point, is_marketable, 
+      is_list, is_top, is_gift, memo, 
+      keyword, seo_title, seo_keywords, 
+      seo_description, score, total_score, 
+      score_count, hits, week_hits, 
+      month_hits, sales, week_sales, 
+      month_sales, week_hits_date, month_hits_date, 
+      week_sales_date, month_sales_date, attribute_value0, 
+      origin_place, storage_condition, product_category_id, 
+      create_by, creation_date, last_updated_by, 
+      last_updated_date, delete_flag, brand_name, 
+      introduction)
+    values (#{id,jdbcType=BIGINT}, #{sn,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, 
+      #{fullName,jdbcType=VARCHAR}, #{price,jdbcType=DECIMAL}, #{cost,jdbcType=DECIMAL}, 
+      #{marketPrice,jdbcType=DECIMAL}, #{image,jdbcType=VARCHAR}, #{unit,jdbcType=VARCHAR}, 
+      #{weight,jdbcType=INTEGER}, #{stock,jdbcType=INTEGER}, #{allocatedStock,jdbcType=INTEGER}, 
+      #{stockMemo,jdbcType=VARCHAR}, #{point,jdbcType=BIGINT}, #{isMarketable,jdbcType=BIT}, 
+      #{isList,jdbcType=BIT}, #{isTop,jdbcType=BIT}, #{isGift,jdbcType=BIT}, #{memo,jdbcType=VARCHAR}, 
+      #{keyword,jdbcType=VARCHAR}, #{seoTitle,jdbcType=VARCHAR}, #{seoKeywords,jdbcType=VARCHAR}, 
+      #{seoDescription,jdbcType=VARCHAR}, #{score,jdbcType=REAL}, #{totalScore,jdbcType=BIGINT}, 
+      #{scoreCount,jdbcType=BIGINT}, #{hits,jdbcType=BIGINT}, #{weekHits,jdbcType=BIGINT}, 
+      #{monthHits,jdbcType=BIGINT}, #{sales,jdbcType=BIGINT}, #{weekSales,jdbcType=BIGINT}, 
+      #{monthSales,jdbcType=BIGINT}, #{weekHitsDate,jdbcType=TIMESTAMP}, #{monthHitsDate,jdbcType=TIMESTAMP}, 
+      #{weekSalesDate,jdbcType=TIMESTAMP}, #{monthSalesDate,jdbcType=TIMESTAMP}, #{attributeValue0,jdbcType=VARCHAR}, 
+      #{originPlace,jdbcType=VARCHAR}, #{storageCondition,jdbcType=VARCHAR}, #{productCategoryId,jdbcType=BIGINT}, 
+      #{createBy,jdbcType=VARCHAR}, #{creationDate,jdbcType=TIMESTAMP}, #{lastUpdatedBy,jdbcType=VARCHAR}, 
+      #{lastUpdatedDate,jdbcType=TIMESTAMP}, #{deleteFlag,jdbcType=BIT}, #{brandName,jdbcType=VARCHAR}, 
+      #{introduction,jdbcType=LONGVARCHAR})
+  </insert>
+  
+  <update id="update" parameterType="com.cxgmerp.domain.Product">
+    update product
+    <set>
+      <if test="sn != null">
+        sn = #{sn,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null">
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="fullName != null">
+        full_name = #{fullName,jdbcType=VARCHAR},
+      </if>
+      <if test="price != null">
+        price = #{price,jdbcType=DECIMAL},
+      </if>
+      <if test="cost != null">
+        cost = #{cost,jdbcType=DECIMAL},
+      </if>
+      <if test="marketPrice != null">
+        market_price = #{marketPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="image != null">
+        image = #{image,jdbcType=VARCHAR},
+      </if>
+      <if test="unit != null">
+        unit = #{unit,jdbcType=VARCHAR},
+      </if>
+      <if test="weight != null">
+        weight = #{weight,jdbcType=INTEGER},
+      </if>
+      <if test="stock != null">
+        stock = #{stock,jdbcType=INTEGER},
+      </if>
+      <if test="allocatedStock != null">
+        allocated_stock = #{allocatedStock,jdbcType=INTEGER},
+      </if>
+      <if test="stockMemo != null">
+        stock_memo = #{stockMemo,jdbcType=VARCHAR},
+      </if>
+      <if test="point != null">
+        point = #{point,jdbcType=BIGINT},
+      </if>
+      <if test="isMarketable != null">
+        is_marketable = #{isMarketable,jdbcType=BIT},
+      </if>
+      <if test="isList != null">
+        is_list = #{isList,jdbcType=BIT},
+      </if>
+      <if test="isTop != null">
+        is_top = #{isTop,jdbcType=BIT},
+      </if>
+      <if test="isGift != null">
+        is_gift = #{isGift,jdbcType=BIT},
+      </if>
+      <if test="memo != null">
+        memo = #{memo,jdbcType=VARCHAR},
+      </if>
+      <if test="keyword != null">
+        keyword = #{keyword,jdbcType=VARCHAR},
+      </if>
+      <if test="seoTitle != null">
+        seo_title = #{seoTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="seoKeywords != null">
+        seo_keywords = #{seoKeywords,jdbcType=VARCHAR},
+      </if>
+      <if test="seoDescription != null">
+        seo_description = #{seoDescription,jdbcType=VARCHAR},
+      </if>
+      <if test="score != null">
+        score = #{score,jdbcType=REAL},
+      </if>
+      <if test="totalScore != null">
+        total_score = #{totalScore,jdbcType=BIGINT},
+      </if>
+      <if test="scoreCount != null">
+        score_count = #{scoreCount,jdbcType=BIGINT},
+      </if>
+      <if test="hits != null">
+        hits = #{hits,jdbcType=BIGINT},
+      </if>
+      <if test="weekHits != null">
+        week_hits = #{weekHits,jdbcType=BIGINT},
+      </if>
+      <if test="monthHits != null">
+        month_hits = #{monthHits,jdbcType=BIGINT},
+      </if>
+      <if test="sales != null">
+        sales = #{sales,jdbcType=BIGINT},
+      </if>
+      <if test="weekSales != null">
+        week_sales = #{weekSales,jdbcType=BIGINT},
+      </if>
+      <if test="monthSales != null">
+        month_sales = #{monthSales,jdbcType=BIGINT},
+      </if>
+      <if test="weekHitsDate != null">
+        week_hits_date = #{weekHitsDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="monthHitsDate != null">
+        month_hits_date = #{monthHitsDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="weekSalesDate != null">
+        week_sales_date = #{weekSalesDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="monthSalesDate != null">
+        month_sales_date = #{monthSalesDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="attributeValue0 != null">
+        attribute_value0 = #{attributeValue0,jdbcType=VARCHAR},
+      </if>
+      <if test="originPlace != null">
+        origin_place = #{originPlace,jdbcType=VARCHAR},
+      </if>
+      <if test="storageCondition != null">
+        storage_condition = #{storageCondition,jdbcType=VARCHAR},
+      </if>
+      <if test="productCategoryId != null">
+        product_category_id = #{productCategoryId,jdbcType=BIGINT},
+      </if>
+      <if test="createBy != null">
+        create_by = #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="creationDate != null">
+        creation_date = #{creationDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastUpdatedBy != null">
+        last_updated_by = #{lastUpdatedBy,jdbcType=VARCHAR},
+      </if>
+      <if test="lastUpdatedDate != null">
+        last_updated_date = #{lastUpdatedDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="deleteFlag != null">
+        delete_flag = #{deleteFlag,jdbcType=BIT},
+      </if>
+      <if test="brandName != null">
+        brand_name = #{brandName,jdbcType=VARCHAR},
+      </if>
+      <if test="introduction != null">
+        introduction = #{introduction,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  
+  
+</mapper>

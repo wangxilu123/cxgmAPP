@@ -1,7 +1,7 @@
 <!doctype html>
 <html class="no-js">
 <head>
-<% include("/common/admin_head.html",{title:'商品分类列表'}){}%>
+<% include("admin_head.html",{title:'商品分类列表'}){}%>
 </head>
 <body>
   <div class="admin-content">
@@ -17,7 +17,7 @@
         <div class="am-u-sm-12 am-u-md-12">
           <div class="am-btn-toolbar app-padding-toolbar-item">
             <div class="am-btn-group am-btn-group-sm">
-              <button type="button" class="am-btn am-btn-default" onclick="location.href='${base}/productCategory/add';"><span class="am-icon-plus"></span> 新增</button>
+              <button type="button" class="am-btn am-btn-default" onclick="location.href='/productCategory/add';"><span class="am-icon-plus"></span> 新增</button>
             </div>
           </div>
         </div>
@@ -30,34 +30,34 @@
           <thead>
             <tr>
               <th>分类名称</th>
-              <th>排序</th>
               <th>操作</th>
             </tr>
           </thead>
           <tbody>
             <%for(list in productCategoryTreeList){%>
-         	<tr level="${list.level!}">
+         	<tr grade="${list.grade!}">
               <td class="categoryName">
-    			<span style="margin-left: ${list.level * 20}px;">
-    		      <%if (list.level == 0){%>
+    			<span style="margin-left: ${list.grade * 20}px;">
+    		      <%if (list.grade == 0){%>
     		      <i class="am-icon-folder-open-o"></i>
+    			  <%}else if((list.grade == 1) && (list.parentId != null) && (list.twoParentId == null)){%>
+    			  <i class="am-icon-folder-open-o"></i>
     			  <%}else{%>
     			  <i class="am-icon-folder-o"></i>
     			  <%}%>
     			  ${list.name}
     			</span>
     	      </td>
-              <td>${list.orderList}</td>
               <td>
                 <div class="am-btn-toolbar">
                   <div class="am-btn-group am-btn-group-xs">   
-                    <a class="am-btn am-btn-default am-btn-xs am-text-secondary" href="${base}/shop/product/list?id=${list.id}" target="_blank" title="查看"><span class="am-icon-home"></span> 查看</a>
-    			    <%if (list.children.~size > 0){%>
+                    <a class="am-btn am-btn-default am-btn-xs am-text-secondary" href="/shop/product/list?id=${list.id}" target="_blank" title="查看"><span class="am-icon-home"></span> 查看</a>
+    			    <%if (list.childCategory.~size > 0){%>
     				<button type="button" class="am-btn am-btn-default am-btn-xs am-text-danger am-hide-sm-only" disabled="disabled"><span class="am-icon-trash-o"></span> 删除</button>
     				<%}else{%>
     				<button id="deleteAction" type="button" class="am-btn am-btn-default am-btn-xs am-text-danger am-hide-sm-only" onclick="deleteCategory('${list.id}')"><span class="am-icon-trash-o"></span> 删除</button>
     				<%}%>
-                    <button type="button" class="am-btn am-btn-default am-btn-xs am-text-secondary" onclick="location.href='${base}/productCategory/edit?id=${list.id}'"><span class="am-icon-pencil-square-o"></span>编辑</button>
+                    <button type="button" class="am-btn am-btn-default am-btn-xs am-text-secondary" onclick="location.href='/productCategory/edit?id=${list.id}'"><span class="am-icon-pencil-square-o"></span>编辑</button>
                   </div>
                 </div>
               </td>
@@ -82,14 +82,14 @@ function deleteCategory(ids) {
     onConfirm: function(options) {
       $.ajax({
         method:"post",  
-        url: '${base}/productCategory/delete',
+        url: '/productCategory/delete',
         data:"id=" + ids + "",
         dataType: "json",
         async: false,
         success: function(data) {
           Modal.alert(data.message);
           if (data.status == "success") {
-            location.href='${base}/productCategory/list';
+            location.href='/productCategory/list';
           }             
         }
       });
@@ -100,11 +100,11 @@ function deleteCategory(ids) {
 $().ready(function() {
   // 树折叠
   $(".categoryName").click( function() {
-    var level = $(this).parent().attr("level");
+    var grade = $(this).parent().attr("grade");
     var isHide;
     $(this).parent().nextAll("tr").each(function(){
-      var thisLevel = $(this).attr("level");
-      if(thisLevel <=  level) {
+      var thisgrade = $(this).attr("grade");
+      if(thisgrade <=  grade) {
         return false;
       }
       if(isHide == null) {

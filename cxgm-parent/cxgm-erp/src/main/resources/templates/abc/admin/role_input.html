@@ -78,7 +78,7 @@
             <% if(isEdit){
 				  var resourceList = role.resourceList;
 				  for(var i = 0; i < resourceList.~size; i++){
-				    if (strutil.contain(resourceList[i].id+'',resource.id+'')){%> checked="checked"
+				    if ((strutil.contain(resourceList[i].id+"",resource.id+"")) && (strutil.length(resourceList[i].id+"") == strutil.length(resource.id+"") )){%> checked="checked"
                 <%}}}%>/>
          ${resource.name!}</label>
 
@@ -89,7 +89,7 @@
 			    <% if(isEdit){
 				  var resourceList = role.resourceList;
 				  for(var i = 0; i < resourceList.~size; i++){
-				    if (strutil.contain(resourceList[i].id+'',list.id+'')){%> checked="checked"
+				    if ((strutil.contain(resourceList[i].id+'',list.id+'')) && (strutil.length(resourceList[i].id+'') == strutil.length(list.id+''))){%> checked="checked"
                 <%}}}%>/>
 				${list.name!}
 			  </label>

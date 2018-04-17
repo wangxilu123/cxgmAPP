@@ -90,10 +90,6 @@ public class AdminService {
 		if(admin==null) {
 			throw new TipException("用户不存在");
 		}
-		if(admin.getName().equals("admin")) {
-			throw new TipException("系统内置用户不允许修改!");
-		}
-		
 		if(null != roleIds && roleIds.length>0) {
 			adminRoleDao.deleteByAdmins(Long.valueOf(id));
 			for(String roleId : roleIds) {
