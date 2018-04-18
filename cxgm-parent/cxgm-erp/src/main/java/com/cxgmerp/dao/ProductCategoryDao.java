@@ -18,4 +18,8 @@ public class ProductCategoryDao extends BaseDaoImpl<ProductCategory,Long> {
 	public List<ProductCategory> findByCategory(Map<String,Object> map){
 		return selectList(this.getNameSpace()+".findByCategory",map);
 	}
+	
+	public ProductCategory findByName(String name) {
+		return selectOne(this.getNameSpace()+".findByName",name);
+	}
 }

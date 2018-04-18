@@ -51,6 +51,13 @@
     where id = #{id,jdbcType=BIGINT}
   </select>
   
+  <select id="findByName" parameterType="String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from product_category
+    where name = #{name,jdbcType=VARCHAR}
+  </select>
+  
   <delete id="delete" parameterType="java.lang.Long">
     delete from product_category
     where id = #{id,jdbcType=BIGINT}
@@ -91,9 +98,7 @@
       <if test="grade != null">
         grade = #{grade,jdbcType=INTEGER},
       </if>
-      <if test="parentId != null">
         parent_id = #{parentId,jdbcType=BIGINT},
-      </if>
       <if test="twoParentId != null">
         two_parent_id = #{twoParentId,jdbcType=INTEGER},
       </if>

@@ -51,7 +51,6 @@
               <td>
                 <div class="am-btn-toolbar">
                   <div class="am-btn-group am-btn-group-xs">   
-                    <a class="am-btn am-btn-default am-btn-xs am-text-secondary" href="/shop/product/list?id=${list.id}" target="_blank" title="查看"><span class="am-icon-home"></span> 查看</a>
     			    <%if (list.childCategory.~size > 0){%>
     				<button type="button" class="am-btn am-btn-default am-btn-xs am-text-danger am-hide-sm-only" disabled="disabled"><span class="am-icon-trash-o"></span> 删除</button>
     				<%}else{%>
@@ -62,6 +61,58 @@
                 </div>
               </td>
             </tr>
+            <%for(child in list.childCategory!){%>
+           <tr grade="${child.grade!}">
+              <td class="categoryName">
+    			<span style="margin-left: ${child.grade * 20}px;">
+    		      <%if (child.grade == 0){%>
+    		      <i class="am-icon-folder-open-o"></i>
+    			  <%}else if((child.grade == 1) && (child.parentId != null) && (child.twoParentId == null)){%>
+    			  <i class="am-icon-folder-open-o"></i>
+    			  <%}else{%>
+    			  <i class="am-icon-folder-o"></i>
+    			  <%}%>
+    			  ${child.name}
+    			</span>
+    	      </td>
+              <td>
+                <div class="am-btn-toolbar">
+                  <div class="am-btn-group am-btn-group-xs">   
+    			    <%if (child.childCategory.~size > 0){%>
+    				<button type="button" class="am-btn am-btn-default am-btn-xs am-text-danger am-hide-sm-only" disabled="disabled"><span class="am-icon-trash-o"></span> 删除</button>
+    				<%}else{%>
+    				<button id="deleteAction" type="button" class="am-btn am-btn-default am-btn-xs am-text-danger am-hide-sm-only" onclick="deleteCategory('${child.id}')"><span class="am-icon-trash-o"></span> 删除</button>
+    				<%}%>
+                    <button type="button" class="am-btn am-btn-default am-btn-xs am-text-secondary" onclick="location.href='/productCategory/edit?id=${child.id}'"><span class="am-icon-pencil-square-o"></span>编辑</button>
+                  </div>
+                </div>
+              </td>
+            </tr>
+            <%for(childTwo in child.childCategory!){%>
+           <tr grade="${childTwo.grade!}">
+              <td class="categoryName">
+    			<span style="margin-left: ${childTwo.grade * 20}px;">
+    		      <%if (childTwo.grade == 0){%>
+    		      <i class="am-icon-folder-open-o"></i>
+    			  <%}else if((childTwo.grade == 1) && (childTwo.parentId != null) && (childTwo.twoParentId == null)){%>
+    			  <i class="am-icon-folder-open-o"></i>
+    			  <%}else{%>
+    			  <i class="am-icon-folder-o"></i>
+    			  <%}%>
+    			  ${childTwo.name}
+    			</span>
+    	      </td>
+              <td>
+                <div class="am-btn-toolbar">
+                  <div class="am-btn-group am-btn-group-xs">   
+    				<button id="deleteAction" type="button" class="am-btn am-btn-default am-btn-xs am-text-danger am-hide-sm-only" onclick="deleteCategory('${childTwo.id}')"><span class="am-icon-trash-o"></span> 删除</button>
+                    <button type="button" class="am-btn am-btn-default am-btn-xs am-text-secondary" onclick="location.href='/productCategory/edit?id=${childTwo.id}'"><span class="am-icon-pencil-square-o"></span>编辑</button>
+                  </div>
+                </div>
+              </td>
+            </tr>
+            <%}%>
+            <%}%>
             <%}%>
           </tbody>
         </table>
@@ -89,7 +140,7 @@ function deleteCategory(ids) {
         success: function(data) {
           Modal.alert(data.message);
           if (data.status == "success") {
-            location.href='/productCategory/list';
+            location.href='/admin/productCategory';
           }             
         }
       });
