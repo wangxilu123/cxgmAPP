@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cxgm.dao.PermissionMapper">
+  <resultMap id="BaseResultMap" type="com.cxgm.domain.Permission">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="value" jdbcType="VARCHAR" property="value" />
+    <result column="url" jdbcType="VARCHAR" property="url" />
+    <result column="module" jdbcType="VARCHAR" property="module" />
+    <result column="description" jdbcType="VARCHAR" property="description" />
+    <result column="create_by" jdbcType="VARCHAR" property="createBy" />
+    <result column="creation_date" jdbcType="TIMESTAMP" property="creationDate" />
+    <result column="last_updated_by" jdbcType="VARCHAR" property="lastUpdatedBy" />
+    <result column="last_updated_date" jdbcType="TIMESTAMP" property="lastUpdatedDate" />
+    <result column="delete_flag" jdbcType="BIT" property="deleteFlag" />
+    <result column="pid" jdbcType="INTEGER" property="pid" />
+    <result column="type" jdbcType="INTEGER" property="type" />
+  </resultMap>
+  <resultMap id="BaseResultMap2" type="com.cxgm.domain.PermissionAndRole">
+  	<id column="pid" jdbcType="BIGINT" property="pid" />
+   	<result column="pid" jdbcType="BIGINT" property="pid" />
+    <result column="pname" jdbcType="VARCHAR" property="pname" />
+    <result column="pvalue" jdbcType="VARCHAR" property="pvalue" />
+    <result column="purl" jdbcType="VARCHAR" property="purl" />
+    
+    <result column="rid" jdbcType="BIGINT" property="rid" />
+    <result column="rname" jdbcType="VARCHAR" property="rname" />
+    <result column="rvalue" jdbcType="VARCHAR" property="rvalue" />
+  </resultMap>
+  <!-- 部分列 -->
+	<resultMap id="BaseResultMapType0" type="com.cxgm.domain.Permission">
+		<id column="id" property="id" jdbcType="INTEGER" />
+		<result column="name" property="name" jdbcType="VARCHAR" />
+		<result column="url" property="url" jdbcType="VARCHAR" />
+		<result column="pid" property="pid" jdbcType="INTEGER" />
+		<result column="type" property="type" jdbcType="INTEGER" />
+	</resultMap>
+  
+  
+  
+  
+  <sql id="Base_Column_List">
+    id, name, value, url, module, description, create_by, creation_date, last_updated_by, 
+    last_updated_date, delete_flag,pid,type
+  </sql>
+  
+   <select id="findAllPermissions" resultMap="BaseResultMap2">
+   	select p.id as pid, p.name as pname, p.value as pvalue, 
+   	p.url as purl, r.id as rid, r.name as rname, r.value as rvalue 
+   	from permission p 
+   	LEFT JOIN permission_role pr on p.id=pr.permissions 
+   	LEFT JOIN role r on pr.roles=r.id
+  </select>
+  
+  <delete id="delete" parameterType="java.lang.Long">
+    delete from permission
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.cxgm.domain.Permission">
+    insert into permission (id, name, value, 
+      url, module, description, 
+      create_by, creation_date, last_updated_by, 
+      last_updated_date, delete_flag,pid,type)
+    values (#{id,jdbcType=BIGINT}, #{name,jdbcType=VARCHAR}, #{value,jdbcType=VARCHAR}, 
+      #{url,jdbcType=VARCHAR}, #{module,jdbcType=VARCHAR}, #{description,jdbcType=VARCHAR}, 
+      #{createBy,jdbcType=VARCHAR}, #{creationDate,jdbcType=TIMESTAMP}, #{lastUpdatedBy,jdbcType=VARCHAR}, 
+      #{lastUpdatedDate,jdbcType=TIMESTAMP}, #{deleteFlag,jdbcType=BIT},#{pid,jdbcType=INTEGER},#{type,jdbcType=INTEGER})
+  </insert>
+  
+  <update id="update" parameterType="com.cxgm.domain.Permission">
+    update permission
+    <set>
+      <if test="name != null">
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="value != null">
+        value = #{value,jdbcType=VARCHAR},
+      </if>
+       <if test="pid != null">
+        pid = #{pid,jdbcType=INTEGER},
+      </if>
+       <if test="type != null">
+        type = #{type,jdbcType=INTEGER},
+      </if>
+      <if test="url != null">
+        url = #{url,jdbcType=VARCHAR},
+      </if>
+      <if test="module != null">
+        module = #{module,jdbcType=VARCHAR},
+      </if>
+      <if test="description != null">
+        description = #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="createBy != null">
+        create_by = #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="creationDate != null">
+        creation_date = #{creationDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastUpdatedBy != null">
+        last_updated_by = #{lastUpdatedBy,jdbcType=VARCHAR},
+      </if>
+      <if test="lastUpdatedDate != null">
+        last_updated_date = #{lastUpdatedDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="deleteFlag != null">
+        delete_flag = #{deleteFlag,jdbcType=BIT},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  
+  
+    <!-- 查询菜单类型资源 -->
+	<select id="findListType0" resultMap="BaseResultMapType0">
+		select
+		id,name,url,pId,type
+		from permission
+		where 1 = 1
+		and pid = 0
+	</select>
+	<!-- 查询动作类型资源 -->
+	<select id="findListType1" resultMap="BaseResultMapType0">
+		select
+		id,name,url,pId,type
+		from permission
+		where 1 = 1
+		and type = 1
+	</select>
+	<!-- 查询所有 -->
+	<select id="findListByIds" parameterType="list" resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from permission
+		where 1=1
+		and id in
+		<foreach collection="list" item="item" index="index" open="("
+			close=")" separator=",">
+			#{item}
+		</foreach>
+		order by id desc
+	</select>
+     <select id="findByRole" parameterType="long" resultMap="BaseResultMap">
+       select p.* from permission p 
+       LEFT JOIN permission_role pr on p.id=pr.permissions 
+       LEFT JOIN role r on pr.roles=r.id 
+       where r.id=#{roleid}
+    </select>
+     <!-- 查询所有 -->
+	<select id="findListAll" resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from permission
+		where pid is not null ORDER BY pid asc
+	</select>
+    
+    <!--查询一个 -->
+	<select id="findById" parameterType="java.lang.Long"
+		resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from permission
+		where id = #{id,jdbcType=BIGINT}
+	</select>
+    <select id="findByName" parameterType="String" resultMap="BaseResultMap">
+        select *
+        from permission
+        where name= #{name}
+        order by id
+		desc
+    </select>
+    <select id="findByPid" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        select *
+        from permission
+        where pid= #{pid}
+    </select>
+    
+</mapper>

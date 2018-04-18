@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cxgm.dao.AdminRoleMapper">
+  <resultMap id="BaseResultMap" type="com.cxgm.domain.AdminRole">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="admins" jdbcType="BIGINT" property="admins" />
+    <result column="roles" jdbcType="BIGINT" property="roles" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, admins, roles
+  </sql>
+  <select id="findById" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from admin_role
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="delete" parameterType="java.lang.Long">
+    delete from admin_role
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  
+   <delete id="deleteByAdmins" parameterType="java.lang.Long">
+    delete from admin_role
+    where admins = #{admins,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.cxgm.domain.AdminRole">
+    insert into admin_role (id, admins, roles
+      )
+    values (#{id,jdbcType=BIGINT}, #{admins,jdbcType=BIGINT}, #{roles,jdbcType=BIGINT}
+      )
+  </insert>
+  
+  <update id="update" parameterType="com.cxgm.domain.AdminRole">
+    update admin_role
+    <set>
+      <if test="admins != null">
+        admins = #{admins,jdbcType=BIGINT},
+      </if>
+      <if test="roles != null">
+        roles = #{roles,jdbcType=BIGINT},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+ <select id="findByRoles" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from admin_role
+    where roles = #{roles,jdbcType=BIGINT}
+  </select>
+  
+  <select id="findByAdmins" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from admin_role
+    where admins = #{admins,jdbcType=BIGINT}
+  </select>
+  
+  
+  <insert id="insertAdminRolesBatch" parameterType="java.util.List">
+		<selectKey resultType="java.lang.Integer" keyProperty="id"
+			order="AFTER">
+			SELECT LAST_INSERT_ID()
+		</selectKey>
+		insert into admin_role
+		(admins, roles)
+		values
+		<foreach collection="list" item="adminRoles" index="index"
+			separator=",">
+			(
+			#{adminRoles.admins},#{adminRoles.roles}
+			)
+		</foreach>
+	</insert>
+  
+  
+  
+  
+</mapper>

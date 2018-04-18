@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cxgm.dao.ProductCategoryMapper">
+  <resultMap id="BaseResultMap" type="com.cxgm.domain.ProductCategory">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="seo_title" jdbcType="VARCHAR" property="seoTitle" />
+    <result column="seo_keywords" jdbcType="VARCHAR" property="seoKeywords" />
+    <result column="seo_description" jdbcType="VARCHAR" property="seoDescription" />
+    <result column="tree_path" jdbcType="VARCHAR" property="treePath" />
+    <result column="grade" jdbcType="INTEGER" property="grade" />
+    <result column="parent_id" jdbcType="BIGINT" property="parentId" />
+    <result column="two_parent_id" jdbcType="INTEGER" property="twoParentId" />
+    <result column="orders" jdbcType="INTEGER" property="orders" />
+    <result column="create_by" jdbcType="VARCHAR" property="createBy" />
+    <result column="creation_date" jdbcType="TIMESTAMP" property="creationDate" />
+    <result column="last_updated_by" jdbcType="VARCHAR" property="lastUpdatedBy" />
+    <result column="last_updated_date" jdbcType="TIMESTAMP" property="lastUpdatedDate" />
+    <result column="delete_flag" jdbcType="BIT" property="deleteFlag" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, name, seo_title, seo_keywords, seo_description, tree_path, grade, parent_id, 
+    two_parent_id, orders, create_by, creation_date, last_updated_by, last_updated_date, 
+    delete_flag
+  </sql>
+  
+  <sql id="queryMap">
+		<if test="parentId !=null and parentId != ''">
+    		and parent_id=#{parentId,jdbcType=BIGINT}
+		</if>
+		<if test="twoParentId !=null">
+    		and two_parent_id=#{twoParentId,jdbcType=INTEGER}
+		</if>
+		<if test="grade !=null">
+    		and grade=#{grade,jdbcType=INTEGER}
+		</if>
+		
+	</sql>
+  <select id="findByCategory" parameterType="map" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from product_category
+    where 1=1
+    <include refid="queryMap" />
+  </select>
+  
+  <select id="findById" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from product_category
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  
+  <select id="findByName" parameterType="String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from product_category
+    where name = #{name,jdbcType=VARCHAR}
+  </select>
+  
+  <delete id="delete" parameterType="java.lang.Long">
+    delete from product_category
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.cxgm.domain.ProductCategory">
+    insert into product_category (id, name, seo_title, 
+      seo_keywords, seo_description, tree_path, 
+      grade, parent_id, two_parent_id, 
+      orders, create_by, creation_date, 
+      last_updated_by, last_updated_date, delete_flag
+      )
+    values (#{id,jdbcType=BIGINT}, #{name,jdbcType=VARCHAR}, #{seoTitle,jdbcType=VARCHAR}, 
+      #{seoKeywords,jdbcType=VARCHAR}, #{seoDescription,jdbcType=VARCHAR}, #{treePath,jdbcType=VARCHAR}, 
+      #{grade,jdbcType=INTEGER}, #{parentId,jdbcType=BIGINT}, #{twoParentId,jdbcType=INTEGER}, 
+      #{orders,jdbcType=INTEGER}, #{createBy,jdbcType=VARCHAR}, #{creationDate,jdbcType=TIMESTAMP}, 
+      #{lastUpdatedBy,jdbcType=VARCHAR}, #{lastUpdatedDate,jdbcType=TIMESTAMP}, #{deleteFlag,jdbcType=BIT}
+      )
+  </insert>
+  
+  <update id="update" parameterType="com.cxgm.domain.ProductCategory">
+    update product_category
+    <set>
+      <if test="name != null">
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="seoTitle != null">
+        seo_title = #{seoTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="seoKeywords != null">
+        seo_keywords = #{seoKeywords,jdbcType=VARCHAR},
+      </if>
+      <if test="seoDescription != null">
+        seo_description = #{seoDescription,jdbcType=VARCHAR},
+      </if>
+      <if test="treePath != null">
+        tree_path = #{treePath,jdbcType=VARCHAR},
+      </if>
+      <if test="grade != null">
+        grade = #{grade,jdbcType=INTEGER},
+      </if>
+        parent_id = #{parentId,jdbcType=BIGINT},
+      <if test="twoParentId != null">
+        two_parent_id = #{twoParentId,jdbcType=INTEGER},
+      </if>
+      <if test="orders != null">
+        orders = #{orders,jdbcType=INTEGER},
+      </if>
+      <if test="createBy != null">
+        create_by = #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="creationDate != null">
+        creation_date = #{creationDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastUpdatedBy != null">
+        last_updated_by = #{lastUpdatedBy,jdbcType=VARCHAR},
+      </if>
+      <if test="lastUpdatedDate != null">
+        last_updated_date = #{lastUpdatedDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="deleteFlag != null">
+        delete_flag = #{deleteFlag,jdbcType=BIT},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>
