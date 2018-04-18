@@ -76,8 +76,6 @@ public class Product {
 
     private Date monthSalesDate;
 
-    private String attributeValue0;
-
     private String originPlace;
 
     private String storageCondition;
@@ -97,6 +95,7 @@ public class Product {
     private String brandName;
 
     private String introduction;
+    
 
     public Long getId() {
         return id;
@@ -384,14 +383,6 @@ public class Product {
 
     public void setMonthSalesDate(Date monthSalesDate) {
         this.monthSalesDate = monthSalesDate;
-    }
-
-    public String getAttributeValue0() {
-        return attributeValue0;
-    }
-
-    public void setAttributeValue0(String attributeValue0) {
-        this.attributeValue0 = attributeValue0 == null ? null : attributeValue0.trim();
     }
 
     public String getOriginPlace() {

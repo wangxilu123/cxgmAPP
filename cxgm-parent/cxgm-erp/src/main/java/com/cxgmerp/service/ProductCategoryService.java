@@ -36,13 +36,6 @@ public class ProductCategoryService {
 		return productCategoryList;
 	}
 	
-	public List<ProductCategory> findByGradeAndTwoParentId(Integer grade,Integer twoParentId){
-		Map<String,Object> map = new HashMap<>();
-		map.put("grade", grade);
-		map.put("twoParentId", twoParentId);
-		List<ProductCategory> productCategoryList = productCategoryDao.findByCategory(map);
-		return productCategoryList;
-	}
 	
 	public List<ProductCategory> getProductCategory(Integer grade){
 		List<ProductCategory> productCategoryTreeList = this.findByGrade(grade);

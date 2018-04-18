@@ -38,7 +38,6 @@
     <result column="month_hits_date" jdbcType="TIMESTAMP" property="monthHitsDate" />
     <result column="week_sales_date" jdbcType="TIMESTAMP" property="weekSalesDate" />
     <result column="month_sales_date" jdbcType="TIMESTAMP" property="monthSalesDate" />
-    <result column="attribute_value0" jdbcType="VARCHAR" property="attributeValue0" />
     <result column="origin_place" jdbcType="VARCHAR" property="originPlace" />
     <result column="storage_condition" jdbcType="VARCHAR" property="storageCondition" />
     <result column="product_category_id" jdbcType="BIGINT" property="productCategoryId" />
@@ -52,25 +51,55 @@
   <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.cxgmerp.domain.Product">
     <result column="introduction" jdbcType="LONGVARCHAR" property="introduction" />
   </resultMap>
+  
+  <resultMap extends="ResultMapWithBLOBs" id="ResultMapWithCategory" type="com.cxgmerp.domain.ProductTransfer">
+   <result column="cid" jdbcType="BIGINT" property="cid" />
+    <result column="cname" jdbcType="VARCHAR" property="cname" />
+    <result column="grade" jdbcType="INTEGER" property="grade" />
+    <result column="parent_id" jdbcType="BIGINT" property="parentId" />
+  </resultMap>
   <sql id="Base_Column_List">
     id, sn, name, full_name, price, cost, market_price, image, unit, weight, stock, allocated_stock, 
     stock_memo, point, is_marketable, is_list, is_top, is_gift, memo, keyword, seo_title, 
     seo_keywords, seo_description, score, total_score, score_count, hits, week_hits, 
     month_hits, sales, week_sales, month_sales, week_hits_date, month_hits_date, week_sales_date, 
-    month_sales_date, attribute_value0, origin_place, storage_condition, product_category_id, 
+    month_sales_date, origin_place, storage_condition, product_category_id, 
     create_by, creation_date, last_updated_by, last_updated_date, delete_flag, brand_name
   </sql>
   <sql id="Blob_Column_List">
     introduction
   </sql>
+  <sql id="Base_Column_List1">
+    p.id as id, sn, p.name as name, full_name, price, cost, market_price, image, unit, weight, stock, allocated_stock, 
+    stock_memo, point, is_marketable, is_list, is_top, is_gift, memo, keyword,score, total_score, score_count, hits, week_hits, 
+    month_hits, sales, week_sales, month_sales, week_hits_date, month_hits_date, week_sales_date, 
+    month_sales_date, origin_place, storage_condition, product_category_id, 
+    p.create_by as create_by, p.creation_date as creation_date, p.last_updated_by as last_updated_by, p.last_updated_date as last_updated_date, brand_name
+  </sql>
+  <sql id="Category_Column_List">
+     pc.id as cid,pc.name as cname,pc.grade as grade,pc.parent_id as parent_id
+  </sql>
   <select id="findById" parameterType="java.lang.Long" resultMap="ResultMapWithBLOBs">
     select 
-    <include refid="Base_Column_List" />
+    <include refid="Base_Column_List1" />
     ,
     <include refid="Blob_Column_List" />
-    from product
+    ,
+   <include refid="Category_Column_List" />
+    from product p left join product_category pc on p.product_category_id = pc.id
     where id = #{id,jdbcType=BIGINT}
   </select>
+  
+  <select id="findListAllWithCategory" resultMap="ResultMapWithCategory">
+    select 
+    <include refid="Base_Column_List1" />
+    ,
+    <include refid="Blob_Column_List" />
+    ,
+   <include refid="Category_Column_List" />
+    from product p left join product_category pc on p.product_category_id = pc.id
+  </select>
+  
   <delete id="delete" parameterType="java.lang.Long">
     delete from product
     where id = #{id,jdbcType=BIGINT}
@@ -87,7 +116,7 @@
       score_count, hits, week_hits, 
       month_hits, sales, week_sales, 
       month_sales, week_hits_date, month_hits_date, 
-      week_sales_date, month_sales_date, attribute_value0, 
+      week_sales_date, month_sales_date, 
       origin_place, storage_condition, product_category_id, 
       create_by, creation_date, last_updated_by, 
       last_updated_date, delete_flag, brand_name, 
@@ -103,7 +132,7 @@
       #{scoreCount,jdbcType=BIGINT}, #{hits,jdbcType=BIGINT}, #{weekHits,jdbcType=BIGINT}, 
       #{monthHits,jdbcType=BIGINT}, #{sales,jdbcType=BIGINT}, #{weekSales,jdbcType=BIGINT}, 
       #{monthSales,jdbcType=BIGINT}, #{weekHitsDate,jdbcType=TIMESTAMP}, #{monthHitsDate,jdbcType=TIMESTAMP}, 
-      #{weekSalesDate,jdbcType=TIMESTAMP}, #{monthSalesDate,jdbcType=TIMESTAMP}, #{attributeValue0,jdbcType=VARCHAR}, 
+      #{weekSalesDate,jdbcType=TIMESTAMP}, #{monthSalesDate,jdbcType=TIMESTAMP}, 
       #{originPlace,jdbcType=VARCHAR}, #{storageCondition,jdbcType=VARCHAR}, #{productCategoryId,jdbcType=BIGINT}, 
       #{createBy,jdbcType=VARCHAR}, #{creationDate,jdbcType=TIMESTAMP}, #{lastUpdatedBy,jdbcType=VARCHAR}, 
       #{lastUpdatedDate,jdbcType=TIMESTAMP}, #{deleteFlag,jdbcType=BIT}, #{brandName,jdbcType=VARCHAR}, 
@@ -217,9 +246,6 @@
       </if>
       <if test="monthSalesDate != null">
         month_sales_date = #{monthSalesDate,jdbcType=TIMESTAMP},
-      </if>
-      <if test="attributeValue0 != null">
-        attribute_value0 = #{attributeValue0,jdbcType=VARCHAR},
       </if>
       <if test="originPlace != null">
         origin_place = #{originPlace,jdbcType=VARCHAR},

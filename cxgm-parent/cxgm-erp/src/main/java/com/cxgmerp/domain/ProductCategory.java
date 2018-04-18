@@ -37,6 +37,8 @@ public class ProductCategory {
     private Boolean deleteFlag;
     
     private List<ProductCategory> childCategory;
+    
+    private ProductCategory parentProductCategory;
 
     public Long getId() {
         return id;
@@ -172,5 +174,13 @@ public class ProductCategory {
 
 	public void setLevel(Integer level) {
 		this.level = level;
+	}
+
+	public ProductCategory getParentProductCategory() {
+		return parentProductCategory;
+	}
+
+	public void setParentProductCategory(ProductCategory parentProductCategory) {
+		this.parentProductCategory = parentProductCategory;
 	}
 }
