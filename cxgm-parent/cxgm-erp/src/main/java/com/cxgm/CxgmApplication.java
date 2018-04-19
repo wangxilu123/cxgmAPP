@@ -5,7 +5,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.session.data.redis.config.annotation.web.http.EnableRedisHttpSession;
 
 @SpringBootApplication
-@EnableRedisHttpSession(maxInactiveIntervalInSeconds = 200)
+@EnableRedisHttpSession(maxInactiveIntervalInSeconds = 20000)
 public class CxgmApplication {
 
 	public static void main(String[] args) {

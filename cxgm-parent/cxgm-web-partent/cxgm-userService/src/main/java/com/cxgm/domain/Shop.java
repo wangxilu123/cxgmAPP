@@ -1,5 +1,9 @@
 package com.cxgm.domain;
 
+import java.util.Date;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.ToString;
@@ -46,4 +50,8 @@ public class Shop {
 
 	@ApiModelProperty(name = "aliPrivatekey",value = "门店支付宝商户私钥")
     private String aliPrivatekey;
+	
+	@ApiModelProperty(name = "createTime",value = "创建时间")
+	@JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
+    private Date createTime;
 }

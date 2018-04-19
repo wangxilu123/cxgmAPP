@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.cxgm.domain.Shop;
 import com.cxgm.domain.ShopResponse;
+import com.github.pagehelper.PageInfo;
 
 
 public interface ShopService {
@@ -37,4 +38,6 @@ public interface ShopService {
     Shop findShopById(Integer shopId);
 
     List<ShopResponse> findShopByPoint(String longitude, String dimension);
+    
+	PageInfo<Shop> findShopByPage(Integer pageNum, Integer pageSize);
 }

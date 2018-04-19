@@ -1,7 +1,23 @@
 server:
     port: 8076
 beetlsql:
-  enabled: false  
+  enabled: false
+
+eureka:
+    client:
+        serviceUrl:
+            defaultZone: http://192.168.10.56:41201/eureka/
+
+    instance:
+      lease-renewal-interval-in-seconds: 48
+      lease-expiration-duration-in-seconds: 28
+      instance-id: ${spring.cloud.client.ipAddress}:${server.port}
+      hostname: ${spring.cloud.client.ipAddress}
+      #注册时使用ip而不是主机名
+      prefer-ip-address: true
+      #如果是swagger 文档，直接写http://${spring.cloud.client.ipAddress}:${server.port}/swagger-ui.html
+      status-page-url: http://${spring.cloud.client.ipAddress}:${server.port}/
+      health-check-url: http://${spring.cloud.client.ipAddress}:${server.port}/    
   
 spring:
     #thymeleaf
@@ -21,33 +37,23 @@ spring:
       readSize: 1
         # 使用druid数据源
       type: com.alibaba.druid.pool.DruidDataSource
-      MASTER:
-        url: jdbc:mysql://:3306/cxgm?useUnicode=true&characterEncoding=UTF-8
+      write:
+        url: jdbc:mysql://47.104.226.173:3306/cxgm?characterEncoding=utf-8
         username: root
-        password: ''
+        password: '*Cxgm@App2018*'
         driver-class-name: com.mysql.jdbc.Driver
         validationQuery: select 'x'
 
-      SLAVE:
-        url: jdbc:mysql://:3306/cxgm?useUnicode=true&characterEncoding=UTF-8
+      read:
+        url: jdbc:mysql://47.104.226.173:3306/cxgm?characterEncoding=utf-8
         username: root
-        password: ''
-        # 使用druid数据源
-        type: com.alibaba.druid.pool.DruidDataSource
+        password: '*Cxgm@App2018*'
         driver-class-name: com.mysql.jdbc.Driver
         validationQuery: select 'x'
 
     redis:
         database: 0
-        host: 
-#        password: isanjie123
+        host: 47.104.226.173
         port: 6379
-
-#指定log的配置文件，以及记录Spring Boot的log级别  
-logging:
-    config: classpath:logback.xml
-mybatis:
-  configuration:
-    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl     
  
     

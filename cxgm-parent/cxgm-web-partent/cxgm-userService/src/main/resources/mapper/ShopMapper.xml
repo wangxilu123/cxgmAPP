@@ -15,6 +15,7 @@
     <result column="weixin_apikey" jdbcType="VARCHAR" property="weixinApikey" />
     <result column="ali_partnerid" jdbcType="VARCHAR" property="aliPartnerid" />
     <result column="ali_privatekey" jdbcType="VARCHAR" property="aliPrivatekey" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
   </resultMap>
   <sql id="Example_Where_Clause">
     <where>
@@ -76,7 +77,7 @@
   </sql>
   <sql id="Base_Column_List">
     id, shop_name, shop_address, longitude, dimension, image_url, description, owner, 
-    electronic_fence, weixin_mchid, weixin_apikey, ali_partnerid, ali_privatekey
+    electronic_fence, weixin_mchid, weixin_apikey, ali_partnerid, ali_privatekey,create_time
   </sql>
   <select id="selectByExample" parameterType="com.cxgm.domain.ShopExample" resultMap="BaseResultMap">
     select
@@ -110,12 +111,12 @@
     insert into tbl_shop (shop_name, shop_address, longitude, 
       dimension, image_url, description, 
       owner, electronic_fence, weixin_mchid, 
-      weixin_apikey, ali_partnerid, ali_privatekey
+      weixin_apikey, ali_partnerid, ali_privatekey,create_time
       )
     values (#{shopName,jdbcType=VARCHAR}, #{shopAddress,jdbcType=VARCHAR}, #{longitude,jdbcType=VARCHAR}, 
       #{dimension,jdbcType=VARCHAR}, #{imageUrl,jdbcType=VARCHAR}, #{description,jdbcType=VARCHAR}, 
       #{owner,jdbcType=VARCHAR}, #{electronicFence,jdbcType=VARCHAR}, #{weixinMchid,jdbcType=VARCHAR}, 
-      #{weixinApikey,jdbcType=VARCHAR}, #{aliPartnerid,jdbcType=VARCHAR}, #{aliPrivatekey,jdbcType=VARCHAR}
+      #{weixinApikey,jdbcType=VARCHAR}, #{aliPartnerid,jdbcType=VARCHAR}, #{aliPrivatekey,jdbcType=VARCHAR},NOW()
       )
   </insert>
   <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="com.cxgm.domain.Shop" useGeneratedKeys="true">

@@ -13,6 +13,8 @@ import com.cxgm.domain.Shop;
 import com.cxgm.domain.ShopExample;
 import com.cxgm.domain.ShopResponse;
 import com.cxgm.service.ShopService;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 
 @Primary
 @Service
@@ -25,7 +27,7 @@ public class ShopServiceImpl implements ShopService {
 	@Override
 	public Integer addShop(Shop shop) {
 		
-		return null;
+		return shopMapper.insert(shop);
 	}
 
 	@Override
@@ -67,6 +69,21 @@ public class ShopServiceImpl implements ShopService {
 			}
 		}
 		return list;
+	}
+	
+	@Override
+	public PageInfo<Shop> findShopByPage(Integer pageNum,Integer pageSize) {
+		
+		PageHelper.startPage(pageNum, pageSize);
+		
+		ShopExample example = new ShopExample();
+		
+		example.setOrderByClause("id desc");
+		
+		List<Shop> shopList = shopMapper.selectByExample(example);
+		
+		PageInfo<Shop> page = new PageInfo<>(shopList);
+		return page;
 	}
 
 	@Override

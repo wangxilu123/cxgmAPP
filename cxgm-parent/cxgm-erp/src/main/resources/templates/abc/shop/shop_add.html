@@ -1,0 +1,307 @@
+<!doctype html>
+<html class="no-js">
+<head>
+<% include("admin_head.html",{title: '添加/编辑门店信息', validatorJS:
+true}){}%> <%var isAdd = false; var isEdit = false;
+if(isEmpty(shop.id)){ isAdd = true; }else{ isEdit = true; }%>
+
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+<style type="text/css">
+body, html {
+	width: 100%;
+	height: 100%;
+	margin: 0;
+	font-family: "微软雅黑";
+	font-size: 14px;
+}
+
+#l-map {
+	height: 300px;
+	width: 100%;
+}
+
+#r-result {
+	width: 100%;
+}
+</style>
+<script type="text/javascript"
+	src="http://api.map.baidu.com/api?v=2.0&ak=Wg05wo3kCKoraGdZqb8PfZI74eAi3MBB"></script>
+<script type="text/javascript" src="http://api.map.baidu.com/library/DrawingManager/1.4/src/DrawingManager_min.js"></script>
+	<link rel="stylesheet" href="http://api.map.baidu.com/library/DrawingManager/1.4/src/DrawingManager_min.css" />
+	<!--加载检索信息窗口-->
+	<script type="text/javascript" src="http://api.map.baidu.com/library/SearchInfoWindow/1.4/src/SearchInfoWindow_min.js"></script>
+	<link rel="stylesheet" href="http://api.map.baidu.com/library/SearchInfoWindow/1.4/src/SearchInfoWindow_min.css" />
+	<title>鼠标绘制工具</title>
+</head>
+<body>
+	<!-- content start -->
+	<div class="admin-content">
+		<div class="admin-content-body">
+			<div class="am-cf app-padding-title">
+				<div class="am-fl am-cf">
+					<strong class="am-text-primary am-text-lg">门店管理</strong> / <small><%if(isAdd){%>添加门店<%}else{%>编辑门店<%}%></small>
+				</div>
+			</div>
+
+			<hr data-am-widget="divider"
+				class="am-divider am-divider-dashed am-margin-0" />
+
+			<form class="validator-form"
+				action="<%if (isAdd){%>/shop/save<%}else{%>/shop/update<%}%>"
+				method="post">
+				<input type="hidden" name="id" value="${shop.id!}" />
+				<div class="am-tabs am-margin" data-am-tabs="{noSwipe: 1}">
+					<ul class="am-tabs-nav am-nav am-nav-tabs">
+						<li class="am-active"><a href="#tab1">基本信息</a></li>
+					</ul>
+
+					<div class="am-tabs-bd am-form">
+						<div
+							class="am-tab-panel am-fade am-in am-active am-form-horizontal"
+							id="tab1">
+							<div class="am-form-group am-form-group-sm">
+								<label class="am-u-sm-4 am-u-md-3 am-text-right am-form-label">门店名称</label>
+								<div class="am-u-sm-8 am-u-md-9">
+									<%if (isAdd){%> <input type="text"
+										class="am-form-field js-pattern-username" name="shopName"
+										placeholder="门店名称" minlength="2" maxlength="20" required />
+									<div class="am-text-warning am-margin-top-xs am-text-xs">${usernameMessages!}</div>
+									<%}else{%> ${shop.shopName!} <input type="hidden"
+										name="shopName" value="${shop.shopName!}" /> <%}%>
+								</div>
+							</div>
+
+							<div class="am-form-group am-form-group-sm">
+								<label class="am-u-sm-4 am-u-md-3 am-text-right am-form-label">负责人</label>
+								<div class="am-u-sm-8 am-u-md-9">
+									<%if (isAdd){%> <input type="text"
+										class="am-form-field js-pattern-username" name="owner"
+										placeholder="负责人" minlength="2" maxlength="20" required />
+									<div class="am-text-warning am-margin-top-xs am-text-xs">${usernameMessages!}</div>
+									<%}else{%> ${shop.owner!} <input type="hidden" name="owner"
+										value="${shop.owner!}" /> <%}%>
+								</div>
+							</div>
+
+							<div class="am-form-group am-form-group-sm">
+								<label class="am-u-sm-4 am-u-md-3 am-text-right am-form-label">微信商户ID</label>
+								<div class="am-u-sm-8 am-u-md-9">
+									<%if (isAdd){%> <input type="text"
+										class="am-form-field js-pattern-username" name="weixinMchid"
+										placeholder="微信商户ID" minlength="2" maxlength="20" required />
+									<div class="am-text-warning am-margin-top-xs am-text-xs">${usernameMessages!}</div>
+									<%}else{%> ${shop.weixinMchid!} <input type="hidden"
+										name="weixinMchid" value="${shop.weixinMchid!}" /> <%}%>
+								</div>
+							</div>
+
+							<div class="am-form-group am-form-group-sm">
+								<label class="am-u-sm-4 am-u-md-3 am-text-right am-form-label">微信APPKEY</label>
+								<div class="am-u-sm-8 am-u-md-9">
+									<%if (isAdd){%> <input type="text"
+										class="am-form-field js-pattern-username" name="weixinApikey"
+										placeholder="微信APPKEY" minlength="2" maxlength="20" required />
+									<div class="am-text-warning am-margin-top-xs am-text-xs">${usernameMessages!}</div>
+									<%}else{%> ${shop.weixinApikey!} <input type="hidden"
+										name="weixinApikey" value="${shop.weixinApikey!}" /> <%}%>
+								</div>
+							</div>
+
+							<div class="am-form-group am-form-group-sm">
+								<label class="am-u-sm-4 am-u-md-3 am-text-right am-form-label">支付宝合作ID</label>
+								<div class="am-u-sm-8 am-u-md-9">
+									<%if (isAdd){%> <input type="text"
+										class="am-form-field js-pattern-username" name="aliPartnerid"
+										placeholder="支付宝合作ID" minlength="2" maxlength="20" required />
+									<div class="am-text-warning am-margin-top-xs am-text-xs">${usernameMessages!}</div>
+									<%}else{%> ${shop.aliPartnerid!} <input type="hidden"
+										name="aliPartnerid" value="${shop.aliPartnerid!}" /> <%}%>
+								</div>
+							</div>
+
+							<div class="am-form-group am-form-group-sm">
+								<label class="am-u-sm-4 am-u-md-3 am-text-right am-form-label">支付宝商户私钥</label>
+								<div class="am-u-sm-8 am-u-md-9">
+									<%if (isAdd){%> <input type="text"
+										class="am-form-field js-pattern-username" name="aliPrivatekey"
+										placeholder="支付宝商户私钥" minlength="2" maxlength="20" required />
+									<div class="am-text-warning am-margin-top-xs am-text-xs">${usernameMessages!}</div>
+									<%}else{%> ${shop.aliPrivatekey!} <input type="hidden"
+										name="aliPrivatekey" value="${shop.aliPrivatekey!}" /> <%}%>
+								</div>
+							</div>
+
+							<div class="am-form-group am-form-group-sm">
+								<label class="am-u-sm-4 am-u-md-3 am-text-right am-form-label"
+									id="r-result">门店地址</label>
+								<div class="am-u-sm-8 am-u-md-9">
+									<div
+										style="width: 320px; height: 240px; border: 1px solid gray"
+										id="l-map"></div>
+									<%if (isAdd){%> <input type="text" id="suggestId"
+										style="width: 520px;" am-form-field
+										js-pattern-username" name="shopAddress" placeholder="门店地址"
+										required />
+									<div id="searchResultPanel"
+										style="border: 1px solid #C0C0C0; width: 150px; height: auto; display: none;"></div>
+									<input type="hidden" id="lonlat" name="lonlat" />
+									<div class="am-text-warning am-margin-top-xs am-text-xs">${usernameMessages!}</div>
+									<%}else{%> ${shop.shopName!} <input type="hidden"
+										name="shopName" value="${shop.shopName!}" /> <%}%>
+								</div>
+							</div>
+
+							<div class="am-form-group am-form-group-sm">
+								<label class="am-u-sm-4 am-u-md-3 am-text-right am-form-label">门店描述</label>
+								<div class="am-u-sm-8 am-u-md-9">
+									<%if (isAdd){%> <input type="text"
+										class="am-form-field js-pattern-username" name="aliPrivatekey"
+										placeholder="支付宝商户私钥" minlength="2" maxlength="20" required />
+									<div class="am-text-warning am-margin-top-xs am-text-xs">${usernameMessages!}</div>
+									<%}else{%> ${shop.aliPrivatekey!} <input type="hidden"
+										name="aliPrivatekey" value="${shop.aliPrivatekey!}" /> <%}%>
+								</div>
+							</div>
+
+							<div class="am-form-group am-form-group-sm">
+								<label class="am-u-sm-4 am-u-md-3 am-text-right am-form-label">电子围栏（配送区域）</label>
+
+								<div style="width: 640px; height: 540px; border: 1px solid gray" id="map"></div>
+								<div id="result">
+									<input type="button" value="获取绘制的覆盖物个数"
+										onclick="alert(overlays.length)" /> <input type="button"
+										value="清除所有覆盖物" onclick="clearAll()" />
+								</div>
+							</div>
+						</div>
+
+					</div>
+				</div>
+				<div class="am-margin">
+					<button type="submit" class="am-btn am-btn-primary">
+						<span class="am-icon-save"> 保 存</span>
+					</button>
+					<button type="button" class="am-btn am-btn-default"
+						onclick="window.history.back(); return false;">
+						<span class="am-icon-undo"> 返 回</span>
+					</button>
+				</div>
+			</form>
+		</div>
+	</div>
+	<!-- content end -->
+</body>
+</html>
+
+<script type="text/javascript">
+	// 百度地图API功能
+	function G(id) {
+		return document.getElementById(id);
+	}
+
+	/* 获取经纬度开始 */
+	var map = new BMap.Map("l-map");
+	map.centerAndZoom("北京", 12);
+	map.setDefaultCursor("crosshair");//设置地图默认的鼠标指针样式
+	map.enableScrollWheelZoom();//启用滚轮放大缩小，默认禁用。
+
+	var ac = new BMap.Autocomplete( //建立一个自动完成的对象
+	{
+		"input" : "suggestId",
+		"location" : map
+	});
+
+	ac.addEventListener("onhighlight", function(e) { //鼠标放在下拉列表上的事件
+		var str = "";
+		var _value = e.fromitem.value;
+		var value = "";
+		if (e.fromitem.index > -1) {
+			value = _value.province + _value.city + _value.district
+					+ _value.street + _value.business;
+		}
+		str = "FromItem<br />index = " + e.fromitem.index + "<br />value = "
+				+ value;
+
+		value = "";
+		if (e.toitem.index > -1) {
+			_value = e.toitem.value;
+			value = _value.province + _value.city + _value.district
+					+ _value.street + _value.business;
+		}
+		str += "<br />ToItem<br />index = " + e.toitem.index + "<br />value = "
+				+ value;
+		G("searchResultPanel").innerHTML = str;
+	});
+
+	var myValue;
+	ac.addEventListener("onconfirm", function(e) { //鼠标点击下拉列表后的事件
+		var _value = e.item.value;
+		myValue = _value.province + _value.city + _value.district
+				+ _value.street + _value.business;
+		G("searchResultPanel").innerHTML = "onconfirm<br />index = "
+				+ e.item.index + "<br />myValue = " + myValue;
+
+		setPlace();
+	});
+
+	function setPlace() {
+		map.clearOverlays(); //清除地图上所有覆盖物
+		function myFun() {
+			var pp = local.getResults().getPoi(0).point; //获取第一个智能搜索的结果
+			map.centerAndZoom(pp, 18);
+			map.addOverlay(new BMap.Marker(pp)); //添加标注
+
+			document.getElementById("lonlat").value = local.getResults()
+					.getPoi(0).point.lng
+					+ ", " + local.getResults().getPoi(0).point.lat;
+		}
+		var local = new BMap.LocalSearch(map, { //智能搜索
+			onSearchComplete : myFun
+		});
+		local.search(myValue);
+	}
+	/* 获取经纬度结束 */
+
+	/* 设置电子围栏开始 */
+	var map1 = new BMap.Map('map');
+	var poi = new BMap.Point(116.307852, 40.057031);
+	map1.centerAndZoom(poi, 16);
+	map1.enableScrollWheelZoom();
+
+	var overlays = [];
+	var overlaycomplete = function(e) {
+		overlays.push(e.overlay);
+	};
+	var styleOptions = {
+		strokeColor : "red", //边线颜色。
+		fillColor : "red", //填充颜色。当参数为空时，圆形将没有填充效果。
+		strokeWeight : 3, //边线的宽度，以像素为单位。
+		strokeOpacity : 0.8, //边线透明度，取值范围0 - 1。
+		fillOpacity : 0.6, //填充的透明度，取值范围0 - 1。
+		strokeStyle : 'solid' //边线的样式，solid或dashed。
+	}
+	//实例化鼠标绘制工具
+	var drawingManager = new BMapLib.DrawingManager(map1, {
+		isOpen : false, //是否开启绘制模式
+		enableDrawingTool : true, //是否显示工具栏
+		drawingToolOptions : {
+			anchor : BMAP_ANCHOR_TOP_RIGHT, //位置
+			offset : new BMap.Size(5, 5), //偏离值
+		},
+		circleOptions : styleOptions, //圆的样式
+		polylineOptions : styleOptions, //线的样式
+		polygonOptions : styleOptions, //多边形的样式
+		rectangleOptions : styleOptions
+	//矩形的样式
+	});
+	//添加鼠标绘制工具监听事件，用于获取绘制结果
+	drawingManager.addEventListener('overlaycomplete', overlaycomplete);
+	function clearAll() {
+		for (var i = 0; i < overlays.length; i++) {
+			map1.removeOverlay(overlays[i]);
+		}
+		overlays.length = 0
+	}
+	/* 设置电子围栏结束 */
+</script>
