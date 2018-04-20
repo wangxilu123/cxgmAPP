@@ -133,6 +133,29 @@ body, html {
 							</div>
 
 							<div class="am-form-group am-form-group-sm">
+								<label class="am-u-sm-4 am-u-md-3 am-text-right am-form-label">门店描述</label>
+								<div class="am-u-sm-8 am-u-md-9">
+									<%if (isAdd){%> <input type="text"
+										class="am-form-field js-pattern-username" name="aliPrivatekey"
+										placeholder="支付宝商户私钥" minlength="2" maxlength="20" required />
+									<div class="am-text-warning am-margin-top-xs am-text-xs">${usernameMessages!}</div>
+									<%}else{%> ${shop.aliPrivatekey!} <input type="hidden"
+										name="aliPrivatekey" value="${shop.aliPrivatekey!}" /> <%}%>
+								</div>
+							</div>
+
+							<div class="am-form-group am-form-group-sm">
+								<label class="am-u-sm-4 am-u-md-3 am-text-right am-form-label">电子围栏（配送区域）</label>
+                                <input type="hidden" id="electronicFence" name="electronicFence" />
+								<div style="width: 640px; height: 540px; border: 1px solid gray" id="map"></div>
+								<div id="result">
+									<input type="button" value="获取电子围栏"
+										onclick="add()" /> <input type="button"
+										value="清除电子围栏" onclick="clearAll()" />
+								</div>
+							</div>
+							
+							<div class="am-form-group am-form-group-sm">
 								<label class="am-u-sm-4 am-u-md-3 am-text-right am-form-label"
 									id="r-result">门店地址</label>
 								<div class="am-u-sm-8 am-u-md-9">
@@ -149,29 +172,6 @@ body, html {
 									<div class="am-text-warning am-margin-top-xs am-text-xs">${usernameMessages!}</div>
 									<%}else{%> ${shop.shopName!} <input type="hidden"
 										name="shopName" value="${shop.shopName!}" /> <%}%>
-								</div>
-							</div>
-
-							<div class="am-form-group am-form-group-sm">
-								<label class="am-u-sm-4 am-u-md-3 am-text-right am-form-label">门店描述</label>
-								<div class="am-u-sm-8 am-u-md-9">
-									<%if (isAdd){%> <input type="text"
-										class="am-form-field js-pattern-username" name="aliPrivatekey"
-										placeholder="支付宝商户私钥" minlength="2" maxlength="20" required />
-									<div class="am-text-warning am-margin-top-xs am-text-xs">${usernameMessages!}</div>
-									<%}else{%> ${shop.aliPrivatekey!} <input type="hidden"
-										name="aliPrivatekey" value="${shop.aliPrivatekey!}" /> <%}%>
-								</div>
-							</div>
-
-							<div class="am-form-group am-form-group-sm">
-								<label class="am-u-sm-4 am-u-md-3 am-text-right am-form-label">电子围栏（配送区域）</label>
-
-								<div style="width: 640px; height: 540px; border: 1px solid gray" id="map"></div>
-								<div id="result">
-									<input type="button" value="获取绘制的覆盖物个数"
-										onclick="alert(overlays.length)" /> <input type="button"
-										value="清除所有覆盖物" onclick="clearAll()" />
 								</div>
 							</div>
 						</div>
@@ -254,7 +254,7 @@ body, html {
 
 			document.getElementById("lonlat").value = local.getResults()
 					.getPoi(0).point.lng
-					+ ", " + local.getResults().getPoi(0).point.lat;
+					+ "," + local.getResults().getPoi(0).point.lat;
 		}
 		var local = new BMap.LocalSearch(map, { //智能搜索
 			onSearchComplete : myFun
@@ -270,9 +270,25 @@ body, html {
 	map1.enableScrollWheelZoom();
 
 	var overlays = [];
+	var mlnglat = [];
 	var overlaycomplete = function(e) {
-		overlays.push(e.overlay);
+		    overlays.push(e.overlay);
+	        var path = e.overlay.getPath();//Array<Point> 返回多边型的点数组   
+	        for (var i = 0; i < path.length; i++) {
+	            mlnglat.push(path[i].lng + "_" + path[i].lat);
+	        }
 	};
+	
+	function add() {
+		 if (mlnglat.length == 0) {
+	            alert("请先设置电子围栏！");
+	        } else {
+	        	document.getElementById("electronicFence").value= mlnglat;
+	        }
+	}
+	
+	
+	
 	var styleOptions = {
 		strokeColor : "red", //边线颜色。
 		fillColor : "red", //填充颜色。当参数为空时，圆形将没有填充效果。

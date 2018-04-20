@@ -60,7 +60,20 @@ public class ShopController {
 	public ModelAndView save(HttpServletRequest request)
 			throws InterruptedException {
 		Shop shop= new Shop();
+		String[] lonlat=request.getParameter("lonlat").split(",");
+		
 		shop.setShopName(request.getParameter("shopName"));
+		shop.setAliPartnerid(request.getParameter("aliPartnerid"));
+		shop.setAliPrivatekey(request.getParameter("aliPrivatekey"));
+		shop.setDescription(request.getParameter("description"));
+		shop.setDimension(lonlat[1]);
+		shop.setLongitude(lonlat[0]);
+		shop.setElectronicFence(request.getParameter("electronicFence"));
+		/*shop.setImageUrl(request.getParameter("imageUrl"));*/
+		shop.setOwner(request.getParameter("owner"));
+		shop.setShopAddress(request.getParameter("shopAddress"));
+		shop.setWeixinApikey(request.getParameter("weixinApikey"));
+		shop.setWeixinMchid(request.getParameter("weixinMchid"));
 		shopService.addShop(shop);
 		ModelAndView mv = new ModelAndView("redirect:/shop/list");
 		return mv;
