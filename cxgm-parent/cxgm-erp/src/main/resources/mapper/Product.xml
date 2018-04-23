@@ -41,6 +41,7 @@
     <result column="origin_place" jdbcType="VARCHAR" property="originPlace" />
     <result column="storage_condition" jdbcType="VARCHAR" property="storageCondition" />
     <result column="product_category_id" jdbcType="BIGINT" property="productCategoryId" />
+    <result column="shop_id" jdbcType="INTEGER" property="shopId" />
     <result column="create_by" jdbcType="VARCHAR" property="createBy" />
     <result column="creation_date" jdbcType="TIMESTAMP" property="creationDate" />
     <result column="last_updated_by" jdbcType="VARCHAR" property="lastUpdatedBy" />
@@ -63,7 +64,7 @@
     stock_memo, point, is_marketable, is_list, is_top, is_gift, memo, keyword, seo_title, 
     seo_keywords, seo_description, score, total_score, score_count, hits, week_hits, 
     month_hits, sales, week_sales, month_sales, week_hits_date, month_hits_date, week_sales_date, 
-    month_sales_date, origin_place, storage_condition, product_category_id, 
+    month_sales_date, origin_place, storage_condition, product_category_id, shop_id,
     create_by, creation_date, last_updated_by, last_updated_date, delete_flag, brand_name
   </sql>
   <sql id="Blob_Column_List">
@@ -73,7 +74,7 @@
     p.id as id, sn, p.name as name, full_name, price, cost, market_price, image, unit, weight, stock, allocated_stock, 
     stock_memo, point, is_marketable, is_list, is_top, is_gift, memo, keyword,score, total_score, score_count, hits, week_hits, 
     month_hits, sales, week_sales, month_sales, week_hits_date, month_hits_date, week_sales_date, 
-    month_sales_date, origin_place, storage_condition, product_category_id, 
+    month_sales_date, origin_place, storage_condition, product_category_id, shop_id,
     p.create_by as create_by, p.creation_date as creation_date, p.last_updated_by as last_updated_by, p.last_updated_date as last_updated_date, brand_name
   </sql>
   <sql id="Category_Column_List">
@@ -117,7 +118,7 @@
       month_hits, sales, week_sales, 
       month_sales, week_hits_date, month_hits_date, 
       week_sales_date, month_sales_date, 
-      origin_place, storage_condition, product_category_id, 
+      origin_place, storage_condition, product_category_id, shop_id,
       create_by, creation_date, last_updated_by, 
       last_updated_date, delete_flag, brand_name, 
       introduction)
@@ -133,7 +134,7 @@
       #{monthHits,jdbcType=BIGINT}, #{sales,jdbcType=BIGINT}, #{weekSales,jdbcType=BIGINT}, 
       #{monthSales,jdbcType=BIGINT}, #{weekHitsDate,jdbcType=TIMESTAMP}, #{monthHitsDate,jdbcType=TIMESTAMP}, 
       #{weekSalesDate,jdbcType=TIMESTAMP}, #{monthSalesDate,jdbcType=TIMESTAMP}, 
-      #{originPlace,jdbcType=VARCHAR}, #{storageCondition,jdbcType=VARCHAR}, #{productCategoryId,jdbcType=BIGINT}, 
+      #{originPlace,jdbcType=VARCHAR}, #{storageCondition,jdbcType=VARCHAR}, #{productCategoryId,jdbcType=BIGINT}, #{shopId,jdbcType=INTEGER},
       #{createBy,jdbcType=VARCHAR}, #{creationDate,jdbcType=TIMESTAMP}, #{lastUpdatedBy,jdbcType=VARCHAR}, 
       #{lastUpdatedDate,jdbcType=TIMESTAMP}, #{deleteFlag,jdbcType=BIT}, #{brandName,jdbcType=VARCHAR}, 
       #{introduction,jdbcType=LONGVARCHAR})
@@ -255,6 +256,9 @@
       </if>
       <if test="productCategoryId != null">
         product_category_id = #{productCategoryId,jdbcType=BIGINT},
+      </if>
+      <if test="shopId != null">
+        shop_id = #{shopId,jdbcType=INTEGER},
       </if>
       <if test="createBy != null">
         create_by = #{createBy,jdbcType=VARCHAR},

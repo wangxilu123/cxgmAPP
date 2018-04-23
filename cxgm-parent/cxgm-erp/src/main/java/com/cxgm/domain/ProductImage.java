@@ -3,71 +3,41 @@ package com.cxgm.domain;
 public class ProductImage {
     private Long id;
 
-    private String title;
+    private String name;
 
-    private Long productId;
+    private String url;
 
-    private String source;
+    private boolean isDel;
 
-    private String large;
+	public Long getId() {
+		return id;
+	}
 
-    private String medium;
+	public void setId(Long id) {
+		this.id = id;
+	}
 
-    private String thumbnail;
+	public String getName() {
+		return name;
+	}
 
-    public Long getId() {
-        return id;
-    }
+	public void setName(String name) {
+		this.name = name;
+	}
 
-    public void setId(Long id) {
-        this.id = id;
-    }
+	public String getUrl() {
+		return url;
+	}
 
-    public String getTitle() {
-        return title;
-    }
+	public void setUrl(String url) {
+		this.url = url;
+	}
 
-    public void setTitle(String title) {
-        this.title = title == null ? null : title.trim();
-    }
+	public boolean isDel() {
+		return isDel;
+	}
 
-    public Long getProductId() {
-        return productId;
-    }
-
-    public void setProductId(Long productId) {
-        this.productId = productId;
-    }
-
-    public String getSource() {
-        return source;
-    }
-
-    public void setSource(String source) {
-        this.source = source == null ? null : source.trim();
-    }
-
-    public String getLarge() {
-        return large;
-    }
-
-    public void setLarge(String large) {
-        this.large = large == null ? null : large.trim();
-    }
-
-    public String getMedium() {
-        return medium;
-    }
-
-    public void setMedium(String medium) {
-        this.medium = medium == null ? null : medium.trim();
-    }
-
-    public String getThumbnail() {
-        return thumbnail;
-    }
-
-    public void setThumbnail(String thumbnail) {
-        this.thumbnail = thumbnail == null ? null : thumbnail.trim();
-    }
+	public void setDel(boolean isDel) {
+		this.isDel = isDel;
+	}
 }

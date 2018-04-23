@@ -43,7 +43,7 @@
   <%if (has(loadUE) && loadUE){%>
   <!-- 百度编辑器 -->
   <script type="text/javascript" charset="utf-8" src="${ctxPath}/static/UEditor/ueditor.config.js"></script>
-  <script type="text/javascript" charset="utf-8" src="${ctxPath}/static/UEditor/ueditor.all.min.js"></script>
+  <script type="text/javascript" charset="utf-8" src="${ctxPath}/static/UEditor/ueditor.all.js"></script>
   <script type="text/javascript" charset="utf-8" src="${ctxPath}/static/UEditor/lang/zh-cn/zh-cn.js"></script>
   <script type="text/javascript">
 	var ue = UE.getEditor('editor',{
@@ -51,6 +51,14 @@
 		//scaleEnabled:true//scaleEnabled {Boolean} [默认值：false] //是否可以拉伸长高，默认true(当开启时，自动长高失效)
 	  }
 	);
+	    UE.Editor.prototype._bkGetActionUrl = UE.Editor.prototype.getActionUrl;
+	    UE.Editor.prototype.getActionUrl = function(action) {
+	        if (action == 'uploadimage' || action == 'uploadscrawl' || action == 'uploadimage') {
+	            return 'http://localhost:8076/uploadimages'; //在这里返回我们实际的上传图片地址
+	        } else {
+	            return this._bkGetActionUrl.call(this, action);
+	        }
+	    }
   </script>
   <%}%>
   <%if (has(validatorJS) && validatorJS){%>
