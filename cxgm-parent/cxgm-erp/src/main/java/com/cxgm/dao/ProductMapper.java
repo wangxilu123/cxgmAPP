@@ -1,5 +1,6 @@
 package com.cxgm.dao;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -16,4 +17,6 @@ public interface ProductMapper {
 	int update(Product product);
 	
 	int delete(Long id);
+	
+	List<ProductTransfer> selectByPage(HashMap<String,Object> map);
 }
