@@ -45,7 +45,6 @@ public class ProductController {
 		SecurityContext ctx = SecurityContextHolder.getContext();  
 	    Authentication auth = ctx.getAuthentication(); 
 	    Admin admin = (Admin) auth.getPrincipal();
-	    admin.setShopId(1);
 	    Map<String,Object> map = new HashMap<>();
 	    map.put("shopId", admin.getShopId());
 		List<ProductTransfer> products = productService.findListAllWithCategory(map);
