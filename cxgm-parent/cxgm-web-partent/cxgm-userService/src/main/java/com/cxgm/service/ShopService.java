@@ -40,4 +40,6 @@ public interface ShopService {
     List<ShopResponse> findShopByPoint(String longitude, String dimension);
     
 	PageInfo<Shop> findShopByPage(Integer pageNum, Integer pageSize);
+	
+	List<Shop> findListAll();
 }

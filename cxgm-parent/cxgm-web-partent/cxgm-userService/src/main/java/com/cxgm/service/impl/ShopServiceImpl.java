@@ -90,6 +90,8 @@ public class ShopServiceImpl implements ShopService {
 	public Shop findShopById(Integer shopId) {
 		return null;
 	}
-
-	
+	@Override
+	public List<Shop> findListAll(){
+		return shopMapper.findListAll();
+	}
 }

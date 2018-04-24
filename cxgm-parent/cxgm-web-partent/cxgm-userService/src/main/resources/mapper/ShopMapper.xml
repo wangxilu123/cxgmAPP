@@ -270,4 +270,12 @@
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
+  
+  <select id="findListAll" resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from tbl_shop
+		where 1 = 1
+		order by id asc
+	</select>
 </mapper>

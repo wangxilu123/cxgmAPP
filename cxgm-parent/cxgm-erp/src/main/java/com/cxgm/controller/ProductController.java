@@ -2,11 +2,16 @@ package com.cxgm.controller;
 
 import java.math.BigDecimal;
 import java.sql.SQLException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -16,6 +21,7 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.cxgm.common.SystemConfig;
+import com.cxgm.domain.Admin;
 import com.cxgm.domain.ProductCategory;
 import com.cxgm.domain.ProductTransfer;
 import com.cxgm.service.ProductCategoryService;
@@ -36,16 +42,25 @@ public class ProductController {
 	public ModelAndView getProduct(HttpServletRequest request,
 			@RequestParam(value = "num", defaultValue = "1") Integer num) throws SQLException {
 		PageHelper.startPage(num, 10);
-		List<ProductTransfer> products = productService.findListAllWithCategory();
+		SecurityContext ctx = SecurityContextHolder.getContext();  
+	    Authentication auth = ctx.getAuthentication(); 
+	    Admin admin = (Admin) auth.getPrincipal();
+	    admin.setShopId(1);
+	    Map<String,Object> map = new HashMap<>();
+	    map.put("shopId", admin.getShopId());
+		List<ProductTransfer> products = productService.findListAllWithCategory(map);
 		PageInfo<ProductTransfer> pager = new PageInfo<>(products);
 		request.setAttribute("pager", pager);
+		request.setAttribute("admin", admin);
 		return new ModelAndView("admin/product_list");
 	}
 	
 	@RequestMapping(value = "/product/add", method = RequestMethod.GET)
 	public ModelAndView productAdd(HttpServletRequest request) {
 		List<ProductCategory> productCategoryTreeList = productCategoryService.getProductCategory(0);
+		String shopId = request.getParameter("product.shop");
 		request.setAttribute("productCategoryTreeList", productCategoryTreeList);
+		request.setAttribute("shopId", shopId);
 		SystemConfig systemConfig = new SystemConfig();
 		systemConfig.setUploadLimit(10);
 		systemConfig.setAllowedUploadImageExtension("png,jpg");

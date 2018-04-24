@@ -41,7 +41,7 @@ public class AdminService {
 
 	@Transactional
 	public void insert(String username, String password, String name, Boolean isAccountEnabled, String email,
-			String department, String[] roleIds) {
+			String department, String[] roleIds,Integer shopId) {
 		Admin admin = adminDao.findByUserName(username);
 		if (admin != null) {
 			throw new TipException("用户名已经存在");
@@ -56,6 +56,7 @@ public class AdminService {
 		admin.setDepartment(department);
 		admin.setDeleteFlag(false);
 		admin.setIsLocked(false);
+		admin.setShopId(shopId);
 		admin.setCreationDate(DateKit.dateFormat(DateKit.dateFormat(new Date())));
 		adminDao.insert(admin);
 		if (roleIds != null && roleIds.length > 0) {
@@ -85,7 +86,7 @@ public class AdminService {
 
 	@Transactional
 	public void update(String username, String password, String name, Boolean isAccountEnabled, String email,
-			String department, String[] roleIds,Long id) {
+			String department, String[] roleIds,Long id,Integer shopId) {
 		Admin admin = adminDao.findById(id);
 		if(admin==null) {
 			throw new TipException("用户不存在");
@@ -108,6 +109,7 @@ public class AdminService {
 		admin.setEmail(email);
 		admin.setDepartment(department);
 		admin.setLastUpdatedDate(DateKit.dateFormat(DateKit.dateFormat(new Date())));
+		admin.setShopId(shopId);
 		adminDao.update(admin);
 	}
 }

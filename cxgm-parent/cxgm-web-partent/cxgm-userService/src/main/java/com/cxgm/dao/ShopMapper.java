@@ -23,4 +23,6 @@ public interface ShopMapper {
     int updateByExampleSelective(@Param("record") Shop record, @Param("example") ShopExample example);
 
     int updateByExample(@Param("record") Shop record, @Param("example") ShopExample example);
+    
+    List<Shop> findListAll();
 }

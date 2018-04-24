@@ -17,9 +17,11 @@ import org.springframework.web.servlet.ModelAndView;
 import com.cxgm.common.RSResult;
 import com.cxgm.domain.Admin;
 import com.cxgm.domain.Role;
+import com.cxgm.domain.Shop;
 import com.cxgm.exception.TipException;
 import com.cxgm.service.AdminService;
 import com.cxgm.service.RoleService;
+import com.cxgm.service.ShopService;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 
@@ -33,6 +35,9 @@ public class AdminController {
 
 	@Autowired
 	RoleService roleService;
+	
+	@Autowired
+	private ShopService shopService;
 
 	@PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_MANAGER')")
 	@RequestMapping(value = "/admin/admin", method = RequestMethod.GET)
@@ -50,6 +55,8 @@ public class AdminController {
 	public ModelAndView getAdminMemberAdd(HttpServletRequest request) throws SQLException {
 		List<Role> roles = roleService.findListAll();
 		request.setAttribute("allRole", roles);
+		List<Shop> shopList = shopService.findListAll();
+		request.setAttribute("shopList", shopList);
 		return new ModelAndView("admin/admin_input");
 	}
 
@@ -82,13 +89,14 @@ public class AdminController {
 			@RequestParam(value = "rePassword") String rePassword, @RequestParam(value = "admin.name") String name,
 			@RequestParam(value = "admin.isEnabled") Boolean isAccountEnabled,
 			@RequestParam(value = "admin.email") String email,
-			@RequestParam(value = "admin.department") String department) throws SQLException {
+			@RequestParam(value = "admin.department") String department,
+			@RequestParam(value = "admin.shopId") Integer shopId) throws SQLException {
 		String[] roleIds = request.getParameterValues("roleList.id");
 		try {
 			if ("".equals(rePassword) || null == rePassword) {
 				throw new TipException("需要输入确认密码");
 			} else {
-				adminService.insert(username, password, name, isAccountEnabled, email, department, roleIds);
+				adminService.insert(username, password, name, isAccountEnabled, email, department, roleIds,shopId);
 				ModelAndView mv = new ModelAndView("redirect:/admin/admin");
 				return mv;
 			}
@@ -106,7 +114,8 @@ public class AdminController {
 			@RequestParam(value = "rePassword") String rePassword, @RequestParam(value = "admin.name") String name,
 			@RequestParam(value = "admin.isEnabled") Boolean isAccountEnabled,
 			@RequestParam(value = "admin.email") String email,
-			@RequestParam(value = "admin.department") String department) throws SQLException {
+			@RequestParam(value = "admin.department") String department,
+			@RequestParam(value = "admin.shopId") Integer shopId) throws SQLException {
 		String[] roleIds = request.getParameterValues("roleList.id");
 		String id = request.getParameter("admin.id");
 		try {
@@ -114,7 +123,7 @@ public class AdminController {
 				throw new TipException("需要输入确认密码");
 			}else {
 			adminService.update(username, password, name, isAccountEnabled, email, department, roleIds,
-					Long.valueOf(id));
+					Long.valueOf(id),shopId);
 			ModelAndView mv = new ModelAndView("redirect:/admin/admin");
 			return mv;
 			}
@@ -151,6 +160,8 @@ public class AdminController {
 		List<Role> roles = roleService.findListAll();
 		request.setAttribute("allRole", roles);
 		request.setAttribute("admin", admin);
+		List<Shop> shopList = shopService.findListAll();
+		request.setAttribute("shopList", shopList);
 		return new ModelAndView("admin/admin_input");
 	}
 }

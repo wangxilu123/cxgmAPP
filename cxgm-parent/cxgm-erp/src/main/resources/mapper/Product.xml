@@ -74,9 +74,17 @@
     p.id as id, sn, p.name as name, full_name, price, cost, market_price, image, unit, weight, stock, allocated_stock, 
     stock_memo, point, is_marketable, is_list, is_top, is_gift, memo, keyword,score, total_score, score_count, hits, week_hits, 
     month_hits, sales, week_sales, month_sales, week_hits_date, month_hits_date, week_sales_date, 
-    month_sales_date, origin_place, storage_condition, product_category_id, shop_id,
+    month_sales_date, origin_place, storage_condition, product_category_id, p.shop_id as shop_id,
     p.create_by as create_by, p.creation_date as creation_date, p.last_updated_by as last_updated_by, p.last_updated_date as last_updated_date, brand_name
   </sql>
+  
+   <sql id="queryMap">
+		<if test="shopId !=null and shopId != ''">
+    		and p.shop_id=#{shopId,jdbcType=INTEGER}
+		</if>
+		
+		
+	</sql>
   <sql id="Category_Column_List">
      pc.id as cid,pc.name as cname,pc.grade as grade,pc.parent_id as parent_id
   </sql>
@@ -91,7 +99,7 @@
     where id = #{id,jdbcType=BIGINT}
   </select>
   
-  <select id="findListAllWithCategory" resultMap="ResultMapWithCategory">
+  <select id="findListAllWithCategory" parameterType="map" resultMap="ResultMapWithCategory">
     select 
     <include refid="Base_Column_List1" />
     ,
@@ -99,6 +107,8 @@
     ,
    <include refid="Category_Column_List" />
     from product p left join product_category pc on p.product_category_id = pc.id
+    where 1=1 
+    <include refid="queryMap" />
   </select>
   
   <delete id="delete" parameterType="java.lang.Long">

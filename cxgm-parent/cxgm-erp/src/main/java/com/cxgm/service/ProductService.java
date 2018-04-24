@@ -2,6 +2,7 @@ package com.cxgm.service;
 
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -22,8 +23,8 @@ public class ProductService {
 	@Autowired
 	ProductImageService productImageService;
 	
-	public List<ProductTransfer> findListAllWithCategory(){
-		return productDao.findListAllWithCategory();
+	public List<ProductTransfer> findListAllWithCategory(Map<String,Object> map){
+		return productDao.findListAllWithCategory(map);
 	}
 	
 	@Transactional
@@ -61,8 +62,10 @@ public class ProductService {
 	                    	Long imgUrl = productImageService.insertImages(file);
 	                        sb.append(imgUrl);
 	                        sb.append(",");
-                    }else {
-                    	sb.deleteCharAt(sb.length()-1);
+                    }else{
+                    	if(sb.length()>0) {
+                    		sb.deleteCharAt(sb.length()-1);
+                    	}
                     }
                 } 
             }
