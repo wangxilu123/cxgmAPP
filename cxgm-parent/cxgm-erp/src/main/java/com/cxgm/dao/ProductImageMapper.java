@@ -8,4 +8,6 @@ public interface ProductImageMapper {
 	
 	int delete(Long id);
 	
+	ProductImage findById(Long id);
+	
 }

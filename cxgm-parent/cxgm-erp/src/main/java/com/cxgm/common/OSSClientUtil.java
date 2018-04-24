@@ -195,4 +195,7 @@ public class OSSClientUtil {
 	    return null;
 	  }
  
+	  public void deleteImage(String key) {
+		  ossClient.deleteObject(bucketName, key);
+	  }
 }

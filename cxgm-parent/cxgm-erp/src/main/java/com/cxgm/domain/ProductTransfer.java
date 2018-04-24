@@ -2,6 +2,7 @@ package com.cxgm.domain;
 
 import java.math.BigDecimal;
 import java.util.Date;
+import java.util.List;
 
 public class ProductTransfer {
 
@@ -96,6 +97,8 @@ public class ProductTransfer {
 	private Integer grade;
 	private Long parentId;
 
+	
+	private List<ProductImage> productImageList;
 	public Long getId() {
 		return id;
 	}
@@ -462,5 +465,13 @@ public class ProductTransfer {
 
 	public void setShopId(Integer shopId) {
 		this.shopId = shopId;
+	}
+
+	public List<ProductImage> getProductImageList() {
+		return productImageList;
+	}
+
+	public void setProductImageList(List<ProductImage> productImageList) {
+		this.productImageList = productImageList;
 	}
 }
