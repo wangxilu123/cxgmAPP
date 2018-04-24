@@ -25,6 +25,12 @@
 			<artifactId>cxgm-userService</artifactId>
 			<version>1.0</version>
 		</dependency>
+		
+		<dependency>
+			<groupId>com.cxgm</groupId>
+			<artifactId>cxgm-erp</artifactId>
+			<version>1.0</version>
+		</dependency>
 
         <dependency>
             <groupId>com.alibaba</groupId>
