@@ -56,7 +56,10 @@ public class ProductController {
 	
 	@RequestMapping(value = "/product/add", method = RequestMethod.GET)
 	public ModelAndView productAdd(HttpServletRequest request) {
-		List<ProductCategory> productCategoryTreeList = productCategoryService.getProductCategory(0);
+		SecurityContext ctx = SecurityContextHolder.getContext();  
+	    Authentication auth = ctx.getAuthentication(); 
+	    Admin admin = (Admin) auth.getPrincipal();
+		List<ProductCategory> productCategoryTreeList = productCategoryService.getProductCategory(0,admin.getShopId());
 		String shopId = request.getParameter("product.shop");
 		request.setAttribute("productCategoryTreeList", productCategoryTreeList);
 		request.setAttribute("shopId", shopId);

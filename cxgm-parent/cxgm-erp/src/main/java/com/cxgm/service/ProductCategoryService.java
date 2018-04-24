@@ -18,9 +18,10 @@ public class ProductCategoryService {
 	@Autowired
 	ProductCategoryMapper productCategoryDao;
 	
-	public List<ProductCategory> findByGrade(Integer grade){
+	public List<ProductCategory> findByGrade(Integer grade, Integer shopId){
 		Map<String,Object> map = new HashMap<>();
 		map.put("grade", grade);
+		map.put("shopId", shopId);
 		List<ProductCategory> productCategoryList = productCategoryDao.findByCategory(map);
 		return productCategoryList;
 	}
@@ -28,22 +29,23 @@ public class ProductCategoryService {
 		return productCategoryDao.findById(id);
 	}
 	
-	public List<ProductCategory> findByGradeAndParentId(Integer grade,Long parentId){
+	public List<ProductCategory> findByGradeAndParentId(Integer grade,Long parentId, Integer shopId){
 		Map<String,Object> map = new HashMap<>();
 		map.put("grade", grade);
 		map.put("parentId", parentId);
+		map.put("shopId", shopId);
 		List<ProductCategory> productCategoryList = productCategoryDao.findByCategory(map);
 		return productCategoryList;
 	}
 	
 	
-	public List<ProductCategory> getProductCategory(Integer grade){
-		List<ProductCategory> productCategoryTreeList = this.findByGrade(grade);
+	public List<ProductCategory> getProductCategory(Integer grade,Integer shopId){
+		List<ProductCategory> productCategoryTreeList = this.findByGrade(grade,shopId);
 		for(ProductCategory pc : productCategoryTreeList) {
-			List<ProductCategory> childOneCategory = this.findByGradeAndParentId(1, pc.getId());
+			List<ProductCategory> childOneCategory = this.findByGradeAndParentId(1, pc.getId(),shopId);
 			pc.setChildCategory(childOneCategory);
 			for(ProductCategory p: childOneCategory) {
-				List<ProductCategory> childTwoCategory = this.findByGradeAndParentId(2, p.getId());
+				List<ProductCategory> childTwoCategory = this.findByGradeAndParentId(2, p.getId(),shopId);
 				p.setChildCategory(childTwoCategory);
 			}
 		}
@@ -51,7 +53,7 @@ public class ProductCategoryService {
 	}
 	
 	@Transactional
-	public void insert(Long parentId, String name) {
+	public void insert(Long parentId, String name, Integer shopId) {
 		ProductCategory productCategory = null;
 		if(parentId == 0) {
 			productCategory = productCategoryDao.findByName(name);
@@ -61,6 +63,7 @@ public class ProductCategoryService {
 			productCategory = new ProductCategory();
 			productCategory.setName(name);
 			productCategory.setGrade(0);
+			productCategory.setShopId(shopId);
 			productCategoryDao.insert(productCategory);
 			
 		}else {
@@ -68,7 +71,8 @@ public class ProductCategoryService {
 			ProductCategory pcy = new ProductCategory();
 			pcy.setName(name);
 			pcy.setParentId(parentId);
-			productCategory.setDeleteFlag(false);
+			pcy.setDeleteFlag(false);
+			pcy.setShopId(shopId);
 			if(productCategory.getGrade()==0) {
 				pcy.setGrade(1);
 			}else if(productCategory.getGrade()==1){
@@ -80,15 +84,17 @@ public class ProductCategoryService {
 	}
 	
 	@Transactional
-	public void update(Long id, Long parentId, String name) {
+	public void update(Long id, Long parentId, String name, Integer shopId) {
 		ProductCategory productCategory = productCategoryDao.findById(id);
 		if(parentId == 0) {
 			productCategory.setGrade(0);
 			productCategory.setParentId(null);
+			productCategory.setShopId(shopId);
 		}else {
 			ProductCategory pcy = productCategoryDao.findById(parentId);
 			productCategory.setName(name);
 			productCategory.setParentId(parentId);
+			productCategory.setShopId(shopId);
 			if(pcy.getGrade()==0) {
 				productCategory.setGrade(1);
 			}else if(pcy.getGrade()==1){

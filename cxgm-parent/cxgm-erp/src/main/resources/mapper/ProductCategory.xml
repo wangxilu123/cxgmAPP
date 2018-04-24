@@ -35,6 +35,9 @@
 		<if test="grade !=null">
     		and grade=#{grade,jdbcType=INTEGER}
 		</if>
+		<if test="shopId !=null and shopId != ''">
+    		and shop_id=#{shopId,jdbcType=INTEGER}
+		</if>
 		
 	</sql>
   <select id="findByCategory" parameterType="map" resultMap="BaseResultMap">

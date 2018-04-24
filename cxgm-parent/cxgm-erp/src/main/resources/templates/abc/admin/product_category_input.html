@@ -23,6 +23,7 @@
     <hr data-am-widget="divider" class="am-divider am-divider-dashed am-margin-0" />
 	  
     <form class="validator-form" action="<%if (isAdd){%>/productCategory/save<%}else{%>/productCategory/update<%}%>" method="post">
+    <input type="hidden" name="productCategory.shop" value="${shopId!}" />
     <input type="hidden" name="productCategory.id" value="${productCategory.id!}" />
     <div class="am-form am-margin am-form-horizontal" >
       <div class="am-form-group am-form-group-sm">
