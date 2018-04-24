@@ -57,7 +57,7 @@
               <th>用户名</th>
               <th>E-mail</th>
               <th>姓名</th>
-              <th>所属部门</th>
+              <th>所属商店</th>
               <th>最后登录时间</th>
               <th>最后登录IP</th>
               <th>状态</th>
@@ -82,7 +82,7 @@
               <td>${list.username}</td>
               <td>${list.email}</td>
               <td>${list.name!"&nbsp;"}</td>
-              <td>${list.department!"&nbsp;"}</td>
+              <td>${list.shopName!"&nbsp;"}</td>
               <td>
 			 	<%if (list.loginDate != null && list.loginDate != ""){%>
 				<span title="${list.loginDate,dateFormat="yyyy-MM-dd HH:mm:ss"}">${list.loginDate,dateFormat="yyyy-MM-dd HH:mm:ss"}</span>

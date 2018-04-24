@@ -25,6 +25,8 @@ public class ProductCategory {
     private Integer twoParentId;
 
     private Integer orders;
+    
+    private Integer shopId;
 
     private String createBy;
 
@@ -182,5 +184,13 @@ public class ProductCategory {
 
 	public void setParentProductCategory(ProductCategory parentProductCategory) {
 		this.parentProductCategory = parentProductCategory;
+	}
+
+	public Integer getShopId() {
+		return shopId;
+	}
+
+	public void setShopId(Integer shopId) {
+		this.shopId = shopId;
 	}
 }

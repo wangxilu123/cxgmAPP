@@ -53,6 +53,10 @@ public class Admin implements UserDetails{
     private Boolean deleteFlag;
     
     private List<Role> roleList;
+    
+    private Integer shopId;
+    
+    private String shopName;
 
     /**
 	 * 角色集合
@@ -271,5 +275,21 @@ public class Admin implements UserDetails{
 
 	public void setAuthorities(Collection<? extends GrantedAuthority> authorities) {
 		this.authorities = authorities;
+	}
+
+	public Integer getShopId() {
+		return shopId;
+	}
+
+	public void setShopId(Integer shopId) {
+		this.shopId = shopId;
+	}
+
+	public String getShopName() {
+		return shopName;
+	}
+
+	public void setShopName(String shopName) {
+		this.shopName = shopName;
 	}
 }

@@ -1,8 +1,7 @@
 package com.cxgm.dao;
 
 import java.util.List;
-
-import org.springframework.stereotype.Component;
+import java.util.Map;
 
 import com.cxgm.domain.Product;
 import com.cxgm.domain.ProductTransfer;
@@ -10,5 +9,11 @@ import com.cxgm.domain.ProductTransfer;
 
 public interface ProductMapper {
 
-	public List<ProductTransfer> findListAllWithCategory();
+	public List<ProductTransfer> findListAllWithCategory(Map<String,Object> map);
+	
+	int insert(Product product);
+	
+	int update(Product product);
+	
+	int delete(Long id);
 }

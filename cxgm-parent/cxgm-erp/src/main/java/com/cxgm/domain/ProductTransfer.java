@@ -75,6 +75,8 @@ public class ProductTransfer {
 	private String storageCondition;
 
 	private Long productCategoryId;
+	
+	private Integer shopId;
 
 	private String createBy;
 
@@ -452,5 +454,13 @@ public class ProductTransfer {
 
 	public void setParentId(Long parentId) {
 		this.parentId = parentId;
+	}
+
+	public Integer getShopId() {
+		return shopId;
+	}
+
+	public void setShopId(Integer shopId) {
+		this.shopId = shopId;
 	}
 }

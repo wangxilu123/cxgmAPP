@@ -21,12 +21,14 @@
     <result column="last_updated_by" jdbcType="VARCHAR" property="lastUpdatedBy" />
     <result column="last_updated_date" jdbcType="TIMESTAMP" property="lastUpdatedDate" />
     <result column="delete_flag" jdbcType="BIT" property="deleteFlag" />
+    <result column="shop_id" jdbcType="INTEGER" property="shopId" />
+    <result column="shop_name" jdbcType="VARCHAR" property="shopName" />
     
   </resultMap>
   <sql id="Base_Column_List">
     id, name, username, password, hasher, salt, department, email, is_enabled, is_locked, 
     locked_date, login_date, login_ip, login_failure_count, create_by, creation_date, 
-    last_updated_by, last_updated_date, delete_flag
+    last_updated_by, last_updated_date, delete_flag,shop_id,shop_name
   </sql>
   
   
@@ -55,14 +57,14 @@
       is_locked, locked_date, login_date, 
       login_ip, login_failure_count, create_by, 
       creation_date, last_updated_by, last_updated_date, 
-      delete_flag)
+      delete_flag,shop_id)
     values (#{id,jdbcType=BIGINT}, #{name,jdbcType=VARCHAR}, #{username,jdbcType=VARCHAR}, 
       #{password,jdbcType=VARCHAR}, #{hasher,jdbcType=VARCHAR}, #{salt,jdbcType=VARCHAR}, 
       #{department,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR}, #{isEnabled,jdbcType=BIT}, 
       #{isLocked,jdbcType=BIT}, #{lockedDate,jdbcType=TIMESTAMP}, #{loginDate,jdbcType=TIMESTAMP}, 
       #{loginIp,jdbcType=VARCHAR}, #{loginFailureCount,jdbcType=INTEGER}, #{createBy,jdbcType=VARCHAR}, 
       #{creationDate,jdbcType=TIMESTAMP}, #{lastUpdatedBy,jdbcType=VARCHAR}, #{lastUpdatedDate,jdbcType=TIMESTAMP}, 
-      #{deleteFlag,jdbcType=BIT})
+      #{deleteFlag,jdbcType=BIT},#{shopId,jdbcType=INTEGER})
   </insert>
   <delete id="delete" parameterType="java.lang.Long">
     delete from admin
@@ -125,6 +127,9 @@
       <if test="deleteFlag != null">
         delete_flag = #{deleteFlag,jdbcType=BIT},
       </if>
+      <if test="shopId != null">
+        shop_id = #{shopId,jdbcType=INTEGER},
+      </if>
     </set>
     where id = #{id,jdbcType=BIGINT}
   </update>
@@ -132,7 +137,7 @@
   <!-- 总记录数 -->
 	<select id="findListCount" parameterType="map" resultType="int">
 		select count(1)
-		from admin
+		from admin a left join tbl_shop s on a.shop_id=s.id
 		where 1 = 1
 		<include refid="queryMap" />
 		order by id desc
@@ -140,8 +145,8 @@
 	<!-- 查询列表 -->
 	<select id="findList" parameterType="map" resultMap="BaseResultMap">
 		select
-		<include refid="Base_Column_List" />
-		from admin
+		a.*,s.shop_name
+		from admin a left join tbl_shop s on a.shop_id=s.id
 		where 1 = 1
 		<include refid="queryMap" />
 		order by id desc
@@ -149,16 +154,16 @@
 	<!-- 查询所有 -->
 	<select id="findListAll" resultMap="BaseResultMap">
 		select
-		<include refid="Base_Column_List" />
-		from admin
+		a.*,s.shop_name
+		from admin a left join tbl_shop s on a.shop_id=s.id
 		where 1 = 1
 		order by id asc
 	</select>
 	<!-- 查询所有 -->
 	<select id="findListAllWithMap" parameterType="map" resultMap="BaseResultMap">
 		select
-		<include refid="Base_Column_List" />
-		from admin
+		a.*,s.shop_name
+		from admin a left join tbl_shop s on a.shop_id=s.id
 		where 1=1
 		order by id asc
 	</select>
@@ -166,24 +171,24 @@
 	<select id="findById" parameterType="java.lang.Long"
 		resultMap="BaseResultMap">
 		select
-		<include refid="Base_Column_List" />
-		from admin
-		where id = #{id,jdbcType=BIGINT}
+		a.*,s.shop_name
+		from admin a left join tbl_shop s on a.shop_id=s.id
+		where a.id = #{id,jdbcType=BIGINT}
 	</select>
   
   
   <select id="findByUserName" parameterType="String" resultMap="BaseResultMap">
-        select *
-        from admin
-        where username= #{username}
+        select a.*,s.shop_name
+        from admin a left join tbl_shop s on a.shop_id=s.id
+        where a.username= #{username}
         order by id
 		desc
     </select>
     
     <select id="findByName" parameterType="String" resultMap="BaseResultMap">
-        select *
-        from admin
-        where name= #{name}
+        select a.*,s.shop_name
+        from admin a left join tbl_shop s on a.shop_id=s.id
+        where a.name= #{name}
         order by id
 		desc
     </select>

@@ -3,15 +3,12 @@
 <mapper namespace="com.cxgm.dao.ProductImageMapper">
   <resultMap id="BaseResultMap" type="com.cxgm.domain.ProductImage">
     <id column="id" jdbcType="BIGINT" property="id" />
-    <result column="title" jdbcType="VARCHAR" property="title" />
-    <result column="product_id" jdbcType="BIGINT" property="productId" />
-    <result column="source" jdbcType="VARCHAR" property="source" />
-    <result column="large" jdbcType="VARCHAR" property="large" />
-    <result column="medium" jdbcType="VARCHAR" property="medium" />
-    <result column="thumbnail" jdbcType="VARCHAR" property="thumbnail" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="url" jdbcType="VARCHAR" property="url" />
+    <result column="is_del" jdbcType="BIT" property="isDel" />
   </resultMap>
   <sql id="Base_Column_List">
-    id, title, product_id, source, large, medium, thumbnail
+    id, name, url, is_del
   </sql>
   <select id="findById" parameterType="java.lang.Long" resultMap="BaseResultMap">
     select 
@@ -24,34 +21,27 @@
     where id = #{id,jdbcType=BIGINT}
   </delete>
   <insert id="insert" parameterType="com.cxgm.domain.ProductImage">
-    insert into product_image (id, title, product_id, 
-      source, large, medium, 
-      thumbnail)
-    values (#{id,jdbcType=BIGINT}, #{title,jdbcType=VARCHAR}, #{productId,jdbcType=BIGINT}, 
-      #{source,jdbcType=VARCHAR}, #{large,jdbcType=VARCHAR}, #{medium,jdbcType=VARCHAR}, 
-      #{thumbnail,jdbcType=VARCHAR})
+  <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">  
+        SELECT LAST_INSERT_ID()  
+    </selectKey>  
+    insert into product_image (id, name, url, is_del)
+    values (#{id,jdbcType=BIGINT}, #{name,jdbcType=VARCHAR}, #{url,jdbcType=VARCHAR}, 
+      #{isDel,jdbcType=BIT})
   </insert>
  
   <update id="update" parameterType="com.cxgm.domain.ProductImage">
     update product_image
     <set>
-      <if test="title != null">
-        title = #{title,jdbcType=VARCHAR},
+      <if test="name != null">
+        title = #{name,jdbcType=VARCHAR},
       </if>
-      <if test="productId != null">
-        product_id = #{productId,jdbcType=BIGINT},
+     
+      <if test="url != null">
+        source = #{url,jdbcType=VARCHAR},
       </if>
-      <if test="source != null">
-        source = #{source,jdbcType=VARCHAR},
-      </if>
-      <if test="large != null">
-        large = #{large,jdbcType=VARCHAR},
-      </if>
-      <if test="medium != null">
-        medium = #{medium,jdbcType=VARCHAR},
-      </if>
-      <if test="thumbnail != null">
-        thumbnail = #{thumbnail,jdbcType=VARCHAR},
+      
+      <if test="isDel != null">
+        is_del = #{isDel,jdbcType=BIT},
       </if>
     </set>
     where id = #{id,jdbcType=BIGINT}

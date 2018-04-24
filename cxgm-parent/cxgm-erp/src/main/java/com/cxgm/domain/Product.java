@@ -81,6 +81,8 @@ public class Product {
     private String storageCondition;
 
     private Long productCategoryId;
+    
+    private Integer shopId;
 
     private String createBy;
 
@@ -464,4 +466,12 @@ public class Product {
     public void setIntroduction(String introduction) {
         this.introduction = introduction == null ? null : introduction.trim();
     }
+
+	public Integer getShopId() {
+		return shopId;
+	}
+
+	public void setShopId(Integer shopId) {
+		this.shopId = shopId;
+	}
 }
