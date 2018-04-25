@@ -114,20 +114,7 @@
     where 1=1 
     <include refid="queryMap" />
   </select>
-  
-  
-  <select id="selectByPage" parameterType="map" resultMap="ResultMapWithCategory">
-    select 
-    <include refid="Base_Column_List1" />
-    ,
-    <include refid="Blob_Column_List" />
-    ,
-   <include refid="Category_Column_List" />
-    from product p left join product_category pc on p.product_category_id = pc.id
-    where 1=1 
-    <include refid="queryMap" /> limit #{pageNum},#{pageSize}
-  </select>
-  
+
   <delete id="delete" parameterType="java.lang.Long">
     delete from product
     where id = #{id,jdbcType=BIGINT}

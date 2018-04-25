@@ -76,21 +76,4 @@ public class ProductService {
             e.printStackTrace();
         }
 	}
-	/**
-     * 根据门店ID和商品类别查询商品信息
-     * @param shopId,categoryId,pageNum,pageSize
-     * @return
-     */
-	public List<ProductTransfer> findListByPage(Integer shopId,Integer categoryId,Integer pageNum,Integer pageSize){
-		
-		HashMap<String,Object> map = new HashMap<String,Object>();
-		
-		map.put("shopId", shopId);
-		map.put("categoryId", categoryId);
-		map.put("pageNum", pageNum);
-		map.put("pageSize", pageSize);
-		
-		return productDao.selectByPage(map);
-	}
-	
 }

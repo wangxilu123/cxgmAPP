@@ -66,7 +66,7 @@ public class OrderController {
     	
     	if(appUser!=null){
     		
-    		PageInfo<Order> result = orderService.orderList(pageNum, pageSize, appUser.getId());
+    		PageInfo<Order> result = orderService.orderList(pageNum , pageSize, appUser.getId());
     		
     		return new ResultDto<>(200,"查询成功！",result);
     	}else{

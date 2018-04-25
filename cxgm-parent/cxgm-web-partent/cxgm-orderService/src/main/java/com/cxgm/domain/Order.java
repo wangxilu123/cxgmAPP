@@ -3,6 +3,7 @@ package com.cxgm.domain;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
+import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
@@ -43,4 +44,6 @@ public class Order implements Serializable{
 
 	@ApiModelProperty(name = "remarks",value = "备注")
     private String remarks;
+	
+	private List<OrderProduct>  productList;
 }
