@@ -87,12 +87,16 @@
     		and p.product_category_id=#{productCategoryId,jdbcType=INTEGER}
 		</if>
 		
+		<if test="name !=null and name != ''">
+    		and p.name  like "%"#{name,jdbcType=VARCHAR}"%"
+		</if>
+		
 		
 	</sql>
   <sql id="Category_Column_List">
      pc.id as cid,pc.name as cname,pc.grade as grade,pc.parent_id as parent_id
   </sql>
-  <select id="findById" parameterType="java.lang.Long" resultMap="ResultMapWithBLOBs">
+  <select id="findById" parameterType="java.lang.Long" resultMap="ResultMapWithCategory">
     select 
     <include refid="Base_Column_List1" />
     ,
@@ -100,6 +104,15 @@
     ,
    <include refid="Category_Column_List" />
     from product p left join product_category pc on p.product_category_id = pc.id
+    where p.id = #{id,jdbcType=BIGINT}
+  </select>
+  
+  <select id="findProductById" parameterType="java.lang.Long" resultMap="ResultMapWithBLOBs">
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from product
     where id = #{id,jdbcType=BIGINT}
   </select>
   
@@ -114,7 +127,6 @@
     where 1=1 
     <include refid="queryMap" />
   </select>
-
   <delete id="delete" parameterType="java.lang.Long">
     delete from product
     where id = #{id,jdbcType=BIGINT}

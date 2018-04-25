@@ -19,4 +19,7 @@ public interface ProductMapper {
 	int delete(Long id);
 	
 	List<ProductTransfer> selectByPage(HashMap<String,Object> map);
+	
+	ProductTransfer findById(Long id);
+	Product findProductById(Long id);
 }
