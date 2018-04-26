@@ -40,7 +40,6 @@ import org.springframework.security.web.session.SessionInformationExpiredStrateg
 import org.springframework.security.web.session.SimpleRedirectSessionInformationExpiredStrategy;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
-import com.cxgm.domain.Admin;
 import com.cxgm.security.login.CustomProvider;
 import com.cxgm.security.login.CustomUsernamePasswordAuthenticationFilter;
 import com.cxgm.security.url.MyFilterSecurityInterceptor;
@@ -78,7 +77,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 				.authorizeRequests()
 				.antMatchers("/static/js/**", "/static/shop/**", "/static/img/**", "/**/favicon.ico","/static/AmazeUI/**","/static/UEditor/**").permitAll()
 	                .regexMatchers("/login\\?invalid", "/login\\?expired",
-	                        "/index", "/home", "/getToken", "/accessDenied"
+	                        "/index", "/home",".*/swagger.*", "/getToken", "/accessDenied"
 	                        , "/changeLang.*")//".*"表示任意字符
 	                .permitAll()//访问以上无需登录认证权限  
 	                .anyRequest()

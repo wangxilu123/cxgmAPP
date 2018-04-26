@@ -14,12 +14,11 @@ import io.swagger.annotations.Api;
 @RequestMapping("/homePage")
 public class HomePageController {
 
-	/*@Autowired
+/*	@Autowired
 	private ProductCategoryService productCategoryService;
 
 	@Autowired
 	private ProductService productService;
-
 	@ApiOperation(value = "根据门店ID查询商品一级分类", nickname = "根据门店ID查询商品一级分类")
 	@PostMapping("/findFirstCategory")
 	public ResultDto<Integer> register(HttpServletRequest request, @RequestBody RegisterEntity registerEntity)
