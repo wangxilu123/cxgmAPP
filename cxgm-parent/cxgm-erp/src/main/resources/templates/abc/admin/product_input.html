@@ -100,17 +100,17 @@ if(isEmpty(product.id)){
           <select name="parentId" data-am-selected="{btnWidth: '100%', btnSize: 'sm'}">
           	<option value="0" selected>顶级分类</option>
            <%for(list in productCategoryTreeList){%>
-            <option value="${list.id}" <%if (product.productCategoryId! == list.id!){%>selected="selected" <%}%>>${list.name!}</option>
+            <option value="${list.id}" <%if (product.productCategoryThirdId! == list.id!){%>selected="selected" <%}%>>${list.name!}</option>
 			
 			<%for(child in list.childCategory){%>
-					<option value="${child.id}" <%if (product.productCategoryId! == child.id!){%>selected="selected" <%}%>>
+					<option value="${child.id}" <%if (product.productCategoryThirdId! == child.id!){%>selected="selected" <%}%>>
 					  <%if (child.grade == 1){%>
 					  <%for( i in range(0,child.grade)){%>--<%}%>
 					  <%}%>
 					  ${child.name}
 					</option>
 					<%for(childTwo in child.childCategory){%>
-							<option value="${childTwo.id}" <%if (product.productCategoryId! == childTwo.id!){%>selected="selected" <%}%>>
+							<option value="${childTwo.id}" <%if (product.productCategoryThirdId! == childTwo.id!){%>selected="selected" <%}%>>
 							  <%if (childTwo.grade == 2){%>
 							  <%for( i in range(0,childTwo.grade)){%>--<%}%>
 							  <%}%>

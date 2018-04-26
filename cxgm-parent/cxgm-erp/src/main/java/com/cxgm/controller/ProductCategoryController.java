@@ -35,7 +35,7 @@ public class ProductCategoryController {
 		SecurityContext ctx = SecurityContextHolder.getContext();  
 	    Authentication auth = ctx.getAuthentication(); 
 	    Admin admin = (Admin) auth.getPrincipal();
-		List<ProductCategory> productCategoryTreeList = productCategoryService.getProductCategory(0,admin.getShopId());
+		List<ProductCategory> productCategoryTreeList = productCategoryService.getProductCategory(0);
 		request.setAttribute("productCategoryTreeList", productCategoryTreeList);
 		request.setAttribute("admin", admin);
 		return new ModelAndView("admin/product_category_list");
@@ -43,24 +43,17 @@ public class ProductCategoryController {
 	
 	@RequestMapping(value = "/productCategory/add", method = RequestMethod.GET)
 	public ModelAndView productCategoryAdd(HttpServletRequest request) throws SQLException {
-		String shopId = request.getParameter("productCategory.shop");
 		List<ProductCategory> productCategoryTreeList = new ArrayList<>();
-		if(shopId.equals("") || shopId == null) {
-			productCategoryTreeList = productCategoryService.getProductCategory(0,null);
-		}else {
-			productCategoryTreeList = productCategoryService.getProductCategory(0,Integer.valueOf(shopId));
-		}
+		productCategoryTreeList = productCategoryService.getProductCategory(0);
 		request.setAttribute("productCategoryTreeList", productCategoryTreeList);
-		request.setAttribute("shopId", shopId);
 		return new ModelAndView("admin/product_category_input");
 	}
 	
 	@RequestMapping(value = "/productCategory/save", method = RequestMethod.POST)
 	public ModelAndView productCategorySave(HttpServletRequest request,@RequestParam(value="parentId") String parentId,
 			@RequestParam(value="productCategory.name") String name) throws SQLException {
-		String shopId = request.getParameter("productCategory.shop");
 		try {
-			productCategoryService.insert(Long.valueOf(parentId), name,shopId.equals("")?null:Integer.valueOf(shopId));
+			productCategoryService.insert(Long.valueOf(parentId), name);
 			ModelAndView mv = new ModelAndView("redirect:/admin/productCategory");
 			return mv;
 		}catch(Exception e) {
@@ -75,9 +68,8 @@ public class ProductCategoryController {
 	public ModelAndView productCategoryUpdate(HttpServletRequest request,@RequestParam(value="parentId") String parentId,
 			@RequestParam(value="productCategory.name") String name,
 			@RequestParam(value="productCategory.id") String id) throws SQLException {
-		String shopId = request.getParameter("productCategory.shop");
 		try {
-			productCategoryService.update(Long.valueOf(id),Long.valueOf(parentId), name,shopId.equals("")?null:Integer.valueOf(shopId));
+			productCategoryService.update(Long.valueOf(id),Long.valueOf(parentId), name);
 			ModelAndView mv = new ModelAndView("redirect:/admin/productCategory");
 			return mv;
 		}catch(Exception e) {
@@ -106,14 +98,10 @@ public class ProductCategoryController {
 	
 	@RequestMapping(value = "/productCategory/edit", method = RequestMethod.GET)
 	public ModelAndView productCategoryEdit(HttpServletRequest request,@RequestParam(value="id") String id) throws SQLException {
-		SecurityContext ctx = SecurityContextHolder.getContext();  
-	    Authentication auth = ctx.getAuthentication(); 
-	    Admin admin = (Admin) auth.getPrincipal();
 		ProductCategory productCategory = productCategoryService.findById(Long.valueOf(id));
-		List<ProductCategory> productCategoryTreeList = productCategoryService.getProductCategory(0,admin.getShopId());
+		List<ProductCategory> productCategoryTreeList = productCategoryService.getProductCategory(0);
 		request.setAttribute("productCategoryTreeList", productCategoryTreeList);
 		request.setAttribute("productCategory", productCategory);
-		request.setAttribute("shopId", admin.getShopId());
 		return new ModelAndView("admin/product_category_input");
 	}
 }

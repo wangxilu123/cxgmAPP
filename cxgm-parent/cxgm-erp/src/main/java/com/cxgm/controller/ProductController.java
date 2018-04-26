@@ -84,7 +84,7 @@ public class ProductController {
 		SecurityContext ctx = SecurityContextHolder.getContext();  
 	    Authentication auth = ctx.getAuthentication(); 
 	    Admin admin = (Admin) auth.getPrincipal();
-		List<ProductCategory> productCategoryTreeList = productCategoryService.getProductCategory(0,admin.getShopId());
+		List<ProductCategory> productCategoryTreeList = productCategoryService.getProductCategory(0);
 		request.setAttribute("productCategoryTreeList", productCategoryTreeList);
 		SystemConfig systemConfig = new SystemConfig();
 		systemConfig.setUploadLimit(10);
@@ -146,12 +146,9 @@ public class ProductController {
 	
 	@RequestMapping(value = "/product/edit", method = RequestMethod.GET)
 	public ModelAndView productEdit(HttpServletRequest request) {
-		SecurityContext ctx = SecurityContextHolder.getContext();  
-	    Authentication auth = ctx.getAuthentication(); 
-	    Admin admin = (Admin) auth.getPrincipal();
 		String productId = request.getParameter("id");
 		ProductTransfer product = productService.findById(Long.valueOf(productId));
-		List<ProductCategory> productCategoryTreeList = productCategoryService.getProductCategory(0,admin.getShopId());
+		List<ProductCategory> productCategoryTreeList = productCategoryService.getProductCategory(0);
 		request.setAttribute("productCategoryTreeList", productCategoryTreeList);
 		SystemConfig systemConfig = new SystemConfig();
 		systemConfig.setUploadLimit(10);
