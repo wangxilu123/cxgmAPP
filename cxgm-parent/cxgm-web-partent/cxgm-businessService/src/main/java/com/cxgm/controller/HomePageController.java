@@ -65,6 +65,8 @@ public class HomePageController {
 		
 		Map<String,Object> map = new HashMap<>();
 		
+		map.put("shopId", shopId);
+		map.put("categoryId", categoryId);
 		List<ProductTransfer> list=productService.findListAllWithCategory(map);
 		PageInfo<ProductTransfer> page = new PageInfo<>(list);
 		
@@ -86,7 +88,8 @@ public class HomePageController {
 		PageHelper.startPage(pageNum, pageSize);
 		
 		Map<String,Object> map = new HashMap<>();
-		
+		map.put("shopId", shopId);
+		map.put("isTop", 1);
 		List<ProductTransfer> list=productService.findListAllWithCategory(map);
 		PageInfo<ProductTransfer> page = new PageInfo<>(list);
 		

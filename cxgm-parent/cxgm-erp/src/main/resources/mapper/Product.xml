@@ -91,6 +91,10 @@
     		and p.name  like "%"#{name,jdbcType=VARCHAR}"%"
 		</if>
 		
+		<if test="isTop !=null and isTop != ''">
+    		and p.is_top=#{isTop,jdbcType=BIT}
+		</if>
+		
 		
 	</sql>
   <sql id="Category_Column_List">
