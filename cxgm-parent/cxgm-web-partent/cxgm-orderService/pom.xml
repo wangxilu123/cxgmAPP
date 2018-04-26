@@ -16,7 +16,7 @@
 	<dependencies>
 		<dependency>
 			<groupId>com.cxgm</groupId>
-			<artifactId>cxgm-userService</artifactId>
+			<artifactId>cxgmUser-pojo</artifactId>
 			<version>${project.version}</version>
 		</dependency>
 
@@ -46,6 +46,16 @@
 			<groupId>com.github.pagehelper</groupId>
 			<artifactId>pagehelper</artifactId>
 			<version>4.1.6</version>
+		</dependency>
+		
+		<dependency>
+			<groupId>io.springfox</groupId>
+			<artifactId>springfox-swagger2</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>io.springfox</groupId>
+			<artifactId>springfox-swagger-ui</artifactId>
 		</dependency>
 
 		<dependency>

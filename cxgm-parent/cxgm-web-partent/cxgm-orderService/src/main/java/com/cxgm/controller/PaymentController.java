@@ -16,7 +16,6 @@ import java.util.TreeMap;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.ws.rs.Path;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -47,7 +46,8 @@ import io.swagger.annotations.ApiOperation;
  * @version 1.0
  */
 @Component
-@Path("/payments")
+
+@RequestMapping("/payments")
 public class PaymentController {
 	
 	@Autowired

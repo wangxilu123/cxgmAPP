@@ -18,7 +18,6 @@ import com.cxgm.common.ResultDto;
 import com.cxgm.domain.AppUser;
 import com.cxgm.domain.Order;
 import com.cxgm.service.OrderService;
-import com.cxgm.service.ShopService;
 import com.github.pagehelper.PageInfo;
 
 import io.swagger.annotations.Api;
@@ -37,10 +36,6 @@ public class OrderController {
 
     @Autowired
     private OrderService orderService;
-    
-    @Autowired
-    private ShopService shopService;
-    
     
     @ApiOperation(value = "用户下单接口",nickname = "用户下单接口")
     @ApiImplicitParam(name = "order", value = "用户实体order", required = true, dataType = "Order")

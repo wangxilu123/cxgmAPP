@@ -1,28 +1,9 @@
 package com.cxgm.controller;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import javax.servlet.http.HttpServletRequest;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.cxgm.common.ResultDto;
-import com.cxgm.domain.ProductTransfer;
-import com.cxgm.service.ProductCategoryService;
-import com.cxgm.service.ProductService;
-import com.github.pagehelper.PageHelper;
-import com.github.pagehelper.PageInfo;
-
 import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiImplicitParam;
-import io.swagger.annotations.ApiImplicitParams;
-import io.swagger.annotations.ApiOperation;
 
 /**
  * @Description 类说明:
@@ -33,19 +14,19 @@ import io.swagger.annotations.ApiOperation;
 @RequestMapping("/homePage")
 public class HomePageController {
 
-	@Autowired
+	/*@Autowired
 	private ProductCategoryService productCategoryService;
 
 	@Autowired
 	private ProductService productService;
 
-	/*@ApiOperation(value = "根据门店ID查询商品一级分类", nickname = "根据门店ID查询商品一级分类")
+	@ApiOperation(value = "根据门店ID查询商品一级分类", nickname = "根据门店ID查询商品一级分类")
 	@PostMapping("/findFirstCategory")
 	public ResultDto<Integer> register(HttpServletRequest request, @RequestBody RegisterEntity registerEntity)
 			throws InterruptedException {
 		ResultDto<Integer> result = userService.addUser(registerEntity);
 		return result;
-	}*/
+	}
 
 	@ApiOperation(value = "根据门店ID和商品类别ID查询商品信息", nickname = "根据门店ID和商品类别ID查询商品信息")
 	@ApiImplicitParams({
@@ -116,6 +97,6 @@ public class HomePageController {
 		PageInfo<ProductTransfer> page = new PageInfo<>(list);
 		
 		return new ResultDto<>(200, "查询成功", page);
-	}
+	}*/
 
 }

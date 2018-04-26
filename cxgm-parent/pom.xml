@@ -352,5 +352,7 @@
     	<module>cxgm-web-partent</module>
     	<module>cxgm-erp</module>
     	<module>cxgm-mybites</module>
+    	<module>cxgmUser-pojo</module>
+    	<module>cxgmErp-pojo</module>
     </modules>
 </project>

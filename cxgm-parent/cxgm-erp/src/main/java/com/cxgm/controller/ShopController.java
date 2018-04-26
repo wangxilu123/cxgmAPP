@@ -1,13 +1,10 @@
 package com.cxgm.controller;
 
 import java.sql.SQLException;
-import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -15,14 +12,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.cxgm.common.ResultDto;
-import com.cxgm.domain.RegisterEntity;
-import com.cxgm.domain.Role;
 import com.cxgm.domain.Shop;
 import com.cxgm.service.ShopService;
 import com.github.pagehelper.PageInfo;
-
-import io.swagger.annotations.ApiOperation;
 
 @RestController
 @RequestMapping("/shop")
