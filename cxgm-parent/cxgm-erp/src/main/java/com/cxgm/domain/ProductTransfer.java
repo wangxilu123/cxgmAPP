@@ -77,6 +77,16 @@ public class ProductTransfer {
 
 	private Long productCategoryId;
 	
+	private Long productCategoryTwoId;
+    
+    private Long productCategoryThirdId;
+    
+    private String productCategoryName;
+    
+    private String productCategoryTwoName;
+    
+    private String productCategoryThirdName;
+	
 	private Integer shopId;
 
 	private String createBy;
@@ -473,5 +483,45 @@ public class ProductTransfer {
 
 	public void setProductImageList(List<ProductImage> productImageList) {
 		this.productImageList = productImageList;
+	}
+
+	public Long getProductCategoryTwoId() {
+		return productCategoryTwoId;
+	}
+
+	public void setProductCategoryTwoId(Long productCategoryTwoId) {
+		this.productCategoryTwoId = productCategoryTwoId;
+	}
+
+	public Long getProductCategoryThirdId() {
+		return productCategoryThirdId;
+	}
+
+	public void setProductCategoryThirdId(Long productCategoryThirdId) {
+		this.productCategoryThirdId = productCategoryThirdId;
+	}
+
+	public String getProductCategoryName() {
+		return productCategoryName;
+	}
+
+	public void setProductCategoryName(String productCategoryName) {
+		this.productCategoryName = productCategoryName;
+	}
+
+	public String getProductCategoryTwoName() {
+		return productCategoryTwoName;
+	}
+
+	public void setProductCategoryTwoName(String productCategoryTwoName) {
+		this.productCategoryTwoName = productCategoryTwoName;
+	}
+
+	public String getProductCategoryThirdName() {
+		return productCategoryThirdName;
+	}
+
+	public void setProductCategoryThirdName(String productCategoryThirdName) {
+		this.productCategoryThirdName = productCategoryThirdName;
 	}
 }

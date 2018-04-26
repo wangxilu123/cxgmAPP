@@ -34,12 +34,14 @@ public class Coupon {
 
     private Integer shopId;
 
+    private Long productCategoryId;
+
     private String introduction;
     
     private Integer totalNumber;
     
     private Integer usedNumber;
-    
+
     public Integer getTotalNumber() {
 		return totalNumber;
 	}
@@ -174,6 +176,14 @@ public class Coupon {
 
     public void setShopId(Integer shopId) {
         this.shopId = shopId;
+    }
+
+    public Long getProductCategoryId() {
+        return productCategoryId;
+    }
+
+    public void setProductCategoryId(Long productCategoryId) {
+        this.productCategoryId = productCategoryId;
     }
 
     public String getIntroduction() {

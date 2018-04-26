@@ -17,13 +17,15 @@
     <result column="price_expression" jdbcType="VARCHAR" property="priceExpression" />
     <result column="creation_date" jdbcType="TIMESTAMP" property="creationDate" />
     <result column="shop_id" jdbcType="INTEGER" property="shopId" />
+    <result column="product_category_id" jdbcType="BIGINT" property="productCategoryId" />
   </resultMap>
   <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.cxgm.domain.Coupon">
     <result column="introduction" jdbcType="LONGVARCHAR" property="introduction" />
   </resultMap>
   <sql id="Base_Column_List">
     id, name, prefix, begin_date, end_date, is_enabled, is_exchange, maximum_price, maximum_quantity, 
-    minimum_price, minimum_quantity, point, price_expression, creation_date, shop_id
+    minimum_price, minimum_quantity, point, price_expression, creation_date, shop_id, 
+    product_category_id
   </sql>
   <sql id="Blob_Column_List">
     introduction
@@ -46,13 +48,13 @@
       is_exchange, maximum_price, maximum_quantity, 
       minimum_price, minimum_quantity, point, 
       price_expression, creation_date, shop_id, 
-      introduction)
+      product_category_id, introduction)
     values (#{id,jdbcType=BIGINT}, #{name,jdbcType=VARCHAR}, #{prefix,jdbcType=VARCHAR}, 
       #{beginDate,jdbcType=TIMESTAMP}, #{endDate,jdbcType=TIMESTAMP}, #{isEnabled,jdbcType=BIT}, 
       #{isExchange,jdbcType=BIT}, #{maximumPrice,jdbcType=DECIMAL}, #{maximumQuantity,jdbcType=INTEGER}, 
       #{minimumPrice,jdbcType=DECIMAL}, #{minimumQuantity,jdbcType=INTEGER}, #{point,jdbcType=BIGINT}, 
       #{priceExpression,jdbcType=VARCHAR}, #{creationDate,jdbcType=TIMESTAMP}, #{shopId,jdbcType=INTEGER}, 
-      #{introduction,jdbcType=LONGVARCHAR})
+      #{productCategoryId,jdbcType=BIGINT}, #{introduction,jdbcType=LONGVARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.cxgm.domain.Coupon">
     insert into coupon
@@ -101,6 +103,9 @@
       </if>
       <if test="shopId != null">
         shop_id,
+      </if>
+      <if test="productCategoryId != null">
+        product_category_id,
       </if>
       <if test="introduction != null">
         introduction,
@@ -152,6 +157,9 @@
       <if test="shopId != null">
         #{shopId,jdbcType=INTEGER},
       </if>
+      <if test="productCategoryId != null">
+        #{productCategoryId,jdbcType=BIGINT},
+      </if>
       <if test="introduction != null">
         #{introduction,jdbcType=LONGVARCHAR},
       </if>
@@ -202,6 +210,9 @@
       <if test="shopId != null">
         shop_id = #{shopId,jdbcType=INTEGER},
       </if>
+      <if test="productCategoryId != null">
+        product_category_id = #{productCategoryId,jdbcType=BIGINT},
+      </if>
       <if test="introduction != null">
         introduction = #{introduction,jdbcType=LONGVARCHAR},
       </if>
@@ -224,6 +235,7 @@
       price_expression = #{priceExpression,jdbcType=VARCHAR},
       creation_date = #{creationDate,jdbcType=TIMESTAMP},
       shop_id = #{shopId,jdbcType=INTEGER},
+      product_category_id = #{productCategoryId,jdbcType=BIGINT},
       introduction = #{introduction,jdbcType=LONGVARCHAR}
     where id = #{id,jdbcType=BIGINT}
   </update>
@@ -242,7 +254,8 @@
       point = #{point,jdbcType=BIGINT},
       price_expression = #{priceExpression,jdbcType=VARCHAR},
       creation_date = #{creationDate,jdbcType=TIMESTAMP},
-      shop_id = #{shopId,jdbcType=INTEGER}
+      shop_id = #{shopId,jdbcType=INTEGER},
+      product_category_id = #{productCategoryId,jdbcType=BIGINT}
     where id = #{id,jdbcType=BIGINT}
   </update>
 </mapper>

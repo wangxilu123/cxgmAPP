@@ -2,6 +2,7 @@ package com.cxgm.service;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -14,8 +15,11 @@ import com.cxgm.common.DateKit;
 import com.cxgm.dao.ProductImageMapper;
 import com.cxgm.dao.ProductMapper;
 import com.cxgm.domain.Product;
+import com.cxgm.domain.ProductCategory;
 import com.cxgm.domain.ProductImage;
 import com.cxgm.domain.ProductTransfer;
+import com.cxgm.domain.ShopCategory;
+import com.cxgm.exception.TipException;
 
 @Service
 public class ProductService {
@@ -27,6 +31,8 @@ public class ProductService {
 	
 	@Autowired
 	ProductImageService productImageService;
+	@Autowired
+	ProductCategoryService productCategoryService;
 	
 	
 	public List<ProductTransfer> findListAllWithCategory(Map<String,Object> map){
@@ -54,7 +60,34 @@ public class ProductService {
         	product.setWeight(weight);
         	product.setUnit(unit);
         	product.setIsTop(isTop);
-        	product.setProductCategoryId(Long.valueOf(pid));
+        	ProductCategory productCategory = productCategoryService.findById(Long.valueOf(pid));
+        	if(productCategory.getGrade()==0) {
+        		product.setProductCategoryId(productCategory.getId());
+        		product.setProductCategoryName(productCategory.getName());
+        		product.setProductCategoryTwoId(productCategory.getId());
+        		product.setProductCategoryTwoName(productCategory.getName());
+        		product.setProductCategoryThirdId(productCategory.getId());
+        		product.setProductCategoryThirdName(productCategory.getName());
+        	}
+        	if(productCategory.getGrade()==1) {
+        		ProductCategory pcy = productCategoryService.findById(productCategory.getParentId());
+        		product.setProductCategoryId(pcy.getId());
+        		product.setProductCategoryName(pcy.getName());
+        		product.setProductCategoryTwoId(productCategory.getId());
+        		product.setProductCategoryTwoName(productCategory.getName());
+        		product.setProductCategoryThirdId(productCategory.getId());
+        		product.setProductCategoryThirdName(productCategory.getName());
+        	}
+        	if(productCategory.getGrade()==2) {
+        		ProductCategory pc2 = productCategoryService.findById(productCategory.getParentId());
+        		ProductCategory pc1 = productCategoryService.findById(pc2.getParentId());
+        		product.setProductCategoryId(pc1.getId());
+        		product.setProductCategoryName(pc1.getName());
+        		product.setProductCategoryTwoId(pc2.getId());
+        		product.setProductCategoryTwoName(pc2.getName());
+        		product.setProductCategoryThirdId(productCategory.getId());
+        		product.setProductCategoryThirdName(productCategory.getName());
+        	}
         	product.setBrandName(brand);
         	product.setPrice(price);
         	product.setMarketPrice(marketPrice);
@@ -130,7 +163,37 @@ public class ProductService {
         	product.setWeight(weight);
         	product.setUnit(unit);
         	product.setIsTop(isTop);
-        	product.setProductCategoryId(Long.valueOf(pid));
+        	if(pid==null || "".equals(pid)) {
+        		throw new TipException("请选择商品分类");
+        	}
+        	ProductCategory productCategory = productCategoryService.findById(Long.valueOf(pid));
+        	if(productCategory.getGrade()==0) {
+        		product.setProductCategoryId(productCategory.getId());
+        		product.setProductCategoryName(productCategory.getName());
+        		product.setProductCategoryTwoId(productCategory.getId());
+        		product.setProductCategoryTwoName(productCategory.getName());
+        		product.setProductCategoryThirdId(productCategory.getId());
+        		product.setProductCategoryThirdName(productCategory.getName());
+        	}
+        	if(productCategory.getGrade()==1) {
+        		ProductCategory pcy = productCategoryService.findById(productCategory.getParentId());
+        		product.setProductCategoryId(pcy.getId());
+        		product.setProductCategoryName(pcy.getName());
+        		product.setProductCategoryTwoId(productCategory.getId());
+        		product.setProductCategoryTwoName(productCategory.getName());
+        		product.setProductCategoryThirdId(productCategory.getId());
+        		product.setProductCategoryThirdName(productCategory.getName());
+        	}
+        	if(productCategory.getGrade()==2) {
+        		ProductCategory pc2 = productCategoryService.findById(productCategory.getParentId());
+        		ProductCategory pc1 = productCategoryService.findById(pc2.getParentId());
+        		product.setProductCategoryId(pc1.getId());
+        		product.setProductCategoryName(pc1.getName());
+        		product.setProductCategoryTwoId(pc2.getId());
+        		product.setProductCategoryTwoName(pc2.getName());
+        		product.setProductCategoryThirdId(productCategory.getId());
+        		product.setProductCategoryThirdName(productCategory.getName());
+        	}
         	product.setBrandName(brand);
         	product.setPrice(price);
         	product.setMarketPrice(marketPrice);
@@ -161,5 +224,37 @@ public class ProductService {
         } catch (Exception e) {
             e.printStackTrace();
         }
+	}
+	/**
+	 * 获取商店的所有的一级类目二级类目三级类目
+	 * @param shopId
+	 * @return
+	 */
+	public List<ShopCategory> findAllCategory(Integer shopId){
+		List<ShopCategory> shopCategoryOnes = productDao.findShopCategory(shopId);
+		for(ShopCategory shopCategoryOne : shopCategoryOnes) {
+			Map<String,Object> map = new HashMap<>();
+			map.put("shopId", shopId);
+			map.put("productCategoryId", shopCategoryOne.getId());
+			List<ShopCategory> shopCategoryTwos = productDao.findShopCategoryTwo(map);
+			shopCategoryOne.setShopCategoryList(shopCategoryTwos);
+			for(ShopCategory shopCategoryTwo : shopCategoryTwos) {
+				Map<String,Object> map1 = new HashMap<>();
+				map1.put("shopId", shopId);
+				map1.put("productCategoryId", shopCategoryOne.getId());
+				map1.put("productCategoryTwoId", shopCategoryTwo.getId());
+				List<ShopCategory> shopCategoryThirds = productDao.findShopCategoryThird(map1);
+				shopCategoryTwo.setShopCategoryList(shopCategoryThirds);
+			}
+		}
+		return shopCategoryOnes;
+	}
+	
+	/**
+	 * 根据输入的条件查询商品
+	 * @return
+	 */
+	public List<Product> findProducts(Map<String,Object> map){
+		return productDao.findProducts(map);
 	}
 }
