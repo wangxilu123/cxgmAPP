@@ -1,9 +1,30 @@
 package com.cxgm.controller;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.cxgm.common.ResultDto;
+import com.cxgm.domain.ProductTransfer;
+import com.cxgm.domain.RegisterEntity;
+import com.cxgm.domain.ShopCategory;
+import com.cxgm.service.HomePageService;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
+
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
+import io.swagger.annotations.ApiOperation;
 
 /**
  * @Description 类说明:
@@ -14,17 +35,16 @@ import io.swagger.annotations.Api;
 @RequestMapping("/homePage")
 public class HomePageController {
 
-/*	@Autowired
-	private ProductCategoryService productCategoryService;
-
 	@Autowired
-	private ProductService productService;
+	private HomePageService homePageService;
+
 	@ApiOperation(value = "根据门店ID查询商品一级分类", nickname = "根据门店ID查询商品一级分类")
 	@PostMapping("/findFirstCategory")
-	public ResultDto<Integer> register(HttpServletRequest request, @RequestBody RegisterEntity registerEntity)
+	public ResultDto<List<ShopCategory>> findShopOneCategory(HttpServletRequest request, 
+			@RequestParam(value = "shopId", required = false) Integer shopId)
 			throws InterruptedException {
-		ResultDto<Integer> result = userService.addUser(registerEntity);
-		return result;
+		List<ShopCategory> result = homePageService.findShopOneCategory(shopId);
+		return new ResultDto<>(200, "查询成功", result);
 	}
 
 	@ApiOperation(value = "根据门店ID和商品类别ID查询商品信息", nickname = "根据门店ID和商品类别ID查询商品信息")
@@ -47,7 +67,7 @@ public class HomePageController {
 		
 		map.put("shopId", shopId);
 		map.put("categoryId", categoryId);
-		List<ProductTransfer> list=productService.findListAllWithCategory(map);
+		List<ProductTransfer> list=homePageService.findListAllWithCategory(map);
 		PageInfo<ProductTransfer> page = new PageInfo<>(list);
 		
 		return new ResultDto<>(200, "查询成功", page);
@@ -70,7 +90,7 @@ public class HomePageController {
 		Map<String,Object> map = new HashMap<>();
 		map.put("shopId", shopId);
 		map.put("isTop", 1);
-		List<ProductTransfer> list=productService.findListAllWithCategory(map);
+		List<ProductTransfer> list=homePageService.findListAllWithCategory(map);
 		PageInfo<ProductTransfer> page = new PageInfo<>(list);
 		
 		return new ResultDto<>(200, "查询成功", page);
@@ -92,10 +112,12 @@ public class HomePageController {
 		
 		Map<String,Object> map = new HashMap<>();
 		
-		List<ProductTransfer> list=productService.findListAllWithCategory(map);
+		map.put("shopId", shopId);
+		
+		List<ProductTransfer> list=homePageService.findListAllWithCategory(map);
 		PageInfo<ProductTransfer> page = new PageInfo<>(list);
 		
 		return new ResultDto<>(200, "查询成功", page);
-	}*/
+	}
 
 }

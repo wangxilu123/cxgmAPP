@@ -192,7 +192,7 @@
    <include refid="Category_Column_List" />
     from product p left join product_category pc on p.product_category_third_id = pc.id
     where 1=1 
-    <include refid="queryMap" />
+    <include refid="queryMap" /> order by creation_date desc
   </select>
   <delete id="delete" parameterType="java.lang.Long">
     delete from product
