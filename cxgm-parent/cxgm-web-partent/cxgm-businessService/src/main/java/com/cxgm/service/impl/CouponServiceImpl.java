@@ -1,31 +1,33 @@
 package com.cxgm.service.impl;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
 
-import com.cxgm.dao.CouponMapper;
-import com.cxgm.domain.Coupon;
+import com.cxgm.dao.CouponCodeMapper;
+import com.cxgm.domain.CouponDetail;
 import com.cxgm.service.CouponService;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 
 @Primary
 @Service
 public class CouponServiceImpl implements CouponService {
 
 	@Autowired
-	private CouponMapper couponMapper;
+	private CouponCodeMapper couponCodeMapper;
 
 	@Override
-	public List<Coupon> findCouponByUserId(Integer userId,Integer pageNum,Integer pageSize) {
+	public PageInfo<CouponDetail> findCouponByUserId(Integer userId,Integer pageNum,Integer pageSize) {
 		
-		Map<String,Object> map = new HashMap<String,Object>();
+		PageHelper.startPage(pageNum, pageSize);
 		
-		List<Coupon> list = couponMapper.findCouponsWithParam(map);
+		List<CouponDetail> list = couponCodeMapper.findCouponsByUserId(userId);
 		
-		return null;
+		PageInfo<CouponDetail> page = new PageInfo<CouponDetail>(list);
+		
+		return page;
 	}
 }

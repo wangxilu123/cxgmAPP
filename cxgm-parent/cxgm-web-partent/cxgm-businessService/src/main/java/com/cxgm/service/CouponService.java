@@ -1,12 +1,11 @@
 package com.cxgm.service;
 
-import java.util.List;
-
-import com.cxgm.domain.Coupon;
+import com.cxgm.domain.CouponDetail;
+import com.github.pagehelper.PageInfo;
 
 public interface CouponService {
 
-	List<Coupon> findCouponByUserId(Integer userId,Integer pageNum,Integer pageSize);
+	PageInfo<CouponDetail> findCouponByUserId(Integer userId,Integer pageNum,Integer pageSize);
 
   
 }

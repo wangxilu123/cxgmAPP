@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.cxgm.domain.CouponCode;
+import com.cxgm.domain.CouponDetail;
 
 public interface CouponCodeMapper {
     int delete(Long id);
@@ -11,5 +12,7 @@ public interface CouponCodeMapper {
     CouponCode select(Long id);
     int update(CouponCode record);
     List<CouponCode> findCouponsWithParam(Map<String,Object> map);
+    
+    List<CouponDetail> findCouponsByUserId(Integer userId);
 
 }

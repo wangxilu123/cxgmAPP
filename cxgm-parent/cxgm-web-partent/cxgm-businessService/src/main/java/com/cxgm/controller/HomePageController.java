@@ -8,14 +8,12 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.cxgm.common.ResultDto;
 import com.cxgm.domain.ProductTransfer;
-import com.cxgm.domain.RegisterEntity;
 import com.cxgm.domain.ShopCategory;
 import com.cxgm.service.HomePageService;
 import com.github.pagehelper.PageHelper;
