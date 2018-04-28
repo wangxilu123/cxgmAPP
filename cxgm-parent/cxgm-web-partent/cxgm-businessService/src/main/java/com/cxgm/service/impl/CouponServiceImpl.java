@@ -24,7 +24,7 @@ public class CouponServiceImpl implements CouponService {
 		
 		Map<String,Object> map = new HashMap<String,Object>();
 		
-		List<Coupon> list = couponMapper.selectByList(map);
+		List<Coupon> list = couponMapper.findCouponsWithParam(map);
 		
 		return null;
 	}

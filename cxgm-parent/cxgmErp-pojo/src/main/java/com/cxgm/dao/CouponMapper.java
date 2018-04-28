@@ -6,19 +6,16 @@ import java.util.Map;
 import com.cxgm.domain.Coupon;
 
 public interface CouponMapper {
-    int deleteByPrimaryKey(Long id);
+    int delete(Long id);
 
     int insert(Coupon record);
 
-    int insertSelective(Coupon record);
+    Coupon select(Long id);
 
     Coupon selectByPrimaryKey(Long id);
     
-    List<Coupon> selectByList(Map<String,Object> map);
+    int update(Coupon record);
+    
+    List<Coupon> findCouponsWithParam(Map<String,Object> map);
 
-    int updateByPrimaryKeySelective(Coupon record);
-
-    int updateByPrimaryKeyWithBLOBs(Coupon record);
-
-    int updateByPrimaryKey(Coupon record);
 }

@@ -18,6 +18,7 @@
     <result column="creation_date" jdbcType="TIMESTAMP" property="creationDate" />
     <result column="shop_id" jdbcType="INTEGER" property="shopId" />
     <result column="product_category_id" jdbcType="BIGINT" property="productCategoryId" />
+    <result column="product_id" jdbcType="BIGINT" property="productId" />
   </resultMap>
   <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.cxgm.domain.Coupon">
     <result column="introduction" jdbcType="LONGVARCHAR" property="introduction" />
@@ -25,12 +26,30 @@
   <sql id="Base_Column_List">
     id, name, prefix, begin_date, end_date, is_enabled, is_exchange, maximum_price, maximum_quantity, 
     minimum_price, minimum_quantity, point, price_expression, creation_date, shop_id, 
-    product_category_id
+    product_category_id,product_id
   </sql>
   <sql id="Blob_Column_List">
     introduction
   </sql>
-  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="ResultMapWithBLOBs">
+  
+  <sql id="queryMap">
+		<if test="shopId !=null and shopId != ''">
+    		and shop_id=#{shopId,jdbcType=INTEGER}
+		</if>
+		
+		<if test="productCategoryId !=null and productCategoryId != ''">
+    		and product_category_id=#{productCategoryId,jdbcType=BIGINT}
+		</if>
+		
+		<if test="productId !=null and productId != ''">
+    		and product_id=#{productId,jdbcType=BIGINT}
+		</if>
+		<if test="name !=null and name != ''">
+    		and name  like "%"#{name,jdbcType=VARCHAR}"%"
+		</if>
+	</sql>
+  
+  <select id="select" parameterType="java.lang.Long" resultMap="ResultMapWithBLOBs">
     select 
     <include refid="Base_Column_List" />
     ,
@@ -39,16 +58,16 @@
     where id = #{id,jdbcType=BIGINT}
   </select>
   
-  <select id="selectByList" parameterType="java.lang.Long" resultMap="ResultMapWithBLOBs">
+  <select id="findCouponsWithParam" parameterType="map" resultMap="ResultMapWithBLOBs">
     select 
     <include refid="Base_Column_List" />
     ,
     <include refid="Blob_Column_List" />
     from coupon
-    where id = #{id,jdbcType=BIGINT}
+    where 1=1
+    <include refid="queryMap" />
   </select>
-  
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+  <delete id="delete" parameterType="java.lang.Long">
     delete from coupon
     where id = #{id,jdbcType=BIGINT}
   </delete>
@@ -58,124 +77,16 @@
       is_exchange, maximum_price, maximum_quantity, 
       minimum_price, minimum_quantity, point, 
       price_expression, creation_date, shop_id, 
-      product_category_id, introduction)
+      product_category_id,product_id, introduction)
     values (#{id,jdbcType=BIGINT}, #{name,jdbcType=VARCHAR}, #{prefix,jdbcType=VARCHAR}, 
       #{beginDate,jdbcType=TIMESTAMP}, #{endDate,jdbcType=TIMESTAMP}, #{isEnabled,jdbcType=BIT}, 
       #{isExchange,jdbcType=BIT}, #{maximumPrice,jdbcType=DECIMAL}, #{maximumQuantity,jdbcType=INTEGER}, 
       #{minimumPrice,jdbcType=DECIMAL}, #{minimumQuantity,jdbcType=INTEGER}, #{point,jdbcType=BIGINT}, 
       #{priceExpression,jdbcType=VARCHAR}, #{creationDate,jdbcType=TIMESTAMP}, #{shopId,jdbcType=INTEGER}, 
-      #{productCategoryId,jdbcType=BIGINT}, #{introduction,jdbcType=LONGVARCHAR})
+      #{productCategoryId,jdbcType=BIGINT}, #{productId,jdbcType=BIGINT},#{introduction,jdbcType=LONGVARCHAR})
   </insert>
-  <insert id="insertSelective" parameterType="com.cxgm.domain.Coupon">
-    insert into coupon
-    <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="id != null">
-        id,
-      </if>
-      <if test="name != null">
-        name,
-      </if>
-      <if test="prefix != null">
-        prefix,
-      </if>
-      <if test="beginDate != null">
-        begin_date,
-      </if>
-      <if test="endDate != null">
-        end_date,
-      </if>
-      <if test="isEnabled != null">
-        is_enabled,
-      </if>
-      <if test="isExchange != null">
-        is_exchange,
-      </if>
-      <if test="maximumPrice != null">
-        maximum_price,
-      </if>
-      <if test="maximumQuantity != null">
-        maximum_quantity,
-      </if>
-      <if test="minimumPrice != null">
-        minimum_price,
-      </if>
-      <if test="minimumQuantity != null">
-        minimum_quantity,
-      </if>
-      <if test="point != null">
-        point,
-      </if>
-      <if test="priceExpression != null">
-        price_expression,
-      </if>
-      <if test="creationDate != null">
-        creation_date,
-      </if>
-      <if test="shopId != null">
-        shop_id,
-      </if>
-      <if test="productCategoryId != null">
-        product_category_id,
-      </if>
-      <if test="introduction != null">
-        introduction,
-      </if>
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="id != null">
-        #{id,jdbcType=BIGINT},
-      </if>
-      <if test="name != null">
-        #{name,jdbcType=VARCHAR},
-      </if>
-      <if test="prefix != null">
-        #{prefix,jdbcType=VARCHAR},
-      </if>
-      <if test="beginDate != null">
-        #{beginDate,jdbcType=TIMESTAMP},
-      </if>
-      <if test="endDate != null">
-        #{endDate,jdbcType=TIMESTAMP},
-      </if>
-      <if test="isEnabled != null">
-        #{isEnabled,jdbcType=BIT},
-      </if>
-      <if test="isExchange != null">
-        #{isExchange,jdbcType=BIT},
-      </if>
-      <if test="maximumPrice != null">
-        #{maximumPrice,jdbcType=DECIMAL},
-      </if>
-      <if test="maximumQuantity != null">
-        #{maximumQuantity,jdbcType=INTEGER},
-      </if>
-      <if test="minimumPrice != null">
-        #{minimumPrice,jdbcType=DECIMAL},
-      </if>
-      <if test="minimumQuantity != null">
-        #{minimumQuantity,jdbcType=INTEGER},
-      </if>
-      <if test="point != null">
-        #{point,jdbcType=BIGINT},
-      </if>
-      <if test="priceExpression != null">
-        #{priceExpression,jdbcType=VARCHAR},
-      </if>
-      <if test="creationDate != null">
-        #{creationDate,jdbcType=TIMESTAMP},
-      </if>
-      <if test="shopId != null">
-        #{shopId,jdbcType=INTEGER},
-      </if>
-      <if test="productCategoryId != null">
-        #{productCategoryId,jdbcType=BIGINT},
-      </if>
-      <if test="introduction != null">
-        #{introduction,jdbcType=LONGVARCHAR},
-      </if>
-    </trim>
-  </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.cxgm.domain.Coupon">
+  
+  <update id="update" parameterType="com.cxgm.domain.Coupon">
     update coupon
     <set>
       <if test="name != null">
@@ -223,49 +134,14 @@
       <if test="productCategoryId != null">
         product_category_id = #{productCategoryId,jdbcType=BIGINT},
       </if>
+       <if test="productId != null">
+        product_id = #{productId,jdbcType=BIGINT},
+      </if>
       <if test="introduction != null">
         introduction = #{introduction,jdbcType=LONGVARCHAR},
       </if>
     </set>
     where id = #{id,jdbcType=BIGINT}
   </update>
-  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.cxgm.domain.Coupon">
-    update coupon
-    set name = #{name,jdbcType=VARCHAR},
-      prefix = #{prefix,jdbcType=VARCHAR},
-      begin_date = #{beginDate,jdbcType=TIMESTAMP},
-      end_date = #{endDate,jdbcType=TIMESTAMP},
-      is_enabled = #{isEnabled,jdbcType=BIT},
-      is_exchange = #{isExchange,jdbcType=BIT},
-      maximum_price = #{maximumPrice,jdbcType=DECIMAL},
-      maximum_quantity = #{maximumQuantity,jdbcType=INTEGER},
-      minimum_price = #{minimumPrice,jdbcType=DECIMAL},
-      minimum_quantity = #{minimumQuantity,jdbcType=INTEGER},
-      point = #{point,jdbcType=BIGINT},
-      price_expression = #{priceExpression,jdbcType=VARCHAR},
-      creation_date = #{creationDate,jdbcType=TIMESTAMP},
-      shop_id = #{shopId,jdbcType=INTEGER},
-      product_category_id = #{productCategoryId,jdbcType=BIGINT},
-      introduction = #{introduction,jdbcType=LONGVARCHAR}
-    where id = #{id,jdbcType=BIGINT}
-  </update>
-  <update id="updateByPrimaryKey" parameterType="com.cxgm.domain.Coupon">
-    update coupon
-    set name = #{name,jdbcType=VARCHAR},
-      prefix = #{prefix,jdbcType=VARCHAR},
-      begin_date = #{beginDate,jdbcType=TIMESTAMP},
-      end_date = #{endDate,jdbcType=TIMESTAMP},
-      is_enabled = #{isEnabled,jdbcType=BIT},
-      is_exchange = #{isExchange,jdbcType=BIT},
-      maximum_price = #{maximumPrice,jdbcType=DECIMAL},
-      maximum_quantity = #{maximumQuantity,jdbcType=INTEGER},
-      minimum_price = #{minimumPrice,jdbcType=DECIMAL},
-      minimum_quantity = #{minimumQuantity,jdbcType=INTEGER},
-      point = #{point,jdbcType=BIGINT},
-      price_expression = #{priceExpression,jdbcType=VARCHAR},
-      creation_date = #{creationDate,jdbcType=TIMESTAMP},
-      shop_id = #{shopId,jdbcType=INTEGER},
-      product_category_id = #{productCategoryId,jdbcType=BIGINT}
-    where id = #{id,jdbcType=BIGINT}
-  </update>
+  
 </mapper>

@@ -1,0 +1,187 @@
+<!doctype html>
+<html class="no-js">
+<head>
+<% include("admin_head.html",{title: '添加/编辑优惠券', loadUE: true, validatorJS: true, livequeryJS: true,WdateJS: true}){}%>
+<%
+var isAdd = false;
+var isEdit = false;
+if(isEmpty(coupon.id)){
+  isAdd = true;
+}else{
+  isEdit = true;
+}%>
+</head>
+<body>
+<!-- content start -->
+<div class="admin-content">
+  <div class="admin-content-body">
+    <div class="am-cf app-padding-title">
+      <div class="am-fl am-cf">
+        <strong class="am-text-primary am-text-lg">优惠券管理</strong> / <small><%if(isAdd){%>添加优惠券<%}else{%>编辑优惠券<%}%></small>
+      </div>
+    </div>
+
+    <hr data-am-widget="divider" class="am-divider am-divider-dashed am-margin-0" />
+    
+    <form class="validator-form" action="<%if (isAdd){%>/coupon/save<%}else{%>/coupon/update<%}%>" enctype="multipart/form-data" method="post">
+    <input type="hidden" name="coupon.id" value="${coupon.id!}" />
+    <input type="hidden" name="coupon.shop" value="${shopId!}" />
+    <div class="am-tabs am-margin" data-am-tabs="{noSwipe: 1}" id="doc-my-tabs">
+      <ul class="am-tabs-nav am-nav am-nav-tabs">
+        <li class="am-active"><a href="#tab1">基本信息</a></li>
+        <li><a href="#tab3">介绍</a></li>
+      </ul>
+
+      <div class="am-tabs-bd am-form am-tabs-bd-ofv">
+        <div class="am-tab-panel am-fade am-in am-active am-form-horizontal" id="tab1">
+          <div class="am-form-group am-form-group-sm">
+            <label class="am-u-sm-4 am-u-md-3 am-text-right am-form-label">名称</label>
+            <div class="am-u-sm-8 am-u-md-9">
+              <input type="text" class="am-form-field" name="coupon.name" value="${coupon.name!}" required />
+            </div>
+          </div>
+          <div class="am-form-group am-form-group-sm">
+            <label class="am-u-sm-4 am-u-md-3 am-text-right am-form-label">前缀</label>
+            <div class="am-u-sm-8 am-u-md-9">
+              <input type="text" class="am-form-field" name="coupon.prefix" value="${coupon.prefix!}" />
+            </div>
+          </div>
+           <div class="am-form-group am-form-group-sm">
+            <label class="am-u-sm-4 am-u-md-3 am-text-right am-form-label">使用起始日期</label>
+            <div class="am-u-sm-8 am-u-md-9">
+              <input type="text" class="am-form-field Wdate"  id="startDate" onfocus="WdatePicker({ dateFmt:'yyyy-MM-dd HH:mm',maxDate:'#F{$dp.$D(\'endDate\')}'})" name="coupon.beginDate" value="${coupon.beginDate!,dateFormat='yyyy-MM-dd HH:mm'}" required />
+            </div>
+          </div>
+          <div class="am-form-group am-form-group-sm">
+            <label class="am-u-sm-4 am-u-md-3 am-text-right am-form-label">使用结束日期</label>
+            <div class="am-u-sm-8 am-u-md-9">
+              <input type="text" class="am-form-field Wdate" id="endDate" onfocus="WdatePicker({ dateFmt:'yyyy-MM-dd HH:mm',minDate:'#F{$dp.$D(\'startDate\')}',maxDate:'2120-10-01'})" name="coupon.endDate" value="${coupon.endDate!,dateFormat='yyyy-MM-dd HH:mm'}"  />
+            </div>
+          </div>
+           <div class="am-form-group am-form-group-sm">
+            <label class="am-u-sm-4 am-u-md-3 am-text-right am-form-label">最小商品价格</label>
+            <div class="am-u-sm-8 am-u-md-9">
+              <input type="text" class="am-form-field" name="coupon.minimumPrice" value="${coupon.minimumPrice!}" required />
+            </div>
+          </div>
+           <div class="am-form-group am-form-group-sm">
+            <label class="am-u-sm-4 am-u-md-3 am-text-right am-form-label">最大商品价格</label>
+            <div class="am-u-sm-8 am-u-md-9">
+              <input type="text" class="am-form-field" name="coupon.maximumPrice" value="${coupon.maximumPrice!}" required />
+            </div>
+          </div>
+          <div class="am-form-group am-form-group-sm">
+            <label class="am-u-sm-4 am-u-md-3 am-text-right am-form-label">最小商品数量</label>
+            <div class="am-u-sm-8 am-u-md-9">
+              <input type="text" class="am-form-field" name="coupon.minimumQuantity" value="${coupon.minimumQuantity!}" required />
+            </div>
+          </div>
+           <div class="am-form-group am-form-group-sm">
+            <label class="am-u-sm-4 am-u-md-3 am-text-right am-form-label">最大商品数量</label>
+            <div class="am-u-sm-8 am-u-md-9">
+              <input type="text" class="am-form-field" name="coupon.maximumQuantity" value="${coupon.maximumQuantity!}" required />
+            </div>
+          </div>
+          <div class="am-form-group am-form-group-sm">
+            <label class="am-u-sm-4 am-u-md-3 am-text-right am-form-label">是否启用</label>
+            <div class="am-u-sm-8 am-u-md-9 am-btn-group" data-am-button>
+                <label class="am-btn am-btn-default am-btn-xs">
+                  <input type="radio" name="coupon.isEnabled" value="true"<%if (isAdd || coupon.isEnabled == true){%> checked<%}%> required> 是
+                </label>
+                <label class="am-btn am-btn-default am-btn-xs">
+                  <input type="radio" name="coupon.isEnabled" value="false"<%if (coupon.isEnabled! == false){%> checked<%}%>> 否
+                </label>
+            </div>
+          </div>
+          
+          <div class="am-form-group am-form-group-sm">
+            <label class="am-u-sm-4 am-u-md-3 am-text-right am-form-label">商品分类</label>
+            <div class="am-u-sm-8 am-u-md-9">
+          <%if(isAdd){%>
+          <select name="parentId" data-am-selected="{btnWidth: '100%', maxHeight: '200px', btnSize: 'sm', btnStyle: 'secondary'}">
+            <option value="0" selected>请选择...</option>
+            <%for(list in productCategoryTreeList){%>
+            <option value="${list.id}">
+			  ${list.name}
+			</option>
+			
+			<%for(child in list.childCategory){%>
+					<option value="${child.id}">
+					  <%if (child.grade == 1){%>
+					  <%for( i in range(0,child.grade)){%>--<%}%>
+					  <%}%>
+					  ${child.name}
+					</option>
+					
+						<%for(childTwo in child.childCategory){%>
+							<option value="${childTwo.id}">
+							  <%if (childTwo.grade == 2){%>
+							  <%for( i in range(0,childTwo.grade)){%>--<%}%>
+							  <%}%>
+							  ${childTwo.name}
+							</option>
+				<%}%>
+				<%}%>
+            <%}%>
+          </select>
+          <%}else{%>
+          <select name="parentId" data-am-selected="{btnWidth: '100%', btnSize: 'sm'}">
+           <%for(list in productCategoryTreeList){%>
+            <option value="${list.id}" <%if (coupon.productCategoryId! == list.id!){%>selected="selected" <%}%>>${list.name!}</option>
+			
+			<%for(child in list.childCategory){%>
+					<option value="${child.id}" <%if (coupon.productCategoryId! == child.id!){%>selected="selected" <%}%>>
+					  <%if (child.grade == 1){%>
+					  <%for( i in range(0,child.grade)){%>--<%}%>
+					  <%}%>
+					  ${child.name}
+					</option>
+					<%for(childTwo in child.childCategory){%>
+							<option value="${childTwo.id}" <%if (coupon.productCategoryId! == childTwo.id!){%>selected="selected" <%}%>>
+							  <%if (childTwo.grade == 2){%>
+							  <%for( i in range(0,childTwo.grade)){%>--<%}%>
+							  <%}%>
+							  ${childTwo.name}
+							</option>
+				<%}%>
+				<%}%>
+            <%}%>
+           
+		</select>
+          <%}%>
+        </div>
+          </div>
+          <div class="am-form-group am-form-group-sm">
+            <label class="am-u-sm-4 am-u-md-3 am-text-right am-form-label">价格运算表达式</label>
+            <div class="am-u-sm-8 am-u-md-9">
+              <input type="text" class="am-form-field" name="coupon.priceExpression" value="${coupon.priceExpression!}" required />
+            </div>
+          </div>
+         </div>
+        <div class="am-tab-panel am-fade" id="tab3">
+          <div class="am-form-group am-form-group-sm">
+            <script id="editor" name="coupon.introduction" type="text/plain">
+              ${coupon.introduction!}
+            </script>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="am-margin">
+      <button type="submit" class="am-btn am-btn-primary"> 保  存 </button>
+      <button type="button" class="am-btn am-btn-default" onclick="window.history.back(); return false;"> 返  回 </button>
+    </div>
+    </form>
+  </div>
+</div>
+<!-- content end -->
+<script>
+  $().ready(function() {
+    
+    $('#doc-my-tabs').find('a').on('opened.tabs.amui', function(e) {
+      $('div.am-tab-panel').removeAttr("style");
+    })
+  });
+</script>
+</body>
+</html>
