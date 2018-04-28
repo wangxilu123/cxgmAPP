@@ -11,5 +11,7 @@ public interface HomePageService {
 	List<ProductTransfer> findListAllWithCategory(Map<String, Object> map);
 	
 	List<ShopCategory> findShopOneCategory(Integer shopId);
+
+	List<ShopCategory> findShopTwoCategory(Integer shopId,Integer productCategoryId);
   
 }

@@ -8,14 +8,12 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.cxgm.common.ResultDto;
 import com.cxgm.domain.ProductTransfer;
-import com.cxgm.domain.RegisterEntity;
 import com.cxgm.domain.ShopCategory;
 import com.cxgm.service.HomePageService;
 import com.github.pagehelper.PageHelper;
@@ -30,10 +28,10 @@ import io.swagger.annotations.ApiOperation;
  * @Description 类说明:
  * @author 作者 E-mail: wangxilu
  */
-@Api(description = "用户首页相关接口")
+@Api(description = "优惠券相关接口")
 @RestController
-@RequestMapping("/homePage")
-public class HomePageController {
+@RequestMapping("/coupon")
+public class CouponController {
 
 	@Autowired
 	private HomePageService homePageService;

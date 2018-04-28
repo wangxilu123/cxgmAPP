@@ -1,5 +1,8 @@
 package com.cxgm.dao;
 
+import java.util.List;
+import java.util.Map;
+
 import com.cxgm.domain.Coupon;
 
 public interface CouponMapper {
@@ -10,6 +13,8 @@ public interface CouponMapper {
     int insertSelective(Coupon record);
 
     Coupon selectByPrimaryKey(Long id);
+    
+    List<Coupon> selectByList(Map<String,Object> map);
 
     int updateByPrimaryKeySelective(Coupon record);
 

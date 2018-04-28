@@ -38,6 +38,16 @@
     from coupon
     where id = #{id,jdbcType=BIGINT}
   </select>
+  
+  <select id="selectByList" parameterType="java.lang.Long" resultMap="ResultMapWithBLOBs">
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from coupon
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
     delete from coupon
     where id = #{id,jdbcType=BIGINT}

@@ -1,5 +1,6 @@
 package com.cxgm.service.impl;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -28,5 +29,15 @@ public class HomePageServiceImpl implements HomePageService {
 	public List<ShopCategory> findShopOneCategory(Integer shopId) {
 		
 		return productDao.findShopCategory(shopId);
+	}
+	
+	@Override
+	public List<ShopCategory> findShopTwoCategory(Integer shopId,Integer productCategoryId) {
+		
+		Map<String,Object> map = new HashMap<String,Object>();
+		
+		map.put("shopId", shopId);
+		map.put("productCategoryId", productCategoryId);
+		return productDao.findShopCategoryTwo(map);
 	}
 }
