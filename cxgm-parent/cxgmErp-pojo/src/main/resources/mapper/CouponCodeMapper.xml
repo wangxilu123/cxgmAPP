@@ -46,6 +46,23 @@
     from coupon_code
     where id = #{id,jdbcType=BIGINT}
   </select>
+  
+  <select id="findListCount" parameterType="map" resultType="int">
+    select 
+    count(1)
+    from coupon_code
+    where 1=1
+    <include refid="queryMap" />
+  </select>
+  
+  <select id="findDispatchCount" parameterType="map" resultType="int">
+    select 
+    count(1)
+    from coupon_code
+    where 1=1
+    <include refid="queryMap" />
+    and user_id is not null
+  </select>
   <delete id="delete" parameterType="java.lang.Long">
     delete from coupon_code
     where id = #{id,jdbcType=BIGINT}

@@ -177,5 +177,37 @@ public class CouponController {
 		request.setAttribute("type", type);
 		return new ModelAndView("admin/coupon_code_input");
 	}
+	@RequestMapping(value = "/couponcode/save", method = RequestMethod.POST)
+	public ModelAndView couponcodeSave(HttpServletRequest request,
+			@RequestParam(value = "coupon.id",required=true) Long couponid,
+			@RequestParam(value = "coupon.codes",required=true) Integer codesNumber,
+			@RequestParam(value = "type",required=true) Integer type) {
+		try {
+			couponService.couponCodeInsert(couponid, codesNumber, type);
+			ModelAndView mv = new ModelAndView("redirect:/admin/coupon");
+			return mv;
+		}catch(Exception e) {
+			request.setAttribute("errorMessages", e.getMessage());
+			request.setAttribute("redirectionUrl", "/admin/coupon");
+			return new ModelAndView("admin/error");
+		}
+	}
 	
+	@RequestMapping(value = "/coupon/couponcode", method = RequestMethod.GET)
+	public ModelAndView getCouponCode(HttpServletRequest request) {
+		String id = request.getParameter("id");
+		Coupon coupon = couponService.select(Long.valueOf(id));
+		int totalNumber  = couponService.findCouponCodeListCount(coupon.getId(), null);
+		int usedNumber = couponService.findCouponCodeListCount(coupon.getId(), 2);
+		int unusedNumber = couponService.findCouponCodeListCount(coupon.getId(), 1);
+		int dispatchNumber = couponService.findCouponCodeDispatch(coupon.getId());
+		int overdueNumber = couponService.findCouponCodeListCount(coupon.getId(), 3);
+		coupon.setTotalNumber(totalNumber);
+		coupon.setUsedNumber(usedNumber);
+		coupon.setUnusedNumber(unusedNumber);
+		coupon.setDispatchNumber(dispatchNumber);
+		coupon.setOverdueNumber(overdueNumber);
+		request.setAttribute("coupon", coupon);
+		return new ModelAndView("admin/coupon_code_list");
+	}
 }

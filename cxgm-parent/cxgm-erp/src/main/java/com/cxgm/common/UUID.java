@@ -1,9 +1,7 @@
 package com.cxgm.common;
 
 
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 import java.util.Random;
 
 /**
@@ -256,11 +254,7 @@ public abstract class UUID {
 	 * @param prefix优惠码的前缀
 	 * @return
 	 */
-	public static List<String> generateCouponCode(Integer totals,Integer length,String prefix) {
-		List<String> couponCodes = new ArrayList<>();
-		for(int i=0;i<totals;i++) {
-			couponCodes.add(prefix+"_"+UUID.captchaChar(length,true));
-		}
-		return couponCodes;
+	public static String generateCouponCode(Integer length,String prefix) {
+		return prefix+"_"+UUID.captchaChar(length,true);
 	}
 }
