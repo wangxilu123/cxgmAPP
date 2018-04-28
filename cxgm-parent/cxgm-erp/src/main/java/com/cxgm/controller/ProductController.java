@@ -128,7 +128,7 @@ public class ProductController {
 		}
 	}
 	@RequestMapping(value = "/product/delete", method = RequestMethod.GET, produces = "text/json;charset=UTF-8")
-	public String adminDelete(HttpServletRequest request) throws SQLException {
+	public String productDelete(HttpServletRequest request) throws SQLException {
 		RSResult rr = new RSResult();
 		String[] productIds = request.getParameterValues("ids");
 		int resultDelete = productService.delete(productIds);

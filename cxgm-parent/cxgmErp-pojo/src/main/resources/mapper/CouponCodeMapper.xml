@@ -14,13 +14,39 @@
   <sql id="Base_Column_List">
     id, user_id, code, coupon_id, status, used_date, creation_date, type
   </sql>
-  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+   <sql id="queryMap">
+		<if test="userId !=null and userId != ''">
+    		and user_id=#{userId,jdbcType=BIGINT}
+		</if>
+		
+		<if test="couponId !=null and couponId != ''">
+    		and coupon_id=#{couponId,jdbcType=BIGINT}
+		</if>
+		
+		<if test="status !=null and status != ''">
+    		and status=#{status,jdbcType=INTEGER}
+		</if>
+		<if test="type !=null and type != ''">
+    		and type=#{type,jdbcType=INTEGER}
+		</if>
+		<if test="code !=null and code != ''">
+    		and code  like "%"#{code,jdbcType=VARCHAR}"%"
+		</if>
+	</sql>
+  <select id="findCouponsWithParam" parameterType="map" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from coupon_code
+    where 1=1
+    <include refid="queryMap" />
+  </select>
+  <select id="select" parameterType="java.lang.Long" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
     from coupon_code
     where id = #{id,jdbcType=BIGINT}
   </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+  <delete id="delete" parameterType="java.lang.Long">
     delete from coupon_code
     where id = #{id,jdbcType=BIGINT}
   </delete>
@@ -32,61 +58,7 @@
       #{couponId,jdbcType=BIGINT}, #{status,jdbcType=INTEGER}, #{usedDate,jdbcType=TIMESTAMP}, 
       #{creationDate,jdbcType=TIMESTAMP}, #{type,jdbcType=INTEGER})
   </insert>
-  <insert id="insertSelective" parameterType="com.cxgm.domain.CouponCode">
-    insert into coupon_code
-    <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="id != null">
-        id,
-      </if>
-      <if test="userId != null">
-        user_id,
-      </if>
-      <if test="code != null">
-        code,
-      </if>
-      <if test="couponId != null">
-        coupon_id,
-      </if>
-      <if test="status != null">
-        status,
-      </if>
-      <if test="usedDate != null">
-        used_date,
-      </if>
-      <if test="creationDate != null">
-        creation_date,
-      </if>
-      <if test="type != null">
-        type,
-      </if>
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="id != null">
-        #{id,jdbcType=BIGINT},
-      </if>
-      <if test="userId != null">
-        #{userId,jdbcType=BIGINT},
-      </if>
-      <if test="code != null">
-        #{code,jdbcType=VARCHAR},
-      </if>
-      <if test="couponId != null">
-        #{couponId,jdbcType=BIGINT},
-      </if>
-      <if test="status != null">
-        #{status,jdbcType=INTEGER},
-      </if>
-      <if test="usedDate != null">
-        #{usedDate,jdbcType=TIMESTAMP},
-      </if>
-      <if test="creationDate != null">
-        #{creationDate,jdbcType=TIMESTAMP},
-      </if>
-      <if test="type != null">
-        #{type,jdbcType=INTEGER},
-      </if>
-    </trim>
-  </insert>
+ 
   <update id="updateByPrimaryKeySelective" parameterType="com.cxgm.domain.CouponCode">
     update coupon_code
     <set>
@@ -114,15 +86,5 @@
     </set>
     where id = #{id,jdbcType=BIGINT}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.cxgm.domain.CouponCode">
-    update coupon_code
-    set user_id = #{userId,jdbcType=BIGINT},
-      code = #{code,jdbcType=VARCHAR},
-      coupon_id = #{couponId,jdbcType=BIGINT},
-      status = #{status,jdbcType=INTEGER},
-      used_date = #{usedDate,jdbcType=TIMESTAMP},
-      creation_date = #{creationDate,jdbcType=TIMESTAMP},
-      type = #{type,jdbcType=INTEGER}
-    where id = #{id,jdbcType=BIGINT}
-  </update>
+  
 </mapper>

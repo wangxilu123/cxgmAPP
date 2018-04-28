@@ -35,6 +35,8 @@ public class Coupon {
     private Integer shopId;
 
     private Long productCategoryId;
+    
+    private Long productId;
 
     private String introduction;
     
@@ -193,4 +195,12 @@ public class Coupon {
     public void setIntroduction(String introduction) {
         this.introduction = introduction == null ? null : introduction.trim();
     }
+
+	public Long getProductId() {
+		return productId;
+	}
+
+	public void setProductId(Long productId) {
+		this.productId = productId;
+	}
 }

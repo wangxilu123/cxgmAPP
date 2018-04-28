@@ -1,0 +1,116 @@
+<!doctype html>
+<html class="no-js">
+<head>
+<% include("admin_head.html",{title: '优惠券列表', loadListJS: true}){}%>
+</head>
+<body>
+  <div class="admin-content">
+    <div class="admin-content-body">
+      <div class="am-cf app-padding-title">
+        <div class="am-fl am-cf">
+          <strong class="am-text-primary am-text-lg">优惠券</strong> / <small>优惠券</small>
+        </div>
+      </div>
+      
+      <hr data-am-widget="divider" class="am-divider am-divider-dotted am-margin-0" />
+      
+      <form class="am-form" id="listForm" action="/coupon/list" method="post">
+      <div class="am-g app-padding-toolbar">
+        <div class="am-u-sm-7 am-u-md-4">
+          <div class="am-btn-toolbar app-padding-toolbar-item">
+            <div class="am-btn-group am-btn-group-sm">
+              <button type="button" class="am-btn am-btn-default" onclick="location.href='/coupon/add?product.shop=${admin.shopId!}';"><span class="am-icon-plus"></span> 新增</button>
+              <button type="button" class="am-btn am-btn-default" onclick="deleteAll('/coupon/delete');" id="deleteButton" disabled="disabled"><span class="am-icon-trash-o"></span> 删除</button>
+            </div>
+          </div>
+        </div>
+        <div class="am-u-sm-5 am-u-md-4 am-padding-0">
+          <div class="app-padding-toolbar-item">
+            <select name="property" data-am-selected="{btnWidth: '100%', btnSize: 'sm'}">
+              <option value="name"<%if(property! == "name"){%>selected="selected"<%}%>>名称</option>
+            </select>
+          </div>
+        </div>
+        
+        <div class="am-u-sm-12 am-show-sm-only am-margin-xs"></div>
+        
+        <div class="am-u-sm-12 am-u-md-4 am-padding-right-0">
+          <div class="am-input-group am-input-group-sm">
+            <input type="text" class="am-form-field" name="keyword" value="${keyword!}" />
+            <span class="am-input-group-btn">
+              <button id="searchButton" class="am-btn am-btn-default" type="button">搜索</button>
+            </span>
+          </div>
+        </div>
+      </div>
+      
+      <hr data-am-widget="divider" class="am-divider am-divider-dashed am-margin-0" />
+      
+      <div class="am-scrollable-horizontal">
+        <table class="am-table am-table-striped am-table-hover table-main am-text-nowrap am-margin-bottom-0">
+          <thead>
+            <tr>
+              <th><input type="checkbox" id="allCheck"></th>
+              <th>编号</th>
+              <th>名称</th>
+              <th>前缀</th>
+              <th>使用起始日期</th>
+              <th>使用结束日期</th>
+              <th>是否启用</th>
+              <th><div class="app-table-td-buttons-width-120">操作</div></th>
+            </tr>
+          </thead>
+          <tbody>
+            <%for(list in pager.list){%>
+            <tr id="listTr${listLP.index}">
+              <td><input type="checkbox" name="ids" value="${list.id}"></td>
+              <td>${listLP.index}</td>
+              <td><div class="am-text-truncate app-text-truncate-product-name">${list.name}</div></td>
+              <td>${list.prefix}</td>
+               <td>
+               ${list.beginDate,dateFormat="yyyy-MM-dd HH:mm:ss"}
+              </td>
+               <td>
+               ${list.endDate,dateFormat="yyyy-MM-dd HH:mm:ss"}
+              </td>
+              <td>
+                <%if(list.isEnabled == true){%>
+                  <i class="am-icon-check"></i>
+                <%}else{%>
+                  <i class="am-icon-close"></i>
+                <%}%>
+              </td>
+              <td>
+                <div class="am-btn-group am-btn-group-xs">
+                <button type="button" class="am-btn am-btn-default am-btn-xs am-text-secondary app-table-button-padding" onclick="location.href='/couponcode/add?type=0&id=${list.id}'">
+                    <span class="am-icon-pencil"> 生成虚拟优惠码</span>
+                  </button>
+                  <button type="button" class="am-btn am-btn-default am-btn-xs am-text-secondary app-table-button-padding" onclick="location.href='/couponcode/add?type=1&id=${list.id}'">
+                    <span class="am-icon-pencil"> 生成实体优惠码</span>
+                  </button>
+                  <button type="button" class="am-btn am-btn-default am-btn-xs am-text-secondary app-table-button-padding" onclick="location.href='/coupon/edit?id=${list.id}'">
+                    <span class="am-icon-pencil"> 编辑</span>
+                  </button>
+                  <button type="button" class="am-btn am-btn-default am-btn-xs am-text-danger app-table-button-padding" onclick="deleteOne('/coupon/delete?ids=${list.id}',${listLP.index})">
+                    <span class="am-icon-trash-o"> 删除</span>
+                  </button>
+                </div>
+              </td>
+            </tr>
+            <%}%>
+          </tbody>
+        </table>
+      </div>
+      <!-- 分页 -->
+      <%if (pager.list.~size > 0){%>
+      <hr data-am-widget="divider" class="am-divider am-divider-dashed am-margin-0" />    
+      <div class="am-margin-left am-text-xs"><% include("pager.html"){}%></div>
+      <%}else{%>
+      <h3 class="am-kai am-text-center am-margin-xs">没有找到任何记录!</h3>
+      <%}%>
+      </form>
+    </div>
+  </div>
+  <!-- content end -->
+</body>
+</html>
