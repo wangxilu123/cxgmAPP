@@ -11,12 +11,17 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.cxgm.common.DateKit;
+import com.cxgm.common.UUID;
 import com.cxgm.dao.CouponCodeMapper;
 import com.cxgm.dao.CouponMapper;
 import com.cxgm.domain.Coupon;
 import com.cxgm.domain.CouponCode;
 import com.cxgm.exception.TipException;
 
+/**
+ * @author Administrator
+ *
+ */
 @Service
 public class CouponService {
 
@@ -100,5 +105,35 @@ public class CouponService {
 		coupon.setShopId(shopId);
 		couponDao.update(coupon);
 	}
+	@Transactional
+	public void couponCodeInsert(Long couponid,Integer codesNumber,Integer type) {
+		Coupon coupon = couponDao.select(couponid);
+		for(int i=0;i<codesNumber;i++) {
+			CouponCode cc = new CouponCode();
+			cc.setCouponId(couponid);
+			cc.setType(type);
+			cc.setCode(UUID.generateCouponCode(32, coupon.getPrefix()));
+			cc.setStatus(null);
+			cc.setCreationDate(new Date());
+			couponCodeDao.insert(cc);
+		}
+	}
 	
+	/**
+	 * 查询某优惠券的指定条件优惠码的数量
+	 * @param couponId
+	 * @return
+	 */
+	public int findCouponCodeListCount(Long couponId,Integer status) {
+		Map<String,Object> map = new HashMap<>();
+		map.put("couponId", couponId);
+		map.put("status", status);
+		return couponCodeDao.findListCount(map);
+	}
+	
+	public int findCouponCodeDispatch(Long couponId) {
+		Map<String,Object> map = new HashMap<>();
+		map.put("couponId", couponId);
+		return couponCodeDao.findDispatchCount(map);
+	}
 }

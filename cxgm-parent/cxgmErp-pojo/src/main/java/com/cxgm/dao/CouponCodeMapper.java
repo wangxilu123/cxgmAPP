@@ -11,5 +11,6 @@ public interface CouponCodeMapper {
     CouponCode select(Long id);
     int update(CouponCode record);
     List<CouponCode> findCouponsWithParam(Map<String,Object> map);
-
+    int findListCount(Map<String,Object> map);
+    int findDispatchCount(Map<String,Object> map);
 }

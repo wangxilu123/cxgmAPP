@@ -43,6 +43,12 @@ public class Coupon {
     private Integer totalNumber;
     
     private Integer usedNumber;
+    
+    private Integer unusedNumber;
+    
+    private Integer dispatchNumber;
+    
+    private Integer overdueNumber;
 
     public Integer getTotalNumber() {
 		return totalNumber;
@@ -202,5 +208,29 @@ public class Coupon {
 
 	public void setProductId(Long productId) {
 		this.productId = productId;
+	}
+
+	public Integer getUnusedNumber() {
+		return unusedNumber;
+	}
+
+	public void setUnusedNumber(Integer unusedNumber) {
+		this.unusedNumber = unusedNumber;
+	}
+
+	public Integer getDispatchNumber() {
+		return dispatchNumber;
+	}
+
+	public void setDispatchNumber(Integer dispatchNumber) {
+		this.dispatchNumber = dispatchNumber;
+	}
+
+	public Integer getOverdueNumber() {
+		return overdueNumber;
+	}
+
+	public void setOverdueNumber(Integer overdueNumber) {
+		this.overdueNumber = overdueNumber;
 	}
 }

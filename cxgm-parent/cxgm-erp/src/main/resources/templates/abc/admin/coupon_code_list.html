@@ -16,7 +16,7 @@
   <div class="admin-content-body">
     <div class="am-cf app-padding-title">
       <div class="am-fl am-cf">
-        <strong class="am-text-primary am-text-lg">优惠码</strong> / <small>生成优惠码</small>
+        <strong class="am-text-primary am-text-lg">优惠码</strong> / <small>优惠码详情</small>
       </div>
     </div>
   
@@ -45,15 +45,38 @@
         </div>
       </div>
       <div class="am-form-group am-form-group-sm">
-        <label class="am-u-sm-4 am-u-md-3 am-text-right am-form-label">生成数量</label>
+        <label class="am-u-sm-4 am-u-md-3 am-text-right am-form-label">总数</label>
         <div class="am-u-sm-8 am-u-md-9">
-          <input type="number" class="am-form-field" name="coupon.codes"  placeholder="只允许输入正整数" min="0" max="10000" required />
+          <input type="text" class="am-form-field" name="coupon.totalNumber" value="${coupon.totalNumber!}" />
+        </div>
+      </div>
+      <div class="am-form-group am-form-group-sm">
+        <label class="am-u-sm-4 am-u-md-3 am-text-right am-form-label">已使用</label>
+        <div class="am-u-sm-8 am-u-md-9">
+          <input type="text" class="am-form-field" name="coupon.usedNumber" value="${coupon.usedNumber!}" />
+        </div>
+      </div>
+      <div class="am-form-group am-form-group-sm">
+        <label class="am-u-sm-4 am-u-md-3 am-text-right am-form-label">未使用</label>
+        <div class="am-u-sm-8 am-u-md-9">
+          <input type="text" class="am-form-field" name="coupon.unusedNumber" value="${coupon.unusedNumber!}" />
+        </div>
+      </div>
+       <div class="am-form-group am-form-group-sm">
+        <label class="am-u-sm-4 am-u-md-3 am-text-right am-form-label">被领取</label>
+        <div class="am-u-sm-8 am-u-md-9">
+          <input type="text" class="am-form-field" name="coupon.dispatchNumber" value="${coupon.dispatchNumber!}" />
+        </div>
+      </div>
+      <div class="am-form-group am-form-group-sm">
+        <label class="am-u-sm-4 am-u-md-3 am-text-right am-form-label">过期数量</label>
+        <div class="am-u-sm-8 am-u-md-9">
+          <input type="text" class="am-form-field" name="coupon.overdueNumber" value="${coupon.overdueNumber!}" />
         </div>
       </div>
       <hr data-am-widget="divider" class="am-divider am-divider-dashed" />
       <div class="am-form-group am-form-group-sm">
         <div class="am-u-sm-8 am-u-sm-offset-4 am-u-md-9 am-u-md-offset-3">
-          <button type="submit" class="am-btn am-btn-primary"><span class="am-icon-save">  保  存</span></button>
           <button type="button" class="am-btn am-btn-default" onclick="window.history.back(); return false;"><span class="am-icon-undo">  返  回</span></button>
         </div>
       </div>
