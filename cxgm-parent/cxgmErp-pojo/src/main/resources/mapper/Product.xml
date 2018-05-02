@@ -155,13 +155,13 @@
   
   <select id="findShopCategoryTwo" parameterType="map" resultMap="GenerallyCategoryQueryMap">
   	select product_category_two_id as id,product_category_two_name as name from product where 
-  	<include refid="categoryQueryMap" />
+  	1=1 <include refid="categoryQueryMap" />
  	GROUP BY product_category_two_id,product_category_two_name
   </select>
   
   <select id="findShopCategoryThird" parameterType="map" resultMap="GenerallyCategoryQueryMap">
   	select product_category_third_id as id,product_category_third_name as name from product where 
-  	<include refid="categoryQueryMap" />
+  	1=1 <include refid="categoryQueryMap" />
  	GROUP BY product_category_third_id,product_category_third_name
   </select>
   
@@ -230,7 +230,7 @@
       #{weekSalesDate,jdbcType=TIMESTAMP}, #{monthSalesDate,jdbcType=TIMESTAMP}, 
       #{originPlace,jdbcType=VARCHAR}, #{storageCondition,jdbcType=VARCHAR}, #{productCategoryId,jdbcType=BIGINT},#{productCategoryTwoId,jdbcType=BIGINT},
       #{productCategoryThirdId,jdbcType=BIGINT}, #{productCategoryName,jdbcType=VARCHAR},#{productCategoryTwoName,jdbcType=VARCHAR},#{productCategoryThirdName,jdbcType=VARCHAR},#{shopId,jdbcType=INTEGER},
-      #{createBy,jdbcType=VARCHAR}, #{creationDate,jdbcType=TIMESTAMP}, #{lastUpdatedBy,jdbcType=VARCHAR}, 
+      #{createBy,jdbcType=VARCHAR},NOW(), #{lastUpdatedBy,jdbcType=VARCHAR}, 
       #{lastUpdatedDate,jdbcType=TIMESTAMP}, #{deleteFlag,jdbcType=BIT}, #{brandName,jdbcType=VARCHAR}, 
       #{introduction,jdbcType=LONGVARCHAR})
   </insert>
@@ -379,9 +379,7 @@
       <if test="lastUpdatedBy != null">
         last_updated_by = #{lastUpdatedBy,jdbcType=VARCHAR},
       </if>
-      <if test="lastUpdatedDate != null">
-        last_updated_date = #{lastUpdatedDate,jdbcType=TIMESTAMP},
-      </if>
+        last_updated_date = NOW(),
       <if test="deleteFlag != null">
         delete_flag = #{deleteFlag,jdbcType=BIT},
       </if>

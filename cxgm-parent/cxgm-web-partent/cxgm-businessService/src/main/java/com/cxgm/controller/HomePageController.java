@@ -7,7 +7,7 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -37,7 +37,7 @@ public class HomePageController {
 	private HomePageService homePageService;
 
 	@ApiOperation(value = "根据门店ID查询商品一级分类", nickname = "根据门店ID查询商品一级分类")
-	@PostMapping("/findFirstCategory")
+	@GetMapping("/findFirstCategory")
 	public ResultDto<List<ShopCategory>> findFirstCategory(HttpServletRequest request, 
 			@RequestParam(value = "shopId", required = false) Integer shopId)
 			throws InterruptedException {
@@ -46,7 +46,7 @@ public class HomePageController {
 	}
 	
 	@ApiOperation(value = "根据门店ID和一级分类查询商品二级分类", nickname = "根据门店ID和一级分类查询商品二级分类")
-	@PostMapping("/findSecondCategory")
+	@GetMapping("/findSecondCategory")
 	public ResultDto<List<ShopCategory>> findSecondCategory(HttpServletRequest request, 
 			@RequestParam(value = "shopId", required = false) Integer shopId,
 			@RequestParam(value = "productCategoryId", required = false) Integer productCategoryId)
@@ -62,7 +62,7 @@ public class HomePageController {
         @ApiImplicitParam(name = "pageNum", value = "第几页，默认1", required = false, paramType = "query", dataType = "int"),
 		@ApiImplicitParam(name = "pageSize", value = "每页多少条，默认10", required = false, paramType = "query", dataType = "int"),
     })
-	@PostMapping("/findProductByCategory")
+	@GetMapping("/findProductByCategory")
 	public ResultDto<PageInfo<ProductTransfer>> findProductByPage(HttpServletRequest request,
 			@RequestParam(value = "shopId", required = false) Integer shopId,
             @RequestParam(value = "categoryId", required = false) Integer categoryId,
@@ -87,7 +87,7 @@ public class HomePageController {
         @ApiImplicitParam(name = "pageNum", value = "第几页，默认1", required = false, paramType = "query", dataType = "int"),
 		@ApiImplicitParam(name = "pageSize", value = "每页多少条，默认10", required = false, paramType = "query", dataType = "int"),
     })
-	@PostMapping("/findHotProduct")
+	@GetMapping("/findHotProduct")
 	public ResultDto<PageInfo<ProductTransfer>> findHotProduct(HttpServletRequest request,
 			@RequestParam(value = "shopId", required = false) Integer shopId,
             @RequestParam(value = "pageNum", defaultValue = "1", required = false) Integer pageNum,
@@ -110,7 +110,7 @@ public class HomePageController {
         @ApiImplicitParam(name = "pageNum", value = "第几页，默认1", required = false, paramType = "query", dataType = "int"),
 		@ApiImplicitParam(name = "pageSize", value = "每页多少条，默认10", required = false, paramType = "query", dataType = "int"),
     })
-	@PostMapping("/findNewProduct")
+	@GetMapping("/findNewProduct")
 	public ResultDto<PageInfo<ProductTransfer>> findNewProduct(HttpServletRequest request,
 			@RequestParam(value = "shopId", required = false) Integer shopId,
             @RequestParam(value = "pageNum", defaultValue = "1", required = false) Integer pageNum,
