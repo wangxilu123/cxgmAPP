@@ -64,10 +64,10 @@ public class ProductService {
         	if(productCategory.getGrade()==0) {
         		product.setProductCategoryId(productCategory.getId());
         		product.setProductCategoryName(productCategory.getName());
-        		product.setProductCategoryTwoId(productCategory.getId());
-        		product.setProductCategoryTwoName(productCategory.getName());
-        		product.setProductCategoryThirdId(productCategory.getId());
-        		product.setProductCategoryThirdName(productCategory.getName());
+//        		product.setProductCategoryTwoId(productCategory.getId());
+//        		product.setProductCategoryTwoName(productCategory.getName());
+//        		product.setProductCategoryThirdId(productCategory.getId());
+//        		product.setProductCategoryThirdName(productCategory.getName());
         	}
         	if(productCategory.getGrade()==1) {
         		ProductCategory pcy = productCategoryService.findById(productCategory.getParentId());
@@ -75,8 +75,8 @@ public class ProductService {
         		product.setProductCategoryName(pcy.getName());
         		product.setProductCategoryTwoId(productCategory.getId());
         		product.setProductCategoryTwoName(productCategory.getName());
-        		product.setProductCategoryThirdId(productCategory.getId());
-        		product.setProductCategoryThirdName(productCategory.getName());
+//        		product.setProductCategoryThirdId(productCategory.getId());
+//        		product.setProductCategoryThirdName(productCategory.getName());
         	}
         	if(productCategory.getGrade()==2) {
         		ProductCategory pc2 = productCategoryService.findById(productCategory.getParentId());
@@ -170,10 +170,10 @@ public class ProductService {
         	if(productCategory.getGrade()==0) {
         		product.setProductCategoryId(productCategory.getId());
         		product.setProductCategoryName(productCategory.getName());
-        		product.setProductCategoryTwoId(productCategory.getId());
-        		product.setProductCategoryTwoName(productCategory.getName());
-        		product.setProductCategoryThirdId(productCategory.getId());
-        		product.setProductCategoryThirdName(productCategory.getName());
+//        		product.setProductCategoryTwoId(productCategory.getId());
+//        		product.setProductCategoryTwoName(productCategory.getName());
+//        		product.setProductCategoryThirdId(productCategory.getId());
+//        		product.setProductCategoryThirdName(productCategory.getName());
         	}
         	if(productCategory.getGrade()==1) {
         		ProductCategory pcy = productCategoryService.findById(productCategory.getParentId());
@@ -181,8 +181,8 @@ public class ProductService {
         		product.setProductCategoryName(pcy.getName());
         		product.setProductCategoryTwoId(productCategory.getId());
         		product.setProductCategoryTwoName(productCategory.getName());
-        		product.setProductCategoryThirdId(productCategory.getId());
-        		product.setProductCategoryThirdName(productCategory.getName());
+//        		product.setProductCategoryThirdId(productCategory.getId());
+//        		product.setProductCategoryThirdName(productCategory.getName());
         	}
         	if(productCategory.getGrade()==2) {
         		ProductCategory pc2 = productCategoryService.findById(productCategory.getParentId());
