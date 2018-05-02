@@ -9,6 +9,7 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -18,10 +19,13 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.cxgm.common.PoiUtils;
 import com.cxgm.common.RSResult;
 import com.cxgm.domain.Admin;
 import com.cxgm.domain.Coupon;
+import com.cxgm.domain.CouponCode;
 import com.cxgm.domain.ProductCategory;
+import com.cxgm.service.CouponCodeService;
 import com.cxgm.service.CouponService;
 import com.cxgm.service.ProductCategoryService;
 import com.github.pagehelper.PageHelper;
@@ -34,6 +38,8 @@ public class CouponController {
 
 	@Autowired
 	CouponService couponService;
+	@Autowired
+	CouponCodeService couponCodeService;
 	@Autowired
 	ProductCategoryService productCategoryService;
 
@@ -209,5 +215,15 @@ public class CouponController {
 		coupon.setOverdueNumber(overdueNumber);
 		request.setAttribute("coupon", coupon);
 		return new ModelAndView("admin/coupon_code_list");
+	}
+	
+	@RequestMapping(value = "/coupon/export", method = RequestMethod.GET)
+	public ResponseEntity<byte[]> exportCouponCode(HttpServletRequest request) {
+		String id = request.getParameter("id");
+		Map<String,Object> map = new HashMap<>();
+		map.put("couponId", id);
+		map.put("type", 1);
+		List<CouponCode> emps = couponCodeService.findCouponsWithParam(map);
+		return PoiUtils.exportCoupon2Excel(emps);
 	}
 }

@@ -131,6 +131,12 @@ public class CouponService {
 		return couponCodeDao.findListCount(map);
 	}
 	
+	
+	/**
+	 * 查询被领取的优惠码
+	 * @param couponId
+	 * @return
+	 */
 	public int findCouponCodeDispatch(Long couponId) {
 		Map<String,Object> map = new HashMap<>();
 		map.put("couponId", couponId);
