@@ -45,25 +45,25 @@ public class UserServiceImpl implements UserService {
 		if(userList.size()!=0){
 			return new ResultDto<>(203,"该用户已存在，请重试！");
 		}else{
-			// 校验短信验证码
+			/*// 校验短信验证码
 			String code = (String) redisService.get(register.getUserAccount());
 
 			if ("".equals(code) == false && code.equals(register.getMobileValidCode())) {
 				return new ResultDto<>(204,"验证码有误请重新输入！");
 			} else {
 				// 删除键值对
-				redisService.remove(register.getUserAccount());
+				redisService.remove(register.getUserAccount());*/
 				
 				AppUser user = new AppUser();
 
 				user.setMobile(register.getUserAccount());
-				user.setUserName("");
+				user.setUserName(register.getUserAccount());
 				user.setUserPwd(register.getPassword());
 				
 				userMapper.insert(user);
 				
 				return  new ResultDto<>(200,"注册成功！",user.getId());
-			}
+			/*}*/
 		}
 	}
 
@@ -88,26 +88,28 @@ public class UserServiceImpl implements UserService {
 				
 				List<UserLogin> userLogins = userLoginMapper.selectByExample(example1);
 				
-				UserLogin userLogin = userLogins.get(0);
+				
 				
 				String newToken = TokenUtils.createToken(loginUser);
 				if (userLogins.size() != 0){
+					UserLogin userLogin = userLogins.get(0);
+					
 					userLogin.setToken(newToken);
 					userLogin.setLastLogin(new Date());
 					//token保鲜
 					userLoginMapper.updateByPrimaryKey(userLogin);
 				}else{
-					userLogin = new UserLogin();
+					UserLogin userLogin= new UserLogin();
 					userLogin.setToken(newToken);
 					userLogin.setUserAccount(loginUser.getUserAccount());
 					userLogin.setLastLogin(new Date());
 					
 					userLoginMapper.insert(userLogin);
 				}
-
+				appUser.setToken(newToken);
 				return new ResultDto<>(200, "登录成功！", appUser);
 			} else {
-				return new ResultDto<>(202, "登录密码错误！", appUser);
+				return new ResultDto<>(202, "登录密码错误！");
 			}
 
 		} else {

@@ -1,11 +1,9 @@
 package com.cxgm.controller;
 
-import java.util.List;
-
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -33,13 +31,14 @@ public class CouponController {
 
 	@Autowired
 	private CouponService couponService;
+	
 
 	@ApiOperation(value = "根据用户查询优惠券", nickname = "根据用户查询优惠券")
 	@ApiImplicitParams({
         @ApiImplicitParam(name = "pageNum", value = "第几页，默认1", required = false, paramType = "query", dataType = "int"),
 		@ApiImplicitParam(name = "pageSize", value = "每页多少条，默认10", required = false, paramType = "query", dataType = "int")
     })
-	@PostMapping("/findCoupons")
+	@GetMapping("/findCoupons")
 	public ResultDto<PageInfo<CouponDetail>> findFirstCategory(HttpServletRequest request,
 			@RequestParam(value = "pageNum", defaultValue = "1", required = false) Integer pageNum,
 			@RequestParam(value = "pageSize", defaultValue = "10", required = false) Integer pageSize){

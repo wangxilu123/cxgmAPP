@@ -2,6 +2,7 @@ package com.cxgm.common;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.cxgm.dao.UserLoginMapper;
 import com.cxgm.dao.UserMapper;
@@ -15,6 +16,7 @@ import com.cxgm.domain.UserLoginExample;
  * User: CQL
  *
  */
+@Service
 public class CheckToken {
     @Autowired
     private UserMapper userMapper;

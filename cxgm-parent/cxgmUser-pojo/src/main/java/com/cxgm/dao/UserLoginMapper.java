@@ -16,6 +16,8 @@ public interface UserLoginMapper {
 
     List<UserLogin> selectByExample(UserLoginExample example);
     
+    UserLogin findByToken(String token);
+    
     int updateByPrimaryKey(UserLogin record);
 
 }

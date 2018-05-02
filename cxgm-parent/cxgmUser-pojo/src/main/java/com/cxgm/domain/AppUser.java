@@ -25,5 +25,8 @@ public class AppUser implements Serializable{
 
     @ApiModelProperty(name = "headUrl",value = "头像")
     private String headUrl;
+    
+    @ApiModelProperty(name = "token",value = "用户token")
+    private String token;
 
 }
