@@ -26,7 +26,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
-import com.cxgm.common.CheckToken;
 import com.cxgm.common.CodeUtil;
 import com.cxgm.common.DateUtil;
 import com.cxgm.common.HttpUtil;
@@ -36,6 +35,7 @@ import com.cxgm.common.XmltoJsonUtil;
 import com.cxgm.domain.AppUser;
 import com.cxgm.domain.Order;
 import com.cxgm.service.OrderService;
+import com.cxgm.service.impl.CheckToken;
 
 import io.swagger.annotations.ApiOperation;
 
@@ -52,6 +52,9 @@ public class PaymentController {
 	
 	@Autowired
     private OrderService orderService;
+	
+	@Autowired
+	private CheckToken checkToken;
 
 	// 微信统一下单接口路径
 	private static final String UNIFORMORDER = "https://api.mch.weixin.qq.com/pay/unifiedorder";
@@ -77,7 +80,7 @@ public class PaymentController {
 		
 		ResultDto result = new ResultDto();// 返回数据结果集合
 		
-        AppUser appUser = new CheckToken().check(request.getHeader("token"));
+        AppUser appUser = checkToken.check(request.getHeader("token"));
     	
     	if(appUser!=null){
     		

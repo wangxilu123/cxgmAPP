@@ -7,6 +7,8 @@ import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
 
 import com.cxgm.dao.CouponCodeMapper;
+import com.cxgm.dao.UserLoginMapper;
+import com.cxgm.dao.UserMapper;
 import com.cxgm.domain.CouponDetail;
 import com.cxgm.service.CouponService;
 import com.github.pagehelper.PageHelper;
@@ -18,6 +20,12 @@ public class CouponServiceImpl implements CouponService {
 
 	@Autowired
 	private CouponCodeMapper couponCodeMapper;
+	
+	@Autowired
+    private UserMapper userMapper;
+    
+    @Autowired
+    private UserLoginMapper userLoginMapper;
 
 	@Override
 	public PageInfo<CouponDetail> findCouponByUserId(Integer userId,Integer pageNum,Integer pageSize) {

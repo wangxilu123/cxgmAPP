@@ -18,7 +18,7 @@ public class MyBatisMapperScannerConfig {
         MapperScannerConfigurer mapperScannerConfigurer = new MapperScannerConfigurer();
         mapperScannerConfigurer.setSqlSessionFactoryBeanName("sqlSessionFactory");
         //这里的BasePackage 不能写cn.com.gomefinance,估计跟spring 的扫描冲突,会实例化两个service,应该需要重构目录
-        mapperScannerConfigurer.setBasePackage("com.cxgm.*.mapper,;com.cxgm.dao,;" );
+        mapperScannerConfigurer.setBasePackage("com.cxgm.*.mapper,;com.cxgm.dao,;com.cxgm.common,;" );
         //        Properties properties = new Properties();
         //        properties.setProperty("mappers", Mapper.class.getName());
         //        properties.setProperty("notEmpty", "false");

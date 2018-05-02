@@ -1,7 +1,8 @@
-package com.cxgm.common;
+package com.cxgm.service.impl;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
 
 import com.cxgm.dao.UserLoginMapper;
@@ -16,6 +17,7 @@ import com.cxgm.domain.UserLoginExample;
  * User: CQL
  *
  */
+@Primary
 @Service
 public class CheckToken {
     @Autowired
@@ -29,7 +31,7 @@ public class CheckToken {
         //根据Token查询用户的信息
     	UserLoginExample example = new UserLoginExample();
 		
-		example.createCriteria().andUserAccountEqualTo(token);
+		example.createCriteria().andTokenEqualTo(token);
     	
     	List<UserLogin> userLogins = userLoginMapper.selectByExample(example);
     	if(userLogins.size()!=0){

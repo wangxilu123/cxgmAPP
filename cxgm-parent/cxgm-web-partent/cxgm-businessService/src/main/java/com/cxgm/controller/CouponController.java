@@ -8,11 +8,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.cxgm.common.CheckToken;
 import com.cxgm.common.ResultDto;
 import com.cxgm.domain.AppUser;
 import com.cxgm.domain.CouponDetail;
 import com.cxgm.service.CouponService;
+import com.cxgm.service.impl.CheckToken;
 import com.github.pagehelper.PageInfo;
 
 import io.swagger.annotations.Api;
@@ -32,6 +32,9 @@ public class CouponController {
 	@Autowired
 	private CouponService couponService;
 	
+	@Autowired
+	private CheckToken checkToken;
+	
 
 	@ApiOperation(value = "根据用户查询优惠券", nickname = "根据用户查询优惠券")
 	@ApiImplicitParams({
@@ -43,7 +46,7 @@ public class CouponController {
 			@RequestParam(value = "pageNum", defaultValue = "1", required = false) Integer pageNum,
 			@RequestParam(value = "pageSize", defaultValue = "10", required = false) Integer pageSize){
 		
-		AppUser appUser = new CheckToken().check(request.getHeader("token"));
+		AppUser appUser = checkToken.check(request.getHeader("token"));
 
 		if (appUser != null) {
 

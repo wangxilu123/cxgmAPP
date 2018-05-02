@@ -12,11 +12,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.cxgm.common.CheckToken;
 import com.cxgm.common.ResultDto;
 import com.cxgm.domain.AppUser;
 import com.cxgm.domain.ShopCart;
 import com.cxgm.service.ShopCartService;
+import com.cxgm.service.impl.CheckToken;
 import com.github.pagehelper.PageInfo;
 
 import io.swagger.annotations.Api;
@@ -35,13 +35,16 @@ public class ShopCartController {
 
 	@Autowired
 	private ShopCartService shopCartService;
+	
+	@Autowired
+	private CheckToken checkToken;
 
 	@ApiOperation(value = "商品添加到购物车接口", nickname = "商品添加到购物车接口")
 	@ApiImplicitParam(name = "shopCart", value = "购物车实体shopCart", required = true, dataType = "ShopCart")
 	@PostMapping("/addCart")
 	public ResultDto<Integer> addOrder(HttpServletRequest request, @Valid @RequestBody ShopCart shopCart) {
 
-		AppUser appUser = new CheckToken().check(request.getHeader("token"));
+		AppUser appUser = checkToken.check(request.getHeader("token"));
 
 		if (appUser != null) {
 			
@@ -58,7 +61,7 @@ public class ShopCartController {
 	@PostMapping("/updateCart")
 	public ResultDto<Integer> updateCart(HttpServletRequest request, @Valid @RequestBody ShopCart shopCart) {
 
-		AppUser appUser = new CheckToken().check(request.getHeader("token"));
+		AppUser appUser = checkToken.check(request.getHeader("token"));
 
 		if (appUser != null) {
 			

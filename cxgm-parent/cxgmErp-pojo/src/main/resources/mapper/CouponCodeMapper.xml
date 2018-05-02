@@ -104,7 +104,7 @@
     where id = #{id,jdbcType=BIGINT}
   </update>
   
-  <select id="findCouponsByUserId" parameterType="java.lang.Long" resultType="com.cxgm.domain.CouponDetail">
+  <select id="findCouponsByUserId" parameterType="java.lang.Integer" resultType="com.cxgm.domain.CouponDetail">
     select cu.`status`,co.`name`,co.introduction,co.begin_date as beginDate,co.end_date as endDate,co.product_category_id as categoryId,co.product_id as productId
     from coupon_code as cu left join coupon as co on cu.coupon_id=co.id where cu.user_id =#{userId,jdbcType=BIGINT}
   </select>
