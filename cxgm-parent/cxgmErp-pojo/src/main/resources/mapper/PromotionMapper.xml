@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cxgm.dao.PromotionMapper">
+  <resultMap id="BaseResultMap" type="com.cxgm.domain.Promotion">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="title" jdbcType="VARCHAR" property="title" />
+    <result column="begin_date" jdbcType="TIMESTAMP" property="beginDate" />
+    <result column="end_date" jdbcType="TIMESTAMP" property="endDate" />
+    <result column="minimum_quantity" jdbcType="INTEGER" property="minimumQuantity" />
+    <result column="maximum_quantity" jdbcType="INTEGER" property="maximumQuantity" />
+    <result column="minimum_price" jdbcType="DECIMAL" property="minimumPrice" />
+    <result column="maximum_price" jdbcType="DECIMAL" property="maximumPrice" />
+    <result column="price_expression" jdbcType="VARCHAR" property="priceExpression" />
+    <result column="is_free_shipping" jdbcType="BIT" property="isFreeShipping" />
+    <result column="is_coupon_allowed" jdbcType="BIT" property="isCouponAllowed" />
+    <result column="shop_id" jdbcType="INTEGER" property="shopId" />
+    <result column="orders" jdbcType="INTEGER" property="orders" />
+    <result column="creation_date" jdbcType="TIMESTAMP" property="creationDate" />
+  </resultMap>
+  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.cxgm.domain.Promotion">
+    <result column="introduction" jdbcType="LONGVARCHAR" property="introduction" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, name, title, begin_date, end_date, minimum_quantity, maximum_quantity, minimum_price, 
+    maximum_price, price_expression, is_free_shipping, is_coupon_allowed, shop_id, orders, creation_date
+  </sql>
+  <sql id="Blob_Column_List">
+    introduction
+  </sql>
+  
+  <sql id="queryMap">
+		<if test="shopId !=null and shopId != ''">
+    		and shop_id=#{shopId,jdbcType=INTEGER}
+		</if>
+		<if test="title !=null and title != ''">
+    		and title  like "%"#{title,jdbcType=VARCHAR}"%"
+		</if>
+		<if test="name !=null and name != ''">
+    		and name  like "%"#{name,jdbcType=VARCHAR}"%"
+		</if>
+	</sql>
+	
+   <select id="findPromotionsWithParam" parameterType="map" resultMap="ResultMapWithBLOBs">
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from promotion
+    where 1=1
+    <include refid="queryMap" />
+  </select>
+  <select id="select" parameterType="java.lang.Long" resultMap="ResultMapWithBLOBs">
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from promotion
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="delete" parameterType="java.lang.Long">
+    delete from promotion
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.cxgm.domain.Promotion">
+    insert into promotion (id, name, title, 
+      begin_date, end_date, minimum_quantity, 
+      maximum_quantity, minimum_price, maximum_price, 
+      price_expression, is_free_shipping, is_coupon_allowed, 
+      orders, creation_date, introduction, shop_id
+      )
+    values (#{id,jdbcType=BIGINT}, #{name,jdbcType=VARCHAR}, #{title,jdbcType=VARCHAR}, 
+      #{beginDate,jdbcType=TIMESTAMP}, #{endDate,jdbcType=TIMESTAMP}, #{minimumQuantity,jdbcType=INTEGER}, 
+      #{maximumQuantity,jdbcType=INTEGER}, #{minimumPrice,jdbcType=DECIMAL}, #{maximumPrice,jdbcType=DECIMAL}, 
+      #{priceExpression,jdbcType=VARCHAR}, #{isFreeShipping,jdbcType=BIT}, #{isCouponAllowed,jdbcType=BIT}, 
+      #{orders,jdbcType=INTEGER}, #{creationDate,jdbcType=TIMESTAMP}, #{introduction,jdbcType=LONGVARCHAR},#{shopId,jdbcType=INTEGER}
+      )
+  </insert>
+  
+  <update id="update" parameterType="com.cxgm.domain.Promotion">
+    update promotion
+    <set>
+      <if test="name != null">
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="title != null">
+        title = #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="beginDate != null">
+        begin_date = #{beginDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="endDate != null">
+        end_date = #{endDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="minimumQuantity != null">
+        minimum_quantity = #{minimumQuantity,jdbcType=INTEGER},
+      </if>
+      <if test="maximumQuantity != null">
+        maximum_quantity = #{maximumQuantity,jdbcType=INTEGER},
+      </if>
+      <if test="minimumPrice != null">
+        minimum_price = #{minimumPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="maximumPrice != null">
+        maximum_price = #{maximumPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="priceExpression != null">
+        price_expression = #{priceExpression,jdbcType=VARCHAR},
+      </if>
+      <if test="isFreeShipping != null">
+        is_free_shipping = #{isFreeShipping,jdbcType=BIT},
+      </if>
+      <if test="isCouponAllowed != null">
+        is_coupon_allowed = #{isCouponAllowed,jdbcType=BIT},
+      </if>
+       <if test="shopId != null">
+        shop_id = #{shopId,jdbcType=INTEGER},
+      </if>
+      <if test="orders != null">
+        orders = #{orders,jdbcType=INTEGER},
+      </if>
+      <if test="creationDate != null">
+        creation_date = #{creationDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="introduction != null">
+        introduction = #{introduction,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

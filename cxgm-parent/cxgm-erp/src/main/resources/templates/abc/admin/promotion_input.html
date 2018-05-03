@@ -1,0 +1,125 @@
+<!doctype html>
+<html class="no-js">
+<head>
+<% include("admin_head.html",{title: '添加/编辑促销活动', loadUE: true, validatorJS: true, livequeryJS: true,WdateJS: true}){}%>
+<%
+var isAdd = false;
+var isEdit = false;
+if(isEmpty(promotion.id)){
+  isAdd = true;
+}else{
+  isEdit = true;
+}%>
+</head>
+<body>
+<!-- content start -->
+<div class="admin-content">
+  <div class="admin-content-body">
+    <div class="am-cf app-padding-title">
+      <div class="am-fl am-cf">
+        <strong class="am-text-primary am-text-lg">促销活动管理</strong> / <small><%if(isAdd){%>添加促销活动<%}else{%>编辑促销活动<%}%></small>
+      </div>
+    </div>
+
+    <hr data-am-widget="divider" class="am-divider am-divider-dashed am-margin-0" />
+    
+    <form class="validator-form" action="<%if (isAdd){%>/promotion/save<%}else{%>/promotion/update<%}%>" enctype="multipart/form-data" method="post">
+    <input type="hidden" name="promotion.id" value="${promotion.id!}" />
+    <input type="hidden" name="promotion.shop" value="${shopId!}" />
+    <div class="am-tabs am-margin" data-am-tabs="{noSwipe: 1}" id="doc-my-tabs">
+      <ul class="am-tabs-nav am-nav am-nav-tabs">
+        <li class="am-active"><a href="#tab1">基本信息</a></li>
+        <li><a href="#tab3">介绍</a></li>
+      </ul>
+
+      <div class="am-tabs-bd am-form am-tabs-bd-ofv">
+        <div class="am-tab-panel am-fade am-in am-active am-form-horizontal" id="tab1">
+          <div class="am-form-group am-form-group-sm">
+            <label class="am-u-sm-4 am-u-md-3 am-text-right am-form-label">名称</label>
+            <div class="am-u-sm-8 am-u-md-9">
+              <input type="text" class="am-form-field" name="promotion.name" value="${promotion.name!}" required />
+            </div>
+          </div>
+          <div class="am-form-group am-form-group-sm">
+            <label class="am-u-sm-4 am-u-md-3 am-text-right am-form-label">标题</label>
+            <div class="am-u-sm-8 am-u-md-9">
+              <input type="text" class="am-form-field" name="promotion.title" value="${promotion.title!}" />
+            </div>
+          </div>
+           <div class="am-form-group am-form-group-sm">
+            <label class="am-u-sm-4 am-u-md-3 am-text-right am-form-label">使用起始日期</label>
+            <div class="am-u-sm-8 am-u-md-9">
+              <input type="text" class="am-form-field Wdate"  id="startDate" onfocus="WdatePicker({ dateFmt:'yyyy-MM-dd HH:mm',maxDate:'#F{$dp.$D(\'endDate\')}'})" name="promotion.beginDate" value="${promotion.beginDate!,dateFormat='yyyy-MM-dd HH:mm'}" required />
+            </div>
+          </div>
+          <div class="am-form-group am-form-group-sm">
+            <label class="am-u-sm-4 am-u-md-3 am-text-right am-form-label">使用结束日期</label>
+            <div class="am-u-sm-8 am-u-md-9">
+              <input type="text" class="am-form-field Wdate" id="endDate" onfocus="WdatePicker({ dateFmt:'yyyy-MM-dd HH:mm',minDate:'#F{$dp.$D(\'startDate\')}',maxDate:'2120-10-01'})" name="promotion.endDate" value="${promotion.endDate!,dateFormat='yyyy-MM-dd HH:mm'}"  />
+            </div>
+          </div>
+          
+          <div class="am-form-group am-form-group-sm">
+            <label class="am-u-sm-4 am-u-md-3 am-text-right am-form-label">赠送优惠券</label>
+            <div class="am-u-sm-8 am-u-md-9">
+		             <%for(list in allCoupon){%>
+		             <label class="am-checkbox-inline">
+		                <input type="checkbox" name="couponIds" class="am-input-sm" value="${list.id!}"
+					    <% if(isEdit){
+						  var resourceList = promotion.couponList;
+						  for(var i = 0; i < resourceList.~size; i++){
+						    if ((strutil.contain(resourceList[i].id+'',list.id+'')) && (strutil.length(resourceList[i].id+'') == strutil.length(list.id+''))){%> checked="checked"
+		                <%}}}%>/>
+						${list.name!}
+					  </label>
+		             <%}%>
+        	</div>
+          </div>
+          <div class="am-form-group am-form-group-sm">
+            <label class="am-u-sm-4 am-u-md-3 am-text-right am-form-label">价格运算表达式</label>
+            <div class="am-u-sm-8 am-u-md-9">
+              <input type="text" class="am-form-field" name="promotion.priceExpression" value="${promotion.priceExpression!}" required />
+            </div>
+          </div>
+          
+           <div class="am-form-group am-form-group-sm">
+            <label class="am-u-sm-4 am-u-md-3 am-text-right am-form-label">设置</label>
+            <div class="am-u-sm-8 am-u-md-9">
+            <label class="am-checkbox-inline">
+            <input type="checkbox" class="am-input-sm" name="promotion.isCouponAllowed" value="${promotion.isCouponAllowed!true}" 
+            <%if(isEdit){%>
+            <% if(promotion.isCouponAllowed!){%>
+             checked="checked"
+			<%}}%>/>
+			是否允许使用优惠券
+			</label>
+            </div>
+          </div>
+         </div>
+        <div class="am-tab-panel am-fade" id="tab3">
+          <div class="am-form-group am-form-group-sm">
+            <script id="editor" name="promotion.introduction" type="text/plain">
+              ${promotion.introduction!}
+            </script>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="am-margin">
+      <button type="submit" class="am-btn am-btn-primary"> 保  存 </button>
+      <button type="button" class="am-btn am-btn-default" onclick="window.history.back(); return false;"> 返  回 </button>
+    </div>
+    </form>
+  </div>
+</div>
+<!-- content end -->
+<script>
+  $().ready(function() {
+    
+    $('#doc-my-tabs').find('a').on('opened.tabs.amui', function(e) {
+      $('div.am-tab-panel').removeAttr("style");
+    })
+  });
+</script>
+</body>
+</html>

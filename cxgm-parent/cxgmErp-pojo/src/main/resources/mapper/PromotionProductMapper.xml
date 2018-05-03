@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cxgm.dao.PromotionProductMapper">
+  <resultMap id="BaseResultMap" type="com.cxgm.domain.PromotionProduct">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="promotions" jdbcType="BIGINT" property="promotions" />
+    <result column="products" jdbcType="BIGINT" property="products" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, promotions, products
+  </sql>
+  <select id="select" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from promotion_product
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="delete" parameterType="java.lang.Long">
+    delete from promotion_product
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.cxgm.domain.PromotionProduct">
+    insert into promotion_product (id, promotions, products
+      )
+    values (#{id,jdbcType=BIGINT}, #{promotions,jdbcType=BIGINT}, #{products,jdbcType=BIGINT}
+      )
+  </insert>
+ 
+  <update id="update" parameterType="com.cxgm.domain.PromotionProduct">
+    update promotion_product
+    <set>
+      <if test="promotions != null">
+        promotions = #{promotions,jdbcType=BIGINT},
+      </if>
+      <if test="products != null">
+        products = #{products,jdbcType=BIGINT},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>
