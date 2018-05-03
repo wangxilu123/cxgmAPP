@@ -105,8 +105,13 @@
   </update>
   
   <select id="findCouponsByUserId" parameterType="java.lang.Integer" resultType="com.cxgm.domain.CouponDetail">
-    select cu.`status`,co.`name`,co.introduction,co.begin_date as beginDate,co.end_date as endDate,co.product_category_id as categoryId,co.product_id as productId
+    select cu.id as codeId,cu.`status`,co.`name`,co.introduction,co.begin_date as beginDate,co.end_date as endDate,co.product_category_id as categoryId,co.product_id as productId
     from coupon_code as cu left join coupon as co on cu.coupon_id=co.id where cu.user_id =#{userId,jdbcType=BIGINT}
+  </select>
+  
+  <select id="findCouponsByCode" parameterType="java.lang.String" resultType="com.cxgm.domain.CouponDetail">
+    select cu.id as codeId,cu.`status`,co.`name`,co.introduction,co.begin_date as beginDate,co.end_date as endDate,co.product_category_id as categoryId,co.product_id as productId
+    from coupon_code as cu left join coupon as co on cu.coupon_id=co.id where cu.code =#{code,jdbcType=VARCHAR} and cu.user_id is null
   </select>
   
 </mapper>

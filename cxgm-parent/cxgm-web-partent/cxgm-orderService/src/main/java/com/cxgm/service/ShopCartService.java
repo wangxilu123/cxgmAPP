@@ -9,7 +9,7 @@ public interface ShopCartService {
 	
 	Integer updateShopCart(ShopCart shopCart);
 	
-    Integer deleteShopCart(Integer shopCartId,Integer userId);
+    Integer deleteShopCart(String shopCartIds,Integer userId);
     
     PageInfo<ShopCart> shopCartList(Integer pageNum, Integer pageSize,Integer userId);
 }

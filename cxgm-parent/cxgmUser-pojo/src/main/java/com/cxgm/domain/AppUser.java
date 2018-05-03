@@ -1,6 +1,9 @@
 package com.cxgm.domain;
 
 import java.io.Serializable;
+import java.util.Date;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -28,5 +31,9 @@ public class AppUser implements Serializable{
     
     @ApiModelProperty(name = "token",value = "用户token")
     private String token;
+    
+    @ApiModelProperty(name = "createTime",value = "创建时间")
+	@JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
+    private Date createTime;
 
 }

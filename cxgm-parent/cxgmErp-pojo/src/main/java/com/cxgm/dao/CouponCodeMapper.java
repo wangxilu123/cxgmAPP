@@ -14,6 +14,8 @@ public interface CouponCodeMapper {
     List<CouponCode> findCouponsWithParam(Map<String,Object> map);
     
     List<CouponDetail> findCouponsByUserId(Integer userId);
+    
+    CouponDetail findCouponsByCode(String code);
 
     int findListCount(Map<String,Object> map);
     int findDispatchCount(Map<String,Object> map);

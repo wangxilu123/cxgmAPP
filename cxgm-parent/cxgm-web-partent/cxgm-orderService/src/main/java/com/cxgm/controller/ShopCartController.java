@@ -48,6 +48,7 @@ public class ShopCartController {
 
 		if (appUser != null) {
 			
+			shopCart.setUserId(appUser.getId());
 			Integer result = shopCartService.addShopCart(shopCart);
 			
 			return new ResultDto<>(200, "添加成功！", result);
@@ -83,7 +84,7 @@ public class ShopCartController {
 			@RequestParam(value = "pageNum", defaultValue = "1", required = false) Integer pageNum,
 			@RequestParam(value = "pageSize", defaultValue = "10", required = false) Integer pageSize) {
 
-		AppUser appUser = new CheckToken().check(request.getHeader("token"));
+		AppUser appUser = checkToken.check(request.getHeader("token"));
 
 		if (appUser != null) {
 
@@ -99,13 +100,13 @@ public class ShopCartController {
 	@ApiImplicitParam(name = "shopCartId", value = "购物车商品ID", required = true, dataType = "Integer")
 	@PostMapping("/deleteShopCart")
 	public ResultDto<Integer> deleteOrder(HttpServletRequest request,
-			@RequestParam(value = "shopCartId", required = false) Integer shopCartId) {
+			@RequestParam(value = "shopCartIds", required = false) String shopCartIds) {
 
-		AppUser appUser = new CheckToken().check(request.getHeader("token"));
+		AppUser appUser = checkToken.check(request.getHeader("token"));
 
 		if (appUser != null) {
 
-			Integer result = shopCartService.deleteShopCart(shopCartId, appUser.getId());
+			Integer result = shopCartService.deleteShopCart(shopCartIds, appUser.getId());
 
 			return new ResultDto<>(200, "删除成功！", result);
 		} else {

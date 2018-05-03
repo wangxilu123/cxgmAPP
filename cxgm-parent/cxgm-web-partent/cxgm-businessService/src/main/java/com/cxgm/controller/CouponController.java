@@ -57,4 +57,25 @@ public class CouponController {
 			return new ResultDto<>(403, "token失效请重新登录！");
 		}
 	}
+	
+	@ApiOperation(value = "优惠券兑换", nickname = "优惠券兑换")
+	@ApiImplicitParams({
+        @ApiImplicitParam(name = "couponCode", value = "兑换码", required = false, paramType = "query", dataType = "string"),
+    })
+	@GetMapping("/exchangeCoupons")
+	public ResultDto<CouponDetail> exchangeCoupons(HttpServletRequest request,
+			@RequestParam(value = "couponCode", required = false) String couponCode){
+		
+		AppUser appUser = checkToken.check(request.getHeader("token"));
+
+		if (appUser != null) {
+
+			CouponDetail result = couponService.exchangeCoupons(appUser.getId(), couponCode);
+
+			return new ResultDto<>(200, "查询成功！", result);
+		} else {
+			return new ResultDto<>(403, "token失效请重新登录！");
+		}
+	}
+	
 }

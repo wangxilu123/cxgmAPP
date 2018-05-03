@@ -7,6 +7,7 @@
     <result column="user_pwd" jdbcType="VARCHAR" property="userPwd" />
     <result column="mobile" jdbcType="VARCHAR" property="mobile" />
     <result column="head_url" jdbcType="VARCHAR" property="headUrl" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
   </resultMap>
   <sql id="Example_Where_Clause">
     <where>
@@ -67,7 +68,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    id, user_name, user_pwd, mobile, head_url
+    id, user_name, user_pwd, mobile, head_url,create_time
   </sql>
   <select id="selectByExample" parameterType="com.cxgm.domain.AppUserExample" resultMap="BaseResultMap">
     select
@@ -91,9 +92,9 @@
   </delete>
   <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.cxgm.domain.AppUser" useGeneratedKeys="true">
     insert into app_user (user_name, user_pwd, mobile, 
-      head_url)
+      head_url,create_time)
     values (#{userName,jdbcType=VARCHAR}, #{userPwd,jdbcType=VARCHAR}, #{mobile,jdbcType=VARCHAR}, 
-      #{headUrl,jdbcType=VARCHAR})
+      #{headUrl,jdbcType=VARCHAR},NOW())
   </insert>
   <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="com.cxgm.domain.AppUser" useGeneratedKeys="true">
     insert into app_user
@@ -110,6 +111,9 @@
       <if test="headUrl != null">
         head_url,
       </if>
+       <if test="createTime != null">
+        create_time,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="userName != null">
@@ -123,6 +127,9 @@
       </if>
       <if test="headUrl != null">
         #{headUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
       </if>
     </trim>
   </insert>
@@ -150,6 +157,9 @@
       <if test="record.headUrl != null">
         head_url = #{record.headUrl,jdbcType=VARCHAR},
       </if>
+      <if test="record.createTime != null">
+        create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
     </set>
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
@@ -161,7 +171,8 @@
       user_name = #{record.userName,jdbcType=VARCHAR},
       user_pwd = #{record.userPwd,jdbcType=VARCHAR},
       mobile = #{record.mobile,jdbcType=VARCHAR},
-      head_url = #{record.headUrl,jdbcType=VARCHAR}
+      head_url = #{record.headUrl,jdbcType=VARCHAR},
+      create_time = #{record.createTime,jdbcType=TIMESTAMP}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -172,7 +183,8 @@
     set user_name = #{userName,jdbcType=VARCHAR},
       user_pwd = #{userPwd,jdbcType=VARCHAR},
       mobile = #{mobile,jdbcType=VARCHAR},
-      head_url = #{headUrl,jdbcType=VARCHAR}
+      head_url = #{headUrl,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=INTEGER}
   </update>
 </mapper>

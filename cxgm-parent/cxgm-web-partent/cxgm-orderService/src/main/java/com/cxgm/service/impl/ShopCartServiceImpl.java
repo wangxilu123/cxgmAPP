@@ -3,6 +3,7 @@ package com.cxgm.service.impl;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
 
 import com.cxgm.dao.ShopCartMapper;
@@ -12,6 +13,7 @@ import com.cxgm.service.ShopCartService;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 
+@Primary
 @Service
 public class ShopCartServiceImpl implements ShopCartService{
 
@@ -35,13 +37,19 @@ public class ShopCartServiceImpl implements ShopCartService{
 	}
 
 	@Override
-	public Integer deleteShopCart(Integer shopCartId, Integer userId) {
+	public Integer deleteShopCart(String shopCartIds, Integer userId) {
 		
-        ShopCartExample example= new ShopCartExample();
+		String[]  ids= shopCartIds.split(",");
 		
-		example.createCriteria().andIdEqualTo(shopCartId).andUserIdEqualTo(userId);
-		
-		return mapper.deleteByExample(example);
+		for (int i = 0; i < ids.length;i++) {
+			
+			 ShopCartExample example= new ShopCartExample();
+				
+			 example.createCriteria().andIdEqualTo(Integer.parseInt(ids[i])).andUserIdEqualTo(userId);
+			 
+			 mapper.deleteByExample(example);
+		}
+		return userId;
 	}
 
 	@Override

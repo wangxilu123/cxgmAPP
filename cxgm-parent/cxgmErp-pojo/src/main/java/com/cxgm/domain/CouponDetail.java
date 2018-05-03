@@ -17,6 +17,16 @@ public class CouponDetail {
     private Integer categoryId;
     
     private Integer productId;
+    
+    private Integer codeId;
+
+	public Integer getCodeId() {
+		return codeId;
+	}
+
+	public void setCodeId(Integer codeId) {
+		this.codeId = codeId;
+	}
 
 	public Integer getStatus() {
 		return status;

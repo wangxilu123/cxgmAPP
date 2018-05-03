@@ -55,17 +55,17 @@ public class HomePageController {
 		return new ResultDto<>(200, "查询成功", result);
 	}
 
-	@ApiOperation(value = "根据门店ID和商品类别ID查询商品信息", nickname = "根据门店ID和商品类别ID查询商品信息")
+	@ApiOperation(value = "根据门店ID和商品二级类别ID查询商品信息", nickname = "根据门店ID和商品类别ID查询商品信息")
 	@ApiImplicitParams({
         @ApiImplicitParam(name = "shopId", value = "门店ID", required = false, paramType = "query", dataType = "int"),
-        @ApiImplicitParam(name = "categoryId", value = "类别ID", required = false, paramType = "query", dataType = "int"),
+        @ApiImplicitParam(name = "productCategoryTwoId", value = "二级类别ID", required = false, paramType = "query", dataType = "int"),
         @ApiImplicitParam(name = "pageNum", value = "第几页，默认1", required = false, paramType = "query", dataType = "int"),
 		@ApiImplicitParam(name = "pageSize", value = "每页多少条，默认10", required = false, paramType = "query", dataType = "int"),
     })
 	@GetMapping("/findProductByCategory")
 	public ResultDto<PageInfo<ProductTransfer>> findProductByPage(HttpServletRequest request,
 			@RequestParam(value = "shopId", required = false) Integer shopId,
-            @RequestParam(value = "categoryId", required = false) Integer categoryId,
+            @RequestParam(value = "productCategoryTwoId", required = false) Integer productCategoryTwoId,
             @RequestParam(value = "pageNum", defaultValue = "1", required = false) Integer pageNum,
 			@RequestParam(value = "pageSize", defaultValue = "10", required = false) Integer pageSize){
 		
@@ -74,7 +74,7 @@ public class HomePageController {
 		Map<String,Object> map = new HashMap<>();
 		
 		map.put("shopId", shopId);
-		map.put("categoryId", categoryId);
+		map.put("productCategoryTwoId", productCategoryTwoId);
 		List<ProductTransfer> list=homePageService.findListAllWithCategory(map);
 		PageInfo<ProductTransfer> page = new PageInfo<>(list);
 		
