@@ -9,6 +9,19 @@
 	<artifactId>cxgmUser-pojo</artifactId>
 	<name>cxgmUser-pojo</name>
 	<dependencies>
+	
+	   <!--  <dependency>
+			<groupId>com.cxgm</groupId>
+			<artifactId>core</artifactId>
+			<version>1.0</version>
+		</dependency>
+		
+		<dependency>
+			<groupId>com.cxgm</groupId>
+			<artifactId>dysmsapi</artifactId>
+			<version>1.0</version>
+		</dependency> -->
+		
 		<dependency>
 			<groupId>org.projectlombok</groupId>
 			<artifactId>lombok</artifactId>
@@ -39,18 +52,6 @@
 		<dependency>
 			<groupId>com.alibaba</groupId>
 			<artifactId>fastjson</artifactId>
-		</dependency>
-		
-		<dependency>
-			<groupId>com.cxgm</groupId>
-			<artifactId>core</artifactId>
-			<version>1.0</version>
-		</dependency>
-		
-		<dependency>
-			<groupId>com.cxgm</groupId>
-			<artifactId>dysmsapi</artifactId>
-			<version>1.0</version>
 		</dependency>
 		
 	</dependencies>
