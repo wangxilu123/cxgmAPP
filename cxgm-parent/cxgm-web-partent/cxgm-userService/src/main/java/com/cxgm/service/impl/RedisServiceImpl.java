@@ -2,6 +2,8 @@ package com.cxgm.service.impl;
 
 import java.util.concurrent.TimeUnit;
 
+import javax.annotation.Resource;
+
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 
@@ -11,7 +13,9 @@ import com.cxgm.service.RedisService;
 @Service
 public class RedisServiceImpl implements RedisService {
 	
-	private RedisTemplate<String, Object> redisTemplate;
+	@Resource  
+    RedisTemplate<String, String> redisTemplate;
+	
 	@Override
     public void addData(final RedisKeyDto redisKeyDto) {
 		redisTemplate.opsForValue().set(redisKeyDto.getKeys(), redisKeyDto.getValues());
@@ -41,11 +45,4 @@ public class RedisServiceImpl implements RedisService {
     	redisTemplate.expire(redisKeyDto.getKeys(), outTime, TimeUnit.MILLISECONDS);
     }
 
-    public RedisTemplate<String, Object> getRedisTemplate() {
-        return redisTemplate;
-    }
-
-    public void setRedisTemplate(RedisTemplate<String, Object> redisTemplate) {
-        this.redisTemplate = redisTemplate;
-    }
 }

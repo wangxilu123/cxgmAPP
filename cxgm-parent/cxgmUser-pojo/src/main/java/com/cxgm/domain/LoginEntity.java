@@ -11,9 +11,6 @@ import lombok.ToString;
 public class LoginEntity implements Serializable{
     private static final long serialVersionUID = 6031854054753338431L;
     
-    @ApiModelProperty(name = "password",value = "用户密码")
-    private String password;
-    
     @ApiModelProperty(name = "userAccount",value = "用户账号")
     private String userAccount;
     

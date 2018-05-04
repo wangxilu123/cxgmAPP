@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.aliyuncs.dysmsapi.model.v20170525.SendSmsResponse;
 import com.cxgm.common.SMSUtils;
 import com.cxgm.domain.RedisKeyDto;
 import com.cxgm.service.SmsVerificationCodeService;
@@ -21,7 +22,7 @@ public class SmsVerificationCodeServiceImpl implements SmsVerificationCodeServic
 		SMSUtils smsu = new SMSUtils();
 		String returnCode="";
 		try {
-			String checkCode = smsu.sendMsgCode(phoneName);
+			String checkCode = smsu.sendSms(phoneName);
 			RedisKeyDto cc = new RedisKeyDto();
 			cc.setKeys(phoneName);
 			cc.setValues(checkCode);

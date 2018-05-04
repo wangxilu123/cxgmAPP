@@ -43,8 +43,14 @@
 		
 		<dependency>
 			<groupId>com.cxgm</groupId>
-			<artifactId>alidayu</artifactId>
-			<version>0.0.1-SNAPSHOT</version>
+			<artifactId>core</artifactId>
+			<version>1.0</version>
+		</dependency>
+		
+		<dependency>
+			<groupId>com.cxgm</groupId>
+			<artifactId>dysmsapi</artifactId>
+			<version>1.0</version>
 		</dependency>
 		
 	</dependencies>

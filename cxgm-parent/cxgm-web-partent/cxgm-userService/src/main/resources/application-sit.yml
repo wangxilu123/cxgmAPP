@@ -48,3 +48,8 @@ spring:
         database: 0
         host: 47.104.226.173
         port: 6379
+        pool:
+          max-active: 8
+          max-idle: 8
+          max-wait: -1
+          min-idle: 0

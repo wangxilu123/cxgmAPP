@@ -1,9 +1,7 @@
 package com.cxgm.service;
 
-import com.cxgm.common.ResultDto;
 import com.cxgm.domain.AppUser;
 import com.cxgm.domain.LoginEntity;
-import com.cxgm.domain.RegisterEntity;
 
 
 public interface UserService {
@@ -13,12 +11,12 @@ public interface UserService {
      * @param RegisterEntity
      * @return
      */
-	ResultDto<Integer> addUser(RegisterEntity register);
-	
+/*	ResultDto<Integer> addUser(RegisterEntity register);
+*/	
     /**
      * 用户登录
      * @param LoginEntity
      * @return
      */
-    ResultDto<AppUser> login(LoginEntity user);
+    AppUser login(LoginEntity user);
 }

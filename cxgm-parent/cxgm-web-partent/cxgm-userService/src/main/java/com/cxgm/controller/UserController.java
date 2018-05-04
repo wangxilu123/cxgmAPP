@@ -22,6 +22,7 @@ import com.cxgm.domain.UserAddress;
 import com.cxgm.service.ShopService;
 import com.cxgm.service.UserAddressService;
 import com.cxgm.service.UserService;
+import com.cxgm.service.impl.SmsVerificationCodeServiceImpl;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
@@ -46,21 +47,31 @@ public class UserController {
 	@Autowired
 	private ShopService shopService;
 
-	@ApiOperation(value = "用户注册", nickname = "用户注册")
+	@Autowired
+	private SmsVerificationCodeServiceImpl smsVerificationCodeService;
+
+	/*@ApiOperation(value = "用户注册", nickname = "用户注册")
 	@PostMapping("/register")
 	public ResultDto<Integer> register(HttpServletRequest request, @RequestBody RegisterEntity registerEntity)
 			throws InterruptedException {
 		ResultDto<Integer> result = userService.addUser(registerEntity);
 		return result;
-	}
+	}*/
 
 	@ApiOperation(value = "用户登录接口", nickname = "用户登录接口")
 	@PostMapping("/login")
-	public ResultDto<AppUser> login(HttpServletRequest request,HttpServletResponse response, @RequestBody LoginEntity user) {
+	public ResultDto<?> login(HttpServletRequest request,HttpServletResponse response, @RequestBody LoginEntity user) {
 
-		ResultDto<AppUser> result = userService.login(user);
+		Boolean result = smsVerificationCodeService.checkIsCorrectCode(user.getUserAccount(), user.getMobileValidCode());
 		
-		return result;
+		if(result==true){
+			
+			AppUser appUser = userService.login(user);
+			
+			return new ResultDto<>(200,"登录成功！",appUser);
+		}else{
+			return new ResultDto<>(201,"验证码输入有误！");
+		}
 	}
 	
 	@ApiOperation(value = "新增用户地址接口", nickname = "新增用户地址接口")
