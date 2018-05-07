@@ -53,6 +53,18 @@
 			<artifactId>cxgm-mybites</artifactId>
 			<version>1.0</version>
 		</dependency>
+		
+		<dependency>
+			<groupId>com.aliyun</groupId>
+			<artifactId>aliyun-sms</artifactId>
+			<version>1.0</version>
+		</dependency>
+		
+		<dependency>
+			<groupId>com.aliyun</groupId>
+			<artifactId>aliyun-core</artifactId>
+			<version>1.0</version>
+		</dependency>
 
 	</dependencies>
 
