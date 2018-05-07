@@ -47,7 +47,7 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-redis</artifactId>
 		</dependency>
-		
+
 		<dependency>
 			<groupId>com.cxgm</groupId>
 			<artifactId>cxgm-mybites</artifactId>
@@ -65,6 +65,7 @@
 			<artifactId>aliyun-core</artifactId>
 			<version>1.0</version>
 		</dependency>
+
 
 	</dependencies>
 

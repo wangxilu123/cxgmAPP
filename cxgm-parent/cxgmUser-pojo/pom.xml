@@ -9,11 +9,19 @@
 	<artifactId>cxgmUser-pojo</artifactId>
 	<name>cxgmUser-pojo</name>
 	<dependencies>
+	
+	   <dependency>
+			<groupId>com.aliyun</groupId>
+			<artifactId>aliyun-java-sdk-core</artifactId>
+			<version>4.0.1</version>
+		</dependency>
 
-		<!-- <dependency> <groupId>com.cxgm</groupId> <artifactId>core</artifactId> 
-			<version>1.0</version> </dependency> <dependency> <groupId>com.cxgm</groupId> 
-			<artifactId>dysmsapi</artifactId> <version>1.0</version> </dependency> -->
-
+		<dependency>
+			<groupId>com.aliyun</groupId>
+			<artifactId>aliyun-java-sdk-dysmsapi</artifactId>
+			<version>1.1.0</version>
+		</dependency>
+		
 		<dependency>
 			<groupId>org.projectlombok</groupId>
 			<artifactId>lombok</artifactId>
