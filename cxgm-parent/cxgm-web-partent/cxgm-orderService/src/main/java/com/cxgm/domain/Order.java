@@ -20,7 +20,7 @@ public class Order implements Serializable{
 	@ApiModelProperty(name = "id",value = "主键ID",hidden = true)
     private Integer id;
 
-	@ApiModelProperty(name = "userId",value = "用户ID")
+	@ApiModelProperty(name = "userId",value = "用户ID",hidden = true)
     private Integer userId;
 
 	@ApiModelProperty(name = "orderNum",value = "订单编号")
@@ -46,4 +46,6 @@ public class Order implements Serializable{
     private String remarks;
 	
 	private List<OrderProduct>  productList;
+	
+	private List<OrderProductTransfer>  productDetails;
 }

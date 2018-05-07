@@ -37,6 +37,7 @@ import com.cxgm.domain.Order;
 import com.cxgm.service.OrderService;
 import com.cxgm.service.impl.CheckToken;
 
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 
 /**
@@ -46,7 +47,7 @@ import io.swagger.annotations.ApiOperation;
  * @version 1.0
  */
 @Component
-
+@Api(description = "支付相关接口")
 @RequestMapping("/payments")
 public class PaymentController {
 	

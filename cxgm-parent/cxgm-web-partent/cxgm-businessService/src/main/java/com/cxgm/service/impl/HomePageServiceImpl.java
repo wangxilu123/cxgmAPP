@@ -24,6 +24,11 @@ public class HomePageServiceImpl implements HomePageService {
 	public List<ProductTransfer> findListAllWithCategory(Map<String,Object> map){
 		return productDao.findListAllWithCategory(map);
 	}
+	
+	@Override
+	public List<ProductTransfer> findHotCategory(Map<String,Object> map){
+		return productDao.findHotCategory(map);
+	}
 
 	@Override
 	public List<ShopCategory> findShopOneCategory(Integer shopId) {
@@ -39,5 +44,15 @@ public class HomePageServiceImpl implements HomePageService {
 		map.put("shopId", shopId);
 		map.put("productCategoryId", productCategoryId);
 		return productDao.findShopCategoryTwo(map);
+	}
+	
+	@Override
+	public List<ShopCategory> findShopThreeCategory(Integer shopId,Integer productCategoryTwoId) {
+		
+		Map<String,Object> map = new HashMap<String,Object>();
+		
+		map.put("shopId", shopId);
+		map.put("productCategoryTwoId", productCategoryTwoId);
+		return productDao.findShopCategoryThird(map);
 	}
 }

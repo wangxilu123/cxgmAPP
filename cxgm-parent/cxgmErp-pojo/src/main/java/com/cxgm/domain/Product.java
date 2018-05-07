@@ -108,6 +108,8 @@ public class Product {
 
     private String introduction;
     
+    private String specifications;
+    
 
     public Long getId() {
         return id;
@@ -524,4 +526,14 @@ public class Product {
 	public void setProductCategoryThirdName(String productCategoryThirdName) {
 		this.productCategoryThirdName = productCategoryThirdName;
 	}
+
+	public String getSpecifications() {
+		return specifications;
+	}
+
+	public void setSpecifications(String specifications) {
+		this.specifications = specifications;
+	}
+	
+	
 }

@@ -45,9 +45,18 @@ public class OrderController {
     @PostMapping("/addOrder")
     public ResultDto<Integer> addOrder(HttpServletRequest request, @Valid @RequestBody  Order order){
     	
+        AppUser appUser = checkToken.check(request.getHeader("token"));
+    	
+    	if(appUser!=null){
+    	
+    	order.setUserId(appUser.getId());
+    		
     	Integer orderId = orderService.addOrder(order);
     	
         return new ResultDto<>(200,"下单成功！",orderId);
+    	}else{
+    		return new ResultDto<>(403,"token失效请重新登录！");
+    	}
     }
     
     @ApiOperation(value = "我的订单列表",nickname = "我的订单列表")
