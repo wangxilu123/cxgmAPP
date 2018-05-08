@@ -6,9 +6,26 @@
     <result column="promotions" jdbcType="BIGINT" property="promotions" />
     <result column="coupons" jdbcType="BIGINT" property="coupons" />
   </resultMap>
+
   <sql id="Base_Column_List">
     id, promotions, coupons
   </sql>
+   <sql id="queryMap">
+		<if test="promotions !=null">
+    		and promotions = #{promotions,jdbcType=BIGINT}
+		</if>
+		<if test="coupons !=null and coupons != ''">
+    		and coupons = #{coupons,jdbcType=BIGINT}
+		</if>
+	</sql>
+	
+   <select id="findPromotionCouponsWithParam" parameterType="map" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from promotion_coupon
+    where 1=1
+    <include refid="queryMap" />
+  </select>
   <select id="select" parameterType="java.lang.Long" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
