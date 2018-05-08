@@ -6,6 +6,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -15,8 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.cxgm.common.ResultDto;
 import com.cxgm.domain.AppUser;
 import com.cxgm.domain.LoginEntity;
-import com.cxgm.domain.RegisterEntity;
-import com.cxgm.domain.Shop;
+import com.cxgm.domain.PsfwTransfer;
 import com.cxgm.domain.ShopResponse;
 import com.cxgm.domain.UserAddress;
 import com.cxgm.service.ShopService;
@@ -94,6 +94,15 @@ public class UserController {
             @RequestParam(value = "dimension", required = false) String dimension) {
 
 		List<ShopResponse> list= shopService.findShopByPoint(longitude,dimension);
+		
+		return new ResultDto<>(200,"成功！",list);
+	}
+	
+	@ApiOperation(value = "查看所有配送范围接口", nickname = "查看所有配送范围接口")
+	@GetMapping("/findAllPsfw")
+	public ResultDto<List<PsfwTransfer>> checkAddress(HttpServletRequest request) {
+
+		List<PsfwTransfer> list= shopService.findPsfw();
 		
 		return new ResultDto<>(200,"成功！",list);
 	}

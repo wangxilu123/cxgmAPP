@@ -8,8 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
 
-import com.cxgm.common.CodeUtil;
-import com.cxgm.common.DateUtil;
 import com.cxgm.dao.OrderMapper;
 import com.cxgm.dao.OrderProductMapper;
 import com.cxgm.dao.ProductMapper;
@@ -38,8 +36,6 @@ public class OrderServiceImpl implements OrderService{
 	@Override
 	public Integer addOrder(Order order) {
 		
-		String orderNum=DateUtil.formatDateTime2()+CodeUtil.genCodes(6);
-		order.setOrderNum(orderNum);
 		order.setOrderTime(new Date());
 		order.setStatus("0");
 		orderMapper.insert(order);
@@ -110,6 +106,20 @@ public class OrderServiceImpl implements OrderService{
 		PageInfo<Order> page = new PageInfo<Order>(list);
 		
 		return page;
+	}
+
+	@Override
+	public Order findById(Integer orderId) {
+		
+        OrderExample example = new OrderExample();
+		
+		example.createCriteria().andIdEqualTo(orderId);
+		List<Order> list = orderMapper.selectByExample(example);
+		if(list.size()!=0){
+			return list.get(0);
+		}else{
+			return null;
+		}
 	}
 
 

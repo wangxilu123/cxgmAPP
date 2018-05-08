@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import com.cxgm.common.LocationUtil;
 import com.cxgm.dao.ShopMapper;
+import com.cxgm.domain.PsfwTransfer;
 import com.cxgm.domain.Shop;
 import com.cxgm.domain.ShopExample;
 import com.cxgm.domain.ShopResponse;
@@ -93,5 +94,24 @@ public class ShopServiceImpl implements ShopService {
 	@Override
 	public List<Shop> findListAll(){
 		return shopMapper.findListAll();
+	}
+	@Override
+	public List<PsfwTransfer> findPsfw(){
+		
+		List<Shop> list = shopMapper.findListAll();
+		
+		
+		List<PsfwTransfer> psfwList= new ArrayList<>();
+		for(Shop shop:list){
+			
+			PsfwTransfer psfw = new PsfwTransfer();
+			
+			psfw.setPsfw(shop.getElectronicFence());
+			
+			psfwList.add(psfw);
+			
+		}
+		return  psfwList;
+
 	}
 }
