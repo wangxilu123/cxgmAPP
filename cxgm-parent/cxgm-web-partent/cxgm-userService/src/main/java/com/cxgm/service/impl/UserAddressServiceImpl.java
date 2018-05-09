@@ -1,5 +1,7 @@
 package com.cxgm.service.impl;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
@@ -42,6 +44,17 @@ public class UserAddressServiceImpl implements UserAddressService {
 		example.createCriteria().andIdEqualTo(addressId).andUserIdEqualTo(userId);
 
 		return addressMapper.deleteByExample(example);
+	}
+
+	@Override
+	public List<UserAddress> addressList(Integer userId) {
+		
+		UserAddressExample example = new UserAddressExample();
+
+		example.createCriteria().andUserIdEqualTo(userId);
+		
+		List<UserAddress> list = addressMapper.selectByExample(example);
+		return list;
 	}
 
 }

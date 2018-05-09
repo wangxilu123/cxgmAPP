@@ -22,6 +22,7 @@ import com.cxgm.domain.UserAddress;
 import com.cxgm.service.ShopService;
 import com.cxgm.service.UserAddressService;
 import com.cxgm.service.UserService;
+import com.cxgm.service.impl.CheckToken;
 import com.cxgm.service.impl.SmsVerificationCodeServiceImpl;
 
 import io.swagger.annotations.Api;
@@ -46,6 +47,9 @@ public class UserController {
 	
 	@Autowired
 	private ShopService shopService;
+	
+	@Autowired
+	private CheckToken checkToken;
 
 	@Autowired
 	private SmsVerificationCodeServiceImpl smsVerificationCodeService;
@@ -78,9 +82,17 @@ public class UserController {
 	@PostMapping("/addAddress")
 	public ResultDto<Integer> addAddress(HttpServletRequest request, @RequestBody UserAddress address) {
 
+		AppUser appUser = checkToken.check(request.getHeader("token"));
+
+		if (appUser != null) {
+
+		address.setUserId(appUser.getId());
 		Integer addressId = addressService.addAddress(address);
 		
 		return new ResultDto<>(200,"添加成功！",addressId);
+		} else {
+			return new ResultDto<>(403, "token失效请重新登录！");
+		}
 	}
 	
 	@ApiOperation(value = "判断用户配送地址是否在配送范围", nickname = "判断用户配送地址是否在配送范围")
@@ -112,31 +124,63 @@ public class UserController {
 	@PostMapping("/updateAddress")
 	public ResultDto<Integer> updateAddress(HttpServletRequest request, @RequestBody UserAddress address) {
 
+		AppUser appUser = checkToken.check(request.getHeader("token"));
+
+		if (appUser != null) {
+			
+		address.setUserId(appUser.getId());
 		Integer num = addressService.updateAddress(address);
 		
 		return new ResultDto<>(200,"修改成功！",num);
+		} else {
+			return new ResultDto<>(403, "token失效请重新登录！");
+		}
 	}
 	
 	@ApiOperation(value = "根据用户ID和地址ID删除用户地址接口", nickname = "根据用户ID和地址ID删除用户地址接口")
+	@ApiImplicitParams({
+        @ApiImplicitParam(name = "addressId", value = "用户地址ID", required = false, paramType = "query", dataType = "Integer"),
+    })
+	@PostMapping("/deleteAddress")
+	public ResultDto<Integer> deleteAddress(HttpServletRequest request, 
+            @RequestParam(value = "addressId", required = false) Integer addressId) {
+
+		AppUser appUser = checkToken.check(request.getHeader("token"));
+
+		if (appUser != null) {
+		Integer num = addressService.deleteAddress(addressId, appUser.getId());
+		
+		return new ResultDto<>(200,"删除成功！",num);
+		} else {
+			return new ResultDto<>(403, "token失效请重新登录！");
+		}
+	}
+	
+	@ApiOperation(value = "根据用户ID查询用户地址接口", nickname = "根据用户ID查询用户地址接口")
 	@ApiImplicitParams({
         
         @ApiImplicitParam(name = "userId", value = "用户ID", required = false, paramType = "query", dataType = "Integer"),
         @ApiImplicitParam(name = "addressId", value = "用户地址ID", required = false, paramType = "query", dataType = "Integer"),
     })
-	@PostMapping("/deleteAddress")
-	public ResultDto<Integer> deleteAddress(HttpServletRequest request, 
-			@RequestParam(value = "userId", required = false) Integer userId,
-            @RequestParam(value = "addressId", required = false) Integer addressId) {
-
-		Integer num = addressService.deleteAddress(addressId, userId);
+	@GetMapping("/addressList")
+	public ResultDto<List<UserAddress>> addressList(HttpServletRequest request) {
 		
-		return new ResultDto<>(200,"添加成功！",num);
+		AppUser appUser = checkToken.check(request.getHeader("token"));
+
+		if (appUser != null) {
+
+			List<UserAddress> result = addressService.addressList(appUser.getId());
+
+			return new ResultDto<>(200, "查询成功！", result);
+		} else {
+			return new ResultDto<>(403, "token失效请重新登录！");
+		}
 	}
 
-	@ApiOperation(value = "版本控制接口", nickname = "版本控制接口")
+	/*@ApiOperation(value = "版本控制接口", nickname = "版本控制接口")
 	@PostMapping("/visionControl")
 	public ResultDto visionControl(HttpServletRequest request, @RequestParam String visionCode) {
 
 		return ResultDto.ok("200");
-	}
+	}*/
 }
