@@ -109,6 +109,29 @@ public class HomePageController {
         @ApiImplicitParam(name = "pageNum", value = "第几页，默认1", required = false, paramType = "query", dataType = "int"),
 		@ApiImplicitParam(name = "pageSize", value = "每页多少条，默认10", required = false, paramType = "query", dataType = "int"),
     })
+	@GetMapping("/findTopProduct")
+	public ResultDto<PageInfo<ProductTransfer>> findTopProduct(HttpServletRequest request,
+			@RequestParam(value = "shopId", required = false) Integer shopId,
+            @RequestParam(value = "pageNum", defaultValue = "1", required = false) Integer pageNum,
+			@RequestParam(value = "pageSize", defaultValue = "10", required = false) Integer pageSize){
+		
+		PageHelper.startPage(pageNum, pageSize);
+		
+		Map<String,Object> map = new HashMap<>();
+		map.put("shopId", shopId);
+		map.put("isTop", 1);
+		List<ProductTransfer> list=homePageService.findListAllWithCategory(map);
+		PageInfo<ProductTransfer> page = new PageInfo<>(list);
+		
+		return new ResultDto<>(200, "查询成功", page);
+	}
+	
+	@ApiOperation(value = "根据门店ID查询首页热门推荐", nickname = "根据门店ID查询首页热门推荐")
+	@ApiImplicitParams({
+        @ApiImplicitParam(name = "shopId", value = "门店ID", required = false, paramType = "query", dataType = "int"),
+        @ApiImplicitParam(name = "pageNum", value = "第几页，默认1", required = false, paramType = "query", dataType = "int"),
+		@ApiImplicitParam(name = "pageSize", value = "每页多少条，默认10", required = false, paramType = "query", dataType = "int"),
+    })
 	@GetMapping("/findHotProduct")
 	public ResultDto<PageInfo<ProductTransfer>> findHotProduct(HttpServletRequest request,
 			@RequestParam(value = "shopId", required = false) Integer shopId,
@@ -119,7 +142,7 @@ public class HomePageController {
 		
 		Map<String,Object> map = new HashMap<>();
 		map.put("shopId", shopId);
-		map.put("isTop", 1);
+		map.put("isHot", 1);
 		List<ProductTransfer> list=homePageService.findListAllWithCategory(map);
 		PageInfo<ProductTransfer> page = new PageInfo<>(list);
 		

@@ -132,6 +132,9 @@
 		<if test="isTop !=null and isTop != ''">
     		and p.is_top=#{isTop,jdbcType=BIT}
 		</if>
+		<if test="isHot !=null and isHot != ''">
+    		and p.is_hot=#{isHot,jdbcType=INTEGER}
+		</if>
 		
 		
 	</sql>
