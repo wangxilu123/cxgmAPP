@@ -54,6 +54,7 @@
     <result column="delete_flag" jdbcType="BIT" property="deleteFlag" />
     <result column="brand_name" jdbcType="VARCHAR" property="brandName" />
     <result column="specifications" jdbcType="VARCHAR" property="specifications" />
+    <result column="is_hot" jdbcType="INTEGER" property="isHot" />
   </resultMap>
   <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.cxgm.domain.Product">
     <result column="introduction" jdbcType="LONGVARCHAR" property="introduction" />
@@ -72,7 +73,7 @@
     month_hits, sales, week_sales, month_sales, week_hits_date, month_hits_date, week_sales_date, 
     month_sales_date, origin_place, storage_condition, product_category_id, product_category_two_id,product_category_third_id,
     product_category_name,product_category_two_name,product_category_third_name,shop_id,
-    create_by, creation_date, last_updated_by, last_updated_date, delete_flag, brand_name,specifications
+    create_by, creation_date, last_updated_by, last_updated_date, delete_flag, brand_name,specifications,is_hot
   </sql>
   <sql id="Blob_Column_List">
     introduction
@@ -83,7 +84,7 @@
     month_hits, sales, week_sales, month_sales, week_hits_date, month_hits_date, week_sales_date, 
     month_sales_date, origin_place, storage_condition, product_category_id,product_category_two_id,product_category_third_id,
     product_category_name,product_category_two_name,product_category_third_name, p.shop_id as shop_id,
-    p.create_by as create_by, p.creation_date as creation_date, p.last_updated_by as last_updated_by, p.last_updated_date as last_updated_date, brand_name,specifications
+    p.create_by as create_by, p.creation_date as creation_date, p.last_updated_by as last_updated_by, p.last_updated_date as last_updated_date, brand_name,specifications,is_hot
   </sql>
   
   <resultMap id="GenerallyCategoryQueryMap" type="com.cxgm.domain.ShopCategory">
@@ -230,7 +231,7 @@
     product_category_name,product_category_two_name,product_category_third_name,shop_id,
       create_by, creation_date, last_updated_by, 
       last_updated_date, delete_flag, brand_name, 
-      introduction,specifications)
+      introduction,specifications,is_hot)
     values (#{id,jdbcType=BIGINT}, #{sn,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, 
       #{fullName,jdbcType=VARCHAR}, #{price,jdbcType=DECIMAL}, #{cost,jdbcType=DECIMAL}, 
       #{marketPrice,jdbcType=DECIMAL}, #{image,jdbcType=VARCHAR}, #{unit,jdbcType=VARCHAR}, 
@@ -247,7 +248,7 @@
       #{productCategoryThirdId,jdbcType=BIGINT}, #{productCategoryName,jdbcType=VARCHAR},#{productCategoryTwoName,jdbcType=VARCHAR},#{productCategoryThirdName,jdbcType=VARCHAR},#{shopId,jdbcType=INTEGER},
       #{createBy,jdbcType=VARCHAR},NOW(), #{lastUpdatedBy,jdbcType=VARCHAR}, 
       #{lastUpdatedDate,jdbcType=TIMESTAMP}, #{deleteFlag,jdbcType=BIT}, #{brandName,jdbcType=VARCHAR}, 
-      #{introduction,jdbcType=LONGVARCHAR},#{specifications,jdbcType=VARCHAR})
+      #{introduction,jdbcType=LONGVARCHAR},#{specifications,jdbcType=VARCHAR},0)
   </insert>
   
   <update id="update" parameterType="com.cxgm.domain.Product">
@@ -406,6 +407,9 @@
       </if>
        <if test="specifications != null">
         specifications = #{specifications,jdbcType=VARCHAR},
+      </if>
+      <if test="isHot != null">
+        is_hot = #{isHot,jdbcType=INTEGER},
       </if>
     </set>
     where id = #{id,jdbcType=BIGINT}

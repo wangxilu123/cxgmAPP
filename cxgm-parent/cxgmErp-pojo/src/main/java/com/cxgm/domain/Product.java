@@ -110,8 +110,17 @@ public class Product {
     
     private String specifications;
     
+    private Integer isHot;
+    
+	public Integer getIsHot() {
+		return isHot;
+	}
 
-    public Long getId() {
+	public void setIsHot(Integer isHot) {
+		this.isHot = isHot;
+	}
+
+	public Long getId() {
         return id;
     }
 
