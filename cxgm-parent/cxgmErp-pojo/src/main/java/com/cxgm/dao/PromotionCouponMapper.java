@@ -1,5 +1,8 @@
 package com.cxgm.dao;
 
+import java.util.List;
+import java.util.Map;
+
 import com.cxgm.domain.PromotionCoupon;
 
 public interface PromotionCouponMapper {
@@ -11,4 +14,5 @@ public interface PromotionCouponMapper {
 
     int update(PromotionCoupon record);
 
+    List<PromotionCoupon> findPromotionCouponsWithParam(Map<String,Object> map);
 }

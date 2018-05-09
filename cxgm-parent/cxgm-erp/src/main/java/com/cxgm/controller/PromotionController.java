@@ -104,4 +104,62 @@ public class PromotionController {
 		request.setAttribute("shopId", admin.getShopId());
 		return new ModelAndView("admin/promotion_input");
 	}
+	
+	@RequestMapping(value = "/promotion/save", method = RequestMethod.POST)
+	public ModelAndView promotionSave(HttpServletRequest request, @RequestParam(value = "promotion.name") String name,
+			@RequestParam(value = "promotion.title") String title,
+			@RequestParam(value = "promotion.beginDate") String beginDate,
+			@RequestParam(value = "promotion.endDate") String endDate,
+			@RequestParam(value = "promotion.priceExpression") String priceExpression,
+			@RequestParam(value = "promotion.isCouponAllowed") boolean isCouponAllowed,
+			@RequestParam(value = "promotion.introduction",required=false) String introduction,
+			@RequestParam(value = "promotion.shop") Integer shopId) throws SQLException {
+		try {
+			String[] couponIds = request.getParameterValues("couponIds");
+			promotionService.insert(name, title, beginDate, endDate, shopId, priceExpression, isCouponAllowed, introduction, shopId, couponIds);
+			ModelAndView mv = new ModelAndView("redirect:/admin/promotion");
+			return mv;
+		} catch (Exception e) {
+			request.setAttribute("errorMessages", e.getMessage());
+			request.setAttribute("redirectionUrl", "/admin/promotion");
+			return new ModelAndView("admin/error");
+		}
+	}
+	@RequestMapping(value = "/promotion/edit", method = RequestMethod.GET)
+	public ModelAndView promotionEdit(HttpServletRequest request) {
+		String id = request.getParameter("id");
+		Promotion promotion = promotionService.select(Long.valueOf(id));
+		SecurityContext ctx = SecurityContextHolder.getContext();
+		Authentication auth = ctx.getAuthentication();
+		Admin admin = (Admin) auth.getPrincipal();
+		Map<String, Object> map = new HashMap<>();
+		map.put("shopId", admin.getShopId());
+		List<Coupon> coupons = couponService.findCouponsWithParam(map);
+		request.setAttribute("allCoupon", coupons);
+		request.setAttribute("shopId", admin.getShopId());
+		request.setAttribute("promotion", promotion);
+		return new ModelAndView("admin/promotion_input");
+	}
+	
+	@RequestMapping(value = "/promotion/update", method = RequestMethod.POST)
+	public ModelAndView promotionUpdate(HttpServletRequest request, @RequestParam(value = "promotion.id") Long id,
+			@RequestParam(value = "promotion.name") String name,
+			@RequestParam(value = "promotion.title") String title,
+			@RequestParam(value = "promotion.beginDate") String beginDate,
+			@RequestParam(value = "promotion.endDate") String endDate,
+			@RequestParam(value = "promotion.priceExpression") String priceExpression,
+			@RequestParam(value = "promotion.isCouponAllowed") boolean isCouponAllowed,
+			@RequestParam(value = "promotion.introduction",required=false) String introduction,
+			@RequestParam(value = "promotion.shop") Integer shopId) throws SQLException {
+		try {
+			String[] couponIds = request.getParameterValues("couponIds");
+			promotionService.update(id, name, title, beginDate, endDate, shopId, priceExpression, isCouponAllowed, introduction, shopId, couponIds);
+			ModelAndView mv = new ModelAndView("redirect:/admin/promotion");
+			return mv;
+		} catch (Exception e) {
+			request.setAttribute("errorMessages", e.getMessage());
+			request.setAttribute("redirectionUrl", "/admin/promotion");
+			return new ModelAndView("admin/error");
+		}
+	}
 }

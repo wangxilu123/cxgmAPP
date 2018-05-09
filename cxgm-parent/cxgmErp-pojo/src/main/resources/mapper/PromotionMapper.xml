@@ -63,6 +63,9 @@
     where id = #{id,jdbcType=BIGINT}
   </delete>
   <insert id="insert" parameterType="com.cxgm.domain.Promotion">
+  <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">  
+        SELECT LAST_INSERT_ID()  
+    </selectKey>  
     insert into promotion (id, name, title, 
       begin_date, end_date, minimum_quantity, 
       maximum_quantity, minimum_price, maximum_price, 
