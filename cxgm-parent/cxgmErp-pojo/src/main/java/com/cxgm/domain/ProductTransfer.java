@@ -100,6 +100,8 @@ public class ProductTransfer {
 	private String brandName;
 
 	private String introduction;
+	
+	private Integer isHot;
 
 	// 商品分类
 	private Long cid;
@@ -108,6 +110,14 @@ public class ProductTransfer {
 	private Long parentId;
 
 	
+	public Integer getIsHot() {
+		return isHot;
+	}
+
+	public void setIsHot(Integer isHot) {
+		this.isHot = isHot;
+	}
+
 	private List<ProductImage> productImageList;
 	public Long getId() {
 		return id;
