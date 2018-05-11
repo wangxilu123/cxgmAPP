@@ -86,6 +86,35 @@ public class ShopServiceImpl implements ShopService {
 		PageInfo<Shop> page = new PageInfo<>(shopList);
 		return page;
 	}
+	
+	@Override
+	public PageInfo<ShopResponse> findShopListByPage(Integer pageNum,Integer pageSize) {
+		
+		PageHelper.startPage(pageNum, pageSize);
+		
+		ShopExample example = new ShopExample();
+		
+		example.setOrderByClause("id desc");
+		List<ShopResponse> list = new ArrayList<>();
+		
+		List<Shop> shopList = shopMapper.selectByExample(example);
+		
+		for(Shop shop :shopList){
+			
+				ShopResponse shopResponse = new ShopResponse();
+				
+				shopResponse.setDescription(shop.getDescription());
+				shopResponse.setId(shop.getId());
+				shopResponse.setImageUrl(shop.getImageUrl());
+				shopResponse.setShopAddress(shop.getShopAddress());
+				shopResponse.setShopName(shop.getShopName());
+				
+				list.add(shopResponse);
+		}
+		
+		PageInfo<ShopResponse> page = new PageInfo<>(list);
+		return page;
+	}
 
 	@Override
 	public Shop findShopById(Integer shopId) {
