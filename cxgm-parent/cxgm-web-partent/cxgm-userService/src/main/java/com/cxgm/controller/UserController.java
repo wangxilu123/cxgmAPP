@@ -127,10 +127,12 @@ public class UserController {
 	}
 
 	@ApiOperation(value = "查看所有配送范围接口", nickname = "查看所有配送范围接口")
+	@ApiImplicitParam(name = "shopId", value = "门店ID", required = false, paramType = "query", dataType = "int")
 	@GetMapping("/findAllPsfw")
-	public ResultDto<List<PsfwTransfer>> checkAddress(HttpServletRequest request) {
+	public ResultDto<List<PsfwTransfer>> checkAddress(HttpServletRequest request,
+			@RequestParam(value = "shopId", required = false) Integer shopId) {
 
-		List<PsfwTransfer> list = shopService.findPsfw();
+		List<PsfwTransfer> list = shopService.findPsfw(shopId);
 
 		return new ResultDto<>(200, "成功！", list);
 	}

@@ -44,7 +44,7 @@ public interface ShopService {
 	
 	List<Shop> findListAll();
 
-	List<PsfwTransfer> findPsfw();
+	List<PsfwTransfer> findPsfw(Integer shopId);
 
 	PageInfo<ShopResponse> findShopListByPage(Integer pageNum, Integer pageSize);
 }

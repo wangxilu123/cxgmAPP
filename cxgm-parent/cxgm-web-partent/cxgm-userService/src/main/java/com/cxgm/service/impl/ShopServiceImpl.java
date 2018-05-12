@@ -125,9 +125,19 @@ public class ShopServiceImpl implements ShopService {
 		return shopMapper.findListAll();
 	}
 	@Override
-	public List<PsfwTransfer> findPsfw(){
+	public List<PsfwTransfer> findPsfw(Integer shopId){
 		
-		List<Shop> list = shopMapper.findListAll();
+		List<Shop> list= new ArrayList<Shop>();
+		if(shopId!=null){
+			
+			ShopExample example = new ShopExample();
+			
+			example.createCriteria().andIdEqualTo(shopId);
+			list = shopMapper.selectByExample(example);
+		}else{
+			list = shopMapper.findListAll();
+		}
+		
 		
 		
 		List<PsfwTransfer> psfwList= new ArrayList<>();
