@@ -22,8 +22,8 @@ public class LocationUtil {
           
         for (String str : strList){  
             String[] points = str.split("_");  
-            double polygonPoint_x=Double.parseDouble(points[1]);    
-            double polygonPoint_y=Double.parseDouble(points[0]);    
+            double polygonPoint_x=Double.parseDouble(points[0]);    
+            double polygonPoint_y=Double.parseDouble(points[1]);    
             Point2D.Double polygonPoint = new Point2D.Double(polygonPoint_x,polygonPoint_y);    
             pointList.add(polygonPoint);    
         }    

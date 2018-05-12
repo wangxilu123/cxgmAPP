@@ -19,6 +19,12 @@
 			<artifactId>cxgmUser-pojo</artifactId>
 			<version>${project.version}</version>
 		</dependency>
+		
+		<dependency>
+			<groupId>com.cxgm</groupId>
+			<artifactId>cxgmErp-pojo</artifactId>
+			<version>1.0</version>
+		</dependency>
 
 		<dependency>
 			<groupId>junit</groupId>

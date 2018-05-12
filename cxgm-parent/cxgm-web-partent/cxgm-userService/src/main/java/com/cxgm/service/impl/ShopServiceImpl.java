@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import com.cxgm.common.LocationUtil;
 import com.cxgm.dao.ShopMapper;
+import com.cxgm.domain.PsfwTransfer;
 import com.cxgm.domain.Shop;
 import com.cxgm.domain.ShopExample;
 import com.cxgm.domain.ShopResponse;
@@ -85,6 +86,35 @@ public class ShopServiceImpl implements ShopService {
 		PageInfo<Shop> page = new PageInfo<>(shopList);
 		return page;
 	}
+	
+	@Override
+	public PageInfo<ShopResponse> findShopListByPage(Integer pageNum,Integer pageSize) {
+		
+		PageHelper.startPage(pageNum, pageSize);
+		
+		ShopExample example = new ShopExample();
+		
+		example.setOrderByClause("id desc");
+		List<ShopResponse> list = new ArrayList<>();
+		
+		List<Shop> shopList = shopMapper.selectByExample(example);
+		
+		for(Shop shop :shopList){
+			
+				ShopResponse shopResponse = new ShopResponse();
+				
+				shopResponse.setDescription(shop.getDescription());
+				shopResponse.setId(shop.getId());
+				shopResponse.setImageUrl(shop.getImageUrl());
+				shopResponse.setShopAddress(shop.getShopAddress());
+				shopResponse.setShopName(shop.getShopName());
+				
+				list.add(shopResponse);
+		}
+		
+		PageInfo<ShopResponse> page = new PageInfo<>(list);
+		return page;
+	}
 
 	@Override
 	public Shop findShopById(Integer shopId) {
@@ -93,5 +123,24 @@ public class ShopServiceImpl implements ShopService {
 	@Override
 	public List<Shop> findListAll(){
 		return shopMapper.findListAll();
+	}
+	@Override
+	public List<PsfwTransfer> findPsfw(){
+		
+		List<Shop> list = shopMapper.findListAll();
+		
+		
+		List<PsfwTransfer> psfwList= new ArrayList<>();
+		for(Shop shop:list){
+			
+			PsfwTransfer psfw = new PsfwTransfer();
+			
+			psfw.setPsfw(shop.getElectronicFence());
+			
+			psfwList.add(psfw);
+			
+		}
+		return  psfwList;
+
 	}
 }

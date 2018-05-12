@@ -13,5 +13,9 @@ public interface HomePageService {
 	List<ShopCategory> findShopOneCategory(Integer shopId);
 
 	List<ShopCategory> findShopTwoCategory(Integer shopId,Integer productCategoryId);
+
+	List<ShopCategory> findShopThreeCategory(Integer shopId, Integer productCategoryTwoId);
+
+	List<ProductTransfer> findHotCategory(Map<String, Object> map);
   
 }

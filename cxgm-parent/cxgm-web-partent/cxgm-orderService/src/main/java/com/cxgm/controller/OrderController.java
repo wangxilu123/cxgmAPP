@@ -2,7 +2,6 @@ package com.cxgm.controller;
 
 
 import javax.servlet.http.HttpServletRequest;
-import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
@@ -43,11 +42,20 @@ public class OrderController {
     @ApiOperation(value = "用户下单接口",nickname = "用户下单接口")
     @ApiImplicitParam(name = "order", value = "用户实体order", required = true, dataType = "Order")
     @PostMapping("/addOrder")
-    public ResultDto<Integer> addOrder(HttpServletRequest request, @Valid @RequestBody  Order order){
+    public ResultDto<Integer> addOrder(HttpServletRequest request, @RequestBody  Order order){
     	
+        AppUser appUser = checkToken.check(request.getHeader("token"));
+    	
+    	if(appUser!=null){
+    	
+    	order.setUserId(appUser.getId());
+    		
     	Integer orderId = orderService.addOrder(order);
     	
         return new ResultDto<>(200,"下单成功！",orderId);
+    	}else{
+    		return new ResultDto<>(403,"token失效请重新登录！");
+    	}
     }
     
     @ApiOperation(value = "我的订单列表",nickname = "我的订单列表")
@@ -56,7 +64,7 @@ public class OrderController {
         @ApiImplicitParam(name = "pageSize", value = "每页多少条，默认10", required = false, paramType = "query", dataType = "int"),
     })
     @GetMapping("/list")
-    public ResultDto<PageInfo<Order>> homeList(HttpServletRequest request,
+    public ResultDto<PageInfo<Order>> orderList(HttpServletRequest request,
             @RequestParam(value = "pageNum", defaultValue = "1" , required = false) Integer pageNum,
             @RequestParam(value = "pageSize", defaultValue = "10" , required = false) Integer pageSize){
     	

@@ -2,6 +2,7 @@ package com.cxgm.service;
 
 import java.util.List;
 
+import com.cxgm.domain.PsfwTransfer;
 import com.cxgm.domain.Shop;
 import com.cxgm.domain.ShopResponse;
 import com.github.pagehelper.PageInfo;
@@ -42,4 +43,8 @@ public interface ShopService {
 	PageInfo<Shop> findShopByPage(Integer pageNum, Integer pageSize);
 	
 	List<Shop> findListAll();
+
+	List<PsfwTransfer> findPsfw();
+
+	PageInfo<ShopResponse> findShopListByPage(Integer pageNum, Integer pageSize);
 }

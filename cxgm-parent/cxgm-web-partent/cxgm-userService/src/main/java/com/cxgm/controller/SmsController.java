@@ -10,11 +10,14 @@ import org.springframework.web.bind.annotation.RestController;
 import com.cxgm.common.ResultDto;
 import com.cxgm.service.impl.SmsVerificationCodeServiceImpl;
 
+import io.swagger.annotations.Api;
+
 
 /**
  * 手机短信发送服务
  * @author wangxilu
  */
+@Api(description = "手机短信发送服务相关接口")
 @RestController
 public class SmsController {
 
