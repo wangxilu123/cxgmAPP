@@ -112,6 +112,16 @@ public class Product {
     
     private Integer isHot;
     
+    private String goodCode;
+    
+	public String getGoodCode() {
+		return goodCode;
+	}
+
+	public void setGoodCode(String goodCode) {
+		this.goodCode = goodCode;
+	}
+
 	public Integer getIsHot() {
 		return isHot;
 	}

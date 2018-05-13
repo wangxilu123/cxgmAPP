@@ -174,10 +174,6 @@ public class UserController {
 	}
 
 	@ApiOperation(value = "根据用户ID查询用户地址接口", nickname = "根据用户ID查询用户地址接口")
-	@ApiImplicitParams({
-
-			@ApiImplicitParam(name = "userId", value = "用户ID", required = false, paramType = "query", dataType = "Integer"),
-			@ApiImplicitParam(name = "addressId", value = "用户地址ID", required = false, paramType = "query", dataType = "Integer"), })
 	@GetMapping("/addressList")
 	public ResultDto<List<UserAddress>> addressList(HttpServletRequest request) {
 

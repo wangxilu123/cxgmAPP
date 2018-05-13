@@ -77,30 +77,22 @@ public class HomePageController {
 	@ApiImplicitParams({
         @ApiImplicitParam(name = "shopId", value = "门店ID", required = false, paramType = "query", dataType = "int"),
         @ApiImplicitParam(name = "productCategoryTwoId", value = "二级类别ID", required = false, paramType = "query", dataType = "int"),
-        @ApiImplicitParam(name = "pageNum", value = "第几页，默认1", required = false, paramType = "query", dataType = "int"),
-		@ApiImplicitParam(name = "pageSize", value = "每页多少条，默认10", required = false, paramType = "query", dataType = "int"),
+        @ApiImplicitParam(name = "productCategoryThirdId", value = "三级类别ID", required = false, paramType = "query", dataType = "int"),
     })
 	@GetMapping("/findProductByCategory")
-	public ResultDto<PageInfo<ProductTransfer>> findProductByPage(HttpServletRequest request,
+	public ResultDto<List<ProductTransfer>> findProductByPage(HttpServletRequest request,
 			@RequestParam(value = "shopId", required = false) Integer shopId,
-			@RequestParam(value = "productCategoryId", required = false) Integer productCategoryId,
             @RequestParam(value = "productCategoryTwoId", required = false) Integer productCategoryTwoId,
-            @RequestParam(value = "productCategoryThirdId", required = false) Integer productCategoryThirdId,
-            @RequestParam(value = "pageNum", defaultValue = "1", required = false) Integer pageNum,
-			@RequestParam(value = "pageSize", defaultValue = "10", required = false) Integer pageSize){
-		
-		PageHelper.startPage(pageNum, pageSize);
+            @RequestParam(value = "productCategoryThirdId", required = false) Integer productCategoryThirdId){
 		
 		Map<String,Object> map = new HashMap<>();
 		
 		map.put("shopId", shopId);
-		map.put("productCategoryId", productCategoryId);
 		map.put("productCategoryTwoId", productCategoryTwoId);
 		map.put("productCategoryThirdId", productCategoryThirdId);
 		List<ProductTransfer> list=homePageService.findListAllWithCategory(map);
-		PageInfo<ProductTransfer> page = new PageInfo<>(list);
 		
-		return new ResultDto<>(200, "查询成功", page);
+		return new ResultDto<>(200, "查询成功", list);
 	}
 	
 	@ApiOperation(value = "根据门店ID查询首页精品推荐", nickname = "根据门店ID查询首页精品推荐")

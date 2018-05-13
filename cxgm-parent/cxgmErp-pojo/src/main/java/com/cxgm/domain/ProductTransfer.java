@@ -102,6 +102,8 @@ public class ProductTransfer {
 	private String introduction;
 	
 	private Integer isHot;
+	
+	private String goodCode;
 
 	// 商品分类
 	private Long cid;
@@ -110,6 +112,14 @@ public class ProductTransfer {
 	private Long parentId;
 
 	
+	public String getGoodCode() {
+		return goodCode;
+	}
+
+	public void setGoodCode(String goodCode) {
+		this.goodCode = goodCode;
+	}
+
 	public Integer getIsHot() {
 		return isHot;
 	}
