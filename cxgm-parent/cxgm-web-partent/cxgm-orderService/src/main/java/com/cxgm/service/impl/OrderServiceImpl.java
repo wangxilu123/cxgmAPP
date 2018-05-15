@@ -74,14 +74,16 @@ public class OrderServiceImpl implements OrderService{
 	}
 
 	@Override
-	public PageInfo<Order> orderList(Integer pageNum, Integer pageSize,Integer userId) {
+	public PageInfo<Order> orderList(Integer pageNum, Integer pageSize,Integer userId,String status) {
 		
 		PageHelper.startPage(pageNum, pageSize);
 		
 		OrderExample example = new OrderExample();
-		
-		example.createCriteria().andUserIdEqualTo(userId);
-		
+		if(status.equals("")==false&&status!=null){
+			example.createCriteria().andUserIdEqualTo(userId).andStatusEqualTo(status);
+		}else{
+			example.createCriteria().andUserIdEqualTo(userId);
+		}
 		List<Order> list = orderMapper.selectByExample(example);
 		
 		for(Order order : list){

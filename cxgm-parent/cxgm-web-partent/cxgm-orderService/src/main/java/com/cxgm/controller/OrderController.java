@@ -62,17 +62,19 @@ public class OrderController {
     @ApiImplicitParams({
         @ApiImplicitParam(name = "pageNum", value = "第几页，默认1", required = false, paramType = "query", dataType = "int"),
         @ApiImplicitParam(name = "pageSize", value = "每页多少条，默认10", required = false, paramType = "query", dataType = "int"),
+        @ApiImplicitParam(name = "status", value = "订单状态0待支付，1待配送（已支付），2配送中，3已完成，4退货", required = false, paramType = "query", dataType = "string"),
     })
     @GetMapping("/list")
     public ResultDto<PageInfo<Order>> orderList(HttpServletRequest request,
             @RequestParam(value = "pageNum", defaultValue = "1" , required = false) Integer pageNum,
-            @RequestParam(value = "pageSize", defaultValue = "10" , required = false) Integer pageSize){
+            @RequestParam(value = "pageSize", defaultValue = "10" , required = false) Integer pageSize,
+            @RequestParam(value = "status", required = false) String status){
     	
     	AppUser appUser = checkToken.check(request.getHeader("token"));
     	
     	if(appUser!=null){
     		
-    		PageInfo<Order> result = orderService.orderList(pageNum , pageSize, appUser.getId());
+    		PageInfo<Order> result = orderService.orderList(pageNum , pageSize, appUser.getId(),status);
     		
     		return new ResultDto<>(200,"查询成功！",result);
     	}else{

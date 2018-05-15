@@ -26,7 +26,7 @@ public class Order implements Serializable{
 	@ApiModelProperty(name = "orderNum",value = "订单编号")
     private String orderNum;
 
-	@ApiModelProperty(name = "status",value = "订单状态")
+	@ApiModelProperty(name = "status",value = "订单状态0待支付，1待配送（已支付），2配送中，3已完成，4退货")
     private String status;
 
 	@ApiModelProperty(name = "storeId",value = "门店ID")

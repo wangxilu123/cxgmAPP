@@ -11,7 +11,7 @@ public interface OrderService {
 	
     Integer deleteOrder(Integer orderId,Integer userId);
     
-    PageInfo<Order> orderList(Integer pageNum, Integer pageSize,Integer userId);
+    PageInfo<Order> orderList(Integer pageNum, Integer pageSize,Integer userId,String status);
     
     Order findById(Integer orderId);
 }

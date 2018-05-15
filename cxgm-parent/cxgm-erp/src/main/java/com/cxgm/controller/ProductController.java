@@ -110,7 +110,7 @@ public class ProductController {
 			@RequestParam(value = "product.stock") Integer stock,
 			@RequestParam(value = "product.isMarketable") boolean isMarketable,
 			@RequestParam(value = "product.isTop") boolean isTop,
-			@RequestParam(value = "product.introduction") String introduction,
+			@RequestParam(value = "product.introduction",required=false) String introduction,
 			@RequestParam(value = "product.shop") Integer shop
 			) throws SQLException {
 		

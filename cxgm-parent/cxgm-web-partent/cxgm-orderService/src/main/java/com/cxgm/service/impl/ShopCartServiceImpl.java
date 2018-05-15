@@ -90,7 +90,7 @@ public class ShopCartServiceImpl implements ShopCartService {
 
 					String unit = product.get(0).getUnit();
 					
-					shopCart.setSpecifications(weight + "/" + unit);
+					shopCart.setSpecifications((weight!=null&&unit!=null)?(weight + "/" + unit):"");
 					shopCart.setImageUrl(product.get(0).getImage());
 					shopCart.setPrice(product.get(0).getPrice());
 
