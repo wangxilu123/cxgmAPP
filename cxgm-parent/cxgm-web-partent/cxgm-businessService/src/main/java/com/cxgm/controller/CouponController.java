@@ -77,5 +77,4 @@ public class CouponController {
 			return new ResultDto<>(403, "token失效请重新登录！");
 		}
 	}
-	
 }

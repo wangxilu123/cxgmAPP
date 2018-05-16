@@ -8,10 +8,12 @@ import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
 
 import com.cxgm.dao.CouponMapper;
+import com.cxgm.dao.ProductImageMapper;
 import com.cxgm.dao.ProductMapper;
 import com.cxgm.dao.ShopCartMapper;
 import com.cxgm.domain.Coupon;
 import com.cxgm.domain.Product;
+import com.cxgm.domain.ProductImage;
 import com.cxgm.domain.ShopCart;
 import com.cxgm.domain.ShopCartExample;
 import com.cxgm.service.ShopCartService;
@@ -30,6 +32,9 @@ public class ShopCartServiceImpl implements ShopCartService {
 
 	@Autowired
 	private CouponMapper couponMapper;
+	
+	@Autowired
+	private ProductImageMapper productImageMapper;
 
 	@Override
 	public Integer addShopCart(ShopCart shopCart) {
@@ -91,7 +96,13 @@ public class ShopCartServiceImpl implements ShopCartService {
 					String unit = product.get(0).getUnit();
 					
 					shopCart.setSpecifications((weight!=null&&unit!=null)?(weight + "/" + unit):"");
-					shopCart.setImageUrl(product.get(0).getImage());
+					
+					if(product.get(0).getImage()!=null&&"".equals(product.get(0).getImage())){
+						String[] imageIds = product.get(0).getImage().split(",");
+						
+						ProductImage image = productImageMapper.findById(Long.valueOf(imageIds[0]));
+						shopCart.setImageUrl(image!=null?image.getUrl():"");
+					}
 					shopCart.setPrice(product.get(0).getPrice());
 
 				}

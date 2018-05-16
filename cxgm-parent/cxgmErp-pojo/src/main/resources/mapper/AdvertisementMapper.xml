@@ -12,6 +12,7 @@
     <result column="on_shelf" jdbcType="INTEGER" property="onShelf" />
     <result column="shop_id" jdbcType="INTEGER" property="shopId" />
     <result column="adver_name" jdbcType="VARCHAR" property="adverName" />
+    <result column="number" jdbcType="INTEGER" property="number" />
   </resultMap>
   <sql id="Example_Where_Clause">
     <where>
@@ -72,7 +73,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    id, position, type, image_url, notify_url, product_code, create_time, on_shelf, shop_id,adver_name
+    id, position, type, image_url, notify_url, product_code, create_time, on_shelf, shop_id,adver_name,number
   </sql>
   <select id="selectByExample" parameterType="com.cxgm.domain.AdvertisementExample" resultMap="BaseResultMap">
     select
@@ -105,10 +106,10 @@
   <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.cxgm.domain.Advertisement" useGeneratedKeys="true">
     insert into advertisement (position, type, image_url, 
       notify_url, product_code, create_time, 
-      on_shelf, shop_id,adver_name)
+      on_shelf, shop_id,adver_name,number)
     values (#{position,jdbcType=VARCHAR}, #{type,jdbcType=VARCHAR}, #{imageUrl,jdbcType=VARCHAR}, 
       #{notifyUrl,jdbcType=VARCHAR}, #{productCode,jdbcType=VARCHAR}, NOW(), 
-      0, #{shopId,jdbcType=INTEGER},#{adverName,jdbcType=VARCHAR})
+      0, #{shopId,jdbcType=INTEGER},#{adverName,jdbcType=VARCHAR},#{number,jdbcType=INTEGER})
   </insert>
   <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="com.cxgm.domain.Advertisement" useGeneratedKeys="true">
     insert into advertisement
@@ -140,6 +141,9 @@
       <if test="adverName != null">
         adver_name,
       </if>
+      <if test="number != null">
+        number,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="position != null">
@@ -168,6 +172,9 @@
       </if>
       <if test="adverName != null">
         #{adverName,jdbcType=VARCHAR},
+      </if>
+      <if test="number != null">
+        #{number,jdbcType=INTEGER},
       </if>
     </trim>
   </insert>
@@ -210,6 +217,9 @@
       <if test="record.adverName != null">
         adver_name = #{record.adverName,jdbcType=VARCHAR},
       </if>
+      <if test="record.number != null">
+        number = #{record.number,jdbcType=INTEGER},
+      </if>
     </set>
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
@@ -226,7 +236,8 @@
       create_time = #{record.createTime,jdbcType=TIMESTAMP},
       on_shelf = #{record.onShelf,jdbcType=INTEGER},
       shop_id = #{record.shopId,jdbcType=INTEGER},
-      adver_name = #{record.adverName,jdbcType=VARCHAR}
+      adver_name = #{record.adverName,jdbcType=VARCHAR},
+      number = #{record.number,jdbcType=INTEGER}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>

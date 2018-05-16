@@ -8,7 +8,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
 
+import com.cxgm.dao.ProductImageMapper;
 import com.cxgm.dao.ProductMapper;
+import com.cxgm.domain.ProductImage;
 import com.cxgm.domain.ProductTransfer;
 import com.cxgm.domain.ShopCategory;
 import com.cxgm.service.HomePageService;
@@ -20,9 +22,25 @@ public class HomePageServiceImpl implements HomePageService {
 	@Autowired
 	private ProductMapper productDao;
 	
+	@Autowired
+	private ProductImageMapper productImageMapper;
+	
 	@Override
 	public List<ProductTransfer> findListAllWithCategory(Map<String,Object> map){
-		return productDao.findListAllWithCategory(map);
+		
+		List<ProductTransfer> list = productDao.findListAllWithCategory(map);
+		
+		for(ProductTransfer productTransfer : list){
+			if(productTransfer.getImage()!=null&&"".equals(productTransfer.getImage())==false){
+				String[] imageIds = productTransfer.getImage().split(",");
+				
+				ProductImage image = productImageMapper.findById(Long.valueOf(imageIds[0]));
+				
+				productTransfer.setImage(image!=null?image.getUrl():"");
+			}
+			
+		}
+		return list;
 	}
 	
 	@Override

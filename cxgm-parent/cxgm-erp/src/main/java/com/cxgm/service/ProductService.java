@@ -45,7 +45,7 @@ public class ProductService {
 			BigDecimal price,BigDecimal marketPrice,
 			Integer weight,String unit,Integer stock,
 			boolean isMarketable,boolean isTop,String introduction,
-			Integer shop,List<MultipartFile> files) {
+			Integer shop,List<MultipartFile> files,BigDecimal originalPrice) {
 		StringBuilder sb = new StringBuilder();
         try {
         	Product product = new Product();
@@ -95,6 +95,7 @@ public class ProductService {
         	product.setIsMarketable(isMarketable);
         	product.setIntroduction(introduction);
         	product.setShopId(shop);
+        	product.setOriginalPrice(originalPrice);
         	if(files!=null){
                 for(int i=0;i<files.size();i++){  
                     MultipartFile file = files.get(i);
@@ -152,7 +153,7 @@ public class ProductService {
 			BigDecimal price,BigDecimal marketPrice,
 			Integer weight,String unit,Integer stock,
 			boolean isMarketable,boolean isTop,String introduction,
-			Integer shop,List<MultipartFile> files,String[] productImageIds) {
+			Integer shop,List<MultipartFile> files,String[] productImageIds,BigDecimal originalPrice) {
 		StringBuilder sb = new StringBuilder();
         try {
         	Product product = productDao.findProductById(id.longValue());
@@ -201,6 +202,7 @@ public class ProductService {
         	product.setIsMarketable(isMarketable);
         	product.setIntroduction(introduction);
         	product.setShopId(shop);
+        	product.setOriginalPrice(originalPrice);
         	if(files!=null){
                 for(int i=0;i<files.size();i++){  
                     MultipartFile file = files.get(i);

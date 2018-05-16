@@ -98,7 +98,6 @@ if(isEmpty(product.id)){
           </select>
           <%}else{%>
           <select name="parentId" data-am-selected="{btnWidth: '100%', btnSize: 'sm'}">
-          	<option value="0" selected>顶级分类</option>
            <%for(list in productCategoryTreeList){%>
             <option value="${list.id}" <%if (product.productCategoryThirdId! == list.id!){%>selected="selected" <%}%>>${list.name!}</option>
 			
@@ -131,7 +130,13 @@ if(isEmpty(product.id)){
             </div>
           </div>
           <div class="am-form-group am-form-group-sm">
-            <label class="am-u-sm-4 am-u-md-3 am-text-right am-form-label">本店售价</label>
+            <label class="am-u-sm-4 am-u-md-3 am-text-right am-form-label">本店原价</label>
+            <div class="am-u-sm-8 am-u-md-9">
+              <input type="number" class="am-form-field" name="originalPrice" value="${product.originalPrice!0}" min="0" required />
+            </div>
+          </div>
+          <div class="am-form-group am-form-group-sm">
+            <label class="am-u-sm-4 am-u-md-3 am-text-right am-form-label">本店现价</label>
             <div class="am-u-sm-8 am-u-md-9">
               <input type="number" class="am-form-field" name="product.price" value="${product.price!0}" min="0" required />
             </div>

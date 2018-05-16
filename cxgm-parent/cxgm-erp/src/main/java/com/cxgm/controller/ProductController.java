@@ -103,6 +103,7 @@ public class ProductController {
 			@RequestParam(value = "product.descriptionWeight") String descriptionWeight,
 			@RequestParam(value = "parentId") String pid,
 			@RequestParam(value = "product.brand") String brand,
+			@RequestParam(value = "originalPrice") BigDecimal originalPrice,
 			@RequestParam(value = "product.price") BigDecimal price,
 			@RequestParam(value = "product.marketPrice") BigDecimal marketPrice,
 			@RequestParam(value = "product.weight") Integer weight,
@@ -118,7 +119,7 @@ public class ProductController {
 		try {
 			productService.insert(name, productSn, originPlace, storageCondition,
 					descriptionWeight, pid, brand, price, marketPrice, weight, unit, 
-					stock, isMarketable, isTop, introduction, shop, files);
+					stock, isMarketable, isTop, introduction, shop, files,originalPrice);
 			ModelAndView mv = new ModelAndView("redirect:/admin/product/product");
 			return mv;
 		}catch(Exception e) {
@@ -172,6 +173,7 @@ public class ProductController {
 			@RequestParam(value = "product.descriptionWeight") String descriptionWeight,
 			@RequestParam(value = "parentId") String pid,
 			@RequestParam(value = "product.brand") String brand,
+			@RequestParam(value = "originalPrice") BigDecimal originalPrice,
 			@RequestParam(value = "product.price") BigDecimal price,
 			@RequestParam(value = "product.marketPrice") BigDecimal marketPrice,
 			@RequestParam(value = "product.weight") Integer weight,
@@ -179,7 +181,7 @@ public class ProductController {
 			@RequestParam(value = "product.stock") Integer stock,
 			@RequestParam(value = "product.isMarketable") boolean isMarketable,
 			@RequestParam(value = "product.isTop") boolean isTop,
-			@RequestParam(value = "product.introduction") String introduction,
+			@RequestParam(value = "product.introduction",required=false) String introduction,
 			@RequestParam(value = "product.shop") Integer shop
 			) throws SQLException {
 		
@@ -188,7 +190,7 @@ public class ProductController {
 		try {
 			productService.update(id,name, productSn, originPlace, storageCondition,
 					descriptionWeight, pid, brand, price, marketPrice, weight, unit, 
-					stock, isMarketable, isTop, introduction, shop, files,productImageIds);
+					stock, isMarketable, isTop, introduction, shop, files,productImageIds,originalPrice);
 			ModelAndView mv = new ModelAndView("redirect:/admin/product/product");
 			return mv;
 		}catch(Exception e) {

@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.cxgm.common.SystemConfig;
 import com.cxgm.domain.Advertisement;
 import com.cxgm.service.AdvertisementService;
 import com.github.pagehelper.PageInfo;
@@ -37,6 +38,10 @@ public class AdvertisementController {
 	@RequestMapping(value = "/toAdd", method = RequestMethod.GET)
 	public ModelAndView shopToAdd(HttpServletRequest request) throws SQLException {
 		
+		SystemConfig systemConfig = new SystemConfig();
+		systemConfig.setUploadLimit(10);
+		systemConfig.setAllowedUploadImageExtension("png,jpg");
+		request.setAttribute("systemConfig",systemConfig);
 		return new ModelAndView("advertisement/advertisement_add");
 	}
 	

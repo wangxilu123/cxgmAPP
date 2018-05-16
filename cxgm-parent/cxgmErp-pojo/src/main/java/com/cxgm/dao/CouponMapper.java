@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.cxgm.domain.Coupon;
+import com.cxgm.domain.CouponDetail;
 
 public interface CouponMapper {
     int delete(Long id);
@@ -17,5 +18,7 @@ public interface CouponMapper {
     int update(Coupon record);
     
     List<Coupon> findCouponsWithParam(Map<String,Object> map);
-
+    
+    List<CouponDetail> findCouponsByProduct(Map<String,Object> map);
+ 
 }

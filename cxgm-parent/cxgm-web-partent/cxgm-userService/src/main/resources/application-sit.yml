@@ -4,7 +4,7 @@ server:
 eureka:
     client:
         serviceUrl:
-            defaultZone: http://47.104.226.173:41201/eureka/
+            defaultZone: http://192.168.199.105:41201/eureka/
 
     instance:
       lease-renewal-interval-in-seconds: 48
@@ -46,7 +46,7 @@ spring:
 
     redis:
         database: 0
-        host: 127.0.0.1
+        host: 47.104.226.173
         port: 6379
         pool:
           max-active: 8

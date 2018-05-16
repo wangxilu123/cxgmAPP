@@ -35,5 +35,8 @@ public class UserAddress implements Serializable{
     
 	@ApiModelProperty(name = "dimension",value = "维度")
     private String dimension;
+	
+	@ApiModelProperty(name = "idDef",value = "是否为默认值")
+    private Integer idDef;
 
 }

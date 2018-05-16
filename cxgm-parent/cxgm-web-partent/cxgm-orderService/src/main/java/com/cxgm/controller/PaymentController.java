@@ -71,8 +71,8 @@ public class PaymentController {
 	 * @return
 	 * @throws UnsupportedEncodingException
 	 */
-	@ApiOperation(value = "用户下单接口",nickname = "用户下单接口")
-	@RequestMapping(value = "/addOrder", method = RequestMethod.POST, produces = "text/html;charset=UTF-8")
+	@ApiOperation(value = "支付接口",nickname = "支付接口")
+	@RequestMapping(value = "/weixinPay", method = RequestMethod.POST, produces = "text/html;charset=UTF-8")
 	@ResponseBody
     public void topay(HttpServletRequest request,HttpServletResponse response) throws Exception{
 		

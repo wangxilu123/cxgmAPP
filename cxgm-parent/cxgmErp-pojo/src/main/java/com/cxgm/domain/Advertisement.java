@@ -27,4 +27,6 @@ public class Advertisement {
     private Integer shopId;
     
     private String adverName;
+    
+    private Integer number;
 }

@@ -11,6 +11,8 @@
     <result column="order_time" jdbcType="TIMESTAMP" property="orderTime" />
     <result column="order_amount" jdbcType="DECIMAL" property="orderAmount" />
     <result column="remarks" jdbcType="VARCHAR" property="remarks" />
+    <result column="address_id" jdbcType="INTEGER" property="addressId" />
+    <result column="receive_time" jdbcType="VARCHAR" property="receiveTime" />
   </resultMap>
   <sql id="Example_Where_Clause">
     <where>
@@ -71,7 +73,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    id, user_id, order_num, status, store_id, pay_type, order_time, order_amount, remarks
+    id, user_id, order_num, status, store_id, pay_type, order_time, order_amount, remarks,address_id,receive_time
   </sql>
   <select id="selectByExample" parameterType="com.cxgm.domain.OrderExample" resultMap="BaseResultMap">
     select
@@ -96,10 +98,10 @@
   <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.cxgm.domain.Order" useGeneratedKeys="true">
     insert into user_order (user_id, order_num, status, 
       store_id, pay_type, order_time, 
-      order_amount, remarks)
+      order_amount, remarks,address_id,receive_time)
     values (#{userId,jdbcType=INTEGER}, #{orderNum,jdbcType=VARCHAR}, #{status,jdbcType=VARCHAR}, 
       #{storeId,jdbcType=INTEGER}, #{payType,jdbcType=VARCHAR}, #{orderTime,jdbcType=TIMESTAMP}, 
-      #{orderAmount,jdbcType=DECIMAL}, #{remarks,jdbcType=VARCHAR})
+      #{orderAmount,jdbcType=DECIMAL}, #{remarks,jdbcType=VARCHAR},#{addressId,jdbcType=INTEGER},#{receiveTime,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="com.cxgm.domain.Order" useGeneratedKeys="true">
     insert into user_order
@@ -128,6 +130,12 @@
       <if test="remarks != null">
         remarks,
       </if>
+       <if test="addressId != null">
+        address_id,
+      </if>
+       <if test="receiveTime != null">
+        receive_time,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="userId != null">
@@ -154,6 +162,13 @@
       <if test="remarks != null">
         #{remarks,jdbcType=VARCHAR},
       </if>
+      <if test="addressId != null">
+        #{addressId,jdbcType=INTEGER},
+      </if>
+       <if test="receiveTime != null">
+        #{receiveTime,jdbcType=VARCHAR},
+      </if>
+      
     </trim>
   </insert>
   <select id="countByExample" parameterType="com.cxgm.domain.OrderExample" resultType="java.lang.Long">
@@ -192,6 +207,12 @@
       <if test="record.remarks != null">
         remarks = #{record.remarks,jdbcType=VARCHAR},
       </if>
+       <if test="record.addressId != null">
+        address_id = #{record.addressId,jdbcType=INTEGER},
+      </if>
+       <if test="record.receiveTime != null">
+        receive_time = #{record.receiveTime,jdbcType=VARCHAR},
+      </if>
     </set>
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
@@ -207,7 +228,9 @@
       pay_type = #{record.payType,jdbcType=VARCHAR},
       order_time = #{record.orderTime,jdbcType=TIMESTAMP},
       order_amount = #{record.orderAmount,jdbcType=DECIMAL},
-      remarks = #{record.remarks,jdbcType=VARCHAR}
+      remarks = #{record.remarks,jdbcType=VARCHAR},
+      address_id = #{record.addressId,jdbcType=INTEGER},
+      receive_time = #{record.receiveTime,jdbcType=VARCHAR}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>

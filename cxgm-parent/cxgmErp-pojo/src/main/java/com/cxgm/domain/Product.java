@@ -113,7 +113,18 @@ public class Product {
     private Integer isHot;
     
     private String goodCode;
+   
+    private BigDecimal originalPrice;
     
+    
+	public BigDecimal getOriginalPrice() {
+		return originalPrice;
+	}
+
+	public void setOriginalPrice(BigDecimal originalPrice) {
+		this.originalPrice = originalPrice;
+	}
+
 	public String getGoodCode() {
 		return goodCode;
 	}

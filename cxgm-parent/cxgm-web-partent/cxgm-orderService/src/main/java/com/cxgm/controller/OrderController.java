@@ -1,6 +1,8 @@
 package com.cxgm.controller;
 
 
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +16,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.cxgm.common.ResultDto;
 import com.cxgm.domain.AppUser;
+import com.cxgm.domain.CouponDetail;
 import com.cxgm.domain.Order;
+import com.cxgm.domain.OrderProduct;
 import com.cxgm.service.OrderService;
 import com.cxgm.service.impl.CheckToken;
 import com.github.pagehelper.PageInfo;
@@ -99,5 +103,24 @@ public class OrderController {
     		return new ResultDto<>(403,"token失效请重新登录！");
     	}
     }
+    
+    @ApiOperation(value = "根据用户ID和所选商品类别查询可用优惠券", nickname = "根据用户ID和所选商品类别查询可用优惠券")
+	@ApiImplicitParams({
+        @ApiImplicitParam(name = "productList", value = "订单商品列表", required = false, paramType = "query", dataType = "string"),
+    })
+	@PostMapping("/checkCoupon")
+	public ResultDto<List<CouponDetail>> exchangeCoupons(HttpServletRequest request,@RequestBody Order  order){
+		
+		AppUser appUser = checkToken.check(request.getHeader("token"));
+
+		if (appUser != null) {
+  
+			List<CouponDetail> list = orderService.checkCoupons(appUser.getId(), order.getProductList());
+
+			return new ResultDto<>(200, "查询成功！",list);
+		} else {
+			return new ResultDto<>(403, "token失效请重新登录！");
+		}
+	}
 
 }

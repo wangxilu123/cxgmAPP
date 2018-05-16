@@ -45,6 +45,12 @@ public class Order implements Serializable{
 	@ApiModelProperty(name = "remarks",value = "备注")
     private String remarks;
 	
+	@ApiModelProperty(name = "addressId",value = "收货地址ID")
+    private String addressId;
+	
+	@ApiModelProperty(name = "receiveTime",value = "预计收货时间")
+    private Integer receiveTime;
+	
 	private List<OrderProduct>  productList;
 	
 	private List<OrderProductTransfer>  productDetails;

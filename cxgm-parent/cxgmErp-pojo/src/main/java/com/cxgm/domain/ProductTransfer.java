@@ -104,6 +104,8 @@ public class ProductTransfer {
 	private Integer isHot;
 	
 	private String goodCode;
+	
+	private BigDecimal originalPrice;
 
 	// 商品分类
 	private Long cid;
@@ -112,6 +114,14 @@ public class ProductTransfer {
 	private Long parentId;
 
 	
+	public BigDecimal getOriginalPrice() {
+		return originalPrice;
+	}
+
+	public void setOriginalPrice(BigDecimal originalPrice) {
+		this.originalPrice = originalPrice;
+	}
+
 	public String getGoodCode() {
 		return goodCode;
 	}

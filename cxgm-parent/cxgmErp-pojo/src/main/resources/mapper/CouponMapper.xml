@@ -28,6 +28,9 @@
     minimum_price, minimum_quantity, point, price_expression, creation_date, shop_id, 
     product_category_id,product_id
   </sql>
+  <sql id="Base_Column_List1">
+    codeId,productId,categoryId,name,introduction,beginDate,endDate,status
+  </sql>
   <sql id="Blob_Column_List">
     introduction
   </sql>
@@ -143,5 +146,17 @@
     </set>
     where id = #{id,jdbcType=BIGINT}
   </update>
+  
+  <select id="findCouponsByProduct" parameterType="map" resultType="com.cxgm.domain.CouponDetail">
+    select cd.id as codeId,cd.`status`,cp.`name`,cp.introduction,cp.begin_date as beginDate,cp.end_date as endDate,cp.product_category_id as categoryId,cp.product_id as productId
+    from coupon  as cp left join coupon_code as cd on cp.id=cd.coupon_id where (
+    <if test="categoryIds != null and categoryIds.size>0">
+      cp.product_category_id in 
+      <foreach collection="categoryIds" item="item" index="index" open="(" close=")" separator=",">
+            #{item}
+      </foreach>
+     </if>
+    or cp.product_id=#{productId,jdbcType=INTEGER}) and user_id=#{userId,jdbcType=INTEGER} and `status`=0
+  </select>
   
 </mapper>
