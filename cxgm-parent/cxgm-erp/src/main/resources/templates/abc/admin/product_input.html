@@ -9,7 +9,18 @@ if(isEmpty(product.id)){
   isAdd = true;
 }else{
   isEdit = true;
-}%>
+}
+
+var productId = 0;
+if(product.productCategoryThirdId!=null){
+productId = product.productCategoryThirdId;
+}else if(product.productCategoryTwoId!=null){
+productId = product.productCategoryTwoId;
+}else{
+productId = product.productCategoryId;
+}
+
+%>
 </head>
 <body>
 <!-- content start -->
@@ -99,17 +110,17 @@ if(isEmpty(product.id)){
           <%}else{%>
           <select name="parentId" data-am-selected="{btnWidth: '100%', btnSize: 'sm'}">
            <%for(list in productCategoryTreeList){%>
-            <option value="${list.id}" <%if (product.productCategoryThirdId! == list.id!){%>selected="selected" <%}%>>${list.name!}</option>
+            <option value="${list.id}" <%if (productId! == list.id!){%>selected="selected" <%}%>>${list.name!}</option>
 			
 			<%for(child in list.childCategory){%>
-					<option value="${child.id}" <%if (product.productCategoryThirdId! == child.id!){%>selected="selected" <%}%>>
+					<option value="${child.id}" <%if (productId! == child.id!){%>selected="selected" <%}%>>
 					  <%if (child.grade == 1){%>
 					  <%for( i in range(0,child.grade)){%>--<%}%>
 					  <%}%>
 					  ${child.name}
 					</option>
 					<%for(childTwo in child.childCategory){%>
-							<option value="${childTwo.id}" <%if (product.productCategoryThirdId! == childTwo.id!){%>selected="selected" <%}%>>
+							<option value="${childTwo.id}" <%if (productId! == childTwo.id!){%>selected="selected" <%}%>>
 							  <%if (childTwo.grade == 2){%>
 							  <%for( i in range(0,childTwo.grade)){%>--<%}%>
 							  <%}%>
