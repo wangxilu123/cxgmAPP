@@ -53,6 +53,8 @@ public class UserAddressServiceImpl implements UserAddressService {
 
 		example.createCriteria().andUserIdEqualTo(userId);
 		
+		example.setOrderByClause("is_def desc");
+		
 		List<UserAddress> list = addressMapper.selectByExample(example);
 		return list;
 	}

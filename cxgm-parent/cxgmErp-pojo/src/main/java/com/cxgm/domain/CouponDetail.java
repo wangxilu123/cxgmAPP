@@ -19,6 +19,17 @@ public class CouponDetail {
     private Integer productId;
     
     private Integer codeId;
+    
+    private String priceExpression;
+
+    
+	public String getPriceExpression() {
+		return priceExpression;
+	}
+
+	public void setPriceExpression(String priceExpression) {
+		this.priceExpression = priceExpression;
+	}
 
 	public Integer getCodeId() {
 		return codeId;

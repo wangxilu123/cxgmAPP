@@ -148,7 +148,7 @@
   </update>
   
   <select id="findCouponsByProduct" parameterType="map" resultType="com.cxgm.domain.CouponDetail">
-    select cd.id as codeId,cd.`status`,cp.`name`,cp.introduction,cp.begin_date as beginDate,cp.end_date as endDate,cp.product_category_id as categoryId,cp.product_id as productId
+    select cd.id as codeId,cd.`status`,cp.`name`,cp.introduction,cp.begin_date as beginDate,cp.end_date as endDate,cp.product_category_id as categoryId,cp.product_id as productId,cp.price_expression as priceExpression
     from coupon  as cp left join coupon_code as cd on cp.id=cd.coupon_id where (
     <if test="categoryIds != null and categoryIds.size>0">
       cp.product_category_id in 
