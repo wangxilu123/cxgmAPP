@@ -49,7 +49,10 @@ public class Order implements Serializable{
     private String addressId;
 	
 	@ApiModelProperty(name = "receiveTime",value = "预计收货时间")
-    private Integer receiveTime;
+    private String receiveTime;
+	
+	@ApiModelProperty(name = "receipt",value = "发票实体对象")
+    private Receipt receipt;
 	
 	private List<OrderProduct>  productList;
 	

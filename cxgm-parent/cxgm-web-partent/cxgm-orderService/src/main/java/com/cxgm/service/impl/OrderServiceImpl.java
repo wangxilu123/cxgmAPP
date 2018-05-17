@@ -15,6 +15,7 @@ import com.cxgm.dao.CouponMapper;
 import com.cxgm.dao.OrderMapper;
 import com.cxgm.dao.OrderProductMapper;
 import com.cxgm.dao.ProductMapper;
+import com.cxgm.dao.ReceiptMapper;
 import com.cxgm.domain.CouponDetail;
 import com.cxgm.domain.Order;
 import com.cxgm.domain.OrderExample;
@@ -41,6 +42,9 @@ public class OrderServiceImpl implements OrderService{
     
     @Autowired
     private CouponMapper couponMapper;
+    
+    @Autowired
+    private ReceiptMapper receiptMapper;
 
 	@Override
 	public Integer addOrder(Order order) {
@@ -62,6 +66,8 @@ public class OrderServiceImpl implements OrderService{
 			productMapper.update(product);
 			
 		}
+		order.getReceipt().setCreateTime(new Date());
+		receiptMapper.insert(order.getReceipt());
 		
 		return order.getId();
 	}
