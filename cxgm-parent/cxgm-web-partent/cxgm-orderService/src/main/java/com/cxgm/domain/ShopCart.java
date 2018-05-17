@@ -1,9 +1,8 @@
 package com.cxgm.domain;
 
-import io.swagger.annotations.ApiModelProperty;
-
 import java.math.BigDecimal;
 
+import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.ToString;
 
@@ -38,6 +37,9 @@ public class ShopCart {
 	@ApiModelProperty(name = "imageUrl",value = "商品图片")
     private String imageUrl;
 
+	@ApiModelProperty(name = "originalPrice",value = "商品原价")
+    private BigDecimal originalPrice;
+	
 	@ApiModelProperty(name = "price",value = "商品单价")
     private BigDecimal price;
     

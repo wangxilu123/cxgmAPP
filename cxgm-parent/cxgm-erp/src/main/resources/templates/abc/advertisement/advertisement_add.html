@@ -1,42 +1,11 @@
 <!doctype html>
 <html class="no-js">
-<head>
-<% include("admin_head.html",{title: '添加/编辑广告位信息', validatorJS:
-true}){}%> <%var isAdd = false; var isEdit = false;
-if(isEmpty(shop.id)){ isAdd = true; }else{ isEdit = true; }%>
+<head><% include("admin_head.html",{title: '添加/编辑广告位信息',loadUE:
+true,validatorJS: true, livequeryJS: true}){}%> <%var isAdd = false; var
+isEdit = false; if(isEmpty(shop.id)){ isAdd = true; }else{ isEdit =
+true; }%>
 
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
-<style type="text/css">
-body, html {
-	width: 100%;
-	height: 100%;
-	margin: 0;
-	font-family: "微软雅黑";
-	font-size: 14px;
-}
 
-#l-map {
-	height: 300px;
-	width: 100%;
-}
-
-#r-result {
-	width: 100%;
-}
-</style>
-<script type="text/javascript"
-	src="http://api.map.baidu.com/api?v=2.0&ak=Wg05wo3kCKoraGdZqb8PfZI74eAi3MBB"></script>
-<script type="text/javascript"
-	src="http://api.map.baidu.com/library/DrawingManager/1.4/src/DrawingManager_min.js"></script>
-<link rel="stylesheet"
-	href="http://api.map.baidu.com/library/DrawingManager/1.4/src/DrawingManager_min.css" />
-<!--加载检索信息窗口-->
-<script type="text/javascript"
-	src="http://api.map.baidu.com/library/SearchInfoWindow/1.4/src/SearchInfoWindow_min.js"></script>
-<link rel="stylesheet"
-	href="http://api.map.baidu.com/library/SearchInfoWindow/1.4/src/SearchInfoWindow_min.css" />
-<title>鼠标绘制工具</title>
 </head>
 <body>
 	<!-- content start -->
@@ -52,13 +21,13 @@ body, html {
 				class="am-divider am-divider-dashed am-margin-0" />
 
 			<form class="validator-form"
-				action="<%if (isAdd){%>/shop/save<%}else{%>/shop/update<%}%>"
-				method="post">
+				action="<%if (isAdd){%>/advertisement/save<%}else{%>/advertisement/update<%}%>"
+				enctype="multipart/form-data" method="post">
 				<input type="hidden" name="id" value="${shop.id!}" />
 				<div class="am-tabs am-margin" data-am-tabs="{noSwipe: 1}">
 					<ul class="am-tabs-nav am-nav am-nav-tabs">
 						<li class="am-active"><a href="#tab1">基本信息</a></li>
-						<li><a href="#tab2">商品图片</a></li>
+						<li><a href="#tab2">广告图片</a></li>
 					</ul>
 
 					<div class="am-tabs-bd am-form">
@@ -69,7 +38,7 @@ body, html {
 								<label class="am-u-sm-4 am-u-md-3 am-text-right am-form-label">广告名称</label>
 								<div class="am-u-sm-8 am-u-md-9">
 									<%if (isAdd){%> <input type="text"
-										class="am-form-field js-pattern-username" name="shopName"
+										class="am-form-field js-pattern-username" name="adverName"
 										placeholder="广告名称" minlength="2" maxlength="20" required />
 									<div class="am-text-warning am-margin-top-xs am-text-xs">${adverName!}</div>
 									<%}else{%> ${advertisement.adverName!} <input type="hidden"
@@ -81,11 +50,29 @@ body, html {
 								<label class="am-u-sm-4 am-u-md-3 am-text-right am-form-label">广告位置</label>
 								<div class="am-u-sm-8 am-u-md-9">
 									<%if (isAdd){%> <input type="text"
-										class="am-form-field js-pattern-username" name="owner"
-										placeholder="请选择广告类型" minlength="2" maxlength="20" required />
+										class="am-form-field js-pattern-username" name="position"
+										placeholder="请选择广告类型" maxlength="20" required />
 									<div class="am-text-warning am-margin-top-xs am-text-xs">${position!}</div>
 									<%}else{%> ${advertisement.position!} <input type="hidden"
 										name="owner" value="${advertisement.position!}" /> <%}%>
+								</div>
+							</div>
+
+                            <div class="am-form-group am-form-group-sm">
+								<label class="am-u-sm-4 am-u-md-3 am-text-right am-form-label">所属门店</label>
+								<div class="am-u-sm-8 am-u-md-9">
+									<%if(isAdd){%> <select name="shopId"
+										data-am-selected="{btnWidth: '100%', maxHeight: '200px', btnSize: 'sm', btnStyle: 'secondary'}">
+										<option value="0" selected>请选择...</option> <%for(list in
+										shopList){%>
+										<option value="${list.id}">${list.shopName}</option> <%}%>
+									</select> <%}else{%> <select name="shopId"
+										data-am-selected="{btnWidth: '100%', btnSize: 'sm'}">
+										<option value="0" selected>顶级分类</option> <%for(list in
+										shopList){%>
+										<option value="${list.id}"<%if (advertisement.shopId! ==
+											list.id!){%>selected="selected" <%}%>>${list.shopName!}</option> <%}%>
+									</select> <%}%>
 								</div>
 							</div>
 
@@ -94,122 +81,124 @@ body, html {
 								<div class="am-u-sm-8 am-u-md-9">
 									<%if (isAdd){%> <input type="text"
 										class="am-form-field js-pattern-username" name="type"
-										placeholder="请选择广告类型" minlength="2" maxlength="20" required />
-									<div class="am-text-warning am-margin-top-xs am-text-xs">${usernameMessages!}</div>
+										placeholder="请选择广告类型" maxlength="20" required />
+									<div class="am-text-warning am-margin-top-xs am-text-xs">${type!}</div>
 									<%}else{%> ${advertisement.type!} <input type="hidden"
 										name="type" value="${advertisement.type!}" /> <%}%>
 								</div>
 							</div>
 
 							<div class="am-form-group am-form-group-sm">
-								<label class="am-u-sm-4 am-u-md-3 am-text-right am-form-label">广告序号</label>
+								<label class="am-u-sm-4 am-u-md-3 am-text-right am-form-label">排列序号</label>
 								<div class="am-u-sm-8 am-u-md-9">
 									<%if (isAdd){%> <input type="text"
 										class="am-form-field js-pattern-username" name="number"
-										placeholder="广告序号" minlength="2" maxlength="20" required />
-									<div class="am-text-warning am-margin-top-xs am-text-xs">${usernameMessages!}</div>
+										placeholder="广告序号" maxlength="20" required />
+									<div class="am-text-warning am-margin-top-xs am-text-xs">${number!}</div>
 									<%}else{%> ${advertisement.number!} <input type="hidden"
 										name="number" value="${advertisement.number!}" /> <%}%>
 								</div>
 							</div>
 
-							<div class="am-tab-panel am-fade app-min-height app-product-image"
-								id="tab2">
-								<ul class="am-avg-sm-2 am-avg-md-4 am-thumbnails" id="file-list">
-									<%for(list in advertisement.imageUrl!){%>
-									<li>
-										<div class="am-thumbnail">
-											<input type="hidden" name="productImageIds"
-												value="${list.id}" /> <input type="hidden"
-												name="productImageParameterTypes" value="productImageId" />
-											<img src="${list.url}" class="am-img-bdrs">
-											<ul class="am-thumbnail-caption am-avg-sm-3">
-												<li><button type="button"
-														class="am-btn am-btn-default am-text-warning am-btn-xs am-center opr-img-left">
-														<span class="am-icon-chevron-left"></span>
-													</button></li>
-												<li><button type="button"
-														class="am-btn am-btn-default am-text-danger am-btn-xs am-center opr-img-delete">
-														<span class="am-icon-trash"></span>
-													</button></li>
-												<li><button type="button"
-														class="am-btn am-btn-default am-text-warning am-btn-xs am-center opr-img-right">
-														<span class="am-icon-chevron-right"></span>
-													</button></li>
-											</ul>
-											<hr data-am-widget="divider"
-												class="am-divider am-divider-dashed am-margin-0" />
-											<ul class="am-thumbnail-caption am-avg-sm-1">
-												<li>
-													<div class="am-form-group am-form-file">
-														<button type="button"
-															class="am-btn am-btn-success am-btn-xs am-center"
-															disabled="disabled">
-															<i class="am-icon-info-circle"></i> 已经上传
-														</button>
-													</div>
-												</li>
-											</ul>
-										</div>
-									</li> <%}%>
-									<li>
-										<div class="am-thumbnail">
-											<div
-												class="app-product-image-preview am-text-center am-text-warning">
-												暂无图片</div>
-											<ul class="am-thumbnail-caption am-avg-sm-3">
-												<li><button type="button"
-														class="am-btn am-btn-default am-text-warning am-btn-xs am-center opr-img-left">
-														<span class="am-icon-chevron-left"></span>
-													</button></li>
-												<li><button type="button"
-														class="am-btn am-btn-default am-text-danger am-btn-xs am-center opr-img-delete"
-														disabled="disabled">
-														<span class="am-icon-trash"></span>
-													</button></li>
-												<li><button type="button"
-														class="am-btn am-btn-default am-text-warning am-btn-xs am-center opr-img-right">
-														<span class="am-icon-chevron-right"></span>
-													</button></li>
-											</ul>
-											<hr data-am-widget="divider"
-												class="am-divider am-divider-dashed am-margin-0" />
-											<ul class="am-thumbnail-caption am-avg-sm-1">
-												<li>
-													<div class="am-form-group am-form-file">
-														<%if (systemConfig.allowedUploadImageExtension != ""){%>
-														<button type="button"
-															class="am-btn am-btn-default am-btn-xs am-center">
-															<i class="am-icon-cloud-upload"></i> 上传图片
-														</button>
-														<input class="doc-form-file" name="productImages"
-															type="file"> <%}else{%>
-														<button type="button"
-															class="am-btn am-btn-danger am-btn-xs am-center"
-															disabled="disabled">
-															<i class="am-icon-warning"></i> 不允许上传
-														</button>
-														<%}%>
-													</div>
-												</li>
-											</ul>
-										</div>
-									</li>
-								</ul>
+							
 
-								<div class="am-alert am-alert-warning am-text-xs">
-									<span class="am-icon-warning"> </span> <%if
-									(systemConfig.allowedUploadImageExtension != ""){%> <%if
-									((systemConfig.uploadLimit != 0) && (systemConfig.uploadLimit <
-									1024)){%> 小于${systemConfig.uploadLimit}KB <%}else if
-									(systemConfig.uploadLimit >= 1024){%>
-									小于${systemConfig.uploadLimit / 1024}MB <%}%> <%for(list in
-									strutil.split(systemConfig.allowedUploadImageExtension,@com.cxgm.common.SystemConfig.EXTENSION_SEPARATOR)){%>
-									<%if (listLP.last){%> *.${list}; <%}else{%> *.${list} <%}%>
-									<%}%> <%}else{%> 系统设置不允许上传图片文件! <%}%>
-								</div>
-								
+						</div>
+						<div class="am-tab-panel am-fade app-min-height app-product-image"
+							id="tab2">
+							<ul class="am-avg-sm-2 am-avg-md-4 am-thumbnails" id="file-list">
+								<%for(list in advertisement.imageUrl!){%>
+								<li>
+									<div class="am-thumbnail">
+										<input type="hidden" name="productImageIds" value="${list.id}" />
+										<input type="hidden" name="productImageParameterTypes"
+											value="productImageId" /> <img src="${list.url}"
+											class="am-img-bdrs">
+										<ul class="am-thumbnail-caption am-avg-sm-3">
+											<li><button type="button"
+													class="am-btn am-btn-default am-text-warning am-btn-xs am-center opr-img-left">
+													<span class="am-icon-chevron-left"></span>
+												</button></li>
+											<li><button type="button"
+													class="am-btn am-btn-default am-text-danger am-btn-xs am-center opr-img-delete">
+													<span class="am-icon-trash"></span>
+												</button></li>
+											<li><button type="button"
+													class="am-btn am-btn-default am-text-warning am-btn-xs am-center opr-img-right">
+													<span class="am-icon-chevron-right"></span>
+												</button></li>
+										</ul>
+										<hr data-am-widget="divider"
+											class="am-divider am-divider-dashed am-margin-0" />
+										<ul class="am-thumbnail-caption am-avg-sm-1">
+											<li>
+												<div class="am-form-group am-form-file">
+													<button type="button"
+														class="am-btn am-btn-success am-btn-xs am-center"
+														disabled="disabled">
+														<i class="am-icon-info-circle"></i> 已经上传
+													</button>
+												</div>
+											</li>
+										</ul>
+									</div>
+								</li> <%}%>
+								<li>
+									<div class="am-thumbnail">
+										<div
+											class="app-product-image-preview am-text-center am-text-warning">
+											暂无图片</div>
+										<ul class="am-thumbnail-caption am-avg-sm-3">
+											<li><button type="button"
+													class="am-btn am-btn-default am-text-warning am-btn-xs am-center opr-img-left">
+													<span class="am-icon-chevron-left"></span>
+												</button></li>
+											<li><button type="button"
+													class="am-btn am-btn-default am-text-danger am-btn-xs am-center opr-img-delete"
+													disabled="disabled">
+													<span class="am-icon-trash"></span>
+												</button></li>
+											<li><button type="button"
+													class="am-btn am-btn-default am-text-warning am-btn-xs am-center opr-img-right">
+													<span class="am-icon-chevron-right"></span>
+												</button></li>
+										</ul>
+										<hr data-am-widget="divider"
+											class="am-divider am-divider-dashed am-margin-0" />
+										<ul class="am-thumbnail-caption am-avg-sm-1">
+											<li>
+												<div class="am-form-group am-form-file">
+													<%if (systemConfig.allowedUploadImageExtension != ""){%>
+													<button type="button"
+														class="am-btn am-btn-default am-btn-xs am-center">
+														<i class="am-icon-cloud-upload"></i> 上传图片
+													</button>
+													<input class="doc-form-file" name="adverImages" type="file">
+													<%}else{%>
+													<button type="button"
+														class="am-btn am-btn-danger am-btn-xs am-center"
+														disabled="disabled">
+														<i class="am-icon-warning"></i> 不允许上传
+													</button>
+													<%}%>
+												</div>
+											</li>
+										</ul>
+									</div>
+								</li>
+							</ul>
+
+							<div class="am-alert am-alert-warning am-text-xs">
+								<span class="am-icon-warning"> </span> <%if
+								(systemConfig.allowedUploadImageExtension != ""){%> <%if
+								((systemConfig.uploadLimit != 0) && (systemConfig.uploadLimit <
+								1024)){%> 小于${systemConfig.uploadLimit}KB <%}else if
+								(systemConfig.uploadLimit >= 1024){%>
+								小于${systemConfig.uploadLimit / 1024}MB <%}%> <%for(list in
+								strutil.split(systemConfig.allowedUploadImageExtension,@com.cxgm.common.SystemConfig.EXTENSION_SEPARATOR)){%>
+								<%if (listLP.last){%> *.${list}; <%}else{%> *.${list} <%}%>
+								<%}%> <%}else{%> 系统设置不允许上传图片文件! <%}%>
 							</div>
+
 						</div>
 						<div class="am-margin">
 							<button type="submit" class="am-btn am-btn-primary">
@@ -224,71 +213,118 @@ body, html {
 		</div>
 	</div>
 	<!-- content end -->
-	
-<script>
-  $().ready(function() {
-    
-    // 商品图片左移
-    $(".opr-img-left").livequery("click", function() {
-        var $productImageLi = $(this).parent().parent().parent().parent();
-        var $productImagePrevLi = $productImageLi.prev("li");
-        if ($productImagePrevLi.length > 0) {
-            $productImagePrevLi.insertAfter($productImageLi);
-        }
-    });
-    
-    // 商品图片右移
-    $(".opr-img-right").livequery("click", function() {
-        var $productImageLi = $(this).parent().parent().parent().parent();
-        var $productImageNextLi = $productImageLi.next("li");
-        if ($productImageNextLi.length > 0) {
-            $productImageNextLi.insertBefore($productImageLi);
-        }
-    });
-    
-    // 商品图片删除
-    $(".opr-img-delete").livequery("click", function() {
-        var $productImageLi = $(this).parent().parent().parent().parent();
-        $productImageLi.remove();
-    });
-    
-    // 添加图片
-    var productImageLiHtmlTemp = '<li><div class="am-thumbnail">'
-        + '<div class="app-product-image-preview am-text-center am-text-warning">暂无图片</div>'
-        + '<ul class="am-thumbnail-caption am-avg-sm-3">'
-        + '<li><button type="button" class="am-btn am-btn-default am-text-warning am-btn-xs am-center opr-img-left"><span class="am-icon-chevron-left"></span></button></li>'
-        + '<li><button type="button" class="am-btn am-btn-default am-text-danger am-btn-xs am-center opr-img-delete" disabled="disabled"><span class="am-icon-trash"></span></button></li>'
-        + '<li><button type="button" class="am-btn am-btn-default am-text-warning am-btn-xs am-center opr-img-right"><span class="am-icon-chevron-right"></span></button></li>'
-        + '</ul><hr data-am-widget="divider" class="am-divider am-divider-dashed am-margin-0" /><ul class="am-thumbnail-caption am-avg-sm-1">'
-        + '<li><div class="am-form-group am-form-file"><button type="button" class="am-btn am-btn-default am-btn-xs am-center"><i class="am-icon-cloud-upload"></i> 上传图片</button><input class="doc-form-file" name="productImages" type="file"></div></li>';
-        + '</ul></div></li>';
-        
-    var index = 0;
-    $("input.doc-form-file").livequery('change', function() {
-      var $this = $(this);
-      var $productImageLi = $this.parent().parent().parent().parent();
-      var $productImagePreview = $productImageLi.find(".app-product-image-preview");
-      var $productImageDeteleBtn = $productImageLi.find(".opr-img-delete");
-      var fileName = $this.val().substr($this.val().lastIndexOf("\\") + 1);
-      if (/(<%for(list in strutil.split(systemConfig.allowedUploadImageExtension,@com.cxgm.common.SystemConfig.EXTENSION_SEPARATOR)){%><%if (!listLP.last){%>.${list}|<%}else{%>.${list}<%}%><%}%>)$/i.test($this.val()) == false) {
-        $.message("您选择的文件格式错误！");
-        return false;
-      }
-      $productImagePreview.html('<img src="' + window.URL.createObjectURL($this[0].files[0]) + '" class="am-img-bdrs"><input type="hidden" name="productImageParameterTypes" value="productImageFile" />');
-      if($productImageDeteleBtn.attr('disabled')){
-          index++;
-          $productImageDeteleBtn.attr('disabled',false);
-          var productImageLiHtml = productImageLiHtmlTemp;
-          productImageLiHtml = productImageLiHtml.replace("productImages", "productImages");
-          $('#file-list').append(productImageLiHtml);
-      }
-    });
-    
-    $('#doc-my-tabs').find('a').on('opened.tabs.amui', function(e) {
-      $('div.am-tab-panel').removeAttr("style");
-    })
-  });
-</script>
+
+	<script>
+		$()
+				.ready(
+						function() {
+
+							// 商品图片左移
+							$(".opr-img-left")
+									.livequery(
+											"click",
+											function() {
+												var $productImageLi = $(this)
+														.parent().parent()
+														.parent().parent();
+												var $productImagePrevLi = $productImageLi
+														.prev("li");
+												if ($productImagePrevLi.length > 0) {
+													$productImagePrevLi
+															.insertAfter($productImageLi);
+												}
+											});
+
+							// 商品图片右移
+							$(".opr-img-right")
+									.livequery(
+											"click",
+											function() {
+												var $productImageLi = $(this)
+														.parent().parent()
+														.parent().parent();
+												var $productImageNextLi = $productImageLi
+														.next("li");
+												if ($productImageNextLi.length > 0) {
+													$productImageNextLi
+															.insertBefore($productImageLi);
+												}
+											});
+
+							// 商品图片删除
+							$(".opr-img-delete").livequery(
+									"click",
+									function() {
+										var $productImageLi = $(this).parent()
+												.parent().parent().parent();
+										$productImageLi.remove();
+									});
+
+							// 添加图片
+							var productImageLiHtmlTemp = '<li><div class="am-thumbnail">'
+									+ '<div class="app-product-image-preview am-text-center am-text-warning">暂无图片</div>'
+									+ '<ul class="am-thumbnail-caption am-avg-sm-3">'
+									+ '<li><button type="button" class="am-btn am-btn-default am-text-warning am-btn-xs am-center opr-img-left"><span class="am-icon-chevron-left"></span></button></li>'
+									+ '<li><button type="button" class="am-btn am-btn-default am-text-danger am-btn-xs am-center opr-img-delete" disabled="disabled"><span class="am-icon-trash"></span></button></li>'
+									+ '<li><button type="button" class="am-btn am-btn-default am-text-warning am-btn-xs am-center opr-img-right"><span class="am-icon-chevron-right"></span></button></li>'
+									+ '</ul><hr data-am-widget="divider" class="am-divider am-divider-dashed am-margin-0" /><ul class="am-thumbnail-caption am-avg-sm-1">'
+									+ '<li><div class="am-form-group am-form-file"><button type="button" class="am-btn am-btn-default am-btn-xs am-center"><i class="am-icon-cloud-upload"></i> 上传图片</button><input class="doc-form-file" name="adverImages" type="file"></div></li>';
+							+'</ul></div></li>';
+
+							var index = 0;
+							$("input.doc-form-file")
+									.livequery(
+											'change',
+											function() {
+												var $this = $(this);
+												var $productImageLi = $this
+														.parent().parent()
+														.parent().parent();
+												var $productImagePreview = $productImageLi
+														.find(".app-product-image-preview");
+												var $productImageDeteleBtn = $productImageLi
+														.find(".opr-img-delete");
+												var fileName = $this
+														.val()
+														.substr(
+																$this
+																		.val()
+																		.lastIndexOf(
+																				"\\") + 1);
+												if (/(<%for(list in strutil.split(systemConfig.allowedUploadImageExtension,@com.cxgm.common.SystemConfig.EXTENSION_SEPARATOR)){%><%if (!listLP.last){%>.${list}|<%}else{%>.${list}<%}%><%}%>)$/i
+														.test($this.val()) == false) {
+													$.message("您选择的文件格式错误！");
+													return false;
+												}
+												$productImagePreview
+														.html('<img src="'
+																+ window.URL
+																		.createObjectURL($this[0].files[0])
+																+ '" class="am-img-bdrs"><input type="hidden" name="productImageParameterTypes" value="productImageFile" />');
+												if ($productImageDeteleBtn
+														.attr('disabled')) {
+													index++;
+													$productImageDeteleBtn
+															.attr('disabled',
+																	false);
+													var productImageLiHtml = productImageLiHtmlTemp;
+													productImageLiHtml = productImageLiHtml
+															.replace(
+																	"adverImages",
+																	"adverImages");
+													$('#file-list').append(
+															productImageLiHtml);
+												}
+											});
+
+							$('#doc-my-tabs').find('a').on(
+									'opened.tabs.amui',
+									function(e) {
+										$('div.am-tab-panel').removeAttr(
+												"style");
+									})
+						});
+	</script>
 </body>
 </html>
 

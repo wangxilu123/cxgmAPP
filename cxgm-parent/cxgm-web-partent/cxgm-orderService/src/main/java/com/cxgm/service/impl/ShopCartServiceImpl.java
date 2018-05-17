@@ -104,6 +104,7 @@ public class ShopCartServiceImpl implements ShopCartService {
 						shopCart.setImageUrl(image!=null?image.getUrl():"");
 					}
 					shopCart.setPrice(product.get(0).getPrice());
+					shopCart.setOriginalPrice(product.get(0).getOriginalPrice());
 
 				}
 				

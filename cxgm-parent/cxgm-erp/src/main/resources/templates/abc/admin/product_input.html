@@ -9,9 +9,8 @@ if(isEmpty(product.id)){
   isAdd = true;
 }else{
   isEdit = true;
-}
-
-var productId = 0;
+  
+  var productId = 0;
 if(product.productCategoryThirdId!=null){
 productId = product.productCategoryThirdId;
 }else if(product.productCategoryTwoId!=null){
@@ -19,7 +18,7 @@ productId = product.productCategoryTwoId;
 }else{
 productId = product.productCategoryId;
 }
-
+}
 %>
 </head>
 <body>

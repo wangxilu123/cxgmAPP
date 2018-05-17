@@ -8,8 +8,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
 
+import com.cxgm.dao.AdvertisementMapper;
 import com.cxgm.dao.ProductImageMapper;
 import com.cxgm.dao.ProductMapper;
+import com.cxgm.domain.Advertisement;
+import com.cxgm.domain.AdvertisementExample;
 import com.cxgm.domain.ProductImage;
 import com.cxgm.domain.ProductTransfer;
 import com.cxgm.domain.ShopCategory;
@@ -24,6 +27,9 @@ public class HomePageServiceImpl implements HomePageService {
 	
 	@Autowired
 	private ProductImageMapper productImageMapper;
+	
+	@Autowired
+	private AdvertisementMapper advertisementMapper;
 	
 	@Override
 	public List<ProductTransfer> findListAllWithCategory(Map<String,Object> map){
@@ -72,5 +78,15 @@ public class HomePageServiceImpl implements HomePageService {
 		map.put("shopId", shopId);
 		map.put("productCategoryTwoId", productCategoryTwoId);
 		return productDao.findShopCategoryThird(map);
+	}
+	
+	@Override
+	public List<Advertisement> findAdvertisement(Integer shopId) {
+		
+		AdvertisementExample example = new AdvertisementExample();
+		
+		example.createCriteria().andShopIdEqualTo(shopId).andOnShelfEqualTo(1);
+		
+		return advertisementMapper.selectByExample(example);
 	}
 }
