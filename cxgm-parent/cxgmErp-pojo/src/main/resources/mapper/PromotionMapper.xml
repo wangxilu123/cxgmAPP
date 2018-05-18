@@ -131,4 +131,11 @@
     </set>
     where id = #{id,jdbcType=BIGINT}
   </update>
+  
+  <select id="findByProductId" parameterType="map" resultMap="ResultMapWithBLOBs">
+    
+    select pn.id, pn.name, pn.title, pn.begin_date, pn.end_date, pn.minimum_quantity, pn.maximum_quantity, pn.minimum_price, 
+    pn.maximum_price, pn.price_expression, pn.is_free_shipping, pn.is_coupon_allowed, pn.shop_id, pn.orders, pn.creation_date from promotion pn left join promotion_product pt on pn.id=pt.promotions where pn.shop_id=#{shopId,jdbcType=INTEGER} and pt.products=#{productId,jdbcType=INTEGER}
+  
+  </select>
 </mapper>

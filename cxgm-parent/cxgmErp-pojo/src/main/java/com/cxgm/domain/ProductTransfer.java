@@ -107,13 +107,14 @@ public class ProductTransfer {
 	
 	private BigDecimal originalPrice;
 	
-	private Promotion  promotionList;
+	private List<Promotion>  promotionList;
 
-	public Promotion getPromotionList() {
+
+	public List<Promotion> getPromotionList() {
 		return promotionList;
 	}
 
-	public void setPromotionList(Promotion promotionList) {
+	public void setPromotionList(List<Promotion> promotionList) {
 		this.promotionList = promotionList;
 	}
 

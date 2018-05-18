@@ -1,6 +1,7 @@
 package com.cxgm.domain;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -42,10 +43,13 @@ public class ShopCart {
 	
 	@ApiModelProperty(name = "price",value = "商品单价")
     private BigDecimal price;
+	
+	@ApiModelProperty(name = "promotionList",value = "商品促销信息")
+	private List<Promotion>  promotionList;
     
-	@ApiModelProperty(name = "coupon",value = "商品促销")
+	@ApiModelProperty(name = "coupon",value = "商品优惠券")
     private String coupon;
     
-	@ApiModelProperty(name = "couponId",value = "商品促销ID")
+	@ApiModelProperty(name = "couponId",value = "商品优惠券ID")
     private Integer couponId;
 }

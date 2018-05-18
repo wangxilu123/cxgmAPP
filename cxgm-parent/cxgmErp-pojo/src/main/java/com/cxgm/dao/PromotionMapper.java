@@ -16,4 +16,6 @@ public interface PromotionMapper {
     int update(Promotion record);
 
     List<Promotion> findPromotionsWithParam(Map<String,Object> map);
+    
+    List<Promotion> findByProductId(Map<String,Object> map);
 }

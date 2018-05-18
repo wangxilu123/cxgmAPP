@@ -11,10 +11,12 @@ import org.springframework.stereotype.Service;
 import com.cxgm.dao.AdvertisementMapper;
 import com.cxgm.dao.ProductImageMapper;
 import com.cxgm.dao.ProductMapper;
+import com.cxgm.dao.PromotionMapper;
 import com.cxgm.domain.Advertisement;
 import com.cxgm.domain.AdvertisementExample;
 import com.cxgm.domain.ProductImage;
 import com.cxgm.domain.ProductTransfer;
+import com.cxgm.domain.Promotion;
 import com.cxgm.domain.ShopCategory;
 import com.cxgm.service.HomePageService;
 
@@ -31,6 +33,9 @@ public class HomePageServiceImpl implements HomePageService {
 	@Autowired
 	private AdvertisementMapper advertisementMapper;
 	
+	@Autowired
+	private PromotionMapper promotionMapper;
+	
 	@Override
 	public List<ProductTransfer> findListAllWithCategory(Map<String,Object> map){
 		
@@ -44,6 +49,10 @@ public class HomePageServiceImpl implements HomePageService {
 				
 				productTransfer.setImage(image!=null?image.getUrl():"");
 			}
+			//根据商品ID和门店ID查询促销信息
+			List<Promotion> promotionList = promotionMapper.findByProductId(map);
+			
+			productTransfer.setPromotionList(promotionList);
 			
 		}
 		return list;
