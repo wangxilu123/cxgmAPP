@@ -97,7 +97,7 @@ public class ShopCartServiceImpl implements ShopCartService {
 					
 					shopCart.setSpecifications((weight!=null&&unit!=null)?(weight + "/" + unit):"");
 					
-					if(product.get(0).getImage()!=null&&"".equals(product.get(0).getImage())){
+					if(product.get(0).getImage()!=null&&"".equals(product.get(0).getImage())==false){
 						String[] imageIds = product.get(0).getImage().split(",");
 						
 						ProductImage image = productImageMapper.findById(Long.valueOf(imageIds[0]));

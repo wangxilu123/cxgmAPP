@@ -106,6 +106,16 @@ public class ProductTransfer {
 	private String goodCode;
 	
 	private BigDecimal originalPrice;
+	
+	private Promotion  promotionList;
+
+	public Promotion getPromotionList() {
+		return promotionList;
+	}
+
+	public void setPromotionList(Promotion promotionList) {
+		this.promotionList = promotionList;
+	}
 
 	// 商品分类
 	private Long cid;

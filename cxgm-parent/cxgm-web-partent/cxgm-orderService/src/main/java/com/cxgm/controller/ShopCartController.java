@@ -97,7 +97,7 @@ public class ShopCartController {
 	}
 
 	@ApiOperation(value = "购物车移除商品接口", nickname = "购物车移除商品接口")
-	@ApiImplicitParam(name = "shopCartIds", value = "购物车商品ID", required = true, dataType = "Integer")
+	@ApiImplicitParam(name = "shopCartIds", value = "购物车商品ID", required = true, dataType = "String")
 	@PostMapping("/deleteShopCart")
 	public ResultDto<Integer> deleteOrder(HttpServletRequest request,
 			@RequestParam(value = "shopCartIds", required = false) String shopCartIds) {
