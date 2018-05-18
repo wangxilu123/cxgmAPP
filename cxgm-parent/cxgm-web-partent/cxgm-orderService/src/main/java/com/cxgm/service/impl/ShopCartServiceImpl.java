@@ -10,10 +10,12 @@ import org.springframework.stereotype.Service;
 import com.cxgm.dao.CouponMapper;
 import com.cxgm.dao.ProductImageMapper;
 import com.cxgm.dao.ProductMapper;
+import com.cxgm.dao.PromotionMapper;
 import com.cxgm.dao.ShopCartMapper;
 import com.cxgm.domain.Coupon;
 import com.cxgm.domain.Product;
 import com.cxgm.domain.ProductImage;
+import com.cxgm.domain.Promotion;
 import com.cxgm.domain.ShopCart;
 import com.cxgm.domain.ShopCartExample;
 import com.cxgm.service.ShopCartService;
@@ -35,6 +37,9 @@ public class ShopCartServiceImpl implements ShopCartService {
 	
 	@Autowired
 	private ProductImageMapper productImageMapper;
+	
+	@Autowired
+	private PromotionMapper promotionMapper;
 
 	@Override
 	public Integer addShopCart(ShopCart shopCart) {
@@ -108,7 +113,7 @@ public class ShopCartServiceImpl implements ShopCartService {
 
 				}
 				
-				// 根据商品唯一标识查询商品促销信息
+				// 根据商品唯一标识查询商品优惠券信息
 				HashMap<String, Object> map1 = new HashMap<String, Object>();
 
 				map1.put("shopId", shopCart.getShopId());
@@ -120,6 +125,11 @@ public class ShopCartServiceImpl implements ShopCartService {
 					shopCart.setCoupon(coupon.get(0).getName());
 					shopCart.setCouponId(coupon.get(0).getId().intValue());
 				}
+				
+				//根据商品ID和门店ID查询促销信息
+				List<Promotion> promotionList = promotionMapper.findByProductId(map);
+				
+				shopCart.setPromotionList(promotionList);
 			}
 		}
 
