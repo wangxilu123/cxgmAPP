@@ -1,5 +1,6 @@
 package com.cxgm.controller;
 
+import java.math.BigDecimal;
 import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.List;
@@ -20,8 +21,12 @@ import org.springframework.web.servlet.ModelAndView;
 import com.cxgm.common.RSResult;
 import com.cxgm.domain.Admin;
 import com.cxgm.domain.Coupon;
+import com.cxgm.domain.Product;
+import com.cxgm.domain.ProductCategory;
 import com.cxgm.domain.Promotion;
 import com.cxgm.service.CouponService;
+import com.cxgm.service.ProductCategoryService;
+import com.cxgm.service.ProductService;
 import com.cxgm.service.PromotionService;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
@@ -36,6 +41,12 @@ public class PromotionController {
 	
 	@Autowired
 	CouponService couponService;
+	
+	@Autowired
+	ProductCategoryService productCategoryService;
+	
+	@Autowired
+	ProductService productService;
 	
 	@RequestMapping(value = "/admin/promotion", method = RequestMethod.GET)
 	public ModelAndView getPromotion(HttpServletRequest request,
@@ -100,7 +111,11 @@ public class PromotionController {
 		Map<String, Object> map = new HashMap<>();
 		map.put("shopId", admin.getShopId());
 		List<Coupon> coupons = couponService.findCouponsWithParam(map);
+		List<Product> products = productService.findProducts(map);
+		List<ProductCategory> productCategoryTreeList = productCategoryService.getProductCategory(0);
+		request.setAttribute("productCategoryTreeList", productCategoryTreeList);
 		request.setAttribute("allCoupon", coupons);
+		request.setAttribute("products", products);
 		request.setAttribute("shopId", admin.getShopId());
 		return new ModelAndView("admin/promotion_input");
 	}
@@ -110,17 +125,24 @@ public class PromotionController {
 			@RequestParam(value = "promotion.title") String title,
 			@RequestParam(value = "promotion.beginDate") String beginDate,
 			@RequestParam(value = "promotion.endDate") String endDate,
+			@RequestParam(value = "promotion.minimumPrice",required=false) BigDecimal minimumPrice,
+			@RequestParam(value = "promotion.maximumPrice",required=false) BigDecimal maximumPrice,
+			@RequestParam(value = "promotion.minimumQuantity",required=false) Integer minimumQuantity,
+			@RequestParam(value = "promotion.maximumQuantity",required=false) Integer maximumQuantity,
 			@RequestParam(value = "promotion.priceExpression") String priceExpression,
-			@RequestParam(value = "promotion.isCouponAllowed") boolean isCouponAllowed,
+			@RequestParam(value = "promotion.isCouponAllowed",required=false) boolean isCouponAllowed,
 			@RequestParam(value = "promotion.introduction",required=false) String introduction,
+			@RequestParam(value = "promotion.catetoryId") Integer catetoryId,
+			@RequestParam(value = "promotion.productId") Integer productId,
 			@RequestParam(value = "promotion.shop") Integer shopId) throws SQLException {
 		try {
 			String[] couponIds = request.getParameterValues("couponIds");
-			promotionService.insert(name, title, beginDate, endDate, shopId, priceExpression, isCouponAllowed, introduction, shopId, couponIds);
+			promotionService.insert(name, title, beginDate, endDate, minimumPrice, maximumPrice, minimumQuantity, maximumQuantity, priceExpression, isCouponAllowed, introduction, catetoryId, productId,shopId, couponIds);
 			ModelAndView mv = new ModelAndView("redirect:/admin/promotion");
 			return mv;
 		} catch (Exception e) {
-			request.setAttribute("errorMessages", e.getMessage());
+			e.printStackTrace();
+			request.setAttribute("errorMessages", "操作失误");
 			request.setAttribute("redirectionUrl", "/admin/promotion");
 			return new ModelAndView("admin/error");
 		}
@@ -129,14 +151,22 @@ public class PromotionController {
 	public ModelAndView promotionEdit(HttpServletRequest request) {
 		String id = request.getParameter("id");
 		Promotion promotion = promotionService.select(Long.valueOf(id));
+		int categoryId = promotionService.getCategoryId(promotion.getId().intValue());
+		promotion.setProductCategoryId(categoryId);
+		int productId = promotionService.getProductId(promotion.getId().intValue());
+		promotion.setProductId(productId);
 		SecurityContext ctx = SecurityContextHolder.getContext();
 		Authentication auth = ctx.getAuthentication();
 		Admin admin = (Admin) auth.getPrincipal();
 		Map<String, Object> map = new HashMap<>();
 		map.put("shopId", admin.getShopId());
 		List<Coupon> coupons = couponService.findCouponsWithParam(map);
+		List<Product> products = productService.findProducts(map);
+		List<ProductCategory> productCategoryTreeList = productCategoryService.getProductCategory(0);
+		request.setAttribute("productCategoryTreeList", productCategoryTreeList);
 		request.setAttribute("allCoupon", coupons);
 		request.setAttribute("shopId", admin.getShopId());
+		request.setAttribute("products", products);
 		request.setAttribute("promotion", promotion);
 		return new ModelAndView("admin/promotion_input");
 	}
@@ -147,17 +177,24 @@ public class PromotionController {
 			@RequestParam(value = "promotion.title") String title,
 			@RequestParam(value = "promotion.beginDate") String beginDate,
 			@RequestParam(value = "promotion.endDate") String endDate,
+			@RequestParam(value = "promotion.minimumPrice") BigDecimal minimumPrice,
+			@RequestParam(value = "promotion.maximumPrice") BigDecimal maximumPrice,
+			@RequestParam(value = "promotion.minimumQuantity") Integer minimumQuantity,
+			@RequestParam(value = "promotion.maximumQuantity") Integer maximumQuantity,
 			@RequestParam(value = "promotion.priceExpression") String priceExpression,
 			@RequestParam(value = "promotion.isCouponAllowed") boolean isCouponAllowed,
 			@RequestParam(value = "promotion.introduction",required=false) String introduction,
+			@RequestParam(value = "promotion.catetoryId") Integer catetoryId,
+			@RequestParam(value = "promotion.productId") Integer productId,
 			@RequestParam(value = "promotion.shop") Integer shopId) throws SQLException {
 		try {
 			String[] couponIds = request.getParameterValues("couponIds");
-			promotionService.update(id, name, title, beginDate, endDate, shopId, priceExpression, isCouponAllowed, introduction, shopId, couponIds);
+			promotionService.update(id, name, title, beginDate, endDate, minimumPrice, maximumPrice, minimumQuantity, maximumQuantity, priceExpression, isCouponAllowed, introduction, catetoryId, productId, shopId, couponIds);
 			ModelAndView mv = new ModelAndView("redirect:/admin/promotion");
 			return mv;
 		} catch (Exception e) {
-			request.setAttribute("errorMessages", e.getMessage());
+			e.printStackTrace();
+			request.setAttribute("errorMessages", "操作失误");
 			request.setAttribute("redirectionUrl", "/admin/promotion");
 			return new ModelAndView("admin/error");
 		}

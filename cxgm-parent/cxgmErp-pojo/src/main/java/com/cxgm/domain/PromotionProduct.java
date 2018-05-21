@@ -6,6 +6,8 @@ public class PromotionProduct {
     private Long promotions;
 
     private Long products;
+    
+    private Integer type;
 
     public Long getId() {
         return id;
@@ -30,4 +32,12 @@ public class PromotionProduct {
     public void setProducts(Long products) {
         this.products = products;
     }
+
+	public Integer getType() {
+		return type;
+	}
+
+	public void setType(Integer type) {
+		this.type = type;
+	}
 }

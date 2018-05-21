@@ -5,9 +5,23 @@
     <id column="id" jdbcType="BIGINT" property="id" />
     <result column="promotions" jdbcType="BIGINT" property="promotions" />
     <result column="products" jdbcType="BIGINT" property="products" />
+    <result column="type" jdbcType="INTEGER" property="type" />
   </resultMap>
+  
+  <sql id="queryMap">
+  	<if test="promotions != null and promotions != ''">
+  	and promotions=#{promotions,jdbcType=BIGINT}
+  	</if>
+  	<if test="products != null and products != ''">
+  	and products=#{products,jdbcType=BIGINT}
+  	</if>
+  	<if test="type != null">
+  	and type=#{type,jdbcType=INTEGER}
+  	</if>
+  </sql>
+  
   <sql id="Base_Column_List">
-    id, promotions, products
+    id, promotions, products,type
   </sql>
   <select id="select" parameterType="java.lang.Long" resultMap="BaseResultMap">
     select 
@@ -15,14 +29,33 @@
     from promotion_product
     where id = #{id,jdbcType=BIGINT}
   </select>
+  
+  <select id="findByParams" parameterType="map" resultMap="BaseResultMap">
+  	select
+  	<include refid="Base_Column_List" />
+  	from promotion_product
+  	where 1=1
+  	<include refid="queryMap" />
+  </select>
+  
   <delete id="delete" parameterType="java.lang.Long">
     delete from promotion_product
     where id = #{id,jdbcType=BIGINT}
   </delete>
+  
+   <delete id="deleteByPromotionCategory" parameterType="java.lang.Long">
+    delete from promotion_product
+    where promotions = #{id,jdbcType=BIGINT} and type=1
+  </delete>
+  
+  <delete id="deleteByPromotionProduct" parameterType="java.lang.Long">
+    delete from promotion_product
+    where promotions = #{id,jdbcType=BIGINT} and type=0
+  </delete>
   <insert id="insert" parameterType="com.cxgm.domain.PromotionProduct">
-    insert into promotion_product (id, promotions, products
+    insert into promotion_product (id, promotions, products,type
       )
-    values (#{id,jdbcType=BIGINT}, #{promotions,jdbcType=BIGINT}, #{products,jdbcType=BIGINT}
+    values (#{id,jdbcType=BIGINT}, #{promotions,jdbcType=BIGINT}, #{products,jdbcType=BIGINT},#{type,jdbcType=INTEGER}
       )
   </insert>
  
@@ -34,6 +67,9 @@
       </if>
       <if test="products != null">
         products = #{products,jdbcType=BIGINT},
+      </if>
+       <if test="type != null">
+        type = #{type,jdbcType=INTEGER},
       </if>
     </set>
     where id = #{id,jdbcType=BIGINT}

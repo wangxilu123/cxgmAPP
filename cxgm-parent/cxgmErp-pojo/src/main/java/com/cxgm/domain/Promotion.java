@@ -39,6 +39,10 @@ public class Promotion {
     
     private List<Coupon> couponList;
     
+    private Integer productId;
+    
+    private Integer productCategoryId;
+    
     public Integer getShopId() {
 		return shopId;
 	}
@@ -173,5 +177,21 @@ public class Promotion {
 
 	public void setCouponList(List<Coupon> couponList) {
 		this.couponList = couponList;
+	}
+
+	public Integer getProductId() {
+		return productId;
+	}
+
+	public void setProductId(Integer productId) {
+		this.productId = productId;
+	}
+
+	public Integer getProductCategoryId() {
+		return productCategoryId;
+	}
+
+	public void setProductCategoryId(Integer productCategoryId) {
+		this.productCategoryId = productCategoryId;
 	}
 }
