@@ -26,7 +26,7 @@ public class Order implements Serializable{
 	@ApiModelProperty(name = "orderNum",value = "订单编号")
     private String orderNum;
 
-	@ApiModelProperty(name = "status",value = "订单状态0待支付，1待配送（已支付），2配送中，3已完成，4退货")
+	@ApiModelProperty(name = "status",value = "订单状态0待支付，1待配送（已支付），2配送中，3已完成，4退货，5已取消")
     private String status;
 
 	@ApiModelProperty(name = "storeId",value = "门店ID")
@@ -53,6 +53,9 @@ public class Order implements Serializable{
 	
 	@ApiModelProperty(name = "receipt",value = "发票实体对象")
     private Receipt receipt;
+	
+	@ApiModelProperty(name = "couponCodeId",value = "优惠券ID")
+    private Integer couponCodeId;
 	
 	private List<OrderProduct>  productList;
 	

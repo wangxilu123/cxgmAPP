@@ -24,4 +24,5 @@ public interface OrderMapper {
     int updateByExampleSelective(@Param("record") Order record, @Param("example") OrderExample example);
 
     int updateByExample(@Param("record") Order record, @Param("example") OrderExample example);
+    
 }

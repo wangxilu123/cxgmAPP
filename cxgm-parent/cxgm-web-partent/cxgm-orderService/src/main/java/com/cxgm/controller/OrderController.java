@@ -18,7 +18,6 @@ import com.cxgm.common.ResultDto;
 import com.cxgm.domain.AppUser;
 import com.cxgm.domain.CouponDetail;
 import com.cxgm.domain.Order;
-import com.cxgm.domain.OrderProduct;
 import com.cxgm.service.OrderService;
 import com.cxgm.service.impl.CheckToken;
 import com.github.pagehelper.PageInfo;
@@ -96,9 +95,11 @@ public class OrderController {
     	
     	if(appUser!=null){
     		
-    		Integer result = orderService.deleteOrder(orderId, appUser.getId());
+    		Order order = orderService.findById(orderId);
     		
-    		return new ResultDto<>(200,"删除成功！",result);
+    		Integer result = orderService.updateOrder(order);
+    		
+    		return new ResultDto<>(200,"取消成功！",result);
     	}else{
     		return new ResultDto<>(403,"token失效请重新登录！");
     	}

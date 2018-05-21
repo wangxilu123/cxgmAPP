@@ -5,7 +5,7 @@ import com.github.pagehelper.PageInfo;
 
 public interface CouponService {
 
-	PageInfo<CouponDetail> findCouponByUserId(Integer userId,Integer pageNum,Integer pageSize);
+	PageInfo<CouponDetail> findCouponByUserId(Integer userId,Integer pageNum,Integer pageSize,Integer status);
 	
 	CouponDetail exchangeCoupons(Integer userId,String code);
 	

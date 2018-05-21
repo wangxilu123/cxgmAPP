@@ -113,7 +113,7 @@ public class CouponService {
 			cc.setCouponId(couponid);
 			cc.setType(type);
 			cc.setCode(UUID.generateCouponCode(32, coupon.getPrefix()));
-			cc.setStatus(null);
+			cc.setStatus(0);
 			cc.setCreationDate(new Date());
 			couponCodeDao.insert(cc);
 		}

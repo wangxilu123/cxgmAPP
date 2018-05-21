@@ -39,18 +39,20 @@ public class CouponController {
 	@ApiOperation(value = "根据用户查询优惠券", nickname = "根据用户查询优惠券")
 	@ApiImplicitParams({
         @ApiImplicitParam(name = "pageNum", value = "第几页，默认1", required = false, paramType = "query", dataType = "int"),
-		@ApiImplicitParam(name = "pageSize", value = "每页多少条，默认10", required = false, paramType = "query", dataType = "int")
+		@ApiImplicitParam(name = "pageSize", value = "每页多少条，默认10", required = false, paramType = "query", dataType = "int"),
+        @ApiImplicitParam(name = "status", value = "0可用，1不可用", required = false, paramType = "query", dataType = "int")
     })
 	@GetMapping("/findCoupons")
 	public ResultDto<PageInfo<CouponDetail>> findFirstCategory(HttpServletRequest request,
 			@RequestParam(value = "pageNum", defaultValue = "1", required = false) Integer pageNum,
-			@RequestParam(value = "pageSize", defaultValue = "10", required = false) Integer pageSize){
+			@RequestParam(value = "pageSize", defaultValue = "10", required = false) Integer pageSize,
+			@RequestParam(value = "status", required = false) Integer status){
 		
 		AppUser appUser = checkToken.check(request.getHeader("token"));
 
 		if (appUser != null) {
 
-			PageInfo<CouponDetail> result = couponService.findCouponByUserId(appUser.getId(), pageNum, pageSize);
+			PageInfo<CouponDetail> result = couponService.findCouponByUserId(appUser.getId(), pageNum, pageSize,status);
 
 			return new ResultDto<>(200, "查询成功！", result);
 		} else {

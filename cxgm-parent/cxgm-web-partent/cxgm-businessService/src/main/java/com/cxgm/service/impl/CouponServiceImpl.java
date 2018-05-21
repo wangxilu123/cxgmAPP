@@ -1,5 +1,6 @@
 package com.cxgm.service.impl;
 
+import java.util.HashMap;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,11 +22,16 @@ public class CouponServiceImpl implements CouponService {
 	private CouponCodeMapper couponCodeMapper;
 	
 	@Override
-	public PageInfo<CouponDetail> findCouponByUserId(Integer userId,Integer pageNum,Integer pageSize) {
+	public PageInfo<CouponDetail> findCouponByUserId(Integer userId,Integer pageNum,Integer pageSize,Integer status) {
 		
 		PageHelper.startPage(pageNum, pageSize);
 		
-		List<CouponDetail> list = couponCodeMapper.findCouponsByUserId(userId);
+		HashMap<String,Object> map = new HashMap<>();
+		
+		map.put("userId", userId);
+		map.put("status", status);
+		
+		List<CouponDetail> list = couponCodeMapper.findCouponsByUserId(map);
 		
 		PageInfo<CouponDetail> page = new PageInfo<CouponDetail>(list);
 		

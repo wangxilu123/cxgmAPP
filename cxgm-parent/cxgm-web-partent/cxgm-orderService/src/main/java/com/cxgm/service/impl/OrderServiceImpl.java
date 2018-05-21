@@ -11,11 +11,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
 
+import com.cxgm.dao.CouponCodeMapper;
 import com.cxgm.dao.CouponMapper;
 import com.cxgm.dao.OrderMapper;
 import com.cxgm.dao.OrderProductMapper;
 import com.cxgm.dao.ProductMapper;
 import com.cxgm.dao.ReceiptMapper;
+import com.cxgm.domain.CouponCode;
 import com.cxgm.domain.CouponDetail;
 import com.cxgm.domain.Order;
 import com.cxgm.domain.OrderExample;
@@ -44,6 +46,9 @@ public class OrderServiceImpl implements OrderService{
     private CouponMapper couponMapper;
     
     @Autowired
+    private CouponCodeMapper couponCodeMapper;
+    
+    @Autowired
     private ReceiptMapper receiptMapper;
 
 	@Override
@@ -66,8 +71,16 @@ public class OrderServiceImpl implements OrderService{
 			productMapper.update(product);
 			
 		}
+		//发票信息
 		order.getReceipt().setCreateTime(new Date());
 		receiptMapper.insert(order.getReceipt());
+		
+		//更改优惠券信息
+		CouponCode couponCode = couponCodeMapper.select((long)order.getCouponCodeId());
+		
+		couponCode.setStatus(1);
+		
+		couponCodeMapper.update(couponCode);
 		
 		return order.getId();
 	}
@@ -75,7 +88,11 @@ public class OrderServiceImpl implements OrderService{
 	@Override
 	public Integer updateOrder(Order order) {
 		
-		return null;
+		 OrderExample example = new OrderExample();
+			
+		 example.createCriteria().andUserIdEqualTo(order.getUserId()).andIdEqualTo(order.getId());
+		
+		return orderMapper.updateByExample(order, example);
 	}
 
 	@Override

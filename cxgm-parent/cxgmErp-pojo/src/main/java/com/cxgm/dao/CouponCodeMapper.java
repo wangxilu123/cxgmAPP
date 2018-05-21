@@ -13,7 +13,7 @@ public interface CouponCodeMapper {
     int update(CouponCode record);
     List<CouponCode> findCouponsWithParam(Map<String,Object> map);
     
-    List<CouponDetail> findCouponsByUserId(Integer userId);
+    List<CouponDetail> findCouponsByUserId(Map<String,Object> map);
     
     CouponDetail findCouponsByCode(String code);
 
