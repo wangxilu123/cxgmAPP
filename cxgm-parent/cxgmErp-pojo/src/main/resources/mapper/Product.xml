@@ -195,6 +195,15 @@
     where id = #{id,jdbcType=BIGINT}
   </select>
   
+  <select id="findProductByGoodCode" parameterType="java.lang.String" resultMap="ResultMapWithBLOBs">
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from product
+    where good_code = #{goodCode,jdbcType=VARCHAR}
+  </select>
+  
   <select id="findListAllWithCategory" parameterType="map" resultMap="ResultMapWithCategory">
     select 
     <include refid="Base_Column_List1" />

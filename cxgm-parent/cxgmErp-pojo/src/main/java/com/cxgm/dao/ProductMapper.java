@@ -23,6 +23,8 @@ public interface ProductMapper {
 	ProductTransfer findById(Long id);
 	Product findProductById(Long id);
 	
+	Product findProductByGoodCode(String goodCode);
+	
 	List<ShopCategory> findShopCategory(Integer shopId);
 	
 	List<ShopCategory> findShopCategoryTwo(Map<String,Object> map);

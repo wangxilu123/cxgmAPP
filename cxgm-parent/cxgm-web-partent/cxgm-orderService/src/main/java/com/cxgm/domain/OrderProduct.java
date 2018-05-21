@@ -14,6 +14,8 @@ public class OrderProduct {
 
     private String productName;
 
+    private String goodCode;
+    
     private Integer productId;
 
     private Integer productNum;

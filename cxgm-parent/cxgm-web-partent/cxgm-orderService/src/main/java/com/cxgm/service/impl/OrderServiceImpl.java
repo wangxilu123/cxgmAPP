@@ -17,6 +17,7 @@ import com.cxgm.dao.OrderMapper;
 import com.cxgm.dao.OrderProductMapper;
 import com.cxgm.dao.ProductMapper;
 import com.cxgm.dao.ReceiptMapper;
+import com.cxgm.dao.ShopCartMapper;
 import com.cxgm.domain.CouponCode;
 import com.cxgm.domain.CouponDetail;
 import com.cxgm.domain.Order;
@@ -25,6 +26,7 @@ import com.cxgm.domain.OrderProduct;
 import com.cxgm.domain.OrderProductTransfer;
 import com.cxgm.domain.Product;
 import com.cxgm.domain.ProductTransfer;
+import com.cxgm.domain.ShopCartExample;
 import com.cxgm.service.OrderService;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
@@ -50,6 +52,9 @@ public class OrderServiceImpl implements OrderService{
     
     @Autowired
     private ReceiptMapper receiptMapper;
+    
+    @Autowired
+    private ShopCartMapper shopCartMapper;
 
 	@Override
 	public Integer addOrder(Order order) {
@@ -64,11 +69,18 @@ public class OrderServiceImpl implements OrderService{
 			orderProduct.setCreateTime(new Date());
 			orderProductMapper.insert(orderProduct);
 			//修改销量
-			Product product = productMapper.findProductById((long)orderProduct.getProductId());
+			Product product = productMapper.findProductByGoodCode(orderProduct.getGoodCode());
 			
 			product.setSales(product.getSales()+orderProduct.getProductNum());
 			
 			productMapper.update(product);
+			
+			//从购物车里面移除商品
+			ShopCartExample example = new ShopCartExample();
+			
+			example.createCriteria().andGoodCodeEqualTo(orderProduct.getGoodCode()).andShopIdEqualTo(order.getStoreId()).andUserIdEqualTo(order.getUserId());
+			
+			shopCartMapper.deleteByExample(example);
 			
 		}
 		//发票信息
