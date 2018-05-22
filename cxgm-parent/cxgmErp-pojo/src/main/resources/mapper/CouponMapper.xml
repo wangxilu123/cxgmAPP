@@ -148,15 +148,26 @@
   </update>
   
   <select id="findCouponsByProduct" parameterType="map" resultType="com.cxgm.domain.CouponDetail">
-    select cd.id as codeId,cd.`status`,cp.`name`,cp.introduction,cp.begin_date as beginDate,cp.end_date as endDate,cp.product_category_id as categoryId,cp.product_id as productId,cp.price_expression as priceExpression
-    from coupon  as cp left join coupon_code as cd on cp.id=cd.coupon_id where (
-    <if test="categoryIds != null and categoryIds.size>0">
-      cp.product_category_id in 
-      <foreach collection="categoryIds" item="item" index="index" open="(" close=")" separator=",">
-            #{item}
+    select cd.id as codeId,cd.`status`,cp.`name`,cp.introduction,cp.begin_date as beginDate,cp.end_date as endDate,cp.product_category_id as categoryId,cp.product_id as productId,cp.price_expression as priceExpression,cp.maximum_price as maximumPrice
+    from coupon  as cp left join coupon_code as cd on cp.id=cd.coupon_id where 1=1
+    <if test="amountList != null and amountList.size>0">
+      <foreach collection="amountList" item="item" index="index">
+           <if test="index == 0">
+           and
+           </if>
+           <if test="index != 0">
+           or
+           </if>
+           (cp.product_category_id = #{item.categoryId} and <![CDATA[cp.maximum_price<=#{item.amount}]]> and cp.product_id is null and user_id=#{userId,jdbcType=INTEGER} and `status`=0) 
       </foreach>
+      
      </if>
-    or cp.product_id=#{productId,jdbcType=INTEGER}) and user_id=#{userId,jdbcType=INTEGER} and `status`=0
+     <if test="productId != null">
+     and cp.product_id=#{productId,jdbcType=INTEGER} and user_id=#{userId,jdbcType=INTEGER} and `status`=0 and <![CDATA[cp.maximum_price<=#{amount,jdbcType=DECIMAL}]]> and cp.product_category_id is null
+     </if>
+     <if test="productId == null and amountList == null">
+     and user_id=#{userId,jdbcType=INTEGER} and `status`=0 and <![CDATA[cp.maximum_price<=#{totalAmount,jdbcType=DECIMAL}]]> and cp.product_category_id is null and cp.product_id is null
+     </if>
   </select>
   
 </mapper>

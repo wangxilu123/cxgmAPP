@@ -116,7 +116,7 @@ public class OrderController {
 
 		if (appUser != null) {
   
-			List<CouponDetail> list = orderService.checkCoupons(appUser.getId(), order.getProductList());
+			List<CouponDetail> list = orderService.checkCoupons(appUser.getId(), order.getProductList(),order.getCategoryAndAmountList(),order.getOrderAmount());
 
 			return new ResultDto<>(200, "查询成功！",list);
 		} else {

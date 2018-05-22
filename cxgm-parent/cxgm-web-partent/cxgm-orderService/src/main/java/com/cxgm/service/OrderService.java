@@ -1,7 +1,9 @@
 package com.cxgm.service;
 
+import java.math.BigDecimal;
 import java.util.List;
 
+import com.cxgm.domain.CategoryAndAmount;
 import com.cxgm.domain.CouponDetail;
 import com.cxgm.domain.Order;
 import com.cxgm.domain.OrderProduct;
@@ -19,5 +21,5 @@ public interface OrderService {
     
     Order findById(Integer orderId);
     
-    List<CouponDetail> checkCoupons(Integer userId,List<OrderProduct> productList);
+    List<CouponDetail> checkCoupons(Integer userId,List<OrderProduct> productList,List<CategoryAndAmount> amountList,BigDecimal totalAmount);
 }

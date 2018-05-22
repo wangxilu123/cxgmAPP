@@ -57,7 +57,12 @@ public class Order implements Serializable{
 	@ApiModelProperty(name = "couponCodeId",value = "优惠券ID")
     private Integer couponCodeId;
 	
+	@ApiModelProperty(name = "productList",value = "下单时传的")
 	private List<OrderProduct>  productList;
 	
+	@ApiModelProperty(name = "productList",value = "查询返回的")
 	private List<OrderProductTransfer>  productDetails;
+	
+	@ApiModelProperty(name = "categoryAndAmountList",value = "二级分和金额")
+	private List<CategoryAndAmount>  categoryAndAmountList;
 }

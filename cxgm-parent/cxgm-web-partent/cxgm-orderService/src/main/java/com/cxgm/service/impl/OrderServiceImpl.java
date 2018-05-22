@@ -18,6 +18,7 @@ import com.cxgm.dao.OrderProductMapper;
 import com.cxgm.dao.ProductMapper;
 import com.cxgm.dao.ReceiptMapper;
 import com.cxgm.dao.ShopCartMapper;
+import com.cxgm.domain.CategoryAndAmount;
 import com.cxgm.domain.CouponCode;
 import com.cxgm.domain.CouponDetail;
 import com.cxgm.domain.Order;
@@ -33,178 +34,192 @@ import com.github.pagehelper.PageInfo;
 
 @Primary
 @Service
-public class OrderServiceImpl implements OrderService{
+public class OrderServiceImpl implements OrderService {
 
-    @Autowired
-    private OrderMapper orderMapper;
-    
-    @Autowired
-    private OrderProductMapper orderProductMapper;
-    
-    @Autowired
-    private ProductMapper productMapper;
-    
-    @Autowired
-    private CouponMapper couponMapper;
-    
-    @Autowired
-    private CouponCodeMapper couponCodeMapper;
-    
-    @Autowired
-    private ReceiptMapper receiptMapper;
-    
-    @Autowired
-    private ShopCartMapper shopCartMapper;
+	@Autowired
+	private OrderMapper orderMapper;
+
+	@Autowired
+	private OrderProductMapper orderProductMapper;
+
+	@Autowired
+	private ProductMapper productMapper;
+
+	@Autowired
+	private CouponMapper couponMapper;
+
+	@Autowired
+	private CouponCodeMapper couponCodeMapper;
+
+	@Autowired
+	private ReceiptMapper receiptMapper;
+
+	@Autowired
+	private ShopCartMapper shopCartMapper;
 
 	@Override
 	public Integer addOrder(Order order) {
-		
+
 		order.setOrderTime(new Date());
 		order.setStatus("0");
 		orderMapper.insert(order);
-		
-		for(OrderProduct orderProduct : order.getProductList()){
-			
+
+		for (OrderProduct orderProduct : order.getProductList()) {
+
 			orderProduct.setOrderId(order.getId());
 			orderProduct.setCreateTime(new Date());
 			orderProductMapper.insert(orderProduct);
-			//修改销量
+			// 修改销量
 			Product product = productMapper.findProductByGoodCode(orderProduct.getGoodCode());
-			
-			product.setSales(product.getSales()+orderProduct.getProductNum());
-			
+
+			product.setSales(product.getSales() + orderProduct.getProductNum());
+
 			productMapper.update(product);
-			
-			//从购物车里面移除商品
+
+			// 从购物车里面移除商品
 			ShopCartExample example = new ShopCartExample();
-			
-			example.createCriteria().andGoodCodeEqualTo(orderProduct.getGoodCode()).andShopIdEqualTo(order.getStoreId()).andUserIdEqualTo(order.getUserId());
-			
+
+			example.createCriteria().andGoodCodeEqualTo(orderProduct.getGoodCode()).andShopIdEqualTo(order.getStoreId())
+					.andUserIdEqualTo(order.getUserId());
+
 			shopCartMapper.deleteByExample(example);
-			
+
 		}
-		//发票信息
+		// 发票信息
 		order.getReceipt().setCreateTime(new Date());
 		receiptMapper.insert(order.getReceipt());
-		
-		//更改优惠券信息
-		CouponCode couponCode = couponCodeMapper.select((long)order.getCouponCodeId());
-		
+
+		// 更改优惠券信息
+		CouponCode couponCode = couponCodeMapper.select((long) order.getCouponCodeId());
+
 		couponCode.setStatus(1);
-		
+
 		couponCodeMapper.update(couponCode);
-		
+
 		return order.getId();
 	}
 
 	@Override
 	public Integer updateOrder(Order order) {
-		
-		 OrderExample example = new OrderExample();
-			
-		 example.createCriteria().andUserIdEqualTo(order.getUserId()).andIdEqualTo(order.getId());
-		
+
+		OrderExample example = new OrderExample();
+
+		example.createCriteria().andUserIdEqualTo(order.getUserId()).andIdEqualTo(order.getId());
+
 		return orderMapper.updateByExample(order, example);
 	}
 
 	@Override
 	public Integer deleteOrder(Integer orderId, Integer userId) {
-		
-        OrderExample example = new OrderExample();
-		
+
+		OrderExample example = new OrderExample();
+
 		example.createCriteria().andUserIdEqualTo(userId).andIdEqualTo(orderId);
-		
+
 		return orderMapper.deleteByExample(example);
 	}
 
 	@Override
-	public PageInfo<Order> orderList(Integer pageNum, Integer pageSize,Integer userId,String status) {
-		
+	public PageInfo<Order> orderList(Integer pageNum, Integer pageSize, Integer userId, String status) {
+
 		PageHelper.startPage(pageNum, pageSize);
-		
+
 		OrderExample example = new OrderExample();
-		if(status.equals("")==false&&status!=null){
+		if (status.equals("") == false && status != null) {
 			example.createCriteria().andUserIdEqualTo(userId).andStatusEqualTo(status);
-		}else{
+		} else {
 			example.createCriteria().andUserIdEqualTo(userId);
 		}
 		List<Order> list = orderMapper.selectByExample(example);
-		
-		for(Order order : list){
-			//根据orderId查询订单详情信息
-			
-			List<OrderProductTransfer> productList=orderProductMapper.selectOrderDetail(order.getId());
-			
-			for(OrderProductTransfer orderDetail :productList){
-				
+
+		for (Order order : list) {
+			// 根据orderId查询订单详情信息
+
+			List<OrderProductTransfer> productList = orderProductMapper.selectOrderDetail(order.getId());
+
+			for (OrderProductTransfer orderDetail : productList) {
+
 				BigDecimal price = orderDetail.getPrice();
-				
+
 				BigDecimal num = new BigDecimal(orderDetail.getProductNum());
-				
+
 				orderDetail.setAmount(price.multiply(num));
-				
+
 			}
-			
+
 			order.setProductDetails(productList);
-			
+
 		}
-		
+
 		PageInfo<Order> page = new PageInfo<Order>(list);
-		
+
 		return page;
 	}
 
 	@Override
 	public Order findById(Integer orderId) {
-		
-        OrderExample example = new OrderExample();
-		
+
+		OrderExample example = new OrderExample();
+
 		example.createCriteria().andIdEqualTo(orderId);
 		List<Order> list = orderMapper.selectByExample(example);
-		if(list.size()!=0){
+		if (list.size() != 0) {
 			return list.get(0);
-		}else{
+		} else {
 			return null;
 		}
 	}
 
 	@Override
-	public List<CouponDetail> checkCoupons(Integer userId, List<OrderProduct> productList) {
-		//根据商品ID查询商品分类
-		List<CouponDetail> newList= new ArrayList<CouponDetail>();
-		
-		for(OrderProduct orderProduct : productList){
-			ProductTransfer productTransfer = productMapper.findById((long)orderProduct.getProductId());
+	public List<CouponDetail> checkCoupons(Integer userId, List<OrderProduct> productList,
+			List<CategoryAndAmount> amountList,BigDecimal totalAmount) {
+		// 根据商品ID查询商品分类
+		List<CouponDetail> newList = new ArrayList<CouponDetail>();
+
+		for (OrderProduct orderProduct : productList) {
+			ProductTransfer productTransfer = productMapper.findById((long) orderProduct.getProductId());
+
+			// 该商品的总价
+			BigDecimal amount=new BigDecimal(0);
+			if(orderProduct.getProductNum()!=null&&productTransfer.getPrice()!=null){
+				 amount = productTransfer.getPrice().multiply(new BigDecimal(orderProduct.getProductNum()));
+			}
+			// 根据商品ID查询优惠券
+
+			HashMap<String, Object> map = new HashMap<String, Object>();
+
+			map.put("userId", userId);
+			map.put("amount", amount);
+			map.put("productId", orderProduct.getProductId());
+			List<CouponDetail> list = couponMapper.findCouponsByProduct(map);
+
+			newList.addAll(list);
+		}
+
+		// 根据商品二级分类及金额查询优惠券
+
+		HashMap<String, Object> map1 = new HashMap<String, Object>();
+
+		map1.put("userId", userId);
+		map1.put("amountList", amountList);
+		if(amountList!=null&&amountList.size()!=0){
+			List<CouponDetail> list1 = couponMapper.findCouponsByProduct(map1);
 			
-			List<Integer>  ids = new ArrayList<>();
-	        
-	        if(productTransfer.getProductCategoryId()!=null){
-	        	ids.add(productTransfer.getProductCategoryId().intValue());
-	        }
-	        
-	        if(productTransfer.getProductCategoryTwoId()!=null){
-	        	ids.add(productTransfer.getProductCategoryTwoId().intValue());
-	        }
-	        
-	        if(productTransfer.getProductCategoryThirdId()!=null){
-	        	ids.add(productTransfer.getProductCategoryThirdId().intValue());
-	        }
-	        
-	        //根据商品类型ID或商品ID查询优惠券
-	        
-	        HashMap<String,Object> map = new HashMap<String,Object>();
-	        
-	        map.put("userId", userId);
-	        map.put("categoryIds", ids);
-	        map.put("productId", orderProduct.getProductId());
-	        
-	        List<CouponDetail> list = couponMapper.findCouponsByProduct(map);
-	        
-	        newList.addAll(list);
+			newList.addAll(list1);
 		}
 		
+		//根据全品类查询优惠券
+		
+		HashMap<String, Object> map2 = new HashMap<String, Object>();
+
+		map2.put("userId", userId);
+		map2.put("totalAmount", totalAmount);
+		
+		List<CouponDetail> list2 = couponMapper.findCouponsByProduct(map2);
+			
+		newList.addAll(list2);
 		newList = new ArrayList<CouponDetail>(new LinkedHashSet<>(newList));
-        
+
 		return newList;
 	}
 

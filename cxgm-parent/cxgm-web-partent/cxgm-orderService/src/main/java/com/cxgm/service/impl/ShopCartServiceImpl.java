@@ -110,6 +110,7 @@ public class ShopCartServiceImpl implements ShopCartService {
 					}
 					shopCart.setPrice(product.get(0).getPrice());
 					shopCart.setOriginalPrice(product.get(0).getOriginalPrice());
+					shopCart.setCategoryId(product.get(0).getProductCategoryTwoId()!=null?product.get(0).getProductCategoryTwoId().intValue():null);
 
 				}
 				

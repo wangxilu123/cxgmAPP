@@ -25,6 +25,9 @@ public class ShopCart {
 
 	@ApiModelProperty(name = "goodCode",value = "商品唯一标志")
     private String goodCode;
+	
+	@ApiModelProperty(name = "categoryId",value = "商品二级分类ID")
+    private Integer categoryId;
     
 	@ApiModelProperty(name = "specifications",value = "规格")
     private String specifications;

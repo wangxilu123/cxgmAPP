@@ -1,5 +1,6 @@
 package com.cxgm.domain;
 
+import java.math.BigDecimal;
 import java.util.Date;
 
 public class CouponDetail {
@@ -21,8 +22,16 @@ public class CouponDetail {
     private Integer codeId;
     
     private String priceExpression;
-
     
+    private BigDecimal maximumPrice;
+	public BigDecimal getMaximumPrice() {
+		return maximumPrice;
+	}
+
+	public void setMaximumPrice(BigDecimal maximumPrice) {
+		this.maximumPrice = maximumPrice;
+	}
+
 	public String getPriceExpression() {
 		return priceExpression;
 	}
