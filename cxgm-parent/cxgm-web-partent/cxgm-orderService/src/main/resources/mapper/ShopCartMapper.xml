@@ -9,6 +9,7 @@
     <result column="good_code" jdbcType="VARCHAR" property="goodCode" />
     <result column="good_num" jdbcType="INTEGER" property="goodNum" />
     <result column="amount" jdbcType="DECIMAL" property="amount" />
+    <result column="product_id" jdbcType="INTEGER" property="productId" />
   </resultMap>
   <sql id="Example_Where_Clause">
     <where>
@@ -69,7 +70,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    id, user_id, shop_id, good_name, good_code, good_num, amount
+    id, user_id, shop_id, good_name, good_code, good_num, amount,product_id
   </sql>
   <select id="selectByExample" parameterType="com.cxgm.domain.ShopCartExample" resultMap="BaseResultMap">
     select
@@ -93,9 +94,9 @@
   </delete>
   <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.cxgm.domain.ShopCart" useGeneratedKeys="true">
     insert into shop_cart (user_id, shop_id, good_name, 
-      good_code, good_num, amount)
+      good_code, good_num, amount,product_id)
     values (#{userId,jdbcType=INTEGER}, #{shopId,jdbcType=INTEGER}, #{goodName,jdbcType=VARCHAR}, 
-      #{goodCode,jdbcType=VARCHAR}, #{goodNum,jdbcType=INTEGER}, #{amount,jdbcType=DECIMAL})
+      #{goodCode,jdbcType=VARCHAR}, #{goodNum,jdbcType=INTEGER}, #{amount,jdbcType=DECIMAL},#{productId,jdbcType=INTEGER})
   </insert>
   <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="com.cxgm.domain.ShopCart" useGeneratedKeys="true">
     insert into shop_cart
@@ -118,6 +119,9 @@
       <if test="amount != null">
         amount,
       </if>
+       <if test="productId != null">
+        product_id,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="userId != null">
@@ -137,6 +141,9 @@
       </if>
       <if test="amount != null">
         #{amount,jdbcType=DECIMAL},
+      </if>
+      <if test="productId != null">
+        #{product_id,jdbcType=INTEGER},
       </if>
     </trim>
   </insert>
@@ -170,6 +177,10 @@
       <if test="record.amount != null">
         amount = #{record.amount,jdbcType=DECIMAL},
       </if>
+      <if test="record.productId != null">
+        product_id = #{record.productId,jdbcType=INTEGER},
+      </if>
+      
     </set>
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
@@ -183,7 +194,8 @@
       good_name = #{record.goodName,jdbcType=VARCHAR},
       good_code = #{record.goodCode,jdbcType=VARCHAR},
       good_num = #{record.goodNum,jdbcType=INTEGER},
-      amount = #{record.amount,jdbcType=DECIMAL}
+      amount = #{record.amount,jdbcType=DECIMAL},
+      product_id = #{record.productId,jdbcType=INTEGER}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>

@@ -28,6 +28,9 @@ public class ShopCart {
 	
 	@ApiModelProperty(name = "categoryId",value = "商品二级分类ID")
     private Integer categoryId;
+	
+	@ApiModelProperty(name = "productId",value = "商品ID")
+    private Integer productId;
     
 	@ApiModelProperty(name = "specifications",value = "规格")
     private String specifications;
