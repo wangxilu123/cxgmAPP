@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.cxgm.domain.Advertisement;
+import com.cxgm.domain.Motion;
 import com.cxgm.domain.ProductTransfer;
 import com.cxgm.domain.ShopCategory;
 
@@ -20,5 +21,7 @@ public interface HomePageService {
 	List<ProductTransfer> findHotCategory(Map<String, Object> map);
 
 	List<Advertisement> findAdvertisement(Integer shopId);
+
+	List<Motion> findMotions(Integer shopId);
   
 }

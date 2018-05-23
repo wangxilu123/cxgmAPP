@@ -1,5 +1,6 @@
 package com.cxgm.service.impl;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -9,11 +10,14 @@ import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
 
 import com.cxgm.dao.AdvertisementMapper;
+import com.cxgm.dao.MotionMapper;
 import com.cxgm.dao.ProductImageMapper;
 import com.cxgm.dao.ProductMapper;
 import com.cxgm.dao.PromotionMapper;
 import com.cxgm.domain.Advertisement;
 import com.cxgm.domain.AdvertisementExample;
+import com.cxgm.domain.Motion;
+import com.cxgm.domain.MotionExample;
 import com.cxgm.domain.ProductImage;
 import com.cxgm.domain.ProductTransfer;
 import com.cxgm.domain.Promotion;
@@ -35,6 +39,9 @@ public class HomePageServiceImpl implements HomePageService {
 	
 	@Autowired
 	private PromotionMapper promotionMapper;
+	
+	@Autowired
+	private MotionMapper motionMapper;
 	
 	@Override
 	public List<ProductTransfer> findListAllWithCategory(Map<String,Object> map){
@@ -97,5 +104,35 @@ public class HomePageServiceImpl implements HomePageService {
 		example.createCriteria().andShopIdEqualTo(shopId).andOnShelfEqualTo(1);
 		
 		return advertisementMapper.selectByExample(example);
+	}
+	
+	@Override
+	public List<Motion> findMotions(Integer shopId) {
+		
+		MotionExample example = new MotionExample();
+		
+		example.createCriteria().andShopIdEqualTo(shopId).andOnShelfEqualTo(1);
+		
+		List<Motion> motionList = motionMapper.selectByExample(example);
+		if(motionList.size()!=0){
+			
+			for(Motion motion : motionList){
+				List<ProductTransfer> productList = new ArrayList<>();
+				
+				if("".equals(motion.getProductIds())==false&&motion.getProductIds()!=null){
+					String[] ids = motion.getProductIds().split(",");
+					
+					for(int i=0;i<ids.length;i++){
+						//根据商品ID查询商品信息
+						
+						ProductTransfer product = productDao.findById(Long.parseLong(ids[i]));
+						
+						productList.add(product);
+					}
+				}
+				motion.setProductList(productList);
+			}
+		}
+		return  motionList;
 	}
 }

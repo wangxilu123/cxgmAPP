@@ -105,6 +105,26 @@ public class OrderController {
     	}
     }
     
+    @ApiOperation(value = "申请退货接口",nickname = "申请退货接口")
+    @ApiImplicitParam(name = "orderId", value = "订单ID", required = true, dataType = "Integer")
+    @PostMapping("/returnMoney")
+    public ResultDto<Integer> returnMoney(HttpServletRequest request, 
+    		@RequestParam(value = "orderId", required = false) Integer orderId){
+    	
+        AppUser appUser = new CheckToken().check(request.getHeader("token"));
+    	
+    	if(appUser!=null){
+    		
+    		Order order = orderService.findById(orderId);
+    		
+    		Integer result = orderService.updateOrder(order);
+    		
+    		return new ResultDto<>(200,"取消成功！",result);
+    	}else{
+    		return new ResultDto<>(403,"token失效请重新登录！");
+    	}
+    }
+    
     @ApiOperation(value = "根据用户ID和所选商品类别查询可用优惠券", nickname = "根据用户ID和所选商品类别查询可用优惠券")
 	@ApiImplicitParams({
         @ApiImplicitParam(name = "productList", value = "订单商品列表", required = false, paramType = "query", dataType = "string"),

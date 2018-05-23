@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.cxgm.common.ResultDto;
 import com.cxgm.domain.Advertisement;
+import com.cxgm.domain.Motion;
 import com.cxgm.domain.ProductTransfer;
 import com.cxgm.domain.ShopCategory;
 import com.cxgm.service.HomePageService;
@@ -159,10 +160,23 @@ public class HomePageController {
         @ApiImplicitParam(name = "shopId", value = "门店ID", required = false, paramType = "query", dataType = "int"),
     })
 	@GetMapping("/findAdvertisement")
-	public ResultDto<List<Advertisement>> findAdvertisement(HttpServletRequest request,
+	public ResultDto<List<Advertisement>> findAdvertisement(HttpServletRequest request, 
 			@RequestParam(value = "shopId", required = false) Integer shopId){
 		
 		List<Advertisement> list=homePageService.findAdvertisement(shopId);
+		
+		return new ResultDto<>(200, "查询成功", list);
+	}
+	
+	@ApiOperation(value = "根据门店ID查询首页运营位置", nickname = "根据门店ID查询首页运营位置")
+	@ApiImplicitParams({
+        @ApiImplicitParam(name = "shopId", value = "门店ID", required = false, paramType = "query", dataType = "int"),
+    })
+	@GetMapping("/findMotion")
+	public ResultDto<List<Motion>> findMotion(HttpServletRequest request, 
+			@RequestParam(value = "shopId", required = false) Integer shopId){
+		
+		List<Motion> list=homePageService.findMotions(shopId);
 		
 		return new ResultDto<>(200, "查询成功", list);
 	}

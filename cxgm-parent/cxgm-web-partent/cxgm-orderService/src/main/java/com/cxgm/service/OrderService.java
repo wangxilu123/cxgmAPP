@@ -15,11 +15,11 @@ public interface OrderService {
 	
 	Integer updateOrder(Order order);
 	
-    Integer deleteOrder(Integer orderId,Integer userId);
-    
     PageInfo<Order> orderList(Integer pageNum, Integer pageSize,Integer userId,String status);
     
     Order findById(Integer orderId);
     
     List<CouponDetail> checkCoupons(Integer userId,List<OrderProduct> productList,List<CategoryAndAmount> amountList,BigDecimal totalAmount);
+
+	Integer returnMoney(Integer orderId);
 }
