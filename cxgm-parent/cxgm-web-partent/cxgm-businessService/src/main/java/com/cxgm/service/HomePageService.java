@@ -10,7 +10,7 @@ import com.cxgm.domain.ShopCategory;
 
 public interface HomePageService {
 
-	List<ProductTransfer> findListAllWithCategory(Map<String, Object> map);
+	List<ProductTransfer> findListAllWithCategory(Map<String, Object> map,Integer userId);
 	
 	List<ShopCategory> findShopOneCategory(Integer shopId);
 
@@ -23,5 +23,7 @@ public interface HomePageService {
 	List<Advertisement> findAdvertisement(Integer shopId);
 
 	List<Motion> findMotions(Integer shopId);
+	
+	ProductTransfer findProductDetail(Integer productId);
   
 }

@@ -14,6 +14,7 @@ import com.cxgm.dao.MotionMapper;
 import com.cxgm.dao.ProductImageMapper;
 import com.cxgm.dao.ProductMapper;
 import com.cxgm.dao.PromotionMapper;
+import com.cxgm.dao.ShopCartMapper;
 import com.cxgm.domain.Advertisement;
 import com.cxgm.domain.AdvertisementExample;
 import com.cxgm.domain.Motion;
@@ -21,6 +22,8 @@ import com.cxgm.domain.MotionExample;
 import com.cxgm.domain.ProductImage;
 import com.cxgm.domain.ProductTransfer;
 import com.cxgm.domain.Promotion;
+import com.cxgm.domain.ShopCart;
+import com.cxgm.domain.ShopCartExample;
 import com.cxgm.domain.ShopCategory;
 import com.cxgm.service.HomePageService;
 
@@ -43,8 +46,11 @@ public class HomePageServiceImpl implements HomePageService {
 	@Autowired
 	private MotionMapper motionMapper;
 	
+	@Autowired
+	private ShopCartMapper shopCartMapper;
+	
 	@Override
-	public List<ProductTransfer> findListAllWithCategory(Map<String,Object> map){
+	public List<ProductTransfer> findListAllWithCategory(Map<String,Object> map,Integer userId){
 		
 		List<ProductTransfer> list = productDao.findListAllWithCategory(map);
 		
@@ -60,6 +66,20 @@ public class HomePageServiceImpl implements HomePageService {
 			List<Promotion> promotionList = promotionMapper.findByProductId(map);
 			
 			productTransfer.setPromotionList(promotionList);
+			
+			//根据商品ID和门店ID查询购物车信息
+			if(userId!=null){
+				
+				ShopCartExample example = new ShopCartExample();
+				example.createCriteria().andShopIdEqualTo(productTransfer.getShopId()).andProductIdEqualTo(productTransfer.getId().intValue()).andUserIdEqualTo(userId);
+				
+				List<ShopCart> cartList = shopCartMapper.selectByExample(example);
+				if(cartList!=null&&cartList.size()!=0){
+					productTransfer.setShopCartNum(cartList.get(0).getGoodNum());
+				}
+				
+			}
+			
 			
 		}
 		return list;
@@ -134,5 +154,22 @@ public class HomePageServiceImpl implements HomePageService {
 			}
 		}
 		return  motionList;
+	}
+
+	@Override
+	public ProductTransfer findProductDetail(Integer productId) {
+		
+		
+		ProductTransfer product = productDao.findById((long)productId);
+		
+		if(product.getImage()!=null&&"".equals(product.getImage())==false){
+			String[] imageIds = product.getImage().split(",");
+			
+			ProductImage image = productImageMapper.findById(Long.valueOf(imageIds[0]));
+			
+			product.setImage(image!=null?image.getUrl():"");
+		}
+		
+		return product;
 	}
 }

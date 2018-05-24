@@ -108,7 +108,17 @@ public class ProductTransfer {
 	private BigDecimal originalPrice;
 	
 	private List<Promotion>  promotionList;
+	
+	private Integer shopCartNum;
 
+
+	public Integer getShopCartNum() {
+		return shopCartNum;
+	}
+
+	public void setShopCartNum(Integer shopCartNum) {
+		this.shopCartNum = shopCartNum;
+	}
 
 	public List<Promotion> getPromotionList() {
 		return promotionList;

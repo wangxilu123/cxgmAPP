@@ -16,14 +16,8 @@
 	<dependencies>
 		<dependency>
 			<groupId>com.cxgm</groupId>
-			<artifactId>cxgmUser-pojo</artifactId>
+			<artifactId>cxgmOrder-pojo</artifactId>
 			<version>${project.version}</version>
-		</dependency>
-		
-		<dependency>
-			<groupId>com.cxgm</groupId>
-			<artifactId>cxgmErp-pojo</artifactId>
-			<version>1.0</version>
 		</dependency>
 
 		<dependency>

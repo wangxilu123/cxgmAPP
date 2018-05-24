@@ -354,5 +354,6 @@
     	<module>cxgm-mybites</module>
     	<module>cxgmUser-pojo</module>
     	<module>cxgmErp-pojo</module>
+    	<module>cxgmOrder-pojo</module>
     </modules>
 </project>

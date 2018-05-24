@@ -14,11 +14,12 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.cxgm.common.ResultDto;
 import com.cxgm.domain.Advertisement;
+import com.cxgm.domain.AppUser;
 import com.cxgm.domain.Motion;
 import com.cxgm.domain.ProductTransfer;
 import com.cxgm.domain.ShopCategory;
 import com.cxgm.service.HomePageService;
-import com.github.pagehelper.PageHelper;
+import com.cxgm.service.impl.CheckToken;
 import com.github.pagehelper.PageInfo;
 
 import io.swagger.annotations.Api;
@@ -37,6 +38,9 @@ public class HomePageController {
 
 	@Autowired
 	private HomePageService homePageService;
+	
+	@Autowired
+	private CheckToken checkToken;
 
 	@ApiOperation(value = "根据门店ID查询商品一级分类", nickname = "根据门店ID查询商品一级分类")
 	@GetMapping("/findFirstCategory")
@@ -87,12 +91,18 @@ public class HomePageController {
             @RequestParam(value = "productCategoryTwoId", required = false) Integer productCategoryTwoId,
             @RequestParam(value = "productCategoryThirdId", required = false) Integer productCategoryThirdId){
 		
+		AppUser appUser = checkToken.check(request.getHeader("token"));
+		Integer userId=null;
+		if(appUser!=null){
+			userId=appUser.getId();
+		}
+		
 		Map<String,Object> map = new HashMap<>();
 		
 		map.put("shopId", shopId);
 		map.put("productCategoryTwoId", productCategoryTwoId);
 		map.put("productCategoryThirdId", productCategoryThirdId);
-		List<ProductTransfer> list=homePageService.findListAllWithCategory(map);
+		List<ProductTransfer> list=homePageService.findListAllWithCategory(map,userId);
 		
 		return new ResultDto<>(200, "查询成功", list);
 	}
@@ -104,11 +114,16 @@ public class HomePageController {
 	@GetMapping("/findTopProduct")
 	public ResultDto<PageInfo<ProductTransfer>> findTopProduct(HttpServletRequest request,
 			@RequestParam(value = "shopId", required = false) Integer shopId){
+		AppUser appUser = checkToken.check(request.getHeader("token"));
+		Integer userId=null;
+		if(appUser!=null){
+			userId=appUser.getId();
+		}
 		
 		Map<String,Object> map = new HashMap<>();
 		map.put("shopId", shopId);
 		map.put("isTop", 1);
-		List<ProductTransfer> list=homePageService.findListAllWithCategory(map);
+		List<ProductTransfer> list=homePageService.findListAllWithCategory(map,userId);
 		PageInfo<ProductTransfer> page = new PageInfo<>(list);
 		
 		return new ResultDto<>(200, "查询成功", page);
@@ -117,21 +132,21 @@ public class HomePageController {
 	@ApiOperation(value = "根据门店ID查询首页热门推荐", nickname = "根据门店ID查询首页热门推荐")
 	@ApiImplicitParams({
         @ApiImplicitParam(name = "shopId", value = "门店ID", required = false, paramType = "query", dataType = "int"),
-        @ApiImplicitParam(name = "pageNum", value = "第几页，默认1", required = false, paramType = "query", dataType = "int"),
-		@ApiImplicitParam(name = "pageSize", value = "每页多少条，默认10", required = false, paramType = "query", dataType = "int"),
     })
 	@GetMapping("/findHotProduct")
 	public ResultDto<PageInfo<ProductTransfer>> findHotProduct(HttpServletRequest request,
-			@RequestParam(value = "shopId", required = false) Integer shopId,
-            @RequestParam(value = "pageNum", defaultValue = "1", required = false) Integer pageNum,
-			@RequestParam(value = "pageSize", defaultValue = "10", required = false) Integer pageSize){
+			@RequestParam(value = "shopId", required = false) Integer shopId){
 		
-		PageHelper.startPage(pageNum, pageSize);
+		AppUser appUser = checkToken.check(request.getHeader("token"));
+		Integer userId=null;
+		if(appUser!=null){
+			userId=appUser.getId();
+		}
 		
 		Map<String,Object> map = new HashMap<>();
 		map.put("shopId", shopId);
 		map.put("isHot", 1);
-		List<ProductTransfer> list=homePageService.findListAllWithCategory(map);
+		List<ProductTransfer> list=homePageService.findListAllWithCategory(map,userId);
 		PageInfo<ProductTransfer> page = new PageInfo<>(list);
 		
 		return new ResultDto<>(200, "查询成功", page);
@@ -145,11 +160,17 @@ public class HomePageController {
 	public ResultDto<PageInfo<ProductTransfer>> findNewProduct(HttpServletRequest request,
 			@RequestParam(value = "shopId", required = false) Integer shopId){
 		
+		AppUser appUser = checkToken.check(request.getHeader("token"));
+		Integer userId=null;
+		if(appUser!=null){
+			userId=appUser.getId();
+		}
+		
 		Map<String,Object> map = new HashMap<>();
 		
 		map.put("shopId", shopId);
 		
-		List<ProductTransfer> list=homePageService.findListAllWithCategory(map);
+		List<ProductTransfer> list=homePageService.findListAllWithCategory(map,userId);
 		PageInfo<ProductTransfer> page = new PageInfo<>(list);
 		
 		return new ResultDto<>(200, "查询成功", page);
@@ -179,6 +200,19 @@ public class HomePageController {
 		List<Motion> list=homePageService.findMotions(shopId);
 		
 		return new ResultDto<>(200, "查询成功", list);
+	}
+	
+	@ApiOperation(value = "根据商品ID查询商品详情", nickname = "根据商品ID查询商品详情")
+	@ApiImplicitParams({
+        @ApiImplicitParam(name = "productId", value = "商品ID", required = false, paramType = "query", dataType = "int"),
+    })
+	@GetMapping("/findProductDetail")
+	public ResultDto<ProductTransfer> findProductDetail(HttpServletRequest request, 
+			@RequestParam(value = "productId", required = false) Integer productId){
+		
+		ProductTransfer detail=homePageService.findProductDetail(productId);
+		
+		return new ResultDto<>(200, "查询成功", detail);
 	}
 
 }

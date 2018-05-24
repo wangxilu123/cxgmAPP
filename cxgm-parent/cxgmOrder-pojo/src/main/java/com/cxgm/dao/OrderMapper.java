@@ -3,7 +3,7 @@ package com.cxgm.dao;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
-import org.springframework.data.repository.query.Param;
+import org.apache.ibatis.annotations.Param;
 
 import com.cxgm.domain.Order;
 import com.cxgm.domain.OrderExample;

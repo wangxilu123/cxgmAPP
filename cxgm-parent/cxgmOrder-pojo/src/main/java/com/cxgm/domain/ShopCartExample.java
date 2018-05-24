@@ -179,6 +179,11 @@ public class ShopCartExample {
             addCriterion("user_id =", value, "userId");
             return (Criteria) this;
         }
+        
+        public Criteria andProductIdEqualTo(Integer value) {
+            addCriterion("product_id =", value, "productId");
+            return (Criteria) this;
+        }
 
         public Criteria andUserIdNotEqualTo(Integer value) {
             addCriterion("user_id <>", value, "userId");
