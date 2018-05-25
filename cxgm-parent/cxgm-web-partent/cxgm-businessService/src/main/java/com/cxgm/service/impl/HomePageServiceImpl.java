@@ -157,19 +157,80 @@ public class HomePageServiceImpl implements HomePageService {
 	}
 
 	@Override
-	public ProductTransfer findProductDetail(Integer productId) {
-		
-		
+	public ProductTransfer findProductDetail(Integer productId,Integer shopId,Integer userId) {
 		ProductTransfer product = productDao.findById((long)productId);
 		
 		if(product.getImage()!=null&&"".equals(product.getImage())==false){
 			String[] imageIds = product.getImage().split(",");
 			
-			ProductImage image = productImageMapper.findById(Long.valueOf(imageIds[0]));
+			List<ProductImage> imageList = new ArrayList<>();
 			
-			product.setImage(image!=null?image.getUrl():"");
+			for(int i=0;i<imageIds.length;i++){
+				
+				ProductImage productImage = productImageMapper.findById(Long.valueOf(imageIds[i]));
+				
+				imageList.add(productImage);
+			}
+			product.setProductImageList(imageList);
+		}
+		
+		//根据商品ID和门店ID查询购物车信息
+		if(userId!=null){
+			
+			ShopCartExample example = new ShopCartExample();
+			example.createCriteria().andShopIdEqualTo(shopId).andProductIdEqualTo(productId).andUserIdEqualTo(userId);
+			
+			List<ShopCart> cartList = shopCartMapper.selectByExample(example);
+			if(cartList!=null&&cartList.size()!=0){
+				product.setShopCartNum(cartList.get(0).getGoodNum());
+			}
+			
 		}
 		
 		return product;
+	}
+
+	@Override
+	public List<ProductTransfer> pushProducts(Integer productCategoryTwoId,Integer productCategoryThirdId, Integer shopId, Integer userId) {
+		
+		Map<String,Object> map = new HashMap<String,Object>();
+		
+		map.put("shopId", shopId);
+		if(productCategoryTwoId!=null&&"".equals(productCategoryTwoId)==false){
+			map.put("productCategoryTwoId", productCategoryTwoId);
+		}
+		if(productCategoryThirdId!=null&&"".equals(productCategoryThirdId)==false){
+			map.put("productCategoryThirdId", productCategoryThirdId);
+		}
+		
+		List<ProductTransfer> list = productDao.findPushProduct(map);
+		
+		for(ProductTransfer productTransfer : list){
+			if(productTransfer.getImage()!=null&&"".equals(productTransfer.getImage())==false){
+				String[] imageIds = productTransfer.getImage().split(",");
+				
+				ProductImage image = productImageMapper.findById(Long.valueOf(imageIds[0]));
+				
+				productTransfer.setImage(image!=null?image.getUrl():"");
+			}
+			//根据商品ID和门店ID查询促销信息
+			List<Promotion> promotionList = promotionMapper.findByProductId(map);
+			
+			productTransfer.setPromotionList(promotionList);
+			
+			//根据商品ID和门店ID查询购物车信息
+			if(userId!=null){
+				
+				ShopCartExample example = new ShopCartExample();
+				example.createCriteria().andShopIdEqualTo(shopId).andProductIdEqualTo(productTransfer.getId().intValue()).andUserIdEqualTo(userId);
+				
+				List<ShopCart> cartList = shopCartMapper.selectByExample(example);
+				if(cartList!=null&&cartList.size()!=0){
+					productTransfer.setShopCartNum(cartList.get(0).getGoodNum());
+				}
+			}
+		}
+		
+		return list;
 	}
 }

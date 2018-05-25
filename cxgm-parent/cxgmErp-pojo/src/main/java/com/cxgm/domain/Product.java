@@ -116,7 +116,27 @@ public class Product {
    
     private BigDecimal originalPrice;
     
+    private String warrantyPeriod;
     
+    private String detailImage;
+    
+    
+	public String getDetailImage() {
+		return detailImage;
+	}
+
+	public void setDetailImage(String detailImage) {
+		this.detailImage = detailImage;
+	}
+
+	public String getWarrantyPeriod() {
+		return warrantyPeriod;
+	}
+
+	public void setWarrantyPeriod(String warrantyPeriod) {
+		this.warrantyPeriod = warrantyPeriod;
+	}
+
 	public BigDecimal getOriginalPrice() {
 		return originalPrice;
 	}

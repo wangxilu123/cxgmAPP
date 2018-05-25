@@ -32,4 +32,6 @@ public interface ProductMapper {
 	List<ShopCategory> findShopCategoryThird(Map<String,Object> map);
 	
 	List<Product> findProducts(Map<String,Object> map);
+	
+	List<ProductTransfer> findPushProduct(Map<String,Object> map);
 }

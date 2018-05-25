@@ -205,14 +205,45 @@ public class HomePageController {
 	@ApiOperation(value = "根据商品ID查询商品详情", nickname = "根据商品ID查询商品详情")
 	@ApiImplicitParams({
         @ApiImplicitParam(name = "productId", value = "商品ID", required = false, paramType = "query", dataType = "int"),
+        @ApiImplicitParam(name = "shopId", value = "门店ID", required = false, paramType = "query", dataType = "int"),
     })
 	@GetMapping("/findProductDetail")
 	public ResultDto<ProductTransfer> findProductDetail(HttpServletRequest request, 
-			@RequestParam(value = "productId", required = false) Integer productId){
+			@RequestParam(value = "productId", required = false) Integer productId,
+			@RequestParam(value = "shopId", required = false) Integer shopId){
 		
-		ProductTransfer detail=homePageService.findProductDetail(productId);
+		AppUser appUser = checkToken.check(request.getHeader("token"));
+		Integer userId=null;
+		if(appUser!=null){
+			userId=appUser.getId();
+		}
+		
+		ProductTransfer detail=homePageService.findProductDetail(productId,shopId,userId);
 		
 		return new ResultDto<>(200, "查询成功", detail);
+	}
+	
+	@ApiOperation(value = "根据商品类别推荐同类商品", nickname = "根据商品类别推荐同类商品")
+	@ApiImplicitParams({
+		@ApiImplicitParam(name = "productCategoryTwoId", value = "二级类别ID", required = false, paramType = "query", dataType = "int"),
+        @ApiImplicitParam(name = "productCategoryThirdId", value = "三级类别ID", required = false, paramType = "query", dataType = "int"),
+        @ApiImplicitParam(name = "shopId", value = "门店ID", required = false, paramType = "query", dataType = "int"),
+    })
+	@GetMapping("/pushProducts")
+	public ResultDto<List<ProductTransfer>> pushProducts(HttpServletRequest request, 
+			@RequestParam(value = "productCategoryTwoId", required = false) Integer productCategoryTwoId,
+            @RequestParam(value = "productCategoryThirdId", required = false) Integer productCategoryThirdId,
+			@RequestParam(value = "shopId", required = false) Integer shopId){
+		
+		AppUser appUser = checkToken.check(request.getHeader("token"));
+		Integer userId=null;
+		if(appUser!=null){
+			userId=appUser.getId();
+		}
+		
+		List<ProductTransfer> list=homePageService.pushProducts(productCategoryTwoId,productCategoryThirdId,shopId,userId);
+		
+		return new ResultDto<>(200, "查询成功", list);
 	}
 
 }

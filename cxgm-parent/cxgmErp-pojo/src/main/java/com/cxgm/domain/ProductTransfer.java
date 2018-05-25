@@ -110,7 +110,26 @@ public class ProductTransfer {
 	private List<Promotion>  promotionList;
 	
 	private Integer shopCartNum;
+	
+	private String warrantyPeriod;
 
+	private String detailImage;
+ 
+	public String getDetailImage() {
+		return detailImage;
+	}
+
+	public void setDetailImage(String detailImage) {
+		this.detailImage = detailImage;
+	}
+
+	public String getWarrantyPeriod() {
+		return warrantyPeriod;
+	}
+
+	public void setWarrantyPeriod(String warrantyPeriod) {
+		this.warrantyPeriod = warrantyPeriod;
+	}
 
 	public Integer getShopCartNum() {
 		return shopCartNum;

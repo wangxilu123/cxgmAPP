@@ -57,6 +57,8 @@
     <result column="is_hot" jdbcType="INTEGER" property="isHot" />
     <result column="good_code" jdbcType="VARCHAR" property="goodCode" />
     <result column="original_price" jdbcType="DECIMAL" property="originalPrice" />
+    <result column="warranty_period" jdbcType="VARCHAR" property="warrantyPeriod" />
+    <result column="detail_image" jdbcType="VARCHAR" property="detailImage" />
   </resultMap>
   <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.cxgm.domain.Product">
     <result column="introduction" jdbcType="LONGVARCHAR" property="introduction" />
@@ -75,7 +77,7 @@
     month_hits, sales, week_sales, month_sales, week_hits_date, month_hits_date, week_sales_date, 
     month_sales_date, origin_place, storage_condition, product_category_id, product_category_two_id,product_category_third_id,
     product_category_name,product_category_two_name,product_category_third_name,shop_id,
-    create_by, creation_date, last_updated_by, last_updated_date, delete_flag, brand_name,specifications,is_hot,good_code,original_price
+    create_by, creation_date, last_updated_by, last_updated_date, delete_flag, brand_name,specifications,is_hot,good_code,original_price,warranty_period,detail_image
   </sql>
   <sql id="Blob_Column_List">
     introduction
@@ -86,7 +88,7 @@
     month_hits, sales, week_sales, month_sales, week_hits_date, month_hits_date, week_sales_date, 
     month_sales_date, origin_place, storage_condition, product_category_id,product_category_two_id,product_category_third_id,
     product_category_name,product_category_two_name,product_category_third_name, p.shop_id as shop_id,
-    p.create_by as create_by, p.creation_date as creation_date, p.last_updated_by as last_updated_by, p.last_updated_date as last_updated_date, brand_name,specifications,is_hot,good_code,original_price
+    p.create_by as create_by, p.creation_date as creation_date, p.last_updated_by as last_updated_by, p.last_updated_date as last_updated_date, brand_name,specifications,is_hot,good_code,original_price,warranty_period,detail_image
   </sql>
   
   <resultMap id="GenerallyCategoryQueryMap" type="com.cxgm.domain.ShopCategory">
@@ -195,6 +197,21 @@
     where id = #{id,jdbcType=BIGINT}
   </select>
   
+  <select id="findPushProduct" parameterType="map" resultMap="ResultMapWithCategory">
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from product
+    where shop_id=#{shopId,jdbcType=INTEGER} 
+    <if test="productCategoryTwoId != null and productCategoryTwoId != ''">
+      and  product_category_two_id = #{productCategoryTwoId,jdbcType=BIGINT}
+    </if>
+    <if test="productCategoryThirdId != null and productCategoryThirdId != ''">
+      and  product_category_third_id = #{productCategoryThirdId,jdbcType=BIGINT}
+    </if>
+  </select>
+  
   <select id="findProductByGoodCode" parameterType="java.lang.String" resultMap="ResultMapWithBLOBs">
     select 
     <include refid="Base_Column_List" />
@@ -250,7 +267,7 @@
     product_category_name,product_category_two_name,product_category_third_name,shop_id,
       create_by, creation_date, last_updated_by, 
       last_updated_date, delete_flag, brand_name, 
-      introduction,specifications,is_hot,good_code,original_price)
+      introduction,specifications,is_hot,good_code,original_price,warranty_period,detail_image)
     values (#{id,jdbcType=BIGINT}, #{sn,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, 
       #{fullName,jdbcType=VARCHAR}, #{price,jdbcType=DECIMAL}, #{cost,jdbcType=DECIMAL}, 
       #{marketPrice,jdbcType=DECIMAL}, #{image,jdbcType=VARCHAR}, #{unit,jdbcType=VARCHAR}, 
@@ -267,7 +284,7 @@
       #{productCategoryThirdId,jdbcType=BIGINT}, #{productCategoryName,jdbcType=VARCHAR},#{productCategoryTwoName,jdbcType=VARCHAR},#{productCategoryThirdName,jdbcType=VARCHAR},#{shopId,jdbcType=INTEGER},
       #{createBy,jdbcType=VARCHAR},NOW(), #{lastUpdatedBy,jdbcType=VARCHAR}, 
       #{lastUpdatedDate,jdbcType=TIMESTAMP}, #{deleteFlag,jdbcType=BIT}, #{brandName,jdbcType=VARCHAR}, 
-      #{introduction,jdbcType=LONGVARCHAR},#{specifications,jdbcType=VARCHAR},0,#{goodCode,jdbcType=VARCHAR},#{originalPrice,jdbcType=DECIMAL})
+      #{introduction,jdbcType=LONGVARCHAR},#{specifications,jdbcType=VARCHAR},0,#{goodCode,jdbcType=VARCHAR},#{originalPrice,jdbcType=DECIMAL},#{warrantyPeriod,jdbcType=VARCHAR},#{detailImage,jdbcType=VARCHAR})
   </insert>
   
   <update id="update" parameterType="com.cxgm.domain.Product">
@@ -435,6 +452,12 @@
       </if>
       <if test="originalPrice != null">
         original_price = #{originalPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="warrantyPeriod != null">
+        warranty_period = #{warrantyPeriod,jdbcType=VARCHAR},
+      </if>
+       <if test="detailImage != null">
+        detail_image = #{detailImage,jdbcType=VARCHAR},
       </if>
     </set>
     where id = #{id,jdbcType=BIGINT}
