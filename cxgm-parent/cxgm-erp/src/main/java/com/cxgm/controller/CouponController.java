@@ -24,10 +24,12 @@ import com.cxgm.common.RSResult;
 import com.cxgm.domain.Admin;
 import com.cxgm.domain.Coupon;
 import com.cxgm.domain.CouponCode;
+import com.cxgm.domain.Product;
 import com.cxgm.domain.ProductCategory;
 import com.cxgm.service.CouponCodeService;
 import com.cxgm.service.CouponService;
 import com.cxgm.service.ProductCategoryService;
+import com.cxgm.service.ProductService;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 
@@ -42,6 +44,8 @@ public class CouponController {
 	CouponCodeService couponCodeService;
 	@Autowired
 	ProductCategoryService productCategoryService;
+	@Autowired
+	ProductService productService;
 
 	@RequestMapping(value = "/admin/coupon", method = RequestMethod.GET)
 	public ModelAndView getCoupon(HttpServletRequest request,
@@ -86,9 +90,13 @@ public class CouponController {
 		SecurityContext ctx = SecurityContextHolder.getContext();
 		Authentication auth = ctx.getAuthentication();
 		Admin admin = (Admin) auth.getPrincipal();
+		Map<String, Object> map = new HashMap<>();
+		map.put("shopId", admin.getShopId());
+		List<Product> products = productService.findProducts(map);
 		List<ProductCategory> productCategoryTreeList = productCategoryService.getProductCategory(0);
 		request.setAttribute("productCategoryTreeList", productCategoryTreeList);
 		request.setAttribute("shopId", admin.getShopId());
+		request.setAttribute("products", products);
 		return new ModelAndView("admin/coupon_input");
 	}
 
@@ -101,13 +109,14 @@ public class CouponController {
 			@RequestParam(value = "coupon.maximumPrice") BigDecimal maximumPrice,
 			@RequestParam(value = "coupon.minimumQuantity") Integer minimumQuantity,
 			@RequestParam(value = "coupon.maximumQuantity") Integer maximumQuantity,
-			@RequestParam(value = "coupon.isEnabled") boolean isEnabled, @RequestParam(value = "parentId") Integer pid,
+			@RequestParam(value = "coupon.isEnabled") boolean isEnabled, @RequestParam(value = "parentId",required=false) Long pid,
 			@RequestParam(value = "coupon.priceExpression") String priceExpression,
 			@RequestParam(value = "coupon.introduction",required=false) String introduction,
-			@RequestParam(value = "coupon.shop") Integer shopId) throws SQLException {
+			@RequestParam(value = "coupon.shop") Integer shopId,
+			@RequestParam(value = "coupon.productId",required=false) Long productId) throws SQLException {
 		try {
 			couponService.insert(name, prefix, beginDate, endDate, minimumPrice, maximumPrice, minimumQuantity,
-					maximumQuantity, isEnabled, pid, priceExpression, introduction, shopId);
+					maximumQuantity, isEnabled, pid, priceExpression, introduction, shopId,productId);
 			ModelAndView mv = new ModelAndView("redirect:/admin/coupon");
 			return mv;
 		} catch (Exception e) {
@@ -141,10 +150,14 @@ public class CouponController {
 		SecurityContext ctx = SecurityContextHolder.getContext();
 		Authentication auth = ctx.getAuthentication();
 		Admin admin = (Admin) auth.getPrincipal();
+		Map<String, Object> map = new HashMap<>();
+		map.put("shopId", admin.getShopId());
+		List<Product> products = productService.findProducts(map);
 		List<ProductCategory> productCategoryTreeList = productCategoryService.getProductCategory(0);
 		request.setAttribute("productCategoryTreeList", productCategoryTreeList);
 		request.setAttribute("shopId", admin.getShopId());
 		request.setAttribute("coupon", coupon);
+		request.setAttribute("products", products);
 		return new ModelAndView("admin/coupon_input");
 	}
 	
@@ -159,15 +172,17 @@ public class CouponController {
 			@RequestParam(value = "coupon.maximumPrice") BigDecimal maximumPrice,
 			@RequestParam(value = "coupon.minimumQuantity") Integer minimumQuantity,
 			@RequestParam(value = "coupon.maximumQuantity") Integer maximumQuantity,
-			@RequestParam(value = "coupon.isEnabled") boolean isEnabled, @RequestParam(value = "parentId") Integer pid,
+			@RequestParam(value = "coupon.isEnabled") boolean isEnabled, @RequestParam(value = "parentId",required=false) Long pid,
 			@RequestParam(value = "coupon.priceExpression") String priceExpression,
 			@RequestParam(value = "coupon.introduction",required=false) String introduction,
-			@RequestParam(value = "coupon.shop") Integer shopId) throws SQLException {
+			@RequestParam(value = "coupon.shop") Integer shopId,
+			@RequestParam(value = "coupon.productId",required=false) Long productId) throws SQLException {
 		try {
-			couponService.update(id, name, prefix, beginDate, endDate, minimumPrice, maximumPrice, minimumQuantity, maximumQuantity, isEnabled, pid, priceExpression, introduction, shopId);
+			couponService.update(id, name, prefix, beginDate, endDate, minimumPrice, maximumPrice, minimumQuantity, maximumQuantity, isEnabled, pid, priceExpression, introduction, shopId,productId);
 			ModelAndView mv = new ModelAndView("redirect:/admin/coupon");
 			return mv;
 		} catch (Exception e) {
+			e.printStackTrace();
 			request.setAttribute("errorMessages", e.getMessage());
 			request.setAttribute("redirectionUrl", "/admin/coupon");
 			return new ModelAndView("admin/error");

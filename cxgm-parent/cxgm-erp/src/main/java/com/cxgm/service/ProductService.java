@@ -45,7 +45,7 @@ public class ProductService {
 			BigDecimal price,BigDecimal marketPrice,
 			Integer weight,String unit,Integer stock,
 			boolean isMarketable,boolean isTop,String introduction,
-			Integer shop,List<MultipartFile> files,BigDecimal originalPrice) {
+			Integer shop,List<MultipartFile> files,BigDecimal originalPrice,Integer warrantyPeriod,String warrantDays) {
 		StringBuilder sb = new StringBuilder();
         try {
         	Product product = new Product();
@@ -59,6 +59,7 @@ public class ProductService {
         	product.setStorageCondition(storageCondition);
         	product.setWeight(weight);
         	product.setUnit(unit);
+        	product.setWarrantyPeriod(warrantyPeriod+warrantDays);
         	product.setIsTop(isTop);
         	ProductCategory productCategory = productCategoryService.findById(Long.valueOf(pid));
         	if(productCategory.getGrade()==0) {
@@ -153,7 +154,7 @@ public class ProductService {
 			BigDecimal price,BigDecimal marketPrice,
 			Integer weight,String unit,Integer stock,
 			boolean isMarketable,boolean isTop,String introduction,
-			Integer shop,List<MultipartFile> files,String[] productImageIds,BigDecimal originalPrice) {
+			Integer shop,List<MultipartFile> files,String[] productImageIds,BigDecimal originalPrice,Integer warrantyPeriod,String warrantDays) {
 		StringBuilder sb = new StringBuilder();
         try {
         	Product product = productDao.findProductById(id.longValue());
@@ -163,6 +164,7 @@ public class ProductService {
         	product.setStorageCondition(storageCondition);
         	product.setWeight(weight);
         	product.setUnit(unit);
+        	product.setWarrantyPeriod(warrantyPeriod+warrantDays);
         	product.setIsTop(isTop);
         	if(pid==null || "".equals(pid)) {
         		throw new TipException("请选择商品分类");

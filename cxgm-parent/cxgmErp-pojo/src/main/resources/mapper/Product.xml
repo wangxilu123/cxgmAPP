@@ -54,6 +54,7 @@
     <result column="delete_flag" jdbcType="BIT" property="deleteFlag" />
     <result column="brand_name" jdbcType="VARCHAR" property="brandName" />
     <result column="specifications" jdbcType="VARCHAR" property="specifications" />
+    
     <result column="is_hot" jdbcType="INTEGER" property="isHot" />
     <result column="good_code" jdbcType="VARCHAR" property="goodCode" />
     <result column="original_price" jdbcType="DECIMAL" property="originalPrice" />

@@ -165,6 +165,19 @@ productId = product.productCategoryId;
             <div class="am-u-sm-3 am-u-md-2">
               <select name="weightUnit" data-am-selected="{btnWidth: '100%', maxHeight: '200px', btnSize: 'sm'}" required>
               	<option value="g" selected>克</option>
+              	<option value="kg">千克</option>
+              </select>
+            </div>
+          </div>
+          <div class="am-form-group am-form-group-sm">
+            <label class="am-u-sm-4 am-u-md-3 am-text-right am-form-label">保质期</label>
+            <div class="am-u-sm-5 am-u-md-7">
+              <input type="number" class="am-form-field" name="product.warrantyPeriod" value="${product.warrantyPeriod!0}" placeholder="保质期" min="10" required />
+            </div>
+            <div class="am-u-sm-3 am-u-md-2">
+              <select name="warrantDays" data-am-selected="{btnWidth: '100%', maxHeight: '200px', btnSize: 'sm'}" required>
+              	<option value="月">月</option>
+              	<option value="天" selected>日</option>
               </select>
             </div>
           </div>
