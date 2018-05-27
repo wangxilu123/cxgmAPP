@@ -38,5 +38,8 @@ public class UserAddress implements Serializable{
 	
 	@ApiModelProperty(name = "isDef",value = "是否为默认值")
     private Integer isDef;
+	
+	@ApiModelProperty(name = "remarks",value = "备注")
+    private String remarks;
 
 }
