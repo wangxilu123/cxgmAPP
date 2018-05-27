@@ -37,8 +37,8 @@ public class CouponService {
 	@Transactional
 	public void insert(String name, String prefix,String beginDate,String endDate,BigDecimal minimumPrice,
 			BigDecimal maximumPrice,Integer minimumQuantity,
-			Integer maximumQuantity,boolean isEnabled,Integer pid,
-			String priceExpression,String introduction,Integer shopId) {
+			Integer maximumQuantity,boolean isEnabled,Long pid,
+			String priceExpression,String introduction,Integer shopId,Long productId) {
 		Coupon coupon = new Coupon();
 		Map<String,Object> map = new HashMap<>();
 		map.put("name", name);
@@ -57,7 +57,8 @@ public class CouponService {
 		coupon.setMinimumQuantity(minimumQuantity);
 		coupon.setMaximumQuantity(maximumQuantity);
 		coupon.setIsEnabled(isEnabled);
-		coupon.setProductCategoryId(Long.valueOf(pid));
+		coupon.setProductId(productId);
+		coupon.setProductCategoryId(pid);
 		coupon.setIntroduction(introduction);
 		coupon.setPriceExpression(priceExpression);
 		coupon.setShopId(shopId);
@@ -82,8 +83,8 @@ public class CouponService {
 	@Transactional
 	public void update(Long id, String name, String prefix,String beginDate,String endDate,BigDecimal minimumPrice,
 			BigDecimal maximumPrice,Integer minimumQuantity,
-			Integer maximumQuantity,boolean isEnabled,Integer pid,
-			String priceExpression,String introduction,Integer shopId) {
+			Integer maximumQuantity,boolean isEnabled,Long pid,
+			String priceExpression,String introduction,Integer shopId,Long productId) {
 		Coupon coupon = couponDao.select(id);
 		coupon.setName(null != name?name:coupon.getName());
 		Map<String,Object> map = new HashMap<>();
@@ -99,7 +100,8 @@ public class CouponService {
 		coupon.setMinimumQuantity(null!=minimumQuantity?minimumQuantity:coupon.getMinimumQuantity());
 		coupon.setMaximumQuantity(null!=maximumQuantity?maximumQuantity:coupon.getMaximumQuantity());
 		coupon.setIsEnabled(isEnabled);
-		coupon.setProductCategoryId(Long.valueOf(pid));
+		coupon.setProductCategoryId(pid);
+		coupon.setProductId(productId);
 		coupon.setPriceExpression(null!=priceExpression?priceExpression:coupon.getPriceExpression());
 		coupon.setIntroduction(introduction);
 		coupon.setShopId(shopId);

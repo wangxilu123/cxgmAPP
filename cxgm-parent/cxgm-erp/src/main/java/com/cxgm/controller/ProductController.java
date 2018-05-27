@@ -108,10 +108,12 @@ public class ProductController {
 			@RequestParam(value = "product.marketPrice") BigDecimal marketPrice,
 			@RequestParam(value = "product.weight") Integer weight,
 			@RequestParam(value = "weightUnit") String unit,
+			@RequestParam(value = "warrantDays") String warrantDays,//保质期单位
 			@RequestParam(value = "product.stock") Integer stock,
 			@RequestParam(value = "product.isMarketable") boolean isMarketable,
 			@RequestParam(value = "product.isTop") boolean isTop,
 			@RequestParam(value = "product.introduction",required=false) String introduction,
+			@RequestParam(value = "product.warrantyPeriod") Integer warrantyPeriod,//保质期
 			@RequestParam(value = "product.shop") Integer shop
 			) throws SQLException {
 		
@@ -119,7 +121,7 @@ public class ProductController {
 		try {
 			productService.insert(name, productSn, originPlace, storageCondition,
 					descriptionWeight, pid, brand, price, marketPrice, weight, unit, 
-					stock, isMarketable, isTop, introduction, shop, files,originalPrice);
+					stock, isMarketable, isTop, introduction, shop, files,originalPrice,warrantyPeriod,warrantDays);
 			ModelAndView mv = new ModelAndView("redirect:/admin/product/product");
 			return mv;
 		}catch(Exception e) {
@@ -178,9 +180,11 @@ public class ProductController {
 			@RequestParam(value = "product.marketPrice") BigDecimal marketPrice,
 			@RequestParam(value = "product.weight") Integer weight,
 			@RequestParam(value = "weightUnit") String unit,
+			@RequestParam(value = "warrantDays") String warrantDays,//保质期单位
 			@RequestParam(value = "product.stock") Integer stock,
 			@RequestParam(value = "product.isMarketable") boolean isMarketable,
 			@RequestParam(value = "product.isTop") boolean isTop,
+			@RequestParam(value = "product.warrantyPeriod") Integer warrantyPeriod,//保质期
 			@RequestParam(value = "product.introduction",required=false) String introduction,
 			@RequestParam(value = "product.shop") Integer shop
 			) throws SQLException {
@@ -190,7 +194,7 @@ public class ProductController {
 		try {
 			productService.update(id,name, productSn, originPlace, storageCondition,
 					descriptionWeight, pid, brand, price, marketPrice, weight, unit, 
-					stock, isMarketable, isTop, introduction, shop, files,productImageIds,originalPrice);
+					stock, isMarketable, isTop, introduction, shop, files,productImageIds,originalPrice,warrantyPeriod,warrantDays);
 			ModelAndView mv = new ModelAndView("redirect:/admin/product/product");
 			return mv;
 		}catch(Exception e) {
