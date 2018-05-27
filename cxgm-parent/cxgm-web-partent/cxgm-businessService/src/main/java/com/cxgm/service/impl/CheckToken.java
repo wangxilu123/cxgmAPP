@@ -31,7 +31,7 @@ public class CheckToken {
         //根据Token查询用户的信息
     	UserLoginExample example = new UserLoginExample();
 		
-		example.createCriteria().andTokenEqualTo(token);
+		example.createCriteria().andTokenEqualTo(token!=null?token:"");
     	
     	List<UserLogin> userLogins = userLoginMapper.selectByExample(example);
     	if(userLogins.size()!=0){
