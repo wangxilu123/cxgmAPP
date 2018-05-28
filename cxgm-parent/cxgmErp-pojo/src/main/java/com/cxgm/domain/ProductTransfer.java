@@ -114,7 +114,17 @@ public class ProductTransfer {
 	private String warrantyPeriod;
 
 	private String detailImage;
+	
+	private Integer shopCartId;
  
+	public Integer getShopCartId() {
+		return shopCartId;
+	}
+
+	public void setShopCartId(Integer shopCartId) {
+		this.shopCartId = shopCartId;
+	}
+
 	public String getDetailImage() {
 		return detailImage;
 	}

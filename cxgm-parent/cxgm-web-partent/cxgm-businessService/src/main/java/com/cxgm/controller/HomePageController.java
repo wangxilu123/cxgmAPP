@@ -245,5 +245,31 @@ public class HomePageController {
 		
 		return new ResultDto<>(200, "查询成功", list);
 	}
+	
+	@ApiOperation(value = "根据门店ID查询首页新品上市", nickname = "根据门店ID查询首页新品上市")
+	@ApiImplicitParams({
+        @ApiImplicitParam(name = "shopId", value = "门店ID", required = false, paramType = "query", dataType = "int"),
+        @ApiImplicitParam(name = "goodName", value = "商品名称", required = false, paramType = "query", dataType = "String"),
+    })
+	@GetMapping("/serch")
+	public ResultDto<PageInfo<ProductTransfer>> findNewProduct(HttpServletRequest request,
+			@RequestParam(value = "shopId", required = false) Integer shopId,
+			@RequestParam(value = "goodName", required = false) String goodName){
+		
+		AppUser appUser = checkToken.check(request.getHeader("token"));
+		Integer userId=null;
+		if(appUser!=null){
+			userId=appUser.getId();
+		}
+		
+		Map<String,Object> map = new HashMap<>();
+		
+		map.put("shopId", shopId);
+		map.put("name", goodName);
+		List<ProductTransfer> list=homePageService.findListAllWithCategory(map,userId);
+		PageInfo<ProductTransfer> page = new PageInfo<>(list);
+		
+		return new ResultDto<>(200, "查询成功", page);
+	}
 
 }

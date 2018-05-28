@@ -14,6 +14,8 @@ import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
 
 import com.cxgm.common.ClientCustomSSL;
+import com.cxgm.common.CodeUtil;
+import com.cxgm.common.DateUtil;
 import com.cxgm.common.RequestHandler;
 import com.cxgm.dao.CouponCodeMapper;
 import com.cxgm.dao.CouponMapper;
@@ -63,9 +65,10 @@ public class OrderServiceImpl implements OrderService {
 
 	@Override
 	public Integer addOrder(Order order) {
-
+		String orderNum=DateUtil.formatDateTime2()+CodeUtil.genCodes(6);
 		order.setOrderTime(new Date());
 		order.setStatus("0");
+		order.setOrderNum(orderNum);
 		orderMapper.insert(order);
 
 		for (OrderProduct orderProduct : order.getProductList()) {
@@ -76,7 +79,10 @@ public class OrderServiceImpl implements OrderService {
 			// 修改销量
 			Product product = productMapper.findProductByGoodCode(orderProduct.getGoodCode());
 
-			product.setSales(product.getSales() + orderProduct.getProductNum());
+			if(product!=null){
+				product.setSales(product.getSales()!=null?product.getSales():0 + (orderProduct.getProductNum()!=null?orderProduct.getProductNum():0));
+			}
+			
 
 			productMapper.update(product);
 
@@ -90,16 +96,20 @@ public class OrderServiceImpl implements OrderService {
 
 		}
 		// 发票信息
-		order.getReceipt().setCreateTime(new Date());
-		receiptMapper.insert(order.getReceipt());
-
+		if(order.getReceipt()!=null){
+			order.getReceipt().setCreateTime(new Date());
+			receiptMapper.insert(order.getReceipt());
+		}
 		// 更改优惠券信息
-		CouponCode couponCode = couponCodeMapper.select((long) order.getCouponCodeId());
+		if(order.getCouponCodeId()!=null){
+			CouponCode couponCode = couponCodeMapper.select((long) order.getCouponCodeId());
 
-		couponCode.setStatus(1);
+			if(couponCode!=null){
+				couponCode.setStatus(1);
 
-		couponCodeMapper.update(couponCode);
-
+				couponCodeMapper.update(couponCode);
+			}
+		}
 		return order.getId();
 	}
 
@@ -132,7 +142,7 @@ public class OrderServiceImpl implements OrderService {
 		PageHelper.startPage(pageNum, pageSize);
 
 		OrderExample example = new OrderExample();
-		if (status.equals("") == false && status != null) {
+		if ("".equals(status) == false && status != null) {
 			example.createCriteria().andUserIdEqualTo(userId).andStatusEqualTo(status);
 		} else {
 			example.createCriteria().andUserIdEqualTo(userId);
