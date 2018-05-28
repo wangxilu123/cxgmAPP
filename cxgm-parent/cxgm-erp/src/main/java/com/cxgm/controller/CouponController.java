@@ -115,6 +115,8 @@ public class CouponController {
 			@RequestParam(value = "coupon.shop") Integer shopId,
 			@RequestParam(value = "coupon.productId",required=false) Long productId) throws SQLException {
 		try {
+			if(pid==-1)pid=null;
+			if(productId==-1)productId=null;
 			couponService.insert(name, prefix, beginDate, endDate, minimumPrice, maximumPrice, minimumQuantity,
 					maximumQuantity, isEnabled, pid, priceExpression, introduction, shopId,productId);
 			ModelAndView mv = new ModelAndView("redirect:/admin/coupon");
@@ -178,6 +180,8 @@ public class CouponController {
 			@RequestParam(value = "coupon.shop") Integer shopId,
 			@RequestParam(value = "coupon.productId",required=false) Long productId) throws SQLException {
 		try {
+			if(pid==-1)pid=null;
+			if(productId==-1)productId=null;
 			couponService.update(id, name, prefix, beginDate, endDate, minimumPrice, maximumPrice, minimumQuantity, maximumQuantity, isEnabled, pid, priceExpression, introduction, shopId,productId);
 			ModelAndView mv = new ModelAndView("redirect:/admin/coupon");
 			return mv;

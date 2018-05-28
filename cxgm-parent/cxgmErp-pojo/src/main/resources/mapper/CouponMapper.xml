@@ -134,12 +134,8 @@
       <if test="shopId != null">
         shop_id = #{shopId,jdbcType=INTEGER},
       </if>
-      <if test="productCategoryId != null">
         product_category_id = #{productCategoryId,jdbcType=BIGINT},
-      </if>
-       <if test="productId != null">
         product_id = #{productId,jdbcType=BIGINT},
-      </if>
       <if test="introduction != null">
         introduction = #{introduction,jdbcType=LONGVARCHAR},
       </if>
