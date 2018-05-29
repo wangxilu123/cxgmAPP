@@ -246,7 +246,7 @@ public class HomePageController {
 		return new ResultDto<>(200, "查询成功", list);
 	}
 	
-	@ApiOperation(value = "根据门店ID查询首页新品上市", nickname = "根据门店ID查询首页新品上市")
+	@ApiOperation(value = "根据门店ID搜索商品", nickname = "根据门店ID搜索商品")
 	@ApiImplicitParams({
         @ApiImplicitParam(name = "shopId", value = "门店ID", required = false, paramType = "query", dataType = "int"),
         @ApiImplicitParam(name = "goodName", value = "商品名称", required = false, paramType = "query", dataType = "String"),

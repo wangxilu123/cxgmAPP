@@ -1,6 +1,7 @@
 package com.cxgm.controller;
 
 
+import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -139,6 +140,40 @@ public class OrderController {
 			List<CouponDetail> list = orderService.checkCoupons(appUser.getId(), order.getProductList(),order.getCategoryAndAmountList(),order.getOrderAmount());
 
 			return new ResultDto<>(200, "查询成功！",list);
+		} else {
+			return new ResultDto<>(403, "token失效请重新登录！");
+		}
+	}
+    
+    @ApiOperation(value = "根据订单ID查询剩余支付时间接口", nickname = "根据订单ID查询剩余支付时间接口")
+	@ApiImplicitParams({
+        @ApiImplicitParam(name = "orderId", value = "订单ID", required = false, paramType = "query", dataType = "int"),
+    })
+	@GetMapping("/surplusTime")
+	public ResultDto<Long> surplusTime(HttpServletRequest request,
+			@RequestParam(value = "orderId", defaultValue = "1" , required = false) Integer orderId){
+		
+		AppUser appUser = checkToken.check(request.getHeader("token"));
+
+		if (appUser != null) {
+  
+			Order order = orderService.findById(orderId);
+			
+			Date orderTime = order.getOrderTime();
+			
+			Date nowTime = new Date();
+			
+			Long time = nowTime.getTime()-orderTime.getTime();
+			
+			if(time>=7200000){
+				
+				return new ResultDto<>(201, "已超时！",null);
+			}else{
+				
+				Long surplusTime =7200000-time;
+				return new ResultDto<>(200, "查询成功！",surplusTime);
+			}
+			
 		} else {
 			return new ResultDto<>(403, "token失效请重新登录！");
 		}

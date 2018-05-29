@@ -147,6 +147,7 @@ public class OrderServiceImpl implements OrderService {
 		} else {
 			example.createCriteria().andUserIdEqualTo(userId);
 		}
+		example.setOrderByClause("order_time desc");
 		List<Order> list = orderMapper.selectByExample(example);
 
 		for (Order order : list) {
