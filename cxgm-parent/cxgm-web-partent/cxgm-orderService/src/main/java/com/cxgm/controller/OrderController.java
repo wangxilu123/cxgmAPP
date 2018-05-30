@@ -159,8 +159,11 @@ public class OrderController {
   
 			Order order = orderService.findById(orderId);
 			
-			Date orderTime = order.getOrderTime();
 			
+			Date orderTime = new Date();
+			if(order!=null){
+				 orderTime = order.getOrderTime();
+			}
 			Date nowTime = new Date();
 			
 			Long time = nowTime.getTime()-orderTime.getTime();
@@ -173,6 +176,27 @@ public class OrderController {
 				Long surplusTime =7200000-time;
 				return new ResultDto<>(200, "查询成功！",surplusTime);
 			}
+			
+		} else {
+			return new ResultDto<>(403, "token失效请重新登录！");
+		}
+	}
+    
+    @ApiOperation(value = "根据订单ID查询订单详情接口", nickname = "根据订单ID查询订单详情接口")
+	@ApiImplicitParams({
+        @ApiImplicitParam(name = "orderId", value = "订单ID", required = false, paramType = "query", dataType = "int"),
+    })
+	@GetMapping("/orderDetail")
+	public ResultDto<Order> orderDetail(HttpServletRequest request,
+			@RequestParam(value = "orderId", defaultValue = "1" , required = false) Integer orderId){
+		
+		AppUser appUser = checkToken.check(request.getHeader("token"));
+
+		if (appUser != null) {
+			
+			Order order = orderService.orderDetail(appUser.getId(), orderId);
+			
+			return new ResultDto<>(200, "查询成功！",order);
 			
 		} else {
 			return new ResultDto<>(403, "token失效请重新登录！");

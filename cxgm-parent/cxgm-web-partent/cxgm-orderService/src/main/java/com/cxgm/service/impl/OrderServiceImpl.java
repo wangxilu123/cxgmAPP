@@ -21,9 +21,12 @@ import com.cxgm.dao.CouponCodeMapper;
 import com.cxgm.dao.CouponMapper;
 import com.cxgm.dao.OrderMapper;
 import com.cxgm.dao.OrderProductMapper;
+import com.cxgm.dao.ProductImageMapper;
 import com.cxgm.dao.ProductMapper;
 import com.cxgm.dao.ReceiptMapper;
 import com.cxgm.dao.ShopCartMapper;
+import com.cxgm.dao.ShopMapper;
+import com.cxgm.dao.UserAddressMapper;
 import com.cxgm.domain.CategoryAndAmount;
 import com.cxgm.domain.CouponCode;
 import com.cxgm.domain.CouponDetail;
@@ -32,8 +35,12 @@ import com.cxgm.domain.OrderExample;
 import com.cxgm.domain.OrderProduct;
 import com.cxgm.domain.OrderProductTransfer;
 import com.cxgm.domain.Product;
+import com.cxgm.domain.ProductImage;
 import com.cxgm.domain.ProductTransfer;
+import com.cxgm.domain.Shop;
 import com.cxgm.domain.ShopCartExample;
+import com.cxgm.domain.UserAddress;
+import com.cxgm.domain.UserAddressExample;
 import com.cxgm.service.OrderService;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
@@ -62,10 +69,19 @@ public class OrderServiceImpl implements OrderService {
 
 	@Autowired
 	private ShopCartMapper shopCartMapper;
+	
+	@Autowired
+	private UserAddressMapper userAddressMapper;
+	
+	@Autowired
+	private ShopMapper shopMapper;
+	
+	@Autowired
+	private ProductImageMapper productImageMapper;
 
 	@Override
 	public Integer addOrder(Order order) {
-		String orderNum=DateUtil.formatDateTime2()+CodeUtil.genCodes(6);
+		String orderNum = DateUtil.formatDateTime2() + CodeUtil.genCodes(6);
 		order.setOrderTime(new Date());
 		order.setStatus("0");
 		order.setOrderNum(orderNum);
@@ -79,10 +95,10 @@ public class OrderServiceImpl implements OrderService {
 			// 修改销量
 			Product product = productMapper.findProductByGoodCode(orderProduct.getGoodCode());
 
-			if(product!=null){
-				product.setSales(product.getSales()!=null?product.getSales():0 + (orderProduct.getProductNum()!=null?orderProduct.getProductNum():0));
+			if (product != null) {
+				product.setSales(product.getSales() != null ? product.getSales()
+						: 0 + (orderProduct.getProductNum() != null ? orderProduct.getProductNum() : 0));
 			}
-			
 
 			productMapper.update(product);
 
@@ -96,15 +112,15 @@ public class OrderServiceImpl implements OrderService {
 
 		}
 		// 发票信息
-		if(order.getReceipt()!=null){
+		if (order.getReceipt() != null) {
 			order.getReceipt().setCreateTime(new Date());
 			receiptMapper.insert(order.getReceipt());
 		}
 		// 更改优惠券信息
-		if(order.getCouponCodeId()!=null){
+		if (order.getCouponCodeId() != null) {
 			CouponCode couponCode = couponCodeMapper.select((long) order.getCouponCodeId());
 
-			if(couponCode!=null){
+			if (couponCode != null) {
 				couponCode.setStatus(1);
 
 				couponCodeMapper.update(couponCode);
@@ -122,19 +138,21 @@ public class OrderServiceImpl implements OrderService {
 
 		return orderMapper.updateByExample(order, example);
 	}
-	
+
 	@Override
 	public Integer returnMoney(Integer orderId) {
-		
-		/*//根据
 
-		OrderExample example = new OrderExample();
-
-		example.createCriteria().andUserIdEqualTo(order.getUserId()).andIdEqualTo(order.getId());*/
+		/*
+		 * //根据
+		 * 
+		 * OrderExample example = new OrderExample();
+		 * 
+		 * example.createCriteria().andUserIdEqualTo(order.getUserId()).
+		 * andIdEqualTo(order.getId());
+		 */
 
 		return null;
 	}
-
 
 	@Override
 	public PageInfo<Order> orderList(Integer pageNum, Integer pageSize, Integer userId, String status) {
@@ -162,7 +180,16 @@ public class OrderServiceImpl implements OrderService {
 				BigDecimal num = new BigDecimal(orderDetail.getProductNum());
 
 				orderDetail.setAmount(price.multiply(num));
-
+				
+				if(orderDetail.getProductUrl()!=null&&!"".equals(orderDetail.getProductUrl())){
+					
+					String[] imageIds = orderDetail.getProductUrl().split(",");
+					
+					//根据图片ID查询图片url
+					ProductImage image  =productImageMapper.findById(Long.parseLong(imageIds[0]));
+					
+					orderDetail.setProductUrl(image!=null?image.getUrl():"");
+				}
 			}
 
 			order.setProductDetails(productList);
@@ -190,7 +217,7 @@ public class OrderServiceImpl implements OrderService {
 
 	@Override
 	public List<CouponDetail> checkCoupons(Integer userId, List<OrderProduct> productList,
-			List<CategoryAndAmount> amountList,BigDecimal totalAmount) {
+			List<CategoryAndAmount> amountList, BigDecimal totalAmount) {
 		// 根据商品ID查询商品分类
 		List<CouponDetail> newList = new ArrayList<CouponDetail>();
 
@@ -198,9 +225,9 @@ public class OrderServiceImpl implements OrderService {
 			ProductTransfer productTransfer = productMapper.findById((long) orderProduct.getProductId());
 
 			// 该商品的总价
-			BigDecimal amount=new BigDecimal(0);
-			if(orderProduct.getProductNum()!=null&&productTransfer.getPrice()!=null){
-				 amount = productTransfer.getPrice().multiply(new BigDecimal(orderProduct.getProductNum()));
+			BigDecimal amount = new BigDecimal(0);
+			if (orderProduct.getProductNum() != null && productTransfer.getPrice() != null) {
+				amount = productTransfer.getPrice().multiply(new BigDecimal(orderProduct.getProductNum()));
 			}
 			// 根据商品ID查询优惠券
 
@@ -220,27 +247,28 @@ public class OrderServiceImpl implements OrderService {
 
 		map1.put("userId", userId);
 		map1.put("amountList", amountList);
-		if(amountList!=null&&amountList.size()!=0){
+		if (amountList != null && amountList.size() != 0) {
 			List<CouponDetail> list1 = couponMapper.findCouponsByProduct(map1);
-			
+
 			newList.addAll(list1);
 		}
-		
-		//根据全品类查询优惠券
-		
+
+		// 根据全品类查询优惠券
+
 		HashMap<String, Object> map2 = new HashMap<String, Object>();
 
 		map2.put("userId", userId);
 		map2.put("totalAmount", totalAmount);
-		
+
 		List<CouponDetail> list2 = couponMapper.findCouponsByProduct(map2);
-			
+
 		newList.addAll(list2);
 		newList = new ArrayList<CouponDetail>(new LinkedHashSet<>(newList));
 
 		return newList;
 	}
-	//微信退款业务逻辑
+
+	// 微信退款业务逻辑
 	public void wechatRefund() {
 		String out_refund_no = "654232";// 退款单号
 		String out_trade_no = "12355";// 订单号
@@ -250,8 +278,8 @@ public class OrderServiceImpl implements OrderService {
 		String appid = "";
 		String appsecret = "";
 		String mch_id = "";
-		String op_user_id = "";//就是MCHID
-		String partnerkey = "";//商户平台上的那个KEY
+		String op_user_id = "";// 就是MCHID
+		String partnerkey = "";// 商户平台上的那个KEY
 		SortedMap<String, String> packageParams = new TreeMap<String, String>();
 		packageParams.put("appid", appid);
 		packageParams.put("mch_id", mch_id);
@@ -262,27 +290,79 @@ public class OrderServiceImpl implements OrderService {
 		packageParams.put("refund_fee", refund_fee);
 		packageParams.put("op_user_id", op_user_id);
 
-		RequestHandler reqHandler = new RequestHandler(
-				null, null);
+		RequestHandler reqHandler = new RequestHandler(null, null);
 		reqHandler.init(appid, appsecret, partnerkey);
 
 		String sign = reqHandler.createSign(packageParams);
-		String xml = "<xml>" + "<appid>" + appid + "</appid>" + "<mch_id>"
-				+ mch_id + "</mch_id>" + "<nonce_str>" + nonce_str
-				+ "</nonce_str>" + "<sign><![CDATA[" + sign + "]]></sign>"
-				+ "<out_trade_no>" + out_trade_no + "</out_trade_no>"
-				+ "<out_refund_no>" + out_refund_no + "</out_refund_no>"
-				+ "<total_fee>" + total_fee + "</total_fee>"
-				+ "<refund_fee>" + refund_fee + "</refund_fee>"
-				+ "<op_user_id>" + op_user_id + "</op_user_id>" + "</xml>";
+		String xml = "<xml>" + "<appid>" + appid + "</appid>" + "<mch_id>" + mch_id + "</mch_id>" + "<nonce_str>"
+				+ nonce_str + "</nonce_str>" + "<sign><![CDATA[" + sign + "]]></sign>" + "<out_trade_no>" + out_trade_no
+				+ "</out_trade_no>" + "<out_refund_no>" + out_refund_no + "</out_refund_no>" + "<total_fee>" + total_fee
+				+ "</total_fee>" + "<refund_fee>" + refund_fee + "</refund_fee>" + "<op_user_id>" + op_user_id
+				+ "</op_user_id>" + "</xml>";
 		String createOrderURL = "https://api.mch.weixin.qq.com/secapi/pay/refund";
 		try {
-			String s= ClientCustomSSL.doRefund(createOrderURL, xml);
+			String s = ClientCustomSSL.doRefund(createOrderURL, xml);
 			System.out.println(s);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+	}
+
+	@Override
+	public Order orderDetail(Integer userId, Integer orderId) {
+
+		OrderExample example = new OrderExample();
+		
+		example.createCriteria().andUserIdEqualTo(userId).andIdEqualTo(orderId);
+		
+		List<Order> orders = orderMapper.selectByExample(example);
+
+		// 根据orderId查询订单详情信息
+		List<OrderProductTransfer> productList = orderProductMapper.selectOrderDetail(orderId);
+
+		for (OrderProductTransfer orderDetail : productList) {
+
+			BigDecimal price = orderDetail.getPrice();
+
+			BigDecimal num = new BigDecimal(orderDetail.getProductNum());
+
+			orderDetail.setAmount(price.multiply(num));
+			
+			if(orderDetail.getProductUrl()!=null&&!"".equals(orderDetail.getProductUrl())){
+				
+				String[] imageIds = orderDetail.getProductUrl().split(",");
+				
+				//根据图片ID查询图片url
+				ProductImage image  =productImageMapper.findById(Long.parseLong(imageIds[0]));
+				
+				orderDetail.setProductUrl(image!=null?image.getUrl():"");
+			}
+
+		}
+        if(orders.size()!=0){
+        	orders.get(0).setProductDetails(productList);
+        	
+        	//根据用户ID查询用户收货地址信息
+        	
+        	UserAddressExample example1 = new UserAddressExample();
+        	
+        	example1.createCriteria().andUserIdEqualTo(userId);
+        	List<UserAddress> addressList = userAddressMapper.selectByExample(example1);
+        	
+        	orders.get(0).setAddress(addressList.size()!=0?addressList.get(0):null);
+        	
+        	//根据门店ID查询门店信息
+        	Shop  shop = shopMapper.selectByPrimaryKey(orders.get(0).getStoreId());
+        	
+        	orders.get(0).setShopName(shop!=null?shop.getShopName():"");
+        	orders.get(0).setShopAddress(shop!=null?shop.getShopAddress():"");
+        	
+        	return orders.get(0);
+        }else{
+        	return null;
+        }
+		
 	}
 
 }

@@ -22,4 +22,6 @@ public interface OrderService {
     List<CouponDetail> checkCoupons(Integer userId,List<OrderProduct> productList,List<CategoryAndAmount> amountList,BigDecimal totalAmount);
 
 	Integer returnMoney(Integer orderId);
+
+	Order orderDetail(Integer userId, Integer orderId);
 }

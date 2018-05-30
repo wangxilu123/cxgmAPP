@@ -170,13 +170,13 @@
   
   <select id="findShopCategoryTwo" parameterType="map" resultMap="GenerallyCategoryQueryMap">
   	select product_category_two_id as id,product_category_two_name as name from product where 
-  	1=1 <include refid="categoryQueryMap" />
+  	1=1 <include refid="categoryQueryMap" /> and product_category_two_id is not null
  	GROUP BY product_category_two_id,product_category_two_name
   </select>
   
   <select id="findShopCategoryThird" parameterType="map" resultMap="GenerallyCategoryQueryMap">
   	select product_category_third_id as id,product_category_third_name as name from product where 
-  	1=1 <include refid="categoryQueryMap" />
+  	1=1 <include refid="categoryQueryMap" /> and product_category_third_id is not null
  	GROUP BY product_category_third_id,product_category_third_name
   </select>
   

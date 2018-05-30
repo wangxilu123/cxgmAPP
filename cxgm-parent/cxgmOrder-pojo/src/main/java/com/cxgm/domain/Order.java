@@ -65,4 +65,19 @@ public class Order implements Serializable{
 	
 	@ApiModelProperty(name = "categoryAndAmountList",value = "二级分和金额")
 	private List<CategoryAndAmount>  categoryAndAmountList;
+	
+	@ApiModelProperty(name = "address",value = "收货地址信息")
+    private UserAddress address;
+	
+	@ApiModelProperty(name = "shopName",value = "门店名称")
+    private String shopName;
+	
+	@ApiModelProperty(name = "shopAddress",value = "门店地址")
+    private String shopAddress;
+	
+	@ApiModelProperty(name = "totalAmount",value = "商品总金额")
+    private BigDecimal totalAmount;
+	
+	@ApiModelProperty(name = "preferential",value = "优惠总金额")
+    private BigDecimal preferential;
 }

@@ -2,16 +2,9 @@
   <modelVersion>4.0.0</modelVersion>
   <parent>
     <groupId>com.cxgm</groupId>
-    <artifactId>cxgm-parent</artifactId>
+    <artifactId>cxgm-web-partent</artifactId>
     <version>1.0</version>
   </parent>
-  <artifactId>cxgm-web-partent</artifactId>
-  <packaging>pom</packaging>
-  <name>cxgm-web-partent</name>
-  <modules>
-  	<module>cxgm-userService</module>
-  	<module>cxgm-businessService</module>
-  	<module>cxgm-orderService</module>
-  	<module>cxgm-ThirdPartyService</module>
-  </modules>
+  <artifactId>cxgm-ThirdPartyService</artifactId>
+  <name>cxgm-ThirdPartyService</name>
 </project>

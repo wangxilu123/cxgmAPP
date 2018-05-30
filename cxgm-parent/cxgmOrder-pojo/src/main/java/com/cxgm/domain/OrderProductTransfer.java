@@ -24,6 +24,9 @@ public class OrderProductTransfer {
     
 	@ApiModelProperty(name = "price",value = "商品单价")
     private BigDecimal price;
+	
+	@ApiModelProperty(name = "originalPrice",value = "商品原单价")
+    private BigDecimal originalPrice;
     
 	@ApiModelProperty(name = "amount",value = "商品总金额")
     private BigDecimal amount;
