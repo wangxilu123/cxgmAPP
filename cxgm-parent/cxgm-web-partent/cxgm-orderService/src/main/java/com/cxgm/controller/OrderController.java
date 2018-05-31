@@ -88,11 +88,11 @@ public class OrderController {
     
     @ApiOperation(value = "取消订单接口",nickname = "取消订单接口")
     @ApiImplicitParam(name = "orderId", value = "订单ID", required = true, dataType = "Integer")
-    @PostMapping("/deleteOrder")
+    @PostMapping("/cancelOrder")
     public ResultDto<Integer> deleteOrder(HttpServletRequest request, 
     		@RequestParam(value = "orderId", required = false) Integer orderId){
     	
-        AppUser appUser = new CheckToken().check(request.getHeader("token"));
+        AppUser appUser = checkToken.check(request.getHeader("token"));
     	
     	if(appUser!=null){
     		
@@ -112,7 +112,7 @@ public class OrderController {
     public ResultDto<Integer> returnMoney(HttpServletRequest request, 
     		@RequestParam(value = "orderId", required = false) Integer orderId){
     	
-        AppUser appUser = new CheckToken().check(request.getHeader("token"));
+        AppUser appUser = checkToken.check(request.getHeader("token"));
     	
     	if(appUser!=null){
     		

@@ -13,8 +13,8 @@ import com.cxgm.dao.ProductMapper;
 import com.cxgm.dao.PromotionMapper;
 import com.cxgm.dao.ShopCartMapper;
 import com.cxgm.domain.Coupon;
-import com.cxgm.domain.Product;
 import com.cxgm.domain.ProductImage;
+import com.cxgm.domain.ProductTransfer;
 import com.cxgm.domain.Promotion;
 import com.cxgm.domain.ShopCart;
 import com.cxgm.domain.ShopCartExample;
@@ -49,13 +49,20 @@ public class ShopCartServiceImpl implements ShopCartService {
 
 	@Override
 	public Integer updateShopCart(ShopCart shopCart) {
-
 		ShopCartExample example = new ShopCartExample();
 
 		example.createCriteria().andIdEqualTo(shopCart.getId())
 				.andUserIdEqualTo(shopCart.getUserId());
-
-		return mapper.updateByExample(shopCart, example);
+		
+		if(shopCart.getGoodNum()!=0){
+			
+			return mapper.updateByExample(shopCart, example);
+		}else{
+			
+			
+			return mapper.deleteByExample(example);
+		}
+		
 	}
 
 	@Override
@@ -93,24 +100,25 @@ public class ShopCartServiceImpl implements ShopCartService {
 
 				map.put("shopId", shopCart.getShopId());
 				map.put("goodCode", shopCart.getGoodCode());
-				List<Product> product = productMapper.findProducts(map);
+				
+				List<ProductTransfer> list = productMapper.findListAllWithCategory(map);
 
-				if(product.size()!=0){
-					Integer weight = product.get(0).getWeight();
+				if(list.size()!=0){
+					Integer weight = list.get(0).getWeight();
 
-					String unit = product.get(0).getUnit();
+					String unit = list.get(0).getUnit();
 					
 					shopCart.setSpecifications((weight!=null&&unit!=null)?(weight + "/" + unit):"");
 					
-					if(product.get(0).getImage()!=null&&"".equals(product.get(0).getImage())==false){
-						String[] imageIds = product.get(0).getImage().split(",");
+					if(list.get(0).getImage()!=null&&"".equals(list.get(0).getImage())==false){
+						String[] imageIds = list.get(0).getImage().split(",");
 						
 						ProductImage image = productImageMapper.findById(Long.valueOf(imageIds[0]));
 						shopCart.setImageUrl(image!=null?image.getUrl():"");
 					}
-					shopCart.setPrice(product.get(0).getPrice());
-					shopCart.setOriginalPrice(product.get(0).getOriginalPrice());
-					shopCart.setCategoryId(product.get(0).getProductCategoryTwoId()!=null?product.get(0).getProductCategoryTwoId().intValue():null);
+					shopCart.setPrice(list.get(0).getPrice());
+					shopCart.setOriginalPrice(list.get(0).getOriginalPrice());
+					shopCart.setCategoryId(list.get(0).getProductCategoryTwoId()!=null?list.get(0).getProductCategoryTwoId().intValue():null);
 
 				}
 				

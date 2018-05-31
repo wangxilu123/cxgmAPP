@@ -355,5 +355,7 @@
     	<module>cxgmUser-pojo</module>
     	<module>cxgmErp-pojo</module>
     	<module>cxgmOrder-pojo</module>
+    	
+    	<module>cxgmThirdParty-pojo</module>
     </modules>
 </project>

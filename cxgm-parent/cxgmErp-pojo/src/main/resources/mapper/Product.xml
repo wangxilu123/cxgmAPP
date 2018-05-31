@@ -146,6 +146,10 @@
     		and p.is_hot=#{isHot,jdbcType=INTEGER}
 		</if>
 		
+		<if test="goodCode !=null and goodCode != ''">
+    		and good_code=#{goodCode,jdbcType=VARCHAR}
+		</if>
+		
 		
 	</sql>
   <sql id="Category_Column_List">
