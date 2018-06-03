@@ -38,5 +38,10 @@
 			<artifactId>javax.wsdl</artifactId>
 			<version>1.5.1</version>
 		</dependency>
+		<dependency>
+			<groupId>com.cxgm</groupId>
+			<artifactId>cxgmUser-pojo</artifactId>
+			<version>${project.version}</version>
+		</dependency>
 	</dependencies>
 </project>

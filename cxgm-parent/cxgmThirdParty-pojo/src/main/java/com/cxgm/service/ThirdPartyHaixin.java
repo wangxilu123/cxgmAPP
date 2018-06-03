@@ -1,158 +1,86 @@
 package com.cxgm.service;
-import java.io.BufferedInputStream;
-import java.io.ByteArrayOutputStream;
 import java.net.MalformedURLException;
+import java.net.URL;
 import java.rmi.RemoteException;
 
 import javax.xml.rpc.ServiceException;
 import javax.xml.rpc.holders.StringHolder;
 import javax.xml.soap.SOAPException;
 
-import org.apache.axis.client.Call;
 import org.apache.axis.client.Service;
-import org.apache.commons.httpclient.HttpClient;
-import org.apache.commons.httpclient.HttpStatus;
-import org.apache.commons.httpclient.methods.PostMethod;
-import org.tempuri.IHsMisWebSrv;
+import org.tempuri.IHsMisWebSrvbindingStub;
+
 /**
  * 海信业务对接
  * User: CQL
  *
  */
-public class ThirdPartyHaixin implements IHsMisWebSrv{
-	
-	/* public static void main(String[] args) {  
-		          String url = "http://221.219.243.5:8099/HsMisWebSrv.dll/wsdl/IHsMisWebSrv";  
-		          
-		          StringBuilder sb = new StringBuilder();  
-		          sb.append("<?xml version='1.0' encoding='UTF-8'?>");  
-		          sb.append("<IMPORTDATA>");  
-		          sb.append(" <OPERATION>1</OPERATION>");
-		          sb.append(" <DEVBRAND>1</DEVBRAND>");
-		          sb.append(" <DEVNO>1</DEVNO>");
-		          sb.append(" <CERTYPE>01</CERTYPE>");
-		          sb.append(" <CERSIGN>096F5CE12EBDAC1C7274FE36515A716E4B5F052B5A920AFCCF53829D1A7876D074B6B463A0A6E75CB8EC3F28DEE42A0C9E145d4e9eb7411d52a1e5cdec5e4bbce23</CERSIGN>");
-		          sb.append("</IMPORTDATA>");
-		          
-		          String  xmlString = sb.toString();
-		          
-		         String result = post(url,xmlString);
-		          
-		         System.out.println(result);
-		      } */
-
-	public static String post(String url,String xmlString){    
-		          //关闭   
-		          System.setProperty("org.apache.commons.logging.Log", "org.apache.commons.logging.impl.SimpleLog");     
-		          System.setProperty("org.apache.commons.logging.simplelog.showdatetime", "true");     
-		          System.setProperty("org.apache.commons.logging.simplelog.log.org.apache.commons.httpclient", "stdout");    
-		            
-		          //创建httpclient工具对象   
-		          HttpClient client = new HttpClient();    
-		          //创建post请求方法   
-		          PostMethod myPost = new PostMethod(url);    
-		          //设置请求超时时间   
-		          client.setConnectionTimeout(300*1000);  
-		          String responseString = null;    
-		          try{    
-		              //设置请求头部类型   
-		              myPost.setRequestHeader("Content-Type","text/xml");  
-		              myPost.setRequestHeader("charset","utf-8");  
-		                
-		              //设置请求体，即xml文本内容，注：这里写了两种方式，一种是直接获取xml内容字符串，一种是读取xml文件以流的形式   
-		           myPost.setRequestBody(xmlString);   
-		                
-		              /*InputStream body=this.getClass().getResourceAsStream("/"+xmlFileName);  
-		              myPost.setRequestBody(body); */ 
-		 //            myPost.setRequestEntity(new StringRequestEntity(xmlString,"text/xml","utf-8"));     
-		             int statusCode = client.executeMethod(myPost);    
-		             if(statusCode == HttpStatus.SC_OK){    
-		                 BufferedInputStream bis = new BufferedInputStream(myPost.getResponseBodyAsStream());    
-		                  byte[] bytes = new byte[1024];    
-		                  ByteArrayOutputStream bos = new ByteArrayOutputStream();    
-		                  int count = 0;    
-		                  while((count = bis.read(bytes))!= -1){    
-		                      bos.write(bytes, 0, count);    
-		                  }    
-		                  byte[] strByte = bos.toByteArray();    
-		                  responseString = new String(strByte,0,strByte.length,"utf-8");    
-		                  bos.close();    
-		                  bis.close();    
-		              }    
-		          }catch (Exception e) {    
-		              e.printStackTrace();    
-		          }    
-		         myPost.releaseConnection();    
-		         return responseString;    
-		    } 
-	
-	
-	public static String getResult() throws ServiceException, MalformedURLException, RemoteException, SOAPException
-	  {
-	     //标识Web Service的具体路径
-	   String endpoint = "http://221.219.243.5:8099/HsMisWebSrv.dll/wsdl/IHsMisWebSrv/IHsMisWebSrvservice";
-	   Service service = new Service();
-	   Call call = (Call) service.createCall();  
-       call.setTargetEndpointAddress(endpoint);  
-       call.setOperationName("IHiOpenedIntf");// WSDL里面描述的接口名称  
-       call.addParameter("intfCode",  
-               org.apache.axis.encoding.XMLType.XSD_STRING,  
-               javax.xml.rpc.ParameterMode.IN);// 接口的参数  
-       call.addParameter("XML",  
-               org.apache.axis.encoding.XMLType.XSD_STRING,  
-               javax.xml.rpc.ParameterMode.IN);// 接口的参数
-       call.setReturnType(org.apache.axis.encoding.XMLType.XSD_STRING);// 设置返回类型  
-	   String temp = "2001";
-	   
-	   StringBuilder sb = new StringBuilder();  
-       sb.append("<?xml version='1.0' encoding='UTF-8'?>");  
-       sb.append("<IMPORTDATA>");  
-       sb.append("<OPERATION>1</OPERATION>");
-       sb.append("<DEVBRAND>1</DEVBRAND>");
-       sb.append("<DEVNO>1</DEVNO>");
-       sb.append("<CERTYPE>01</CERTYPE>");
-       sb.append("<CERSIGN>112556653728E050D8350900446C390E93B6CBA90DD8D4135C09CCBC3C9C05FEE241FC1CE3DAF0EE1D5499060D46CD62D0B04CA0C4300819BC755e164aa45664fded1b54ae2fdbd818e</CERSIGN>");
-       sb.append("</IMPORTDATA>");
-       
-       String  xmlString = sb.toString();
-       
-	   String res =(String) call.invoke(new Object[]{temp,xmlString});
-	   System.out.println("111111111111111111111111111111111111111111111");
-	   System.out.println(res);
-	   System.out.println("222222222222222222222222222222222222222222222");
-	   return res;
-	  }
+public class ThirdPartyHaixin  {
 	/**
 	  * @param args
+	 * @throws ServiceException 
 	  */
-	 public static void main(String[] args) {
+	 public static void main(String[] args) throws MalformedURLException, SOAPException, ServiceException {
 	  try {
-	   System.out.println(getResult());
-	  } catch (MalformedURLException e) {
-	   e.printStackTrace();
+		  
+		   String endpoint = "http://221.219.243.5:8099/HsMisWebSrv.dll/wsdl/IHsMisWebSrv/IHsMisWebSrvservice";
+		   
+		   URL url = new URL(endpoint);
+		   Service service = new Service();
+		   IHsMisWebSrvbindingStub cleant =  new IHsMisWebSrvbindingStub(url,service);
+		   
+		   
+		   String pIntfCode = "2001";
+		   StringBuilder sb = new StringBuilder();  
+	       sb.append("<IMPORTDATA>");  
+	       sb.append("<OPERATION>1</OPERATION>");
+	       sb.append("<DEVBRAND>1</DEVBRAND>");
+	       sb.append("<DEVNO>1</DEVNO>");
+	       sb.append("<CERTYPE>01</CERTYPE>");
+	       sb.append("<CERSIGN>112556653728E050D8350900446C390E93B6CBA90DD8D4135C09CCBC3C9C05FEE241FC1CE3DAF0EE1D5499060D46CD62D0B04CA0C4300819BC755e164aa45664fded1b54ae2fdbd818e</CERSIGN>");
+	       sb.append("</IMPORTDATA>");
+	       
+	       String  pInData = sb.toString();
+		  
+	       StringHolder pOutData = new StringHolder();
+	       
+	       
+	   System.out.println(cleant.IHiOpenedIntf(pIntfCode, pInData, pOutData));
 	  } catch (RemoteException e) {
-	   e.printStackTrace();
-	  } catch (ServiceException e) {
-	   e.printStackTrace();
-	  } catch (SOAPException e) {
 	   e.printStackTrace();
 	  }
 	    }
+	 
+	 /*public String format(String unformattedXml) {
+	        try {
+	            final Document document = parseXmlFile(unformattedXml);
+	            OutputFormat format = new OutputFormat(document);
+	            format.setLineWidth(65);
+	            format.setIndenting(true);
+	            format.setIndent(2);
+	            Writer out = new StringWriter();
+	            XMLSerializer serializer = new XMLSerializer(out, format);
+	            serializer.serialize(document);
+	            return out.toString();
+	        } catch (IOException e) {
+	            throw new RuntimeException(e);
+	        }
+	    }
 
-
-	@Override
-	public String testWeb() throws RemoteException {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-
-	@Override
-	public int IHiOpenedIntf(String pIntfCode, String pInData, StringHolder pOutData) throws RemoteException {
-		
-		
-		return 0;
-	}
+	    private Document parseXmlFile(String in) {
+	        try {
+	            DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
+	            DocumentBuilder db = dbf.newDocumentBuilder();
+	            InputSource is = new InputSource(new StringReader(in));
+	            return db.parse(is);
+	        } catch (ParserConfigurationException e) {
+	            throw new RuntimeException(e);
+	        } catch (SAXException e) {
+	            throw new RuntimeException(e);
+	        } catch (IOException e) {
+	            throw new RuntimeException(e);
+	        }
+	    }*/
 }
 	
 	

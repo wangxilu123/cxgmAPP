@@ -84,13 +84,13 @@ public class ShopCartServiceImpl implements ShopCartService {
 
 	@Override
 	public PageInfo<ShopCart> shopCartList(Integer pageNum, Integer pageSize,
-			Integer userId) {
+			Integer userId,Integer shopId) {
 
 		PageHelper.startPage(pageNum, pageSize);
 
 		ShopCartExample example = new ShopCartExample();
 
-		example.createCriteria().andUserIdEqualTo(userId);
+		example.createCriteria().andUserIdEqualTo(userId).andShopIdEqualTo(shopId);
 
 		List<ShopCart> result = mapper.selectByExample(example);
 		if (result.size() != 0) {
