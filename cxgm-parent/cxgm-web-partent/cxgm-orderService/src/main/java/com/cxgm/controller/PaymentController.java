@@ -56,15 +56,15 @@ public class PaymentController {
 	// 微信统一下单接口路径
 	public static final String createOrderURL="https://api.mch.weixin.qq.com/pay/unifiedorder"; 
 
-	public static final String appid = "XXXXXX";//在微信开发平台登记的app应用 
+	public static final String appid = "wxd2f7d73babd9de68";//在微信开发平台登记的app应用 
 	
-	public static final String partner = "XXXXXXXXX";//商户号
+	public static final String partner = "1505765861";//商户号
 	// 微信回调地址
 	private static final String NOTIFYURL = "*********";
 	
 	public static final String partnerkey ="XXXXXXXXXXXXXXXXXXXXXXXXXXXXX";//不是商户登录密码，是商户在微信平台设置的32位长度的api秘钥，  
 	
-	public static final String appsecret = "XXXXXXXXX"; 
+	public static final String appsecret = "c72c6e5006bdccf527f6f5ebbd6e570d"; 
 
 	/**
 	 * 微信统一下单

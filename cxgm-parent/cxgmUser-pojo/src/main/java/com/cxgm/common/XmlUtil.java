@@ -1,10 +1,16 @@
 package com.cxgm.common;
 
-import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
-import java.util.Set;
-import java.util.SortedMap;
-import java.util.TreeMap;
+
+import org.apache.commons.lang.StringUtils;
+
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+
+import net.sf.json.JSONArray;
+import net.sf.json.JSONObject;
+import net.sf.json.xml.XMLSerializer;
 
 /**
  * 日期工具类。<br>
@@ -13,39 +19,49 @@ import java.util.TreeMap;
  * @version 1.0
  */
 public  class XmlUtil {
+	 private static XMLSerializer xmlserializer = new XMLSerializer();
 
-    /** 
-     * 将请求参数转换为xml格式的string 
-     * 通知微信.异步确认成功.必写.不然会一直通知后台.八次之后就认为交易失败了. 
-     *  
-     */  
-    @SuppressWarnings("all")  
-    public static String getRequestXml(final SortedMap<String, String> parameters) {  
-        StringBuffer sb = new StringBuffer();  
-        sb.append("<xml>");  
-        Set es = parameters.entrySet();  
-        Iterator it = es.iterator();  
-        while (it.hasNext()) {  
-            Map.Entry entry = (Map.Entry) it.next();  
-            String k = (String) entry.getKey();  
-            String v = (String) entry.getValue();  
-            if ("attach".equalsIgnoreCase(k) || "body".equalsIgnoreCase(k) || "sign".equalsIgnoreCase(k)) {  
-                sb.append("<" + k + ">" + "<![CDATA[" + v + "]]></" + k + ">");  
-            } else {  
-                sb.append("<" + k + ">" + v + "</" + k + ">");  
-            }  
-        }  
-        sb.append("</xml>");  
-        return sb.toString();  
-    }  
-  
-    /** 
-     * main 
-     */  
-    public static void main(final String[] arg) {  
-        SortedMap<String, String> sm = new TreeMap<String, String>();  
-        sm.put("SUCCESS", "OK");  
-        String ss = getRequestXml(sm);  
-        System.out.println(ss);  
+	public static String xml2json(String xmlString){
+        if(StringUtils.isNotBlank(xmlString)){
+            try {
+                return xmlserializer.read(xmlString).toString();
+            } catch (Exception e) {
+                e.printStackTrace();
+                return null;
+            }
+        }
+        return null;
     }
+	
+	/***
+     * JSON 转换为 List
+     * @param jsonStr
+     *         [{"age":12,"createTime":null,"id":"","name":"wxw","registerTime":null,"sex":1},{...}]
+     * @param objectClass
+     * @return
+     */
+    @SuppressWarnings("unchecked")
+    public static <T> List<T> json2List(String jsonStr, Class<T> objectClass){  
+        if (StringUtils.isNotBlank(jsonStr)) {
+            JSONArray jsonArray = JSONArray.fromObject(jsonStr);  
+            List<T> list = (List<T>) JSONArray.toCollection(jsonArray, objectClass);  
+            return list;  
+        }
+        return null;
+    }  
+    // 将Json数据解析成相应的映射对象
+         public static <T> T parseJsonWithGson(String jsonData, Class<T> type) {
+             Gson gson = new Gson();
+             T result = gson.fromJson(jsonData, type);
+             return result;
+         }
+     
+         // 将Json数组解析成相应的映射对象列表
+         public static <T> List<T> parseJsonArrayWithGson(String jsonData,
+                 Class<T> type) {
+             Gson gson = new Gson();
+             List<T> result = gson.fromJson(jsonData, new TypeToken<List<T>>() {
+             }.getType());
+             return result;
+         }
 }
