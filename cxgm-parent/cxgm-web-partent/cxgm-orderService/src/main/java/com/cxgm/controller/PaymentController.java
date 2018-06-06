@@ -34,6 +34,7 @@ import com.cxgm.service.OrderService;
 import com.cxgm.service.impl.CheckToken;
 
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
 
 /**
@@ -60,11 +61,11 @@ public class PaymentController {
 	
 	public static final String partner = "1505765861";//商户号
 	// 微信回调地址
-	private static final String NOTIFYURL = "*********";
+	private static final String NOTIFYURL = "http://47.104.226.173:41203/payments/notify";
 	
-	public static final String partnerkey ="XXXXXXXXXXXXXXXXXXXXXXXXXXXXX";//不是商户登录密码，是商户在微信平台设置的32位长度的api秘钥，  
+	public static final String partnerkey ="9a72407e88e9786148906a3400f9a44a";//不是商户登录密码，是商户在微信平台设置的32位长度的api秘钥，  
 	
-	public static final String appsecret = "c72c6e5006bdccf527f6f5ebbd6e570d"; 
+	public static final String appsecret = "c15e1da71829aa86776f9b4fc40514d0"; 
 
 	/**
 	 * 微信统一下单
@@ -73,6 +74,7 @@ public class PaymentController {
 	 */
 	@ApiOperation(value = "支付接口",nickname = "支付接口")
 	@RequestMapping(value = "/weixinPay", method = RequestMethod.POST, produces = "text/html;charset=UTF-8")
+	@ApiImplicitParam(name = "orderId", value = "订单ID", required = true, dataType = "Integer")
 	@ResponseBody
     public void topay(HttpServletRequest request,HttpServletResponse response) throws Exception{
 		
@@ -89,7 +91,7 @@ public class PaymentController {
 			       
 			    Order order=orderService.findById(Integer.parseInt(orderId));//获取订单数据  
 			    String userId = appUser.getId().toString();    
-			    String money = order.getOrderAmount().toString();//获取订单金额  
+			    String money = "0.01";//获取订单金额  
 			    //金额转化为分为单位  
 			    float sessionmoney = Float.parseFloat(money);  
 			    String finalmoney = String.format("%.2f", sessionmoney);  
@@ -109,22 +111,19 @@ public class PaymentController {
 			            String device_info="";  
 			            //随机数   
 			            String nonce_str = strReq;  
-			            String body = order.getRemarks();  
-			            //附加数据  
-			            String attach = userId;  
+			            String body = "test";  
 			            //商户订单号  
 			            String out_trade_no = order.getOrderNum();//订单编号加时间戳  
 			            int intMoney = Integer.parseInt(finalmoney);              
 			            //总金额以分为单位，不带小数点  
 			            String total_fee = String.valueOf(intMoney);  
 			            //订单生成的机器 IP  
-			            String spbill_create_ip = request.getRemoteAddr();  
+			            String spbill_create_ip =request.getRemoteAddr();  
 			            String notify_url =NOTIFYURL;//微信异步通知地址           
 			            String trade_type = "APP";//app支付必须填写为APP  
 			                        //对以下字段进行签名  
 			            SortedMap<String, String> packageParams = new TreeMap<String, String>();  
 			            packageParams.put("appid", appid);    
-			            packageParams.put("attach", attach);   
 			            packageParams.put("body", body);    
 			            packageParams.put("mch_id", mch_id);      
 			            packageParams.put("nonce_str", nonce_str);    
@@ -138,7 +137,6 @@ public class PaymentController {
 			            String sign = reqHandler.createSign(packageParams);//获取签名  
 			            String xml="<xml>"+  
 			                    "<appid>"+appid+"</appid>"+  
-			                    "<attach>"+attach+"</attach>"+  
 			                    "<body><![CDATA["+body+"]]></body>"+  
 			                    "<mch_id>"+mch_id+"</mch_id>"+  
 			                    "<nonce_str>"+nonce_str+"</nonce_str>"+  
@@ -242,12 +240,12 @@ public class PaymentController {
                 JSONArray out_trade_no = result_xml.getJSONArray("out_trade_no");//订单编号  
                 
                 //修改订单状态。。。。。。
+                //根据订单号查询订单信息
                 
+                Order order = orderService.findById((Integer)out_trade_no.get(0));
                 
-                /*Map<String,Object> map = new HashMap<String,Object>();  
-                map.put("orderNum", (String)out_trade_no.get(0));  
-                map.put("consumState", 1);  
-                accountWalletService.updateAccountOrderState(map);*/  
+                order.setStatus("1");
+                orderService.updateOrder(order);
                   
                 response.getWriter().write(setXml("SUCCESS", "OK"));  
             }             

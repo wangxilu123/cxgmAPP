@@ -116,7 +116,17 @@ public class ProductTransfer {
 	private String detailImage;
 	
 	private Integer shopCartId;
+	
+	private Boolean deleteFlag;
  
+	public Boolean getDeleteFlag() {
+		return deleteFlag;
+	}
+
+	public void setDeleteFlag(Boolean deleteFlag) {
+		this.deleteFlag = deleteFlag;
+	}
+
 	public Integer getShopCartId() {
 		return shopCartId;
 	}

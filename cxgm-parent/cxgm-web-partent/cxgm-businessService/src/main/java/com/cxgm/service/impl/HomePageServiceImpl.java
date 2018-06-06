@@ -184,6 +184,7 @@ public class HomePageServiceImpl implements HomePageService {
 			List<ShopCart> cartList = shopCartMapper.selectByExample(example);
 			if(cartList!=null&&cartList.size()!=0){
 				product.setShopCartNum(cartList.get(0).getGoodNum());
+				product.setShopCartId(cartList.get(0).getId());
 			}
 			
 		}
