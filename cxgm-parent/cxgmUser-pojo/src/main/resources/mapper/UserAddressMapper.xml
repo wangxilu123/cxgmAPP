@@ -98,7 +98,7 @@
     insert into user_address (user_id, address, phone, 
       real_name, area, longitude, dimension,is_def,remarks)
     values (#{userId,jdbcType=INTEGER}, #{address,jdbcType=VARCHAR}, #{phone,jdbcType=VARCHAR}, 
-      #{realName,jdbcType=VARCHAR}, #{area,jdbcType=VARCHAR}, #{longitude,jdbcType=VARCHAR}, #{dimension,jdbcType=VARCHAR},#{isDef,jdbcType=INTEGER}, #{remarks,jdbcType=VARCHAR})
+      #{realName,jdbcType=VARCHAR}, #{area,jdbcType=VARCHAR}, #{longitude,jdbcType=VARCHAR}, #{dimension,jdbcType=VARCHAR},0, #{remarks,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="com.cxgm.domain.UserAddress" useGeneratedKeys="true">
     insert into user_address

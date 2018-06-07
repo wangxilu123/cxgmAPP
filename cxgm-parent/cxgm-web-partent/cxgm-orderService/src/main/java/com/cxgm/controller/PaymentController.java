@@ -35,6 +35,7 @@ import com.cxgm.service.impl.CheckToken;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 
 /**
@@ -256,6 +257,52 @@ public class PaymentController {
         }  
           
     }
+	
+	
+	/**
+	 * 修改订单状态
+	 * @return
+	 * @throws UnsupportedEncodingException
+	 */
+	@ApiOperation(value = "修改订单状态接口",nickname = "修改订单状态接口")
+	@RequestMapping(value = "/updateStatus", method = RequestMethod.POST, produces = "text/html;charset=UTF-8")
+	@ApiImplicitParams({
+	@ApiImplicitParam(name = "orderId", value = "订单ID", required = true, dataType = "Integer"),
+	@ApiImplicitParam(name = "payType", value = "支付方式,微信wx，支付宝zfb", required = true, dataType = "String")
+	})
+	@ResponseBody
+    public void updateStatus(HttpServletRequest request,HttpServletResponse response) throws Exception{
+		
+		AppUser appUser = checkToken.check(request.getHeader("token"));
+		
+		JSONObject retMsgJson=new JSONObject();
+		if(appUser!=null){
+			  request.setCharacterEncoding("UTF-8");  
+			    response.setCharacterEncoding("UTF-8");  
+			    response.setContentType("text/html;charset=UTF-8");  
+			    String orderId= request.getParameter("orderId");  
+			    String payType= request.getParameter("payType");
+			    
+                //根据订单号查询订单信息
+                
+                Order order = orderService.findById(Integer.parseInt(orderId));
+                
+                order.setStatus("1");
+                order.setPayType(payType);
+                orderService.updateOrder(order);
+                
+                PrintWriter out = response.getWriter();
+                
+                retMsgJson.put("msg", "ok");  
+                out.write(retMsgJson.toString());
+			   
+		}else{
+			 retMsgJson.put("msg", 403);  
+		     retMsgJson.put("body", "token失效请重新登录！"); 
+		}
+	}
+	
+	
 
 	// 返回用IP地址
 	public String getIpAddr(HttpServletRequest request) {

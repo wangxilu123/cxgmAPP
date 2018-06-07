@@ -11,7 +11,7 @@ import com.cxgm.domain.OrderExample;
 
 @Mapper
 public interface OrderMapper {
-    long countByExample(OrderExample example);
+	long countByExample(OrderExample example);
 
     int deleteByExample(OrderExample example);
 

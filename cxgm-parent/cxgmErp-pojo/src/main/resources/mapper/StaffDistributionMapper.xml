@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.cxgm.dao.OrderProductMapper">
-  <resultMap id="BaseResultMap" type="com.cxgm.domain.OrderProduct">
+<mapper namespace="com.cxgm.dao.StaffDistributionMapper">
+  <resultMap id="BaseResultMap" type="com.cxgm.domain.StaffDistribution">
     <result column="id" jdbcType="INTEGER" property="id" />
+    <result column="admin_id" jdbcType="INTEGER" property="adminId" />
     <result column="order_id" jdbcType="INTEGER" property="orderId" />
-    <result column="product_name" jdbcType="VARCHAR" property="productName" />
-    <result column="product_id" jdbcType="INTEGER" property="productId" />
-    <result column="product_num" jdbcType="INTEGER" property="productNum" />
+    <result column="status" jdbcType="VARCHAR" property="status" />
+    <result column="address_id" jdbcType="INTEGER" property="addressId" />
     <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
   </resultMap>
   <sql id="Example_Where_Clause">
@@ -68,15 +68,15 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    id, order_id, product_name, product_id, product_num, create_time
+    id, admin_id, order_id, status, address_id, create_time
   </sql>
-  <select id="selectByExample" parameterType="com.cxgm.domain.OrderProductExample" resultMap="BaseResultMap">
+  <select id="selectByExample" parameterType="com.cxgm.domain.StaffDistributionExample" resultMap="BaseResultMap">
     select
     <if test="distinct">
       distinct
     </if>
     <include refid="Base_Column_List" />
-    from order_product
+    from staff_distribution
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
@@ -84,85 +84,78 @@
       order by ${orderByClause}
     </if>
   </select>
-  
-  <select id="selectOrderDetail" parameterType="java.lang.Integer" resultType="com.cxgm.domain.OrderProductTransfer">
-    select product_name as productName,good_code as productCode,product_num as productNum,image as productUrl,price,unit,weight,order_amount as amount,original_price as originalPrice,product_id as productId 
-    from order_product as rd LEFT JOIN product as pd on rd.product_id=pd.id left join user_order as od on rd.order_id=od.id
-    where order_id = #{orderId,jdbcType=INTEGER}
-  </select>
-  
-  <delete id="deleteByExample" parameterType="com.cxgm.domain.OrderProductExample">
-    delete from order_product
+  <delete id="deleteByExample" parameterType="com.cxgm.domain.StaffDistributionExample">
+    delete from staff_distribution
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.cxgm.domain.OrderProduct" useGeneratedKeys="true">
-    insert into order_product (order_id, product_name, product_id, 
-      product_num, create_time)
-    values (#{orderId,jdbcType=INTEGER}, #{productName,jdbcType=VARCHAR}, #{productId,jdbcType=INTEGER}, 
-      #{productNum,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP})
+  <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.cxgm.domain.StaffDistribution" useGeneratedKeys="true">
+    insert into staff_distribution (admin_id, order_id, status, 
+      address_id, create_time)
+    values (#{adminId,jdbcType=INTEGER}, #{orderId,jdbcType=INTEGER}, #{status,jdbcType=VARCHAR}, 
+      #{addressId,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP})
   </insert>
-  <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="com.cxgm.domain.OrderProduct" useGeneratedKeys="true">
-    insert into order_product
+  <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="com.cxgm.domain.StaffDistribution" useGeneratedKeys="true">
+    insert into staff_distribution
     <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="adminId != null">
+        admin_id,
+      </if>
       <if test="orderId != null">
         order_id,
       </if>
-      <if test="productName != null">
-        product_name,
+      <if test="status != null">
+        status,
       </if>
-      <if test="productId != null">
-        product_id,
-      </if>
-      <if test="productNum != null">
-        product_num,
+      <if test="addressId != null">
+        address_id,
       </if>
       <if test="createTime != null">
         create_time,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="adminId != null">
+        #{adminId,jdbcType=INTEGER},
+      </if>
       <if test="orderId != null">
         #{orderId,jdbcType=INTEGER},
       </if>
-      <if test="productName != null">
-        #{productName,jdbcType=VARCHAR},
+      <if test="status != null">
+        #{status,jdbcType=VARCHAR},
       </if>
-      <if test="productId != null">
-        #{productId,jdbcType=INTEGER},
-      </if>
-      <if test="productNum != null">
-        #{productNum,jdbcType=INTEGER},
+      <if test="addressId != null">
+        #{addressId,jdbcType=INTEGER},
       </if>
       <if test="createTime != null">
         #{createTime,jdbcType=TIMESTAMP},
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="com.cxgm.domain.OrderProductExample" resultType="java.lang.Long">
-    select count(*) from order_product
+  <select id="countByExample" parameterType="com.cxgm.domain.StaffDistributionExample" resultType="java.lang.Long">
+    select count(*) from staff_distribution
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </select>
   <update id="updateByExampleSelective" parameterType="map">
-    update order_product
+    update staff_distribution
     <set>
       <if test="record.id != null">
         id = #{record.id,jdbcType=INTEGER},
       </if>
+      <if test="record.adminId != null">
+        admin_id = #{record.adminId,jdbcType=INTEGER},
+      </if>
       <if test="record.orderId != null">
         order_id = #{record.orderId,jdbcType=INTEGER},
       </if>
-      <if test="record.productName != null">
-        product_name = #{record.productName,jdbcType=VARCHAR},
+      <if test="record.status != null">
+        status = #{record.status,jdbcType=VARCHAR},
       </if>
-      <if test="record.productId != null">
-        product_id = #{record.productId,jdbcType=INTEGER},
-      </if>
-      <if test="record.productNum != null">
-        product_num = #{record.productNum,jdbcType=INTEGER},
+      <if test="record.addressId != null">
+        address_id = #{record.addressId,jdbcType=INTEGER},
       </if>
       <if test="record.createTime != null">
         create_time = #{record.createTime,jdbcType=TIMESTAMP},
@@ -173,12 +166,12 @@
     </if>
   </update>
   <update id="updateByExample" parameterType="map">
-    update order_product
+    update staff_distribution
     set id = #{record.id,jdbcType=INTEGER},
+      admin_id = #{record.adminId,jdbcType=INTEGER},
       order_id = #{record.orderId,jdbcType=INTEGER},
-      product_name = #{record.productName,jdbcType=VARCHAR},
-      product_id = #{record.productId,jdbcType=INTEGER},
-      product_num = #{record.productNum,jdbcType=INTEGER},
+      status = #{record.status,jdbcType=VARCHAR},
+      address_id = #{record.addressId,jdbcType=INTEGER},
       create_time = #{record.createTime,jdbcType=TIMESTAMP}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />

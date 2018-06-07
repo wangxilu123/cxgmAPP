@@ -10,6 +10,9 @@ import lombok.ToString;
 @ToString
 public class OrderProductTransfer {
 	
+	@ApiModelProperty(name = "productId",value = "商品ID")
+    private Integer productId;
+	
 	@ApiModelProperty(name = "productName",value = "商品名称")
     private String productName;
 
