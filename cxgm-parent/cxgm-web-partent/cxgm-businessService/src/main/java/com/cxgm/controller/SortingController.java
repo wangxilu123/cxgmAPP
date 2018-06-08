@@ -26,7 +26,7 @@ import io.swagger.annotations.ApiOperation;
  */
 @Api(description = "优惠券相关接口")
 @RestController
-@RequestMapping("/coupon")
+@RequestMapping("/sorting")
 public class SortingController {
 
 	@Autowired

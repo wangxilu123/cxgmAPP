@@ -173,6 +173,7 @@ public class HomePageServiceImpl implements HomePageService {
 				imageList.add(productImage);
 			}
 			product.setProductImageList(imageList);
+			product.setImage(imageList.get(0).getUrl());
 		}
 		
 		//根据商品ID和门店ID查询购物车信息

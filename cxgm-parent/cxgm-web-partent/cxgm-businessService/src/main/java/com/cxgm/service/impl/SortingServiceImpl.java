@@ -11,7 +11,6 @@ import com.cxgm.dao.OrderMapper;
 import com.cxgm.dao.OrderProductMapper;
 import com.cxgm.dao.ProductImageMapper;
 import com.cxgm.dao.StaffSortingMapper;
-import com.cxgm.domain.DistributionOrder;
 import com.cxgm.domain.Order;
 import com.cxgm.domain.OrderExample;
 import com.cxgm.domain.OrderProductTransfer;

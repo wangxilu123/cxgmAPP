@@ -1,24 +1,21 @@
 package com.cxgm.service.impl;
 
-import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.commons.math.distribution.Distribution;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
 
 import com.cxgm.dao.OrderMapper;
-import com.cxgm.dao.OrderProductMapper;
-import com.cxgm.dao.ProductImageMapper;
-import com.cxgm.dao.StaffSortingMapper;
+import com.cxgm.dao.StaffDistributionMapper;
+import com.cxgm.dao.UserAddressMapper;
 import com.cxgm.domain.DistributionOrder;
 import com.cxgm.domain.Order;
 import com.cxgm.domain.OrderExample;
-import com.cxgm.domain.OrderProductTransfer;
-import com.cxgm.domain.ProductImage;
-import com.cxgm.domain.StaffSorting;
-import com.cxgm.domain.StaffSortingExample;
+import com.cxgm.domain.StaffDistribution;
+import com.cxgm.domain.UserAddress;
+import com.cxgm.domain.UserAddressExample;
 import com.cxgm.service.DistributionService;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
@@ -31,30 +28,66 @@ public class DistributionServiceImpl implements DistributionService {
 	private OrderMapper orderMapper;
 
 	@Autowired
-	private OrderProductMapper orderProductMapper;
-
+	private UserAddressMapper userAddressMapper;
+	
 	@Autowired
-	private ProductImageMapper productImageMapper;
-
-	@Autowired
-	private StaffSortingMapper staffSortingMapper;
-
+	private StaffDistributionMapper distributionMapper;
+	
 	@Override
 	public PageInfo<DistributionOrder> orderList(Integer pageNum, Integer pageSize, Integer shopId, String status) {
 		
 		
-		return null;
+		//根据门店ID和状态
+		PageHelper.startPage(pageNum, pageSize);
+		OrderExample example = new OrderExample();
+		if ("".equals(status) == false && status != null) {
+			example.createCriteria().andStoreIdEqualTo(shopId).andStatusEqualTo(status);
+		} else {
+			example.createCriteria().andStoreIdEqualTo(shopId);
+		}
+		example.setOrderByClause("order_time asc");
+		List<Order> list = orderMapper.selectByExample(example);
+		
+		List<DistributionOrder> distributionOrderList = new ArrayList<DistributionOrder>();
+		
+		for(Order order : list){
+			
+			//根据addressID查询地址信息
+			UserAddressExample example1 = new UserAddressExample();
+			
+			example1.createCriteria().andIdEqualTo(Integer.parseInt(order.getAddressId()));
+			List<UserAddress> userAddressList = userAddressMapper.selectByExample(example1);
+			UserAddress userAddress = userAddressList.get(0);
+			
+			DistributionOrder distributionOrder = new DistributionOrder();
+			
+			distributionOrder.setOrderId(order.getId());
+			distributionOrder.setOrderTime(order.getOrderTime());
+			distributionOrder.setAddress(userAddress.getAddress());
+			distributionOrder.setArea(userAddress.getArea());
+			distributionOrder.setDimension(userAddress.getDimension());
+			distributionOrder.setId(userAddress.getId());
+			distributionOrder.setIsDef(userAddress.getIsDef());
+			distributionOrder.setLongitude(userAddress.getLongitude());
+			distributionOrder.setPhone(userAddress.getPhone());
+			distributionOrder.setRealName(userAddress.getRealName());
+			distributionOrder.setRemarks(userAddress.getRemarks());
+			distributionOrder.setUserId(userAddress.getUserId());
+			
+			distributionOrderList.add(distributionOrder);
+		}
+		PageInfo<DistributionOrder> page = new PageInfo<DistributionOrder>(distributionOrderList);
+		return page;
 	}
 
 	@Override
-	public Integer addDistribution(Distribution distribution) {
-		// TODO Auto-generated method stub
-		return null;
+	public Integer addDistribution(StaffDistribution distribution) {
+		
+		return distributionMapper.insert(distribution);
 	}
 
 	@Override
 	public Integer updateStatusByOrderId(Integer orderId, String status, Integer shopId) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
