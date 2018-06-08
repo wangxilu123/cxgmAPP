@@ -1,0 +1,209 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cxgm.dao.ArticleMapper">
+  <resultMap id="BaseResultMap" type="com.cxgm.domain.Article">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="title" jdbcType="VARCHAR" property="title" />
+    <result column="is_publication" jdbcType="BIT" property="isPublication" />
+    <result column="is_top" jdbcType="BIT" property="isTop" />
+    <result column="hits" jdbcType="BIGINT" property="hits" />
+    <result column="article_category_id" jdbcType="BIGINT" property="articleCategoryId" />
+    <result column="create_by" jdbcType="VARCHAR" property="createBy" />
+    <result column="creation_date" jdbcType="TIMESTAMP" property="creationDate" />
+    <result column="last_updated_by" jdbcType="VARCHAR" property="lastUpdatedBy" />
+    <result column="last_updated_date" jdbcType="TIMESTAMP" property="lastUpdatedDate" />
+    <result column="shop_id" jdbcType="INTEGER" property="shopId" />
+  </resultMap>
+  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.cxgm.domain.Article">
+    <result column="content" jdbcType="LONGVARCHAR" property="content" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, title, is_publication, is_top, hits, article_category_id, create_by, creation_date, 
+    last_updated_by, last_updated_date,shop_id
+  </sql>
+  <sql id="Blob_Column_List">
+    content
+  </sql>
+  
+   <sql id="queryMap">
+		<if test="shopId !=null and shopId != ''">
+    		and shop_id=#{shopId,jdbcType=INTEGER}
+		</if>
+		
+		<if test="title !=null and title != ''">
+    		and title  like "%"#{title,jdbcType=VARCHAR}"%"
+		</if>
+	</sql>
+  
+  <select id="findArticlesWithParam" parameterType="map" resultMap="ResultMapWithBLOBs">
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from article
+    where 1=1
+    <include refid="queryMap" />
+  </select>
+  
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="ResultMapWithBLOBs">
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from article
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from article
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.cxgm.domain.Article">
+    insert into article (id, title, is_publication, 
+      is_top, hits, article_category_id, 
+      create_by, creation_date, last_updated_by, 
+      last_updated_date, content,shop_id)
+    values (#{id,jdbcType=BIGINT}, #{title,jdbcType=VARCHAR}, #{isPublication,jdbcType=BIT}, 
+      #{isTop,jdbcType=BIT}, #{hits,jdbcType=BIGINT}, #{articleCategoryId,jdbcType=BIGINT}, 
+      #{createBy,jdbcType=VARCHAR}, #{creationDate,jdbcType=TIMESTAMP}, #{lastUpdatedBy,jdbcType=VARCHAR}, 
+      #{lastUpdatedDate,jdbcType=TIMESTAMP}, #{content,jdbcType=LONGVARCHAR},#{shopId,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.cxgm.domain.Article">
+    insert into article
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="title != null">
+        title,
+      </if>
+      <if test="isPublication != null">
+        is_publication,
+      </if>
+      <if test="isTop != null">
+        is_top,
+      </if>
+      <if test="hits != null">
+        hits,
+      </if>
+      <if test="articleCategoryId != null">
+        article_category_id,
+      </if>
+      <if test="createBy != null">
+        create_by,
+      </if>
+      <if test="creationDate != null">
+        creation_date,
+      </if>
+      <if test="lastUpdatedBy != null">
+        last_updated_by,
+      </if>
+      <if test="lastUpdatedDate != null">
+        last_updated_date,
+      </if>
+      <if test="content != null">
+        content,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="title != null">
+        #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="isPublication != null">
+        #{isPublication,jdbcType=BIT},
+      </if>
+      <if test="isTop != null">
+        #{isTop,jdbcType=BIT},
+      </if>
+      <if test="hits != null">
+        #{hits,jdbcType=BIGINT},
+      </if>
+      <if test="articleCategoryId != null">
+        #{articleCategoryId,jdbcType=BIGINT},
+      </if>
+      <if test="createBy != null">
+        #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="creationDate != null">
+        #{creationDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastUpdatedBy != null">
+        #{lastUpdatedBy,jdbcType=VARCHAR},
+      </if>
+      <if test="lastUpdatedDate != null">
+        #{lastUpdatedDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="content != null">
+        #{content,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.cxgm.domain.Article">
+    update article
+    <set>
+      <if test="title != null">
+        title = #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="isPublication != null">
+        is_publication = #{isPublication,jdbcType=BIT},
+      </if>
+      <if test="isTop != null">
+        is_top = #{isTop,jdbcType=BIT},
+      </if>
+      <if test="hits != null">
+        hits = #{hits,jdbcType=BIGINT},
+      </if>
+      <if test="articleCategoryId != null">
+        article_category_id = #{articleCategoryId,jdbcType=BIGINT},
+      </if>
+      <if test="createBy != null">
+        create_by = #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="creationDate != null">
+        creation_date = #{creationDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastUpdatedBy != null">
+        last_updated_by = #{lastUpdatedBy,jdbcType=VARCHAR},
+      </if>
+      <if test="shopId != null">
+        shop_id = #{shopId,jdbcType=INTEGER},
+      </if>
+      <if test="lastUpdatedDate != null">
+        last_updated_date = #{lastUpdatedDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="content != null">
+        content = #{content,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.cxgm.domain.Article">
+    update article
+    set title = #{title,jdbcType=VARCHAR},
+      is_publication = #{isPublication,jdbcType=BIT},
+      is_top = #{isTop,jdbcType=BIT},
+      hits = #{hits,jdbcType=BIGINT},
+      article_category_id = #{articleCategoryId,jdbcType=BIGINT},
+      create_by = #{createBy,jdbcType=VARCHAR},
+      creation_date = #{creationDate,jdbcType=TIMESTAMP},
+      last_updated_by = #{lastUpdatedBy,jdbcType=VARCHAR},
+      last_updated_date = #{lastUpdatedDate,jdbcType=TIMESTAMP},
+      content = #{content,jdbcType=LONGVARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.cxgm.domain.Article">
+    update article
+    set title = #{title,jdbcType=VARCHAR},
+      is_publication = #{isPublication,jdbcType=BIT},
+      is_top = #{isTop,jdbcType=BIT},
+      hits = #{hits,jdbcType=BIGINT},
+      article_category_id = #{articleCategoryId,jdbcType=BIGINT},
+      create_by = #{createBy,jdbcType=VARCHAR},
+      creation_date = #{creationDate,jdbcType=TIMESTAMP},
+      last_updated_by = #{lastUpdatedBy,jdbcType=VARCHAR},
+      last_updated_date = #{lastUpdatedDate,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>
