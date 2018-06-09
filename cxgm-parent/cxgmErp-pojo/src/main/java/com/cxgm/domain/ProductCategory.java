@@ -41,8 +41,18 @@ public class ProductCategory {
     private List<ProductCategory> childCategory;
     
     private ProductCategory parentProductCategory;
+    
+    private List<ProductImage> productImageList;
+    
+    public List<ProductImage> getProductImageList() {
+		return productImageList;
+	}
 
-    public Long getId() {
+	public void setProductImageList(List<ProductImage> productImageList) {
+		this.productImageList = productImageList;
+	}
+
+	public Long getId() {
         return id;
     }
 

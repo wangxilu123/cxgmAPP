@@ -14,11 +14,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.cxgm.common.RSResult;
+import com.cxgm.common.SystemConfig;
 import com.cxgm.domain.Admin;
 import com.cxgm.domain.ProductCategory;
+import com.cxgm.domain.ProductImage;
 import com.cxgm.service.ProductCategoryService;
 
 import net.sf.json.JSONObject;
@@ -45,6 +49,10 @@ public class ProductCategoryController {
 	public ModelAndView productCategoryAdd(HttpServletRequest request) throws SQLException {
 		List<ProductCategory> productCategoryTreeList = new ArrayList<>();
 		productCategoryTreeList = productCategoryService.getProductCategory(0);
+		SystemConfig systemConfig = new SystemConfig();
+		systemConfig.setUploadLimit(10);
+		systemConfig.setAllowedUploadImageExtension("png,jpg");
+		request.setAttribute("systemConfig",systemConfig);
 		request.setAttribute("productCategoryTreeList", productCategoryTreeList);
 		return new ModelAndView("admin/product_category_input");
 	}
@@ -52,8 +60,9 @@ public class ProductCategoryController {
 	@RequestMapping(value = "/productCategory/save", method = RequestMethod.POST)
 	public ModelAndView productCategorySave(HttpServletRequest request,@RequestParam(value="parentId") String parentId,
 			@RequestParam(value="productCategory.name") String name) throws SQLException {
+		List<MultipartFile> files = ((MultipartHttpServletRequest) request).getFiles("productImages");
 		try {
-			productCategoryService.insert(Long.valueOf(parentId), name);
+			productCategoryService.insert(Long.valueOf(parentId), name, files);
 			ModelAndView mv = new ModelAndView("redirect:/admin/productCategory");
 			return mv;
 		}catch(Exception e) {
@@ -68,8 +77,10 @@ public class ProductCategoryController {
 	public ModelAndView productCategoryUpdate(HttpServletRequest request,@RequestParam(value="parentId") String parentId,
 			@RequestParam(value="productCategory.name") String name,
 			@RequestParam(value="productCategory.id") String id) throws SQLException {
+		List<MultipartFile> files = ((MultipartHttpServletRequest) request).getFiles("productImages");
+		String[] productImageIds = request.getParameterValues("productImageIds");
 		try {
-			productCategoryService.update(Long.valueOf(id),Long.valueOf(parentId), name);
+			productCategoryService.update(Long.valueOf(id),Long.valueOf(parentId), name, files, productImageIds);
 			ModelAndView mv = new ModelAndView("redirect:/admin/productCategory");
 			return mv;
 		}catch(Exception e) {
@@ -100,8 +111,14 @@ public class ProductCategoryController {
 	public ModelAndView productCategoryEdit(HttpServletRequest request,@RequestParam(value="id") String id) throws SQLException {
 		ProductCategory productCategory = productCategoryService.findById(Long.valueOf(id));
 		List<ProductCategory> productCategoryTreeList = productCategoryService.getProductCategory(0);
+		SystemConfig systemConfig = new SystemConfig();
+		systemConfig.setUploadLimit(10);
+		systemConfig.setAllowedUploadImageExtension("png,jpg");
+		List<ProductImage> productImages = productCategoryService.getAllAttachmentImage(productCategory);
+		productCategory.setProductImageList(productImages);
 		request.setAttribute("productCategoryTreeList", productCategoryTreeList);
 		request.setAttribute("productCategory", productCategory);
+		request.setAttribute("systemConfig",systemConfig);
 		return new ModelAndView("admin/product_category_input");
 	}
 }
