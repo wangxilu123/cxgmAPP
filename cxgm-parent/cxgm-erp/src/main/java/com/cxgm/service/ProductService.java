@@ -62,13 +62,15 @@ public class ProductService {
         	product.setWarrantyPeriod(warrantyPeriod+warrantDays);
         	product.setIsTop(isTop);
         	ProductCategory productCategory = productCategoryService.findById(Long.valueOf(pid));
+        	
         	if(productCategory.getGrade()==0) {
         		product.setProductCategoryId(productCategory.getId());
         		product.setProductCategoryName(productCategory.getName());
-//        		product.setProductCategoryTwoId(productCategory.getId());
-//        		product.setProductCategoryTwoName(productCategory.getName());
-//        		product.setProductCategoryThirdId(productCategory.getId());
-//        		product.setProductCategoryThirdName(productCategory.getName());
+        		String imagesValue = productCategory.getTreePath();
+            	String oneCategoryImage = imagesValue.split(",")[0];
+            	ProductImage oneCategoryProductImage= productImageDao.findById(Long.valueOf(oneCategoryImage));
+            	String oneCategoryURL = oneCategoryProductImage.getUrl();
+        		product.setDetailImage(oneCategoryURL);
         	}
         	if(productCategory.getGrade()==1) {
         		ProductCategory pcy = productCategoryService.findById(productCategory.getParentId());
@@ -76,8 +78,11 @@ public class ProductService {
         		product.setProductCategoryName(pcy.getName());
         		product.setProductCategoryTwoId(productCategory.getId());
         		product.setProductCategoryTwoName(productCategory.getName());
-//        		product.setProductCategoryThirdId(productCategory.getId());
-//        		product.setProductCategoryThirdName(productCategory.getName());
+        		String imagesValue = pcy.getTreePath();
+            	String oneCategoryImage = imagesValue.split(",")[0];
+            	ProductImage oneCategoryProductImage= productImageDao.findById(Long.valueOf(oneCategoryImage));
+            	String oneCategoryURL = oneCategoryProductImage.getUrl();
+        		product.setDetailImage(oneCategoryURL);
         	}
         	if(productCategory.getGrade()==2) {
         		ProductCategory pc2 = productCategoryService.findById(productCategory.getParentId());
@@ -88,6 +93,11 @@ public class ProductService {
         		product.setProductCategoryTwoName(pc2.getName());
         		product.setProductCategoryThirdId(productCategory.getId());
         		product.setProductCategoryThirdName(productCategory.getName());
+        		String imagesValue = pc1.getTreePath();
+            	String oneCategoryImage = imagesValue.split(",")[0];
+            	ProductImage oneCategoryProductImage= productImageDao.findById(Long.valueOf(oneCategoryImage));
+            	String oneCategoryURL = oneCategoryProductImage.getUrl();
+        		product.setDetailImage(oneCategoryURL);
         	}
         	product.setBrandName(brand);
         	product.setPrice(price);
@@ -173,10 +183,11 @@ public class ProductService {
         	if(productCategory.getGrade()==0) {
         		product.setProductCategoryId(productCategory.getId());
         		product.setProductCategoryName(productCategory.getName());
-//        		product.setProductCategoryTwoId(productCategory.getId());
-//        		product.setProductCategoryTwoName(productCategory.getName());
-//        		product.setProductCategoryThirdId(productCategory.getId());
-//        		product.setProductCategoryThirdName(productCategory.getName());
+        		String imagesValue = productCategory.getTreePath();
+            	String oneCategoryImage = imagesValue.split(",")[0];
+            	ProductImage oneCategoryProductImage= productImageDao.findById(Long.valueOf(oneCategoryImage));
+            	String oneCategoryURL = oneCategoryProductImage.getUrl();
+        		product.setDetailImage(oneCategoryURL);
         	}
         	if(productCategory.getGrade()==1) {
         		ProductCategory pcy = productCategoryService.findById(productCategory.getParentId());
@@ -184,8 +195,11 @@ public class ProductService {
         		product.setProductCategoryName(pcy.getName());
         		product.setProductCategoryTwoId(productCategory.getId());
         		product.setProductCategoryTwoName(productCategory.getName());
-//        		product.setProductCategoryThirdId(productCategory.getId());
-//        		product.setProductCategoryThirdName(productCategory.getName());
+        		String imagesValue = pcy.getTreePath();
+            	String oneCategoryImage = imagesValue.split(",")[0];
+            	ProductImage oneCategoryProductImage= productImageDao.findById(Long.valueOf(oneCategoryImage));
+            	String oneCategoryURL = oneCategoryProductImage.getUrl();
+        		product.setDetailImage(oneCategoryURL);
         	}
         	if(productCategory.getGrade()==2) {
         		ProductCategory pc2 = productCategoryService.findById(productCategory.getParentId());
@@ -196,6 +210,11 @@ public class ProductService {
         		product.setProductCategoryTwoName(pc2.getName());
         		product.setProductCategoryThirdId(productCategory.getId());
         		product.setProductCategoryThirdName(productCategory.getName());
+        		String imagesValue = pc1.getTreePath();
+            	String oneCategoryImage = imagesValue.split(",")[0];
+            	ProductImage oneCategoryProductImage= productImageDao.findById(Long.valueOf(oneCategoryImage));
+            	String oneCategoryURL = oneCategoryProductImage.getUrl();
+        		product.setDetailImage(oneCategoryURL);
         	}
         	product.setBrandName(brand);
         	product.setPrice(price);
