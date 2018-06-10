@@ -31,9 +31,44 @@ public class UserAddressServiceImpl implements UserAddressService {
 		
         UserAddressExample  example = new UserAddressExample();
 		
-		example.createCriteria().andIdEqualTo(address.getId()).andUserIdEqualTo(address.getUserId());
+		example.createCriteria().andIdEqualTo(address.getId());
 		
-		return addressMapper.updateByExample(address, example);
+		if(address.getIsDef()!=null&&address.getIsDef()==1){
+			//根据ID查询地址信息
+			UserAddressExample example1 = new UserAddressExample();
+			
+			example1.createCriteria().andUserIdEqualTo(address.getUserId()).andIdNotEqualTo(address.getId());
+			List<UserAddress> list = addressMapper.selectByExample(example1);
+			
+			for(UserAddress userAddress : list){
+				UserAddressExample example2 = new UserAddressExample();
+				
+				example2.createCriteria().andIdEqualTo(userAddress.getId());
+				
+				userAddress.setIsDef(0);
+				addressMapper.updateByExample(userAddress, example2);
+			}
+			
+			return addressMapper.updateByExample(address, example);
+		}else{
+			//根据ID查询地址信息
+			UserAddressExample example3 = new UserAddressExample();
+			
+			example3.createCriteria().andIdEqualTo(address.getId());
+			List<UserAddress> list = addressMapper.selectByExample(example3);
+			
+			UserAddress dbAddress = list.get(0);
+			
+			dbAddress.setAddress(address.getAddress());
+			dbAddress.setArea(address.getArea());
+			dbAddress.setDimension(address.getDimension());
+			dbAddress.setLongitude(address.getLongitude());
+			dbAddress.setPhone(address.getPhone());
+			dbAddress.setRealName(address.getRealName());
+			dbAddress.setRemarks(address.getRemarks());
+			return addressMapper.updateByExample(dbAddress, example);
+		}
+		
 	}
 
 	@Override

@@ -8,6 +8,8 @@ public class ShopCategory {
 	
 	private String name;
 	
+	private String imageUrl;
+	
 	private List<ShopCategory> shopCategoryList;
 
 	public Long getId() {
@@ -33,6 +35,14 @@ public class ShopCategory {
 
 	public void setShopCategoryList(List<ShopCategory> shopCategoryList) {
 		this.shopCategoryList = shopCategoryList;
+	}
+
+	public String getImageUrl() {
+		return imageUrl;
+	}
+
+	public void setImageUrl(String imageUrl) {
+		this.imageUrl = imageUrl;
 	}
 	
 
