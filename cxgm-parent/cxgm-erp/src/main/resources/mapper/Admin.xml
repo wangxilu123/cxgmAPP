@@ -192,4 +192,10 @@
         order by id
 		desc
     </select>
+    
+    <select id="findAdmin" parameterType="map" resultMap="BaseResultMap">
+        select a.*,s.shop_name
+        from admin a left join tbl_shop s on a.shop_id=s.id
+        where a.name= #{name} and a.username = #{username}
+    </select>
 </mapper>

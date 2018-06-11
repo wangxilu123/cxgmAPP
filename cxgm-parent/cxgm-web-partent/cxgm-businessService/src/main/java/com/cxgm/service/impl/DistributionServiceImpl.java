@@ -57,24 +57,27 @@ public class DistributionServiceImpl implements DistributionService {
 			
 			example1.createCriteria().andIdEqualTo(Integer.parseInt(order.getAddressId()));
 			List<UserAddress> userAddressList = userAddressMapper.selectByExample(example1);
-			UserAddress userAddress = userAddressList.get(0);
 			
-			DistributionOrder distributionOrder = new DistributionOrder();
-			
-			distributionOrder.setOrderId(order.getId());
-			distributionOrder.setOrderTime(order.getOrderTime());
-			distributionOrder.setAddress(userAddress.getAddress());
-			distributionOrder.setArea(userAddress.getArea());
-			distributionOrder.setDimension(userAddress.getDimension());
-			distributionOrder.setId(userAddress.getId());
-			distributionOrder.setIsDef(userAddress.getIsDef());
-			distributionOrder.setLongitude(userAddress.getLongitude());
-			distributionOrder.setPhone(userAddress.getPhone());
-			distributionOrder.setRealName(userAddress.getRealName());
-			distributionOrder.setRemarks(userAddress.getRemarks());
-			distributionOrder.setUserId(userAddress.getUserId());
-			
-			distributionOrderList.add(distributionOrder);
+			if(userAddressList.size()!=0){
+				UserAddress userAddress = userAddressList.get(0);
+				
+				DistributionOrder distributionOrder = new DistributionOrder();
+				
+				distributionOrder.setOrderId(order.getId());
+				distributionOrder.setOrderTime(order.getOrderTime());
+				distributionOrder.setAddress(userAddress.getAddress());
+				distributionOrder.setArea(userAddress.getArea());
+				distributionOrder.setDimension(userAddress.getDimension());
+				distributionOrder.setId(userAddress.getId());
+				distributionOrder.setIsDef(userAddress.getIsDef());
+				distributionOrder.setLongitude(userAddress.getLongitude());
+				distributionOrder.setPhone(userAddress.getPhone());
+				distributionOrder.setRealName(userAddress.getRealName());
+				distributionOrder.setRemarks(userAddress.getRemarks());
+				distributionOrder.setUserId(userAddress.getUserId());
+				
+				distributionOrderList.add(distributionOrder);
+			}
 		}
 		PageInfo<DistributionOrder> page = new PageInfo<DistributionOrder>(distributionOrderList);
 		return page;

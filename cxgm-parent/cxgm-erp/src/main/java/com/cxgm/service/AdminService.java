@@ -2,6 +2,7 @@ package com.cxgm.service;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,10 +11,17 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.cxgm.common.DateKit;
+import com.cxgm.common.ResultDto;
+import com.cxgm.common.TokenUtils;
 import com.cxgm.dao.AdminMapper;
 import com.cxgm.dao.AdminRoleMapper;
+import com.cxgm.dao.UserLoginMapper;
 import com.cxgm.domain.Admin;
+import com.cxgm.domain.AdminLogin;
 import com.cxgm.domain.AdminRole;
+import com.cxgm.domain.LoginEntity;
+import com.cxgm.domain.UserLogin;
+import com.cxgm.domain.UserLoginExample;
 import com.cxgm.exception.TipException;
 
 @Service
@@ -23,6 +31,9 @@ public class AdminService {
 	AdminMapper adminDao;
 	@Autowired
 	AdminRoleMapper adminRoleDao;
+	
+	@Autowired
+	UserLoginMapper userLoginMapper;
 
 	public Admin findByUserName(String username) {
 		return adminDao.findByUserName(username);
@@ -30,6 +41,70 @@ public class AdminService {
 	public Admin findByName(String name) {
 		return adminDao.findByAdminName(name);
 	}
+	
+	public AdminLogin findAdmin(String realName,String username,String password) {
+		
+		HashMap<String, String> map = new HashMap<String, String>();
+		
+		map.put("name", realName);
+		map.put("username", username);
+		
+		Admin admin = adminDao.findAdmin(map);
+		
+		if(admin!=null){
+			
+			BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+			
+			boolean  check = encoder.matches(password, admin.getPassword());
+			
+			if(check==true){
+				// 根据用户名查询用户登录信息
+
+				UserLoginExample example1 = new UserLoginExample();
+
+				example1.createCriteria().andUserAccountEqualTo(username);
+
+				List<UserLogin> userLogins = userLoginMapper.selectByExample(example1);
+				
+				LoginEntity loginUser = new LoginEntity();
+				
+				loginUser.setUserAccount(username);
+				
+				String newToken = TokenUtils.createToken(loginUser);
+				if (userLogins.size() != 0) {
+					UserLogin userLogin = userLogins.get(0);
+
+					userLogin.setToken(newToken);
+					userLogin.setLastLogin(new Date());
+					// token保鲜
+					userLoginMapper.updateByPrimaryKey(userLogin);
+				} else {
+					UserLogin userLogin = new UserLogin();
+					userLogin.setToken(newToken);
+					userLogin.setUserAccount(loginUser.getUserAccount());
+					userLogin.setLastLogin(new Date());
+
+					userLoginMapper.insert(userLogin);
+				}
+				
+	            AdminLogin adminLogin = new AdminLogin();
+				
+				adminLogin.setAdminId(admin.getId().intValue());
+				adminLogin.setRealName(admin.getName());
+				adminLogin.setShopId(admin.getShopId());
+				adminLogin.setToken(newToken);
+				adminLogin.setUsername(admin.getUsername());
+				
+				return adminLogin;
+			}else{
+				return null;
+			}
+		}else{
+			return null;
+		}
+		 
+	}
+	
 
 	public List<Admin> findListAll() {
 		return adminDao.findListAll();

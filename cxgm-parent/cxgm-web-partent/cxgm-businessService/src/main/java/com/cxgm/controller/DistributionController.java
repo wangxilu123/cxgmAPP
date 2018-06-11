@@ -11,9 +11,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.cxgm.common.ResultDto;
-import com.cxgm.domain.Order;
-import com.cxgm.domain.StaffSorting;
-import com.cxgm.service.SortingService;
+import com.cxgm.domain.DistributionOrder;
+import com.cxgm.domain.StaffDistribution;
+import com.cxgm.service.DistributionService;
 import com.cxgm.service.impl.CheckToken;
 import com.github.pagehelper.PageInfo;
 
@@ -26,27 +26,27 @@ import io.swagger.annotations.ApiOperation;
  * @Description 类说明:
  * @author 作者 E-mail: wangxilu
  */
-@Api(description = "分拣 相关接口")
+@Api(description = "配送相关接口")
 @RestController
-@RequestMapping("/sorting")
-public class SortingController {
+@RequestMapping("/distribution")
+public class DistributionController {
 
 	@Autowired
-	private SortingService sortingService;
+	private DistributionService distributionService;
 	
 	@Autowired
 	private CheckToken checkToken;
 	
 
-	@ApiOperation(value = "根据门店查询分拣列表", nickname = "根据门店查询分拣列表")
+	@ApiOperation(value = "根据门店查询配送列表", nickname = "根据门店查询配送列表")
 	@ApiImplicitParams({
         @ApiImplicitParam(name = "pageNum", value = "第几页，默认1", required = false, paramType = "query", dataType = "int"),
 		@ApiImplicitParam(name = "pageSize", value = "每页多少条，默认10", required = false, paramType = "query", dataType = "int"),
         @ApiImplicitParam(name = "status", value = "", required = false, paramType = "query", dataType = "int"),
         @ApiImplicitParam(name = "shopId", required = false, paramType = "query", dataType = "int")
     })
-	@GetMapping("/findSorting")
-	public ResultDto<PageInfo<Order>> findFirstCategory(HttpServletRequest request,
+	@GetMapping("/findDistribution")
+	public ResultDto<PageInfo<DistributionOrder>> findDistribution(HttpServletRequest request,
 			@RequestParam(value = "pageNum", defaultValue = "1", required = false) Integer pageNum,
 			@RequestParam(value = "pageSize", defaultValue = "10", required = false) Integer pageSize,
 			@RequestParam(value = "status", required = false) String status,
@@ -56,7 +56,7 @@ public class SortingController {
 
 		if (result == true) {
 
-			PageInfo<Order> list = sortingService.orderList(pageNum, pageSize, shopId, status);
+			PageInfo<DistributionOrder> list = distributionService.orderList(pageNum, pageSize, shopId, status);
 
 			return new ResultDto<>(200, "查询成功！", list);
 		} else {
@@ -64,20 +64,21 @@ public class SortingController {
 		}
 	}
 	
-	@ApiOperation(value = "员工接受分拣单接口",nickname = "员工接分拣单接口")
-    @ApiImplicitParam(name = "StaffSorting", value = "分拣单实体StaffSorting", required = true, dataType = "StaffSorting")
-    @PostMapping("/addStaffSorting")
-    public ResultDto<Integer> addStaffSorting(HttpServletRequest request, @RequestBody  StaffSorting staffSorting){
+	@ApiOperation(value = "员工接受配送单接口",nickname = "员工接受配送单接口")
+    @ApiImplicitParam(name = "StaffDistribution", value = "配送单实体StaffDistribution", required = true, dataType = "StaffDistribution")
+    @PostMapping("/addStaffDistribution")
+    public ResultDto<Integer> addStaffDistribution(HttpServletRequest request, @RequestBody  StaffDistribution distribution){
     	
 		boolean result = checkToken.checkAdmin(request.getHeader("token"));
     	
     	if(result == true){
     	
-    	Integer sortingId = sortingService.addSorting(staffSorting);
+    	Integer id = distributionService.addDistribution(distribution);
     	
-        return new ResultDto<>(200,"接单成功！",sortingId);
+        return new ResultDto<>(200,"接单成功！",id);
     	}else{
     		return new ResultDto<>(403,"token失效请重新登录！");
     	}
     }
+	
 }
