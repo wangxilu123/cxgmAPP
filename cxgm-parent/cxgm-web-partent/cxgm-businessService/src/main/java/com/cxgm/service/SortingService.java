@@ -10,8 +10,10 @@ public interface SortingService {
 	
 	Integer addSorting(StaffSorting staffSorting);
 	
-	Integer updateStatusByOrderId(Integer orderId,String status,Integer shopId);
+	Integer updateStatusByOrderId(Integer orderId,Integer shopId);
 	
 	Order orderDetail(Integer orderId);
+
+	Integer cancelOrder(Integer orderId, String cancelReason);
 	
 }

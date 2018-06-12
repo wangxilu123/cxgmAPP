@@ -10,6 +10,8 @@ public interface DistributionService {
 	
 	Integer addDistribution(StaffDistribution distribution);
 	
-	Integer updateStatusByOrderId(Integer orderId,String status,Integer shopId);
+	Integer updateStatusByOrderId(Integer orderId);
+
+	Integer cancelOrder(Integer orderId, String cancelReason);
 	
 }

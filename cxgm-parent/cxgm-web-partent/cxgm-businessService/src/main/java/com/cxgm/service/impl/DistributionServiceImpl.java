@@ -14,6 +14,7 @@ import com.cxgm.domain.DistributionOrder;
 import com.cxgm.domain.Order;
 import com.cxgm.domain.OrderExample;
 import com.cxgm.domain.StaffDistribution;
+import com.cxgm.domain.StaffDistributionExample;
 import com.cxgm.domain.UserAddress;
 import com.cxgm.domain.UserAddressExample;
 import com.cxgm.service.DistributionService;
@@ -29,15 +30,14 @@ public class DistributionServiceImpl implements DistributionService {
 
 	@Autowired
 	private UserAddressMapper userAddressMapper;
-	
+
 	@Autowired
 	private StaffDistributionMapper distributionMapper;
-	
+
 	@Override
 	public PageInfo<DistributionOrder> orderList(Integer pageNum, Integer pageSize, Integer shopId, String status) {
-		
-		
-		//根据门店ID和状态
+
+		// 根据门店ID和状态
 		PageHelper.startPage(pageNum, pageSize);
 		OrderExample example = new OrderExample();
 		if ("".equals(status) == false && status != null) {
@@ -47,22 +47,22 @@ public class DistributionServiceImpl implements DistributionService {
 		}
 		example.setOrderByClause("order_time asc");
 		List<Order> list = orderMapper.selectByExample(example);
-		
+
 		List<DistributionOrder> distributionOrderList = new ArrayList<DistributionOrder>();
-		
-		for(Order order : list){
-			
-			//根据addressID查询地址信息
+
+		for (Order order : list) {
+
+			// 根据addressID查询地址信息
 			UserAddressExample example1 = new UserAddressExample();
-			
+
 			example1.createCriteria().andIdEqualTo(Integer.parseInt(order.getAddressId()));
 			List<UserAddress> userAddressList = userAddressMapper.selectByExample(example1);
-			
-			if(userAddressList.size()!=0){
+
+			if (userAddressList.size() != 0) {
 				UserAddress userAddress = userAddressList.get(0);
-				
+
 				DistributionOrder distributionOrder = new DistributionOrder();
-				
+
 				distributionOrder.setOrderId(order.getId());
 				distributionOrder.setOrderTime(order.getOrderTime());
 				distributionOrder.setAddress(userAddress.getAddress());
@@ -75,7 +75,7 @@ public class DistributionServiceImpl implements DistributionService {
 				distributionOrder.setRealName(userAddress.getRealName());
 				distributionOrder.setRemarks(userAddress.getRemarks());
 				distributionOrder.setUserId(userAddress.getUserId());
-				
+
 				distributionOrderList.add(distributionOrder);
 			}
 		}
@@ -85,15 +85,95 @@ public class DistributionServiceImpl implements DistributionService {
 
 	@Override
 	public Integer addDistribution(StaffDistribution distribution) {
-		
-		return distributionMapper.insert(distribution);
+
+		// 根据订单ID查询配送单
+		StaffDistributionExample example = new StaffDistributionExample();
+
+		example.createCriteria().andOrderIdEqualTo(distribution.getOrderId());
+
+		List<StaffDistribution> list = distributionMapper.selectByExample(example);
+
+		if (list.size() != 0) {
+			return 0;
+		} else {
+
+			distribution.setStatus("4");
+
+			Integer distributionId = distributionMapper.insert(distribution);
+
+			// 修改订单状态
+			OrderExample example1 = new OrderExample();
+
+			example1.createCriteria().andIdEqualTo(distribution.getOrderId());
+			List<Order> orderList = orderMapper.selectByExample(example1);
+			if (orderList.size() != 0) {
+
+				Order order = orderList.get(0);
+				order.setStatus("4");
+				orderMapper.updateByExample(order, example1);
+			}
+			return distributionId;
+		}
 	}
 
 	@Override
-	public Integer updateStatusByOrderId(Integer orderId, String status, Integer shopId) {
-		return null;
-	}
+	public Integer updateStatusByOrderId(Integer orderId) {
+		// 根据订单ID查询配送单
+		StaffDistributionExample example = new StaffDistributionExample();
 
+		example.createCriteria().andOrderIdEqualTo(orderId);
+
+		List<StaffDistribution> list = distributionMapper.selectByExample(example);
+
+		StaffDistribution staffDistribution = list.get(0);
+
+		staffDistribution.setStatus("5");
+
+		Integer num = distributionMapper.updateByExample(staffDistribution, example);
+
+		// 修改订单状态
+		OrderExample example1 = new OrderExample();
+
+		example1.createCriteria().andIdEqualTo(staffDistribution.getOrderId());
+		List<Order> orderList = orderMapper.selectByExample(example1);
+		if (orderList.size() != 0) {
+
+			Order order = orderList.get(0);
+			order.setStatus("5");
+			orderMapper.updateByExample(order, example1);
+		}
+
+		return num;
+	}
 	
+	@Override
+	public Integer cancelOrder(Integer orderId,String cancelReason) {
+		// 根据订单ID查询配送单
+		StaffDistributionExample example = new StaffDistributionExample();
+
+		example.createCriteria().andOrderIdEqualTo(orderId);
+
+		List<StaffDistribution> list = distributionMapper.selectByExample(example);
+
+		StaffDistribution staffDistribution = list.get(0);
+
+		staffDistribution.setStatus("6");
+
+		Integer num = distributionMapper.updateByExample(staffDistribution, example);
+
+		// 修改订单状态
+		OrderExample example1 = new OrderExample();
+
+		example1.createCriteria().andIdEqualTo(staffDistribution.getOrderId());
+		List<Order> orderList = orderMapper.selectByExample(example1);
+		if (orderList.size() != 0) {
+
+			Order order = orderList.get(0);
+			order.setStatus("6");
+			orderMapper.updateByExample(order, example1);
+		}
+
+		return num;
+	}
 
 }

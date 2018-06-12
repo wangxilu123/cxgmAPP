@@ -8,6 +8,7 @@
     <result column="status" jdbcType="VARCHAR" property="status" />
     <result column="address_id" jdbcType="INTEGER" property="addressId" />
     <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="cancel_reason" jdbcType="VARCHAR" property="cancelReason" />
   </resultMap>
   <sql id="Example_Where_Clause">
     <where>
@@ -68,7 +69,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    id, admin_id, order_id, status, address_id, create_time
+    id, admin_id, order_id, status, address_id, create_time,cancel_reason
   </sql>
   <select id="selectByExample" parameterType="com.cxgm.domain.StaffDistributionExample" resultMap="BaseResultMap">
     select
@@ -92,9 +93,9 @@
   </delete>
   <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.cxgm.domain.StaffDistribution" useGeneratedKeys="true">
     insert into staff_distribution (admin_id, order_id, status, 
-      address_id, create_time)
+      address_id, create_time,cancel_reason)
     values (#{adminId,jdbcType=INTEGER}, #{orderId,jdbcType=INTEGER}, #{status,jdbcType=VARCHAR}, 
-      #{addressId,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP})
+      #{addressId,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP},#{cancelReason,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="com.cxgm.domain.StaffDistribution" useGeneratedKeys="true">
     insert into staff_distribution
@@ -172,7 +173,8 @@
       order_id = #{record.orderId,jdbcType=INTEGER},
       status = #{record.status,jdbcType=VARCHAR},
       address_id = #{record.addressId,jdbcType=INTEGER},
-      create_time = #{record.createTime,jdbcType=TIMESTAMP}
+      create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      cancel_reason = #{record.cancelReason,jdbcType=VARCHAR}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>

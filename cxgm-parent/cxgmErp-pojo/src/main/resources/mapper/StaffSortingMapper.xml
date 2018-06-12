@@ -8,6 +8,7 @@
     <result column="status" jdbcType="VARCHAR" property="status" />
     <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
     <result column="shop_id" jdbcType="INTEGER" property="shopId" />
+    <result column="cancel_reason" jdbcType="VARCHAR" property="cancelReason" />
   </resultMap>
   <sql id="Example_Where_Clause">
     <where>
@@ -68,7 +69,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    id, admin_id, order_id, status, create_time,shop_id
+    id, admin_id, order_id, status, create_time,shop_id,cancel_reason
   </sql>
   <select id="selectByExample" parameterType="com.cxgm.domain.StaffSortingExample" resultMap="BaseResultMap">
     select
@@ -92,9 +93,9 @@
   </delete>
   <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.cxgm.domain.StaffSorting" useGeneratedKeys="true">
     insert into staff_sorting (admin_id, order_id, status, 
-      create_time,shop_id)
+      create_time,shop_id,cancel_reason)
     values (#{adminId,jdbcType=INTEGER}, #{orderId,jdbcType=INTEGER}, #{status,jdbcType=VARCHAR}, 
-      #{createTime,jdbcType=TIMESTAMP},#{shopId,jdbcType=INTEGER})
+      #{createTime,jdbcType=TIMESTAMP},#{shopId,jdbcType=INTEGER},#{cancelReason,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="com.cxgm.domain.StaffSorting" useGeneratedKeys="true">
     insert into staff_sorting
@@ -160,6 +161,9 @@
       <if test="record.shopId != null">
         shop_id = #{record.shopId,jdbcType=INTEGER},
       </if>
+      <if test="record.cancelReason != null">
+        cancel_reason = #{record.cancelReason,jdbcType=VARCHAR},
+      </if>
     </set>
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
@@ -172,7 +176,8 @@
       order_id = #{record.orderId,jdbcType=INTEGER},
       status = #{record.status,jdbcType=VARCHAR},
       create_time = #{record.createTime,jdbcType=TIMESTAMP},
-      shop_id = #{record.shopId,jdbcType=INTEGER}
+      shop_id = #{record.shopId,jdbcType=INTEGER},
+      cancel_reason = #{record.cancelReason,jdbcType=VARCHAR}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>

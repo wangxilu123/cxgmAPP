@@ -42,7 +42,7 @@ public class DistributionController {
 	@ApiImplicitParams({
         @ApiImplicitParam(name = "pageNum", value = "第几页，默认1", required = false, paramType = "query", dataType = "int"),
 		@ApiImplicitParam(name = "pageSize", value = "每页多少条，默认10", required = false, paramType = "query", dataType = "int"),
-        @ApiImplicitParam(name = "status", value = "", required = false, paramType = "query", dataType = "int"),
+        @ApiImplicitParam(name = "status", value = "待配送3，配送中3，配送完成5，退单7", required = false, paramType = "query", dataType = "int"),
         @ApiImplicitParam(name = "shopId", required = false, paramType = "query", dataType = "int")
     })
 	@GetMapping("/findDistribution")
@@ -76,6 +76,48 @@ public class DistributionController {
     	Integer id = distributionService.addDistribution(distribution);
     	
         return new ResultDto<>(200,"接单成功！",id);
+    	}else{
+    		return new ResultDto<>(403,"token失效请重新登录！");
+    	}
+    }
+	
+	@ApiOperation(value = "员工完成配送单接口",nickname = "员工完成配送单接口")
+	@ApiImplicitParams({
+        @ApiImplicitParam(name = "orderId", required = false, paramType = "query", dataType = "int"),
+    })
+    @PostMapping("/completeDistribution")
+    public ResultDto<Integer> completeDistribution(HttpServletRequest request, 
+    		@RequestParam(value = "orderId", required = false) Integer orderId){
+    	
+		boolean result = checkToken.checkAdmin(request.getHeader("token"));
+    	
+    	if(result == true){
+    	
+    	Integer distriId = distributionService.updateStatusByOrderId(orderId);
+    	
+        return new ResultDto<>(200,"完成配送！",distriId);
+    	}else{
+    		return new ResultDto<>(403,"token失效请重新登录！");
+    	}
+    }
+	
+	@ApiOperation(value = "员工取消配送单接口",nickname = "员工取消配送单接口")
+	@ApiImplicitParams({
+        @ApiImplicitParam(name = "orderId", required = false, paramType = "query", dataType = "int"),
+        @ApiImplicitParam(name = "cancelReason", required = false, paramType = "query", dataType = "string"),
+    })
+    @PostMapping("/cancelDistribution")
+    public ResultDto<Integer> cancelDistribution(HttpServletRequest request, 
+    		@RequestParam(value = "orderId", required = false) Integer orderId,
+    		@RequestParam(value = "cancelReason", required = false) String cancelReason){
+    	
+		boolean result = checkToken.checkAdmin(request.getHeader("token"));
+    	
+    	if(result == true){
+    	
+    	Integer distriId = distributionService.cancelOrder(orderId, cancelReason);
+    	
+        return new ResultDto<>(200,"取消配送成功！",distriId);
     	}else{
     		return new ResultDto<>(403,"token失效请重新登录！");
     	}

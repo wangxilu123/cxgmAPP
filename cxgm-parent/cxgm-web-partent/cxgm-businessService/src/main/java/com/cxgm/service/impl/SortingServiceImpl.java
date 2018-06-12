@@ -98,12 +98,28 @@ public class SortingServiceImpl implements SortingService {
 		if (list.size() != 0) {
 			return 0;
 		} else {
-			return staffSortingMapper.insert(staffSorting);
+			
+			staffSorting.setStatus("2");
+			
+			Integer sortingId = staffSortingMapper.insert(staffSorting);
+			
+			//修改订单状态
+			OrderExample example1 = new OrderExample();
+			
+			example1.createCriteria().andIdEqualTo(staffSorting.getOrderId());
+			List<Order> orderList  = orderMapper.selectByExample(example1);
+			if(orderList.size()!=0){
+				
+				Order order = orderList.get(0);
+				order.setStatus("2");
+				orderMapper.updateByExample(order, example1);
+			}
+			return sortingId;
 		}
 	}
 
 	@Override
-	public Integer updateStatusByOrderId(Integer orderId, String status,Integer shopId) {
+	public Integer updateStatusByOrderId(Integer orderId,Integer shopId) {
 
 		// 根据订单ID查询分拣单
 		StaffSortingExample example = new StaffSortingExample();
@@ -116,9 +132,53 @@ public class SortingServiceImpl implements SortingService {
 		StaffSorting staffSorting = list.get(0);
 		
 		
-		staffSorting.setStatus(status);
+		staffSorting.setStatus("3");
+		
+		Integer num = staffSortingMapper.updateByExample(staffSorting, example);
+		
+		//修改订单状态
+		OrderExample example1 = new OrderExample();
+		
+		example1.createCriteria().andIdEqualTo(staffSorting.getOrderId());
+		List<Order> orderList  = orderMapper.selectByExample(example1);
+		if(orderList.size()!=0){
+			
+			Order order = orderList.get(0);
+			order.setStatus("3");
+			orderMapper.updateByExample(order, example1);
+		}
 
-		return staffSortingMapper.updateByExample(staffSorting, example);
+		return num;
+	}
+	
+	@Override
+	public Integer cancelOrder(Integer orderId,String cancelReason) {
+		// 根据订单ID查询配送单
+		StaffSortingExample example = new StaffSortingExample();
+
+		example.createCriteria().andOrderIdEqualTo(orderId);
+
+		List<StaffSorting> list = staffSortingMapper.selectByExample(example);
+
+		StaffSorting staffSorting = list.get(0);
+
+		staffSorting.setStatus("6");
+
+		Integer num = staffSortingMapper.updateByExample(staffSorting, example);
+
+		// 修改订单状态
+		OrderExample example1 = new OrderExample();
+
+		example1.createCriteria().andIdEqualTo(staffSorting.getOrderId());
+		List<Order> orderList = orderMapper.selectByExample(example1);
+		if (orderList.size() != 0) {
+
+			Order order = orderList.get(0);
+			order.setStatus("6");
+			orderMapper.updateByExample(order, example1);
+		}
+
+		return num;
 	}
 
 	@Override

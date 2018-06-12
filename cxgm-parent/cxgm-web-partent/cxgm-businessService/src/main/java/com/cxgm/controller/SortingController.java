@@ -42,7 +42,7 @@ public class SortingController {
 	@ApiImplicitParams({
         @ApiImplicitParam(name = "pageNum", value = "第几页，默认1", required = false, paramType = "query", dataType = "int"),
 		@ApiImplicitParam(name = "pageSize", value = "每页多少条，默认10", required = false, paramType = "query", dataType = "int"),
-        @ApiImplicitParam(name = "status", value = "", required = false, paramType = "query", dataType = "int"),
+        @ApiImplicitParam(name = "status", value = "待分拣1，分拣中2，已完成3，退单7", required = false, paramType = "query", dataType = "int"),
         @ApiImplicitParam(name = "shopId", required = false, paramType = "query", dataType = "int")
     })
 	@GetMapping("/findSorting")
@@ -76,6 +76,50 @@ public class SortingController {
     	Integer sortingId = sortingService.addSorting(staffSorting);
     	
         return new ResultDto<>(200,"接单成功！",sortingId);
+    	}else{
+    		return new ResultDto<>(403,"token失效请重新登录！");
+    	}
+    }
+	
+	@ApiOperation(value = "员工完成分拣单接口",nickname = "员工完成分拣单接口")
+	@ApiImplicitParams({
+        @ApiImplicitParam(name = "orderId", required = false, paramType = "query", dataType = "int"),
+        @ApiImplicitParam(name = "shopId", required = false, paramType = "query", dataType = "int")
+    })
+    @PostMapping("/completeSorting")
+    public ResultDto<Integer> completeSorting(HttpServletRequest request, 
+    		@RequestParam(value = "orderId", required = false) Integer orderId,
+    		@RequestParam(value = "shopId", required = false) Integer shopId){
+    	
+		boolean result = checkToken.checkAdmin(request.getHeader("token"));
+    	
+    	if(result == true){
+    	
+    	Integer sortingId = sortingService.updateStatusByOrderId(orderId, shopId);
+    	
+        return new ResultDto<>(200,"完成分拣！",sortingId);
+    	}else{
+    		return new ResultDto<>(403,"token失效请重新登录！");
+    	}
+    }
+	
+	@ApiOperation(value = "员工取消分拣单接口",nickname = "员工取消分拣单接口")
+	@ApiImplicitParams({
+        @ApiImplicitParam(name = "orderId", required = false, paramType = "query", dataType = "int"),
+        @ApiImplicitParam(name = "cancelReason", required = false, paramType = "query", dataType = "string"),
+    })
+    @PostMapping("/cancelSorting")
+    public ResultDto<Integer> cancelDistribution(HttpServletRequest request, 
+    		@RequestParam(value = "orderId", required = false) Integer orderId,
+    		@RequestParam(value = "cancelReason", required = false) String cancelReason){
+    	
+		boolean result = checkToken.checkAdmin(request.getHeader("token"));
+    	
+    	if(result == true){
+    	
+    	Integer distriId = sortingService.cancelOrder(orderId, cancelReason);
+    	
+        return new ResultDto<>(200,"取消配送成功！",distriId);
     	}else{
     		return new ResultDto<>(403,"token失效请重新登录！");
     	}
