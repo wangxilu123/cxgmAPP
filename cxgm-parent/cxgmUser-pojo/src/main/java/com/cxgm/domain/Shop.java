@@ -54,4 +54,10 @@ public class Shop {
 	@ApiModelProperty(name = "createTime",value = "创建时间")
 	@JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
     private Date createTime;
+	
+	@ApiModelProperty(name = "yzShopId",value = "有赞门店ID")
+    private Integer yzShopId;
+	
+	@ApiModelProperty(name = "hxShopId",value = "海信门店ID")
+    private Integer hxShopId;
 }
