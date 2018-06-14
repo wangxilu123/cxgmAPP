@@ -80,4 +80,7 @@ public class Order implements Serializable{
 	
 	@ApiModelProperty(name = "preferential",value = "优惠总金额")
     private BigDecimal preferential;
+	
+	@ApiModelProperty(name = "orderResource",value = "订单来源")
+    private String orderResource;
 }

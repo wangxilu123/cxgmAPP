@@ -78,7 +78,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 				.antMatchers("/static/js/**", "/static/shop/**", "/static/img/**", "/**/favicon.ico","/static/AmazeUI/**","/static/UEditor/**").permitAll()
 	                .regexMatchers("/login\\?invalid", "/login\\?expired",
 	                        "/index", "/home",".*/swagger.*", "/getToken", "/accessDenied"
-	                        , "/changeLang.*")//".*"表示任意字符
+	                        , "/changeLang.*","/staffLogin.*")//".*"表示任意字符
 	                .permitAll()//访问以上无需登录认证权限  
 	                .anyRequest()
 	                .authenticated() //其他所有资源都需要认证，登陆后访问  

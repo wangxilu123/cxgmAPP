@@ -32,6 +32,18 @@
 			<artifactId>commons-discovery</artifactId>
 			<version>0.2</version>
 		</dependency>
+		
+		<dependency>
+			<groupId>youzan.open</groupId>
+			<artifactId>youzan.open.order</artifactId>
+			<version>1.0</version>
+		</dependency>
+		
+		<dependency>
+			<groupId>youzan.open.resource</groupId>
+			<artifactId>youzan.open.order.resource</artifactId>
+			<version>1.0</version>
+		</dependency>
 
 		<dependency>
 			<groupId>org.eclipse.birt.runtime.3_7_1</groupId>

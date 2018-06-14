@@ -15,6 +15,7 @@
     <result column="receive_time" jdbcType="VARCHAR" property="receiveTime" />
     <result column="total_amount" jdbcType="DECIMAL" property="totalAmount" />
     <result column="preferential" jdbcType="DECIMAL" property="preferential" />
+    <result column="order_resource" jdbcType="VARCHAR" property="orderResource" />
   </resultMap>
   <sql id="Example_Where_Clause">
     <where>
@@ -75,7 +76,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    id, user_id, order_num, status, store_id, pay_type, order_time, order_amount, remarks,address_id,receive_time,total_amount,preferential
+    id, user_id, order_num, status, store_id, pay_type, order_time, order_amount, remarks,address_id,receive_time,total_amount,preferential,order_resource
   </sql>
   <select id="selectByExample" parameterType="com.cxgm.domain.OrderExample" resultMap="BaseResultMap">
     select
@@ -100,11 +101,11 @@
   <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.cxgm.domain.Order" useGeneratedKeys="true">
     insert into user_order (user_id, order_num, status, 
       store_id, pay_type, order_time, 
-      order_amount, remarks,address_id,receive_time,total_amount,preferential)
+      order_amount, remarks,address_id,receive_time,total_amount,preferential,order_resource)
     values (#{userId,jdbcType=INTEGER}, #{orderNum,jdbcType=VARCHAR}, #{status,jdbcType=VARCHAR}, 
       #{storeId,jdbcType=INTEGER}, #{payType,jdbcType=VARCHAR}, #{orderTime,jdbcType=TIMESTAMP}, 
       #{orderAmount,jdbcType=DECIMAL}, #{remarks,jdbcType=VARCHAR},#{addressId,jdbcType=INTEGER},#{receiveTime,jdbcType=VARCHAR},
-      #{totalAmount,jdbcType=DECIMAL},#{preferential,jdbcType=DECIMAL})
+      #{totalAmount,jdbcType=DECIMAL},#{preferential,jdbcType=DECIMAL},#{orderResource,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="com.cxgm.domain.Order" useGeneratedKeys="true">
     insert into user_order
@@ -145,6 +146,9 @@
       <if test="preferential != null">
         preferential,
       </if>
+      <if test="orderResource != null">
+        order_resource,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="userId != null">
@@ -178,12 +182,14 @@
         #{receiveTime,jdbcType=VARCHAR},
       </if>
       <if test="totalAmount != null">
-        #{total_amount,jdbcType=DECIMAL},
+        #{totalAmount,jdbcType=DECIMAL},
       </if>
       <if test="preferential != null">
         #{preferential,jdbcType=DECIMAL},
       </if>
-      
+      <if test="orderResource != null">
+        #{orderResource,jdbcType=VARCHAR},
+      </if>
     </trim>
   </insert>
   <select id="countByExample" parameterType="com.cxgm.domain.OrderExample" resultType="java.lang.Long">
@@ -234,6 +240,9 @@
       <if test="record.preferential != null">
         preferential = #{record.preferential,jdbcType=DECIMAL},
       </if>
+      <if test="record.orderResource != null">
+        order_resource = #{record.orderResource,jdbcType=VARCHAR},
+      </if>
     </set>
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
@@ -253,7 +262,8 @@
       address_id = #{record.addressId,jdbcType=INTEGER},
       receive_time = #{record.receiveTime,jdbcType=VARCHAR},
       total_amount = #{record.totalAmount,jdbcType=DECIMAL},
-      preferential = #{record.preferential,jdbcType=DECIMAL}
+      preferential = #{record.preferential,jdbcType=DECIMAL},
+      order_resource = #{record.orderResource,jdbcType=VARCHAR}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>

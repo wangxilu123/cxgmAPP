@@ -85,6 +85,7 @@ public class OrderServiceImpl implements OrderService {
 		order.setOrderTime(new Date());
 		order.setStatus("0");
 		order.setOrderNum(orderNum);
+		order.setOrderResource("APP");
 		orderMapper.insert(order);
 
 		for (OrderProduct orderProduct : order.getProductList()) {

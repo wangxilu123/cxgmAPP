@@ -69,7 +69,7 @@ public class LoginController{
     }
     
     @ApiOperation(value = "分拣配送员工登录接口", nickname = "分拣配送员工登录接口")
-	@PostMapping("/swagger/staffLogin")
+	@PostMapping("/staffLogin")
 	public ResultDto<AdminLogin> staffLogin(HttpServletRequest request, HttpServletResponse response,@RequestBody AdminLogin  admin) {
 		
 		//根据用户名密码查询员工信息
