@@ -1,8 +1,13 @@
 package com.cxgm.controller;
 
+import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.sql.SQLException;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.xml.rpc.ServiceException;
+import javax.xml.soap.SOAPException;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -13,8 +18,12 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.cxgm.domain.Shop;
+import com.cxgm.domain.ThirdOrg;
 import com.cxgm.service.ShopService;
+import com.cxgm.service.ThirdPartyHaixinOrgService;
+import com.cxgm.service.YouzanShopService;
 import com.github.pagehelper.PageInfo;
+import com.youzan.open.sdk.gen.v3_0_0.model.YouzanMultistoreOfflineSearchResult.AccountShopOffline;
 
 @RestController
 @RequestMapping("/shop")
@@ -22,6 +31,12 @@ public class ShopController {
 
 	@Autowired
 	private ShopService shopService;
+	
+	@Autowired
+	private YouzanShopService youzanShopService;
+	
+	@Autowired
+	private ThirdPartyHaixinOrgService thirdPartyHaixinOrgService;
 	
 	@RequestMapping(value = "/list", method = RequestMethod.GET)
 	public ModelAndView shopList(HttpServletRequest request,
@@ -35,8 +50,15 @@ public class ShopController {
 	}
 	
 	@RequestMapping(value = "/toAdd", method = RequestMethod.GET)
-	public ModelAndView shopToAdd(HttpServletRequest request) throws SQLException {
+	public ModelAndView shopToAdd(HttpServletRequest request) throws SQLException, UnsupportedEncodingException, SOAPException, ServiceException, IOException {
 		
+		@SuppressWarnings("static-access")
+		List<AccountShopOffline> yzShopList = youzanShopService.findYouzanShopList();
+		request.setAttribute("yzShopList", yzShopList);
+		
+		List<ThirdOrg> hxShopList  = thirdPartyHaixinOrgService.findOrg();
+		
+		request.setAttribute("hxShopList", hxShopList);
 		return new ModelAndView("shop/shop_add");
 	}
 	
@@ -66,6 +88,8 @@ public class ShopController {
 		shop.setShopAddress(request.getParameter("shopAddress"));
 		shop.setWeixinApikey(request.getParameter("weixinApikey"));
 		shop.setWeixinMchid(request.getParameter("weixinMchid"));
+		shop.setYzShopId(Integer.parseInt(request.getParameter("yzShopId")));
+		shop.setHxShopId(Integer.parseInt(request.getParameter("hxShopId")));
 		shopService.addShop(shop);
 		ModelAndView mv = new ModelAndView("redirect:/shop/list");
 		return mv;

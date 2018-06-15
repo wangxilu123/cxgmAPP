@@ -9,6 +9,7 @@ import javax.xml.rpc.holders.StringHolder;
 import javax.xml.soap.SOAPException;
 
 import org.apache.axis.client.Service;
+import org.springframework.context.annotation.Primary;
 import org.tempuri.IHsMisWebSrvbindingStub;
 
 import com.cxgm.common.XmlUtil;
@@ -22,7 +23,8 @@ import sun.misc.BASE64Decoder;
  * User: CQL
  *
  */
-
+@Primary
+@org.springframework.stereotype.Service
 public class ThirdPartyHaixinOrgService  {
 	/**
 	  *获取门店信息接口
@@ -67,10 +69,6 @@ public class ThirdPartyHaixinOrgService  {
 	       
 	   return thirdOrgList;
 	   }
-	  
-	  public static void main(String[] args) throws UnsupportedEncodingException, SOAPException, ServiceException, IOException{
-		  System.out.println(findOrg().toString());
-	  } 
 }
 	
 	

@@ -71,7 +71,42 @@ body, html {
 										name="shopName" value="${shop.shopName!}" /> <%}%>
 								</div>
 							</div>
-
+							
+							<div class="am-form-group am-form-group-sm">
+								<label class="am-u-sm-4 am-u-md-3 am-text-right am-form-label">有赞平台门店</label>
+								<div class="am-u-sm-8 am-u-md-9">
+									<%if(isAdd){%> <select name="yzShopId"
+										data-am-selected="{btnWidth: '100%', maxHeight: '200px', btnSize: 'sm', btnStyle: 'secondary'}">
+										<option value="0" selected>请选择...</option> <%for(list in
+										yzShopList){%>
+										<option value="${list.id}">${list.name}</option> <%}%>
+									</select> <%}else{%> <select name="yzShopId"
+										data-am-selected="{btnWidth: '100%', btnSize: 'sm'}">
+										<option value="0" selected>顶级分类</option> <%for(list in
+										yzShopList){%>
+										<option value="${list.id}"<%if (shop.yzShopId! ==
+											list.id!){%>selected="selected" <%}%>>${list.name!}</option> <%}%>
+									</select> <%}%>
+								</div>
+							</div>
+							
+							<div class="am-form-group am-form-group-sm">
+								<label class="am-u-sm-4 am-u-md-3 am-text-right am-form-label">海信平台门店</label>
+								<div class="am-u-sm-8 am-u-md-9">
+									<%if(isAdd){%> <select name="hxShopId"
+										data-am-selected="{btnWidth: '100%', maxHeight: '200px', btnSize: 'sm', btnStyle: 'secondary'}">
+										<option value="0" selected>请选择...</option> <%for(list in
+										hxShopList){%>
+										<option value="${list.ORGCODE}">${list.ORGNAME}</option> <%}%>
+									</select> <%}else{%> <select name="hxShopId"
+										data-am-selected="{btnWidth: '100%', btnSize: 'sm'}">
+										<option value="0" selected>顶级分类</option> <%for(list in
+										hxShopList){%>
+										<option value="${list.ORGCODE}"<%if (shop.hxShopId! ==
+											list.ORGCODE!){%>selected="selected" <%}%>>${list.ORGNAME!}</option> <%}%>
+									</select> <%}%>
+								</div>
+							</div>
 							<div class="am-form-group am-form-group-sm">
 								<label class="am-u-sm-4 am-u-md-3 am-text-right am-form-label">负责人</label>
 								<div class="am-u-sm-8 am-u-md-9">
@@ -84,7 +119,7 @@ body, html {
 								</div>
 							</div>
 
-							<div class="am-form-group am-form-group-sm">
+							<!-- <div class="am-form-group am-form-group-sm">
 								<label class="am-u-sm-4 am-u-md-3 am-text-right am-form-label">微信商户ID</label>
 								<div class="am-u-sm-8 am-u-md-9">
 									<%if (isAdd){%> <input type="text"
@@ -130,14 +165,14 @@ body, html {
 									<%}else{%> ${shop.aliPrivatekey!} <input type="hidden"
 										name="aliPrivatekey" value="${shop.aliPrivatekey!}" /> <%}%>
 								</div>
-							</div>
+							</div> -->
 
 							<div class="am-form-group am-form-group-sm">
 								<label class="am-u-sm-4 am-u-md-3 am-text-right am-form-label">门店描述</label>
 								<div class="am-u-sm-8 am-u-md-9">
 									<%if (isAdd){%> <input type="text"
 										class="am-form-field js-pattern-username" name="aliPrivatekey"
-										placeholder="支付宝商户私钥" minlength="2" maxlength="20" required />
+										placeholder="门店描述" minlength="2" maxlength="20" required />
 									<div class="am-text-warning am-margin-top-xs am-text-xs">${usernameMessages!}</div>
 									<%}else{%> ${shop.aliPrivatekey!} <input type="hidden"
 										name="aliPrivatekey" value="${shop.aliPrivatekey!}" /> <%}%>
