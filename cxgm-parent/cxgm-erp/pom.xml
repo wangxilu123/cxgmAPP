@@ -21,6 +21,12 @@
 		
 		<dependency>
 			<groupId>com.cxgm</groupId>
+			<artifactId>cxgmThirdParty-pojo</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+		
+		<dependency>
+			<groupId>com.cxgm</groupId>
 			<artifactId>cxgmUser-pojo</artifactId>
 			<version>${project.version}</version>
 		</dependency>
