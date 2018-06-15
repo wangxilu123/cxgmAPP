@@ -13,6 +13,7 @@ import org.springframework.web.filter.CorsFilter;
 public class CxgmApplication {
 
 	public static void main(String[] args) {
+		
 		SpringApplication.run(CxgmApplication.class, args);
 	}
 	
