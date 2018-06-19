@@ -271,5 +271,18 @@ public class HomePageController {
 		
 		return new ResultDto<>(200, "查询成功", page);
 	}
+	
+	@ApiOperation(value = "根据门店ID查询首页简报列表", nickname = "根据门店ID查询首页简报列表")
+	@ApiImplicitParams({
+        @ApiImplicitParam(name = "shopId", value = "门店ID", required = false, paramType = "query", dataType = "int"),
+    })
+	@GetMapping("/findReport")
+	public ResultDto<List<Motion>> findReport(HttpServletRequest request, 
+			@RequestParam(value = "shopId", required = false) Integer shopId){
+		
+		List<Motion> list=homePageService.findReport(shopId);
+		
+		return new ResultDto<>(200, "查询成功", list);
+	}
 
 }

@@ -45,6 +45,19 @@ true; }%>
 										name="motionName" value="${motion.motionName!}" /> <%}%>
 								</div>
 							</div>
+							
+							<div class="am-form-group am-form-group-sm">
+								<label class="am-u-sm-4 am-u-md-3 am-text-right am-form-label">运营类型</label>
+								<div class="am-u-sm-8 am-u-md-9">
+									<%if(isAdd){%> <select name="type"
+										data-am-selected="{btnWidth: '100%', maxHeight: '200px', btnSize: 'sm', btnStyle: 'secondary'}">
+										<option value="0">运营类</option> 
+										<option value="1">简报类</option> 
+									</select> <%}else{%> <select name="yzShopId"
+										data-am-selected="{btnWidth: '100%', btnSize: 'sm'}">
+									</select> <%}%>
+								</div>
+							</div>
 
 							<div class="am-form-group am-form-group-sm">
 								<label class="am-u-sm-4 am-u-md-3 am-text-right am-form-label">运营位置</label>
@@ -158,7 +171,7 @@ true; }%>
 														class="am-btn am-btn-default am-btn-xs am-center">
 														<i class="am-icon-cloud-upload"></i> 上传图片
 													</button>
-													<input class="doc-form-file" name="adverImages" type="file">
+													<input class="doc-form-file" name="motionImage" type="file">
 													<%}else{%>
 													<button type="button"
 														class="am-btn am-btn-danger am-btn-xs am-center"
@@ -254,7 +267,7 @@ true; }%>
 									+ '<li><button type="button" class="am-btn am-btn-default am-text-danger am-btn-xs am-center opr-img-delete" disabled="disabled"><span class="am-icon-trash"></span></button></li>'
 									+ '<li><button type="button" class="am-btn am-btn-default am-text-warning am-btn-xs am-center opr-img-right"><span class="am-icon-chevron-right"></span></button></li>'
 									+ '</ul><hr data-am-widget="divider" class="am-divider am-divider-dashed am-margin-0" /><ul class="am-thumbnail-caption am-avg-sm-1">'
-									+ '<li><div class="am-form-group am-form-file"><button type="button" class="am-btn am-btn-default am-btn-xs am-center"><i class="am-icon-cloud-upload"></i> 上传图片</button><input class="doc-form-file" name="adverImages" type="file"></div></li>';
+									+ '<li><div class="am-form-group am-form-file"><button type="button" class="am-btn am-btn-default am-btn-xs am-center"><i class="am-icon-cloud-upload"></i> 上传图片</button><input class="doc-form-file" name="motionImage" type="file"></div></li>';
 							+'</ul></div></li>';
 
 							var index = 0;
@@ -296,8 +309,8 @@ true; }%>
 													var productImageLiHtml = productImageLiHtmlTemp;
 													productImageLiHtml = productImageLiHtml
 															.replace(
-																	"adverImages",
-																	"adverImages");
+																	"motionImage",
+																	"motionImage");
 													$('#file-list').append(
 															productImageLiHtml);
 												}

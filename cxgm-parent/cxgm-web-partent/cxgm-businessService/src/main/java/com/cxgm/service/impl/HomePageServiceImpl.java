@@ -132,7 +132,7 @@ public class HomePageServiceImpl implements HomePageService {
 		
 		MotionExample example = new MotionExample();
 		
-		example.createCriteria().andShopIdEqualTo(shopId).andOnShelfEqualTo(1);
+		example.createCriteria().andShopIdEqualTo(shopId).andOnShelfEqualTo(1).andTypeEqualTo("0");
 		
 		List<Motion> motionList = motionMapper.selectByExample(example);
 		if(motionList.size()!=0){
@@ -235,5 +235,17 @@ public class HomePageServiceImpl implements HomePageService {
 		}
 		
 		return list;
+	}
+
+	@Override
+	public List<Motion> findReport(Integer shopId) {
+		
+        MotionExample example = new MotionExample();
+		
+		example.createCriteria().andShopIdEqualTo(shopId).andOnShelfEqualTo(1).andTypeEqualTo("1");
+		
+		List<Motion> motionList = motionMapper.selectByExample(example);
+		
+		return motionList;
 	}
 }

@@ -24,6 +24,8 @@ public interface HomePageService {
 
 	List<Motion> findMotions(Integer shopId);
 	
+	List<Motion> findReport(Integer shopId);
+	
 	ProductTransfer findProductDetail(Integer productId,Integer shopId,Integer userId);
 	
 	List<ProductTransfer> pushProducts(Integer productCategoryTwoId,Integer productCategoryThirdId,Integer shopId,Integer userId);

@@ -25,5 +25,7 @@ public class Motion {
 
     private String motionName;
     
+    private String type;
+    
     private List<ProductTransfer> productList;
 }

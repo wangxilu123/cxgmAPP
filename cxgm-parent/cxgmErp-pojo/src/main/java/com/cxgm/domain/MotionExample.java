@@ -119,6 +119,11 @@ public class MotionExample {
             addCriterion("id =", value, "id");
             return (Criteria) this;
         }
+        
+        public Criteria andTypeEqualTo(String value) {
+            addCriterion("type =", value, "type");
+            return (Criteria) this;
+        }
 
         public Criteria andIdNotEqualTo(Integer value) {
             addCriterion("id <>", value, "id");

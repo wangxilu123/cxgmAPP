@@ -17,7 +17,6 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.cxgm.common.OSSClientUtil;
 import com.cxgm.common.SystemConfig;
-import com.cxgm.domain.Advertisement;
 import com.cxgm.domain.Motion;
 import com.cxgm.domain.Shop;
 import com.cxgm.service.MotionService;
@@ -58,33 +57,30 @@ public class MotionController {
 		List<Shop> shopList = shopService.findListAll();
 		request.setAttribute("shopList", shopList);
 		request.setAttribute("systemConfig",systemConfig);
-		return new ModelAndView("advertisement/advertisement_add");
+		return new ModelAndView("motion/motion_add");
 	}
 	
 	@RequestMapping(value = "/save", method = RequestMethod.POST )
 	public ModelAndView save(HttpServletRequest request,
-			@RequestParam(value = "adverName",required=false) String adverName,
-			@RequestParam(value = "notifyUrl",required=false) String notifyUrl,
+			@RequestParam(value = "motionName",required=false) String motionName,
 			@RequestParam(value = "position",required=false) String position,
 			@RequestParam(value = "productCode",required=false) String productCode,
 			@RequestParam(value = "shopId",required=false) Integer shopId,
-			@RequestParam(value = "type",required=false) String type,
-			@RequestParam(value = "number",required=false) String number)
+			@RequestParam(value = "type",required=false) String type)
 			throws Exception {
-		List<MultipartFile> files = ((MultipartHttpServletRequest) request).getFiles("adverImages");
+		List<MultipartFile> files = ((MultipartHttpServletRequest) request).getFiles("motionImage");
 		
-		Advertisement advertisement= new Advertisement();
+		Motion motion= new Motion();
 		
-		advertisement.setCreateTime(new Date());
-		advertisement.setAdverName(adverName);
-		advertisement.setNotifyUrl(notifyUrl);
-		advertisement.setPosition(position);
-		advertisement.setProductCode(productCode);
-		advertisement.setShopId(shopId);
-		advertisement.setType(type);
+		motion.setCreateTime(new Date());
+		motion.setMotionName(motionName);
+		
+		motion.setPosition(position);
+		motion.setType(type);
+		motion.setShopId(shopId);
 		StringBuilder sb = new StringBuilder();
 		
-		/*if(files!=null){
+		if(files!=null){
             for(int i=0;i<files.size();i++){  
                 MultipartFile file = files.get(i);
                 if (file.getSize() > 0) {
@@ -96,9 +92,10 @@ public class MotionController {
             } 
         }
 		sb.deleteCharAt(sb.length()-1);
-		advertisement.setImageUrl(sb.toString());
-		advertisementService.addAdvertisement(advertisement);*/
-		ModelAndView mv = new ModelAndView("redirect:/shop/list");
+		motion.setImageUrl(sb.toString());
+		
+		motionService.addMotion(motion);
+		ModelAndView mv = new ModelAndView("redirect:/motion/list");
 		return mv;
 	}
 
