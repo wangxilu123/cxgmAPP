@@ -9,10 +9,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.cxgm.common.ResultDto;
-import com.cxgm.domain.DistributionOrder;
-import com.cxgm.service.DistributionService;
+import com.cxgm.domain.FjpsHomePage;
+import com.cxgm.service.FjpsHomePageService;
 import com.cxgm.service.impl.CheckToken;
-import com.github.pagehelper.PageInfo;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
@@ -25,11 +24,11 @@ import io.swagger.annotations.ApiOperation;
  */
 @Api(description = "分拣配送首页相关接口")
 @RestController
-@RequestMapping("/fjpsHomePage")
+@RequestMapping("/homePage")
 public class FjpsHomePageController {
 
 	@Autowired
-	private DistributionService distributionService;
+	private FjpsHomePageService fjpsHomePageService;
 	
 	@Autowired
 	private CheckToken checkToken;
@@ -41,13 +40,19 @@ public class FjpsHomePageController {
         @ApiImplicitParam(name = "shopId", required = false, paramType = "query", dataType = "int")
     })
 	@GetMapping("/fjpsHomePage")
-	public ResultDto<PageInfo<DistributionOrder>> findDistribution(HttpServletRequest request,
+	public ResultDto<FjpsHomePage> findDistribution(HttpServletRequest request,
 			@RequestParam(value = "adminId", required = false) Integer adminId,
 			@RequestParam(value = "shopId", required = false) Integer shopId){
 		
 		boolean result = checkToken.checkAdmin(request.getHeader("token"));
-		return null;
+		
+		if (result == true) {
 
+			FjpsHomePage fjpsHomePage = fjpsHomePageService.findHomePageNum(adminId,shopId);
+			return new ResultDto<>(200, "查询成功！", fjpsHomePage);
+		} else {
+			return new ResultDto<>(403, "token失效请重新登录！");
+		}
 	}
 	
 	

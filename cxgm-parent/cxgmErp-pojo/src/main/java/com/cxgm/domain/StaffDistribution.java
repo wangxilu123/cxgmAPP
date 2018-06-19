@@ -3,7 +3,11 @@ package com.cxgm.domain;
 import java.util.Date;
 
 import io.swagger.annotations.ApiModelProperty;
+import lombok.Data;
+import lombok.ToString;
 
+@Data
+@ToString
 public class StaffDistribution {
 	
 	@ApiModelProperty(name = "id",value = "主键ID",hidden = true)
@@ -26,62 +30,9 @@ public class StaffDistribution {
     
 	@ApiModelProperty(name = "cancelReason",value = "取消原因")
     private String cancelReason;
+	
+	@ApiModelProperty(name = "shopId",value = "门店ID")
+    private Integer shopId;
 
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public Integer getAdminId() {
-        return adminId;
-    }
-
-    public void setAdminId(Integer adminId) {
-        this.adminId = adminId;
-    }
-
-    public Integer getOrderId() {
-        return orderId;
-    }
-
-    public void setOrderId(Integer orderId) {
-        this.orderId = orderId;
-    }
-
-    public String getStatus() {
-        return status;
-    }
-
-    public void setStatus(String status) {
-        this.status = status == null ? null : status.trim();
-    }
-
-    public Integer getAddressId() {
-        return addressId;
-    }
-
-    public void setAddressId(Integer addressId) {
-        this.addressId = addressId;
-    }
-
-    public Date getCreateTime() {
-        return createTime;
-    }
-
-    public void setCreateTime(Date createTime) {
-        this.createTime = createTime;
-    }
-
-	public String getCancelReason() {
-		return cancelReason;
-	}
-
-	public void setCancelReason(String cancelReason) {
-		this.cancelReason = cancelReason;
-	}
-    
     
 }
