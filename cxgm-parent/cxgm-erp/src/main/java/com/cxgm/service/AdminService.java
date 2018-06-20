@@ -11,15 +11,16 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.cxgm.common.DateKit;
-import com.cxgm.common.ResultDto;
 import com.cxgm.common.TokenUtils;
 import com.cxgm.dao.AdminMapper;
 import com.cxgm.dao.AdminRoleMapper;
+import com.cxgm.dao.ShopMapper;
 import com.cxgm.dao.UserLoginMapper;
 import com.cxgm.domain.Admin;
 import com.cxgm.domain.AdminLogin;
 import com.cxgm.domain.AdminRole;
 import com.cxgm.domain.LoginEntity;
+import com.cxgm.domain.Shop;
 import com.cxgm.domain.UserLogin;
 import com.cxgm.domain.UserLoginExample;
 import com.cxgm.exception.TipException;
@@ -34,6 +35,9 @@ public class AdminService {
 	
 	@Autowired
 	UserLoginMapper userLoginMapper;
+	
+	@Autowired
+	ShopMapper shopMapper;
 
 	public Admin findByUserName(String username) {
 		return adminDao.findByUserName(username);
@@ -86,6 +90,8 @@ public class AdminService {
 
 					userLoginMapper.insert(userLogin);
 				}
+				//根据门店ID查询门店信息
+				Shop shop  = shopMapper.selectByPrimaryKey(admin.getShopId());
 				
 	            AdminLogin adminLogin = new AdminLogin();
 				
@@ -94,7 +100,7 @@ public class AdminService {
 				adminLogin.setShopId(admin.getShopId());
 				adminLogin.setToken(newToken);
 				adminLogin.setUsername(admin.getUsername());
-				
+				adminLogin.setShopName(shop.getShopName());
 				return adminLogin;
 			}else{
 				return null;

@@ -5,6 +5,8 @@ public class AdminLogin {
 	
 	private Integer adminId;
 	
+	private String  shopName;
+	
 	private String  realName;
 	
 	private String  username;
@@ -59,6 +61,14 @@ public class AdminLogin {
 
 	public void setPassword(String password) {
 		this.password = password;
+	}
+
+	public String getShopName() {
+		return shopName;
+	}
+
+	public void setShopName(String shopName) {
+		this.shopName = shopName;
 	}
 	
 	
