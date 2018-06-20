@@ -78,6 +78,15 @@
   <sql id="Base_Column_List">
     id, user_id, order_num, status, store_id, pay_type, order_time, order_amount, remarks,address_id,receive_time,total_amount,preferential,order_resource
   </sql>
+   <sql id="Base_Column_List1">
+    id, user_id, order_num, store_id, pay_type, order_time, order_amount, remarks,address_id,receive_time,total_amount,preferential,order_resource
+  </sql>
+  <select id="selectParseStatus" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select
+   <include refid="Base_Column_List1" />,(case when status=0 then "ordering" when status=1 then "paid" when status=2 then "sorting" when status=3 then "sorted" when status=4 then "dispatching" when status=5 then "dispatched" when status=6 then "unrefund" when status=7 then "refund" END) as status
+    from user_order where store_id=#{storeId}
+  </select>
+  
   <select id="selectByExample" parameterType="com.cxgm.domain.OrderExample" resultMap="BaseResultMap">
     select
     <if test="distinct">

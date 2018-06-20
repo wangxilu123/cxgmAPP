@@ -1,7 +1,7 @@
 <!doctype html>
 <html class="no-js">
 <head>
-<% include("/common/admin_head.html",{title: '订单列表', loadListJS: true}){}%>
+<% include("admin_head.html",{title: '订单列表', loadListJS: true}){}%>
 </head>
 <body>
   <div class="admin-content">
@@ -14,12 +14,12 @@
       
       <hr data-am-widget="divider" class="am-divider am-divider-dotted am-margin-0" />
       
-      <form class="am-form" id="listForm" action="${base}/order/list" method="post">
+      <form class="am-form" id="listForm" action="/order/list" method="post">
       <div class="am-g app-padding-toolbar">
         <div class="am-u-sm-6 am-u-md-4">
           <div class="am-btn-toolbar app-padding-toolbar-item">
             <div class="am-btn-group am-btn-group-sm">
-              <button type="button" class="am-btn am-btn-default" onclick="deleteAll('${base}/order/delete');" id="deleteButton" disabled="disabled"><span class="am-icon-trash-o"></span> 删除</button>
+              <button type="button" class="am-btn am-btn-default" onclick="deleteAll('/order/delete');" id="deleteButton" disabled="disabled"><span class="am-icon-trash-o"></span> 删除</button>
             </div>
           </div>
         </div>
@@ -55,13 +55,12 @@
               <th>序号</th>
               <th><div class="app-table-td-buttons-width-160">操作</div></th>
               <th>订单编号</th>
-              <th>用户名</th>
+              <th>订单来源</th>
               <th>订单总额</th>
-              <th>付款状态</th>
-              <th>配送状态</th>
-              <th>支付方式</th>
+              <th>状态</th>
               <th>配送方式</th>
               <th>下单时间</th>
+              <th>收货时间</th>
             </tr>
           </thead>
           <tbody>
@@ -71,31 +70,29 @@
               <td>${listLP.index}</td>              
               <td>
               <!-- 
-              订单状态（未处理0、已处理1、已完成2、已作废3）
-              付款状态（未支付0、部分支付1、已支付2、部分退款3、全额退款4）
-              配送状态（未发货0、部分发货1、已发货2、部分退货3、已退货4） -->
+             订单状态0待支付，1待配送（已支付），2配送中，3已完成，4退货，5已取消
+              -->
                 <div class="am-btn-group am-btn-group-xs">
-                  <button type="button" class="am-btn am-btn-default am-btn-xs am-text-success app-table-button-padding" onclick="location.href='${base}/order/view?orders.id=${list.id}'">
+                  <button type="button" class="am-btn am-btn-default am-btn-xs am-text-success app-table-button-padding" onclick="location.href='/order/view?orders.id=${list.id}'">
                     <span class="am-icon-file-o"> 查看</span>
                   </button>
                   <%if ((list.orderStatus != 'completed') && (list.orderStatus != 'invalid') && (list.paymentStatus == 'unpaid') && (list.shippingStatus == 'unshipped')){%>
-                  <button type="button" class="am-btn am-btn-default am-btn-xs am-text-secondary app-table-button-padding" onclick="location.href='${base}/order/edit?orders.id=${list.id}'">
+                  <button type="button" class="am-btn am-btn-default am-btn-xs am-text-secondary app-table-button-padding" onclick="location.href='/order/edit?orders.id=${list.id}'">
                     <span class="am-icon-pencil"> 编辑</span>
                   </button>
                   <%}%>
-                  <button type="button" class="am-btn am-btn-default am-btn-xs am-text-warning app-table-button-padding" onclick="location.href='${base}/order/process?orders.id=${list.id}'">
+                  <button type="button" class="am-btn am-btn-default am-btn-xs am-text-warning app-table-button-padding" onclick="location.href='/order/process?orders.id=${list.id}'">
                     <span class="am-icon-hand-o-up"> 处理</span>
                   </button>
                 </div>
               </td> 
-              <td>${list.orderSn}</td>
-              <td>${list.member.username!"-"}</td>
-              <td>${list.totalAmount,orderUnitCurrencyFormat}</td>
-              <td>${i18n("PaymentStatus." + list.paymentStatus)}</td>
-              <td>${i18n("ShippingStatus." + list.shippingStatus)}</td>
-              <td>${list.paymentConfigName}</td>
-              <td>${list.deliveryTypeName}</td>
-              <td>${list.createDate,"yyyy-MM-dd HH:mm:ss"}</td>
+              <td>${list.orderNum}</td>
+              <td>${list.orderResource}</td>
+              <td>${list.totalAmount}</td>
+              <td>${i18n("Status." + list.status)}</td>
+              <td>${list.payType}</td>
+              <td>${list.orderTime,"yyyy-MM-dd HH:mm:ss"}</td>
+              <td>${list.receiveTime,"yyyy-MM-dd HH:mm:ss"}</td>
             </tr>
             <%}%> 
           </tbody>
@@ -104,7 +101,7 @@
       <!-- 分页 -->
       <%if (pager.list.~size > 0){%>
       <hr data-am-widget="divider" class="am-divider am-divider-dashed am-margin-0" />    
-      <div class="am-margin-left am-text-xs"><% include("/admin/pager.html"){}%></div>
+      <div class="am-margin-left am-text-xs"><% include("pager.html"){}%></div>
       <%}else{%>
       <h3 class="am-kai am-text-center am-margin-xs">没有找到任何记录!</h3>
       <%}%>

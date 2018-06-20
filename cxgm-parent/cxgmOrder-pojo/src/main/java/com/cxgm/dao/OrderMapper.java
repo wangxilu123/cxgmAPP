@@ -25,4 +25,6 @@ public interface OrderMapper {
 
     int updateByExample(@Param("record") Order record, @Param("example") OrderExample example);
     
+    List<Order> selectParseStatus(Integer storeId);
+    
 }

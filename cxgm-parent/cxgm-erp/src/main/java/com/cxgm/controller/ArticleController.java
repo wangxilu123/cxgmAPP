@@ -63,7 +63,7 @@ public class ArticleController {
 			PageInfo<Article> pager = new PageInfo<>(articles);
 			request.setAttribute("pager", pager);
 			request.setAttribute("admin", admin);
-			return new ModelAndView("admin/coupon_list");
+			return new ModelAndView("admin/article_list");
 		}
 		return this.getArticle(request, num);
 	}
