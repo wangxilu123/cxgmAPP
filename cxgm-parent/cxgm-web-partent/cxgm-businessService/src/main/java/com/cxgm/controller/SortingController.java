@@ -64,6 +64,26 @@ public class SortingController {
 		}
 	}
 	
+	@ApiOperation(value = "根据订单查询分拣详情", nickname = "根据订单查询分拣详情")
+	@ApiImplicitParams({
+        @ApiImplicitParam(name = "orderId", required = false, paramType = "query", dataType = "int")
+    })
+	@GetMapping("/findSortingDetail")
+	public ResultDto<Order> findFirstCategory(HttpServletRequest request,
+			@RequestParam(value = "orderId", required = false) Integer orderId){
+		
+		boolean result = checkToken.checkAdmin(request.getHeader("token"));
+
+		if (result == true) {
+
+			Order order = sortingService.orderDetail(orderId);
+
+			return new ResultDto<>(200, "查询成功！", order);
+		} else {
+			return new ResultDto<>(403, "token失效请重新登录！");
+		}
+	}
+	
 	@ApiOperation(value = "员工接受分拣单接口",nickname = "员工接分拣单接口")
     @ApiImplicitParam(name = "StaffSorting", value = "分拣单实体StaffSorting", required = true, dataType = "StaffSorting")
     @PostMapping("/addStaffSorting")

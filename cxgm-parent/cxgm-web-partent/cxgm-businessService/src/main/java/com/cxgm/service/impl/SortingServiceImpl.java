@@ -74,7 +74,7 @@ public class SortingServiceImpl implements SortingService {
 					orderDetail.setProductUrl(image != null ? image.getUrl() : "");
 				}
 			}
-
+			order.setGoodNum(productList.size());
 			order.setProductDetails(productList);
 
 		}
@@ -183,8 +183,40 @@ public class SortingServiceImpl implements SortingService {
 
 	@Override
 	public Order orderDetail(Integer orderId) {
-		// TODO Auto-generated method stub
-		return null;
+		
+		OrderExample example = new OrderExample();
+		
+	    example.createCriteria().andIdEqualTo(orderId);
+		List<Order> list = orderMapper.selectByExample(example);
+
+		Order order = list.get(0);
+		
+			// 根据orderId查询订单详情信息
+
+			List<OrderProductTransfer> productList = orderProductMapper.selectOrderDetail(order.getId());
+
+			for (OrderProductTransfer orderDetail : productList) {
+
+				BigDecimal price = orderDetail.getPrice();
+
+				BigDecimal num = new BigDecimal(orderDetail.getProductNum());
+
+				orderDetail.setAmount(price.multiply(num));
+
+				if (orderDetail.getProductUrl() != null && !"".equals(orderDetail.getProductUrl())) {
+
+					String[] imageIds = orderDetail.getProductUrl().split(",");
+
+					// 根据图片ID查询图片url
+					ProductImage image = productImageMapper.findById(Long.parseLong(imageIds[0]));
+
+					orderDetail.setProductUrl(image != null ? image.getUrl() : "");
+				}
+			}
+			order.setGoodNum(productList.size());
+			order.setProductDetails(productList);
+
+		return order;
 	}
 
 }

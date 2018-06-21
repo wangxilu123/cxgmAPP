@@ -12,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.cxgm.common.DateKit;
+import com.cxgm.common.UmmessageSend;
 import com.cxgm.dao.ProductImageMapper;
 import com.cxgm.dao.ProductMapper;
 import com.cxgm.domain.Product;
@@ -122,7 +123,14 @@ public class ProductService {
                 } 
             }
         	product.setImage(sb.toString());
-        	productDao.insert(product);
+        	Integer productId = productDao.insert(product);
+        	//限时抢购消息推送
+        	if(productId!=null&&!originalPrice.equals(price)){
+        		String content=name+"原价"+originalPrice+"元，"+"现价"+price+"元";
+            	
+            	new UmmessageSend().sendMessage("限时抢购",content);
+        	}
+        	
         } catch (Exception e) {
             e.printStackTrace();
         }
