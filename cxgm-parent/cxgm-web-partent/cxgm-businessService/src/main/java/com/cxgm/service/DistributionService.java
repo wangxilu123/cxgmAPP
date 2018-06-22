@@ -1,6 +1,7 @@
 package com.cxgm.service;
 
 import com.cxgm.domain.DistributionOrder;
+import com.cxgm.domain.Order;
 import com.cxgm.domain.StaffDistribution;
 import com.github.pagehelper.PageInfo;
 
@@ -13,5 +14,7 @@ public interface DistributionService {
 	Integer updateStatusByOrderId(Integer orderId);
 
 	Integer cancelOrder(Integer orderId, String cancelReason);
+
+	Order orderDetail(Integer orderId);
 	
 }

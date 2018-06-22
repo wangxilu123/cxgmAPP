@@ -9,21 +9,37 @@ public class UmmessageSend{
 	
 	private String appkey = "5af6acadb27b0a761e000306";
 	private String appMasterSecret = "m72zniduleuccjevyabczru7sri1ec9e";
+	
+	private String iosappkey = "5b2c54328f4a9d3b2a00003f";
+	private String iosappMasterSecret = "p3qvfqpedv9vq0aluqe32ptcj8eey7wq";
+	
 	private PushClient client = new PushClient();
 	
   
     public void sendMessage(String title,String content) {  
        try{  
     	   
-    	    AndroidBroadcast broadcast = new AndroidBroadcast(appkey,appMasterSecret);
-	   		broadcast.setTitle(title);
-	   		broadcast.setText(content);
-	   		broadcast.setCustomField(content);
-	   		broadcast.goAppAfterOpen();
-	   		broadcast.setDisplayType(AndroidNotification.DisplayType.NOTIFICATION);
+    	    AndroidBroadcast androidbroadcast = new AndroidBroadcast(appkey,appMasterSecret);
+    	    androidbroadcast.setTitle(title);
+    	    androidbroadcast.setText(content);
+    	    androidbroadcast.setCustomField(content);
+    	    androidbroadcast.goAppAfterOpen();
+    	    androidbroadcast.setDisplayType(AndroidNotification.DisplayType.NOTIFICATION);
 	   		
-	   		broadcast.setProductionMode();
-	   		client.send(broadcast);
+    	    androidbroadcast.setProductionMode();
+	   		client.send(androidbroadcast);
+	   		
+	   		IOSBroadcast iosbroadcast = new IOSBroadcast(iosappkey,iosappMasterSecret);
+	   		
+	   		iosbroadcast.setAlert(title);
+	   		iosbroadcast.setBadge( 0);
+	   		iosbroadcast.setSound( "default");
+			// TODO set 'production_mode' to 'true' if your app is under production mode
+	   		iosbroadcast.setTestMode();
+			// Set customized fields
+	   		
+	   		iosbroadcast.setCustomizedField(title, content);
+	   		client.send(iosbroadcast);
         }catch(Exception e){
         	e.printStackTrace();
         }  

@@ -1,5 +1,6 @@
 package com.cxgm.service.impl;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -8,11 +9,15 @@ import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
 
 import com.cxgm.dao.OrderMapper;
+import com.cxgm.dao.OrderProductMapper;
+import com.cxgm.dao.ProductImageMapper;
 import com.cxgm.dao.StaffDistributionMapper;
 import com.cxgm.dao.UserAddressMapper;
 import com.cxgm.domain.DistributionOrder;
 import com.cxgm.domain.Order;
 import com.cxgm.domain.OrderExample;
+import com.cxgm.domain.OrderProductTransfer;
+import com.cxgm.domain.ProductImage;
 import com.cxgm.domain.StaffDistribution;
 import com.cxgm.domain.StaffDistributionExample;
 import com.cxgm.domain.UserAddress;
@@ -33,6 +38,12 @@ public class DistributionServiceImpl implements DistributionService {
 
 	@Autowired
 	private StaffDistributionMapper distributionMapper;
+
+	@Autowired
+	private OrderProductMapper orderProductMapper;
+
+	@Autowired
+	private ProductImageMapper productImageMapper;
 
 	@Override
 	public PageInfo<DistributionOrder> orderList(Integer pageNum, Integer pageSize, Integer shopId, String status) {
@@ -145,9 +156,9 @@ public class DistributionServiceImpl implements DistributionService {
 
 		return num;
 	}
-	
+
 	@Override
-	public Integer cancelOrder(Integer orderId,String cancelReason) {
+	public Integer cancelOrder(Integer orderId, String cancelReason) {
 		// 根据订单ID查询配送单
 		StaffDistributionExample example = new StaffDistributionExample();
 
@@ -176,4 +187,49 @@ public class DistributionServiceImpl implements DistributionService {
 		return num;
 	}
 
+	@Override
+	public Order orderDetail(Integer orderId) {
+
+		OrderExample example = new OrderExample();
+
+		example.createCriteria().andIdEqualTo(orderId);
+		List<Order> list = orderMapper.selectByExample(example);
+
+		Order order = list.get(0);
+
+		// 根据orderId查询订单详情信息
+
+		List<OrderProductTransfer> productList = orderProductMapper.selectOrderDetail(order.getId());
+
+		for (OrderProductTransfer orderDetail : productList) {
+
+			BigDecimal price = orderDetail.getPrice();
+
+			BigDecimal num = new BigDecimal(orderDetail.getProductNum());
+
+			orderDetail.setAmount(price.multiply(num));
+
+			if (orderDetail.getProductUrl() != null && !"".equals(orderDetail.getProductUrl())) {
+
+				String[] imageIds = orderDetail.getProductUrl().split(",");
+
+				// 根据图片ID查询图片url
+				ProductImage image = productImageMapper.findById(Long.parseLong(imageIds[0]));
+
+				orderDetail.setProductUrl(image != null ? image.getUrl() : "");
+			}
+		}
+		order.setGoodNum(productList.size());
+		order.setProductDetails(productList);
+
+		// 根据addressID查询地址信息
+		UserAddressExample example1 = new UserAddressExample();
+
+		example1.createCriteria().andIdEqualTo(Integer.parseInt(order.getAddressId()));
+		List<UserAddress> userAddressList = userAddressMapper.selectByExample(example1);
+
+		order.setAddress(userAddressList.size() != 0 ? userAddressList.get(0) : null);
+
+		return order;
+	}
 }

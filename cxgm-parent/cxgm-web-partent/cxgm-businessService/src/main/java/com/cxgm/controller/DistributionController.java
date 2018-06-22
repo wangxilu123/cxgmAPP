@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.cxgm.common.ResultDto;
 import com.cxgm.domain.DistributionOrder;
+import com.cxgm.domain.Order;
 import com.cxgm.domain.StaffDistribution;
 import com.cxgm.service.DistributionService;
 import com.cxgm.service.impl.CheckToken;
@@ -122,5 +123,25 @@ public class DistributionController {
     		return new ResultDto<>(403,"token失效请重新登录！");
     	}
     }
+	
+	@ApiOperation(value = "根据订单查询配送详情", nickname = "根据订单查询配送详情")
+	@ApiImplicitParams({
+        @ApiImplicitParam(name = "orderId", required = false, paramType = "query", dataType = "int")
+    })
+	@GetMapping("/findDistributionDetail")
+	public ResultDto<Order> findDistributionDetail(HttpServletRequest request,
+			@RequestParam(value = "orderId", required = false) Integer orderId){
+		
+		boolean result = checkToken.checkAdmin(request.getHeader("token"));
+
+		if (result == true) {
+
+			Order order = distributionService.orderDetail(orderId);
+
+			return new ResultDto<>(200, "查询成功！", order);
+		} else {
+			return new ResultDto<>(403, "token失效请重新登录！");
+		}
+	}
 	
 }

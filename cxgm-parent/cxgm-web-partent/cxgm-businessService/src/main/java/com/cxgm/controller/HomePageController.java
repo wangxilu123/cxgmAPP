@@ -99,6 +99,7 @@ public class HomePageController {
 		
 		Map<String,Object> map = new HashMap<>();
 		
+		map.put("isMarketable", 1);
 		map.put("shopId", shopId);
 		map.put("productCategoryTwoId", productCategoryTwoId);
 		map.put("productCategoryThirdId", productCategoryThirdId);
@@ -121,6 +122,7 @@ public class HomePageController {
 		}
 		
 		Map<String,Object> map = new HashMap<>();
+		map.put("isMarketable", 1);
 		map.put("shopId", shopId);
 		map.put("isTop", 1);
 		List<ProductTransfer> list=homePageService.findListAllWithCategory(map,userId);
@@ -144,6 +146,7 @@ public class HomePageController {
 		}
 		
 		Map<String,Object> map = new HashMap<>();
+		map.put("isMarketable", 1);
 		map.put("shopId", shopId);
 		map.put("isHot", 1);
 		List<ProductTransfer> list=homePageService.findListAllWithCategory(map,userId);
@@ -167,7 +170,7 @@ public class HomePageController {
 		}
 		
 		Map<String,Object> map = new HashMap<>();
-		
+		map.put("isMarketable", 1);
 		map.put("shopId", shopId);
 		
 		List<ProductTransfer> list=homePageService.findListAllWithCategory(map,userId);
@@ -263,7 +266,7 @@ public class HomePageController {
 		}
 		
 		Map<String,Object> map = new HashMap<>();
-		
+		map.put("isMarketable", 1);
 		map.put("shopId", shopId);
 		map.put("name", goodName);
 		List<ProductTransfer> list=homePageService.findListAllWithCategory(map,userId);
