@@ -1,10 +1,3 @@
-/***
- *	JFINALSHOP Base JavaScript
- *
- *	http://www.JFinalshop.com
- *
- *	Copyright (c) 2014 JFINALSHOP. All rights reserved. 
- **/
 
 var JFinalshop = {
 	currencySign: "￥",// 货币符号

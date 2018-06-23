@@ -1,10 +1,3 @@
-/***
- *	JFinalShop Register JavaScript
- *
- *	http://www.jfinalshop.com
- *
- *	Copyright (c) 2014 JFinalShop. All rights reserved.
- **/
 
 $().ready( function() {	
 	var $allCheck = $("#allCheck");// 全选复选框
@@ -91,6 +84,25 @@ function deleteOne(url, index) {
 			  $("#listTr" + index).remove();
 		  }
 		  Modal.alert(data.message);
+		}
+	  });
+	}
+  });
+}
+
+//更新
+function updateOne(url) {
+  Modal.register(['confirm','alert']);
+  Modal.confirm("您确定要更新吗？",{
+    relatedTarget: this,
+	onConfirm: function(options) {
+      $.ajax({
+    	url: url,
+		dataType: "json",
+		async: false,
+		success: function(data) {
+		  Modal.alert(data.message);
+		  window.history.back(-1); 
 		}
 	  });
 	}

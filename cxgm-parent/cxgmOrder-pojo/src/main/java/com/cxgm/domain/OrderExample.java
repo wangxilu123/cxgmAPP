@@ -570,6 +570,10 @@ public class OrderExample {
             addCriterion("order_amount =", value, "orderAmount");
             return (Criteria) this;
         }
+        public Criteria andTotalAmountEqualTo(BigDecimal value) {
+            addCriterion("total_amount =", value, "totalAmount");
+            return (Criteria) this;
+        }
 
         public Criteria andOrderAmountNotEqualTo(BigDecimal value) {
             addCriterion("order_amount <>", value, "orderAmount");

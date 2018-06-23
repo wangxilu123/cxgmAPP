@@ -19,16 +19,16 @@
         <div class="am-u-sm-6 am-u-md-4">
           <div class="am-btn-toolbar app-padding-toolbar-item">
             <div class="am-btn-group am-btn-group-sm">
-              <button type="button" class="am-btn am-btn-default" onclick="deleteAll('/order/delete');" id="deleteButton" disabled="disabled"><span class="am-icon-trash-o"></span> 删除</button>
+             <!--  <button type="button" class="am-btn am-btn-default" onclick="deleteAll('/order/delete');" id="deleteButton" disabled="disabled"><span class="am-icon-trash-o"></span> 删除</button> -->
             </div>
           </div>
         </div>
         <div class="am-u-sm-6 am-u-md-4 am-padding-0">
           <div class="app-padding-toolbar-item">
             <select name="property" data-am-selected="{btnWidth: '100%', btnSize: 'sm', maxHeight: '100px'}">
-              <option value="orderSn" <%if (property! == "orderSn"){%>selected="selected" <%}%>>订单编号</option>
-		      <option value="shipName" <%if (property! == "shipName"){%>selected="selected" <%}%>>收货人</option>
-		      <option value="shipAddress" <%if (property! == "shipAddress"){%>selected="selected" <%}%>>收货地址</option>
+              <option value="orderNum" <%if (property! == "orderNum"){%>selected="selected" <%}%>>订单编号</option>
+		      <option value="status" <%if (property! == "status"){%>selected="selected" <%}%>>订单状态</option>
+		      <option value="totalAmount" <%if (property! == "totalAmount"){%>selected="selected" <%}%>>订单总额</option>
             </select>
           </div>
         </div>
@@ -51,9 +51,7 @@
         <table class="am-table am-table-striped am-table-hover table-main am-text-nowrap am-margin-bottom-0">
           <thead>
             <tr>
-              <th><input type="checkbox" id="allCheck"></th>
               <th>序号</th>
-              <th><div class="app-table-td-buttons-width-160">操作</div></th>
               <th>订单编号</th>
               <th>订单来源</th>
               <th>订单总额</th>
@@ -61,38 +59,41 @@
               <th>配送方式</th>
               <th>下单时间</th>
               <th>收货时间</th>
+              <th><div class="app-table-td-buttons-width-160">操作</div></th>
             </tr>
           </thead>
           <tbody>
             <%for(list in pager.list){%>
             <tr id="listTr${listLP.index}">
-              <td><input type="checkbox" name="ids" value="${list.id}"></td>              
               <td>${listLP.index}</td>              
+              
+              <td>${list.orderNum}</td>
+              <td>${list.orderResource}</td>
+              <td>${list.totalAmount}</td>
+              <td>${list.status}</td>
+              <td>${list.payType}</td>
+              <td>${list.orderTime,dateFormat="yyyy-MM-dd HH:mm:ss"}</td>
+              <td>${list.receiveTime}</td>
               <td>
               <!-- 
              订单状态0待支付，1待配送（已支付），2配送中，3已完成，4退货，5已取消
               -->
+              <%if (list.status == '待退款'){%>
                 <div class="am-btn-group am-btn-group-xs">
-                  <button type="button" class="am-btn am-btn-default am-btn-xs am-text-success app-table-button-padding" onclick="location.href='/order/view?orders.id=${list.id}'">
+                <!--   <button type="button" class="am-btn am-btn-default am-btn-xs am-text-success app-table-button-padding" onclick="location.href='/order/view?orders.id=${list.id}'">
                     <span class="am-icon-file-o"> 查看</span>
                   </button>
-                  <%if ((list.orderStatus != 'completed') && (list.orderStatus != 'invalid') && (list.paymentStatus == 'unpaid') && (list.shippingStatus == 'unshipped')){%>
+                  <%if ((list.status != 'completed') && (list.status != 'invalid') && (list.status == 'unpaid') && (list.status == 'unshipped')){%>
                   <button type="button" class="am-btn am-btn-default am-btn-xs am-text-secondary app-table-button-padding" onclick="location.href='/order/edit?orders.id=${list.id}'">
                     <span class="am-icon-pencil"> 编辑</span>
                   </button>
-                  <%}%>
-                  <button type="button" class="am-btn am-btn-default am-btn-xs am-text-warning app-table-button-padding" onclick="location.href='/order/process?orders.id=${list.id}'">
+                  <%}%> -->
+                  <button type="button" class="am-btn am-btn-default am-btn-xs am-text-warning app-table-button-padding" onclick="updateOne('/order/process?orders.id=${list.id}')">
                     <span class="am-icon-hand-o-up"> 处理</span>
                   </button>
                 </div>
+                <%}%>
               </td> 
-              <td>${list.orderNum}</td>
-              <td>${list.orderResource}</td>
-              <td>${list.totalAmount}</td>
-              <td>${i18n("Status." + list.status)}</td>
-              <td>${list.payType}</td>
-              <td>${list.orderTime,"yyyy-MM-dd HH:mm:ss"}</td>
-              <td>${list.receiveTime,"yyyy-MM-dd HH:mm:ss"}</td>
             </tr>
             <%}%> 
           </tbody>

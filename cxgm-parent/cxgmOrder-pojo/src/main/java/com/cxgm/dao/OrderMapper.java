@@ -1,6 +1,7 @@
 package com.cxgm.dao;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
@@ -26,5 +27,7 @@ public interface OrderMapper {
     int updateByExample(@Param("record") Order record, @Param("example") OrderExample example);
     
     List<Order> selectParseStatus(Integer storeId);
+    
+    List<Order> findOrdersWithParam(Map<String,Object> map);
     
 }

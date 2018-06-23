@@ -1,6 +1,7 @@
 package com.cxgm.service;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -26,5 +27,24 @@ public class OrderServiceErp {
 	public List<Order> selectParseStatus(Integer storeId){
 		return orderDao.selectParseStatus(storeId);
 	}
+	
+	public List<Order> findOrdersWithParam(Map<String,Object> map){
+		return orderDao.findOrdersWithParam(map);
+	}
 
+	public Long countByExample(OrderExample example) {
+		return orderDao.countByExample(example);
+	}
+	
+	public Integer updateOrderStatus(Integer id, Integer status) {
+		OrderExample orderExample = new OrderExample();
+		orderExample.createCriteria().andIdEqualTo(id);
+		List<Order> orders = orderDao.selectByExample(orderExample);
+		if(orders.size()>0) {
+			Order order = orders.get(0);
+			order.setStatus(String.valueOf(status));
+			return orderDao.updateByExample(order, orderExample);
+		}
+		return null;
+	}
 }

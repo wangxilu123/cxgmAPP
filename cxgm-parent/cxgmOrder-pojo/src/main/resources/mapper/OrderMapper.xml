@@ -75,6 +75,26 @@
       </foreach>
     </where>
   </sql>
+  <sql id="queryMap">
+  	<if test="storeId !=null and storeId != ''">
+    		and store_id=#{storeId,jdbcType=INTEGER}
+	</if>
+  </sql>
+  
+  <sql id="queryMap1">
+	  	<if test="storeId !=null and storeId != ''">
+	    	and store_id=#{storeId,jdbcType=INTEGER}
+		</if>
+		<if test="orderNum !=null and orderNum != ''">
+    		and order_num=#{orderNum,jdbcType=VARCHAR}
+		</if>
+		<if test="status !=null">
+    		and status=#{status,jdbcType=VARCHAR}
+		</if>
+		<if test="totalAmount !=null and totalAmount != ''">
+    		and total_amount=#{totalAmount,jdbcType=DECIMAL}
+		</if>
+	</sql>
   <sql id="Base_Column_List">
     id, user_id, order_num, status, store_id, pay_type, order_time, order_amount, remarks,address_id,receive_time,total_amount,preferential,order_resource
   </sql>
@@ -83,8 +103,14 @@
   </sql>
   <select id="selectParseStatus" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select
-   <include refid="Base_Column_List1" />,(case when status=0 then "ordering" when status=1 then "paid" when status=2 then "sorting" when status=3 then "sorted" when status=4 then "dispatching" when status=5 then "dispatched" when status=6 then "unrefund" when status=7 then "refund" END) as status
-    from user_order where store_id=#{storeId}
+   <include refid="Base_Column_List1" />,(case when status=0 then "下单" when status=1 then "已经支付" when status=2 then "分拣中" when status=3 then "分拣完成" when status=4 then "配送中" when status=5 then "配送完成" when status=6 then "待退款" when status=7 then "已退款" END) as status
+    from user_order where 1=1 <include refid="queryMap" /> order by order_time desc
+  </select>
+  
+  <select id="findOrdersWithParam" parameterType="map" resultMap="BaseResultMap">
+    select 
+   <include refid="Base_Column_List1" />,(case when status=0 then "下单" when status=1 then "已经支付" when status=2 then "分拣中" when status=3 then "分拣完成" when status=4 then "配送中" when status=5 then "配送完成" when status=6 then "待退款" when status=7 then "已退款" END) as status
+   from user_order where 1=1 <include refid="queryMap1" /> order by order_time desc
   </select>
   
   <select id="selectByExample" parameterType="com.cxgm.domain.OrderExample" resultMap="BaseResultMap">
