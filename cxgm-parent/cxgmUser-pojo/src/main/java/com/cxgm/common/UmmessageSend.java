@@ -1,5 +1,8 @@
 package com.cxgm.common;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 /** 
  * 接收消息的Listener,用于接收订阅到的消息.  
  * @author Administrator 
@@ -18,14 +21,15 @@ public class UmmessageSend{
   
     public void sendMessage(String title,String content) {  
        try{  
-    	   
+    	    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+    	    
     	    AndroidBroadcast androidbroadcast = new AndroidBroadcast(appkey,appMasterSecret);
     	    androidbroadcast.setTitle(title);
-    	    androidbroadcast.setText(content);
+    	    androidbroadcast.setText(sdf.format(new Date()));
     	    androidbroadcast.setCustomField(content);
     	    androidbroadcast.goAppAfterOpen();
-    	    androidbroadcast.setDisplayType(AndroidNotification.DisplayType.NOTIFICATION);
-	   		
+    	    androidbroadcast.setDisplayType(AndroidNotification.DisplayType.MESSAGE);
+    	    
     	    androidbroadcast.setProductionMode();
 	   		client.send(androidbroadcast);
 	   		
@@ -39,6 +43,7 @@ public class UmmessageSend{
 			// Set customized fields
 	   		
 	   		iosbroadcast.setCustomizedField(title, content);
+	   		iosbroadcast.setDescription(sdf.format(new Date()));
 	   		client.send(iosbroadcast);
         }catch(Exception e){
         	e.printStackTrace();

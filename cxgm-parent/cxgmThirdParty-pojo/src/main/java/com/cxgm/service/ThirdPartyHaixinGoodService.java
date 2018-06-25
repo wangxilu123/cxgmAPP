@@ -2,16 +2,20 @@ package com.cxgm.service;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URL;
+import java.util.List;
 
 import javax.xml.rpc.ServiceException;
 import javax.xml.rpc.holders.StringHolder;
 import javax.xml.soap.SOAPException;
 
 import org.apache.axis.client.Service;
+import org.springframework.context.annotation.Primary;
 import org.tempuri.IHsMisWebSrvbindingStub;
 
 import com.cxgm.common.XmlUtil;
-import com.cxgm.domain.ThirdGoodResult;
+import com.cxgm.domain.GOODS_DATA;
+import com.cxgm.domain.HaixinGood;
+import com.cxgm.domain.ThirdGood;
 
 import sun.misc.BASE64Decoder;
 
@@ -20,12 +24,14 @@ import sun.misc.BASE64Decoder;
  * User: CQL
  *
  */
-
+@Primary
+@org.springframework.stereotype.Service
 public class ThirdPartyHaixinGoodService  {
+	
 	/**
 	  *获取门店商品信息接口
 	  */
-	  public static ThirdGoodResult findGoods () throws SOAPException, ServiceException, UnsupportedEncodingException, IOException {
+	  public static List<GOODS_DATA> findGoods () throws SOAPException, ServiceException, UnsupportedEncodingException, IOException {
 		  
 		 String endpoint = "http://221.219.243.5:8099/HsMisWebSrv.dll/soap/IHsMisWebSrv";
 		   
@@ -57,13 +63,13 @@ public class ThirdPartyHaixinGoodService  {
 	       
 	       String str = new String(decoder.decodeBuffer(result), "GBK");
 	       
-	       String json = XmlUtil.xml2json(str);
+	       String json = XmlUtil.xml2json(str).replaceAll("@", "");
 	       
-	      /* ThirdGoodResult thirdOrgResult = XmlUtil.parseJsonWithGson(json, ThirdGoodResult.class);
-	       
-	       ResultData good= thirdOrgResult.getRESULT_DATA();*/
-	       
-	   return null;
+	       ThirdGood thirdOrgResult = XmlUtil.parseJsonWithGson(json, ThirdGood.class);
+
+		   List<GOODS_DATA> goodList = thirdOrgResult.getRESULT_DATA().getGOODS_DATA();
+			
+	   return goodList;
 	   }
 	  
 	  public static void main(String[] args) throws UnsupportedEncodingException, SOAPException, ServiceException, IOException{
