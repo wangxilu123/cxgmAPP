@@ -66,7 +66,7 @@ public class OrderController {
     @ApiImplicitParams({
         @ApiImplicitParam(name = "pageNum", value = "第几页，默认1", required = false, paramType = "query", dataType = "int"),
         @ApiImplicitParam(name = "pageSize", value = "每页多少条，默认10", required = false, paramType = "query", dataType = "int"),
-        @ApiImplicitParam(name = "status", value = "订单状态0待支付，1待配送（已支付），2配送中，3已完成，4退货", required = false, paramType = "query", dataType = "string"),
+        @ApiImplicitParam(name = "status", value = "订单状态0待支付，1待配送（已支付），4配送中，5已完成，7退货", required = false, paramType = "query", dataType = "string"),
     })
     @GetMapping("/list")
     public ResultDto<PageInfo<Order>> orderList(HttpServletRequest request,
@@ -98,6 +98,7 @@ public class OrderController {
     		
     		Order order = orderService.findById(orderId);
     		
+    		order.setStatus("9");
     		Integer result = orderService.updateOrder(order);
     		
     		return new ResultDto<>(200,"取消成功！",result);
@@ -117,8 +118,10 @@ public class OrderController {
     	if(appUser!=null){
     		
     		Order order = orderService.findById(orderId);
-    		
+    		order.setStatus("6");
     		Integer result = orderService.updateOrder(order);
+    		
+    		//缺少退款流程
     		
     		return new ResultDto<>(200,"取消成功！",result);
     	}else{

@@ -8,7 +8,7 @@ import org.springframework.scheduling.annotation.Scheduled;
 import com.cxgm.service.YouzanOrderService;
 
 /**
- * @Description 类说明:定时任务
+ * @Description 类说明:有赞订单同步定时任务
  */
 @Configuration
 @EnableScheduling
@@ -17,7 +17,7 @@ public class YouzanController {
 	@Autowired
 	private YouzanOrderService youzanOrderService;
 	
-	@Scheduled(cron = "0 */120 * * * ?") // 每10分钟执行一次
+	@Scheduled(cron = "0 */120 * * * ?") // 每两个小时执行一次
 	public void getOrders() {
 
 		youzanOrderService.findYouZanOrder();

@@ -97,7 +97,7 @@ public class AdvertisementController {
 		sb.deleteCharAt(sb.length()-1);
 		advertisement.setImageUrl(sb.toString());
 		advertisementService.addAdvertisement(advertisement);
-		ModelAndView mv = new ModelAndView("redirect:/shop/list");
+		ModelAndView mv = new ModelAndView("redirect:/advertisement/advertisement_list");
 		return mv;
 	}
 

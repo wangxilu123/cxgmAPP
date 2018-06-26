@@ -162,7 +162,21 @@ public class OrderServiceImpl implements OrderService {
 
 		OrderExample example = new OrderExample();
 		if ("".equals(status) == false && status != null) {
-			example.createCriteria().andUserIdEqualTo(userId).andStatusEqualTo(status);
+			if(status.equals("1")){
+				List<String> list= new ArrayList<>();
+				list.add("1");
+				list.add("2");
+				list.add("3");
+				example.createCriteria().andUserIdEqualTo(userId).andStatusIn(list);
+			}
+			else if(status.equals("7")){
+				List<String> list1= new ArrayList<>();
+				list1.add("6");
+				list1.add("7");
+				example.createCriteria().andUserIdEqualTo(userId).andStatusIn(list1);
+			}else{
+				example.createCriteria().andUserIdEqualTo(userId).andStatusEqualTo(status);
+			}
 		} else {
 			example.createCriteria().andUserIdEqualTo(userId);
 		}

@@ -148,6 +148,14 @@ public class HomePageServiceImpl implements HomePageService {
 						
 						ProductTransfer product = productDao.findById(Long.parseLong(ids[i]));
 						
+						if(product.getImage()!=null&&"".equals(product.getImage())==false){
+							String[] imageIds = product.getImage().split(",");
+							
+							ProductImage image = productImageMapper.findById(Long.valueOf(imageIds[0]));
+							
+							product.setImage(image!=null?image.getUrl():"");
+						}
+						
 						productList.add(product);
 					}
 				}

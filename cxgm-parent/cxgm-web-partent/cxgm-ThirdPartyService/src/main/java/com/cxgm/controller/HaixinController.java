@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import com.cxgm.service.HaixinGoodService;
 
 /**
- * @Description 类说明:定时任务
+ * @Description 类说明:海信同步商品数据
  */
 @Configuration
 @EnableScheduling
