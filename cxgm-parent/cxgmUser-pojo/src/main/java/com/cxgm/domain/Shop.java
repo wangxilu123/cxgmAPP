@@ -56,8 +56,8 @@ public class Shop {
     private Date createTime;
 	
 	@ApiModelProperty(name = "yzShopId",value = "有赞门店ID")
-    private Integer yzShopId;
+    private String yzShopId;
 	
 	@ApiModelProperty(name = "hxShopId",value = "海信门店ID")
-    private Integer hxShopId;
+    private String hxShopId;
 }

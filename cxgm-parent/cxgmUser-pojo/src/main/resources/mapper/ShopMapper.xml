@@ -16,8 +16,8 @@
     <result column="ali_partnerid" jdbcType="VARCHAR" property="aliPartnerid" />
     <result column="ali_privatekey" jdbcType="VARCHAR" property="aliPrivatekey" />
     <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
-    <result column="yz_shop_id" jdbcType="INTEGER" property="yzShopId" />
-    <result column="hx_shop_id" jdbcType="INTEGER" property="hxShopId" />
+    <result column="yz_shop_id" jdbcType="VARCHAR" property="yzShopId" />
+    <result column="hx_shop_id" jdbcType="VARCHAR" property="hxShopId" />
   </resultMap>
   <sql id="Example_Where_Clause">
     <where>
@@ -118,7 +118,7 @@
     values (#{shopName,jdbcType=VARCHAR}, #{shopAddress,jdbcType=VARCHAR}, #{longitude,jdbcType=VARCHAR}, 
       #{dimension,jdbcType=VARCHAR}, #{imageUrl,jdbcType=VARCHAR}, #{description,jdbcType=VARCHAR}, 
       #{owner,jdbcType=VARCHAR}, #{electronicFence,jdbcType=VARCHAR}, #{weixinMchid,jdbcType=VARCHAR}, 
-      #{weixinApikey,jdbcType=VARCHAR}, #{aliPartnerid,jdbcType=VARCHAR}, #{aliPrivatekey,jdbcType=VARCHAR},NOW(),#{yzShopId,jdbcType=INTEGER},#{hxShopId,jdbcType=INTEGER}
+      #{weixinApikey,jdbcType=VARCHAR}, #{aliPartnerid,jdbcType=VARCHAR}, #{aliPrivatekey,jdbcType=VARCHAR},NOW(),#{yzShopId,jdbcType=VARCHAR},#{hxShopId,jdbcType=VARCHAR}
       )
   </insert>
   <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="com.cxgm.domain.Shop" useGeneratedKeys="true">
@@ -205,10 +205,10 @@
         #{aliPrivatekey,jdbcType=VARCHAR},
       </if>
        <if test="yzShopId != null">
-        #{yzShopId,jdbcType=INTEGER},
+        #{yzShopId,jdbcType=VARCHAR},
       </if>
       <if test="hxShopId != null">
-        #{hxShopId,jdbcType=INTEGER},
+        #{hxShopId,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -261,10 +261,10 @@
         ali_privatekey = #{record.aliPrivatekey,jdbcType=VARCHAR},
       </if>
       <if test="record.yzShopId != null">
-        yz_shop_id =#{record.yzShopId,jdbcType=INTEGER},
+        yz_shop_id =#{record.yzShopId,jdbcType=VARCHAR},
       </if>
       <if test="record.hxShopId != null">
-        hx_shop_id =#{record.hxShopId,jdbcType=INTEGER},
+        hx_shop_id =#{record.hxShopId,jdbcType=VARCHAR},
       </if>
     </set>
     <if test="_parameter != null">
@@ -286,8 +286,8 @@
       weixin_apikey = #{record.weixinApikey,jdbcType=VARCHAR},
       ali_partnerid = #{record.aliPartnerid,jdbcType=VARCHAR},
       ali_privatekey = #{record.aliPrivatekey,jdbcType=VARCHAR},
-      yz_shop_id =#{record.yzShopId,jdbcType=INTEGER},
-      hx_shop_id =#{record.hxShopId,jdbcType=INTEGER}
+      yz_shop_id =#{record.yzShopId,jdbcType=VARCHAR},
+      hx_shop_id =#{record.hxShopId,jdbcType=VARCHAR}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>

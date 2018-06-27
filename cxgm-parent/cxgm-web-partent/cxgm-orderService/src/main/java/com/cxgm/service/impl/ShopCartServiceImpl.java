@@ -91,6 +91,8 @@ public class ShopCartServiceImpl implements ShopCartService {
 		ShopCartExample example = new ShopCartExample();
 
 		example.createCriteria().andUserIdEqualTo(userId).andShopIdEqualTo(shopId);
+		
+		example.setOrderByClause("");
 
 		List<ShopCart> result = mapper.selectByExample(example);
 		if (result.size() != 0) {

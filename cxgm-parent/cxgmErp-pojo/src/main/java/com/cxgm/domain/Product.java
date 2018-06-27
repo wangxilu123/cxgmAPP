@@ -120,6 +120,8 @@ public class Product {
     
     private String detailImage;
     
+    private String barCode;
+    
     
 	public String getDetailImage() {
 		return detailImage;
@@ -583,6 +585,14 @@ public class Product {
 
 	public void setSpecifications(String specifications) {
 		this.specifications = specifications;
+	}
+
+	public String getBarCode() {
+		return barCode;
+	}
+
+	public void setBarCode(String barCode) {
+		this.barCode = barCode;
 	}
 	
 	

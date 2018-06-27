@@ -17,7 +17,10 @@ public class OrderProductTransfer {
     private String productName;
 
 	@ApiModelProperty(name = "productCode",value = "商品唯一标识")
-    private Integer productCode;
+    private String productCode;
+	
+	@ApiModelProperty(name = "barCode",value = "商品条码")
+    private String barCode;
 
 	@ApiModelProperty(name = "productNum",value = "商品数量")
     private Integer productNum;

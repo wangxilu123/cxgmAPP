@@ -81,11 +81,15 @@ public class OrderServiceImpl implements OrderService {
 
 	@Override
 	public Integer addOrder(Order order) {
+		//根据门店ID查询门店信息
+		 Shop shop = shopMapper.selectByPrimaryKey(order.getStoreId());
+		
 		String orderNum = DateUtil.formatDateTime2() + CodeUtil.genCodes(6);
 		order.setOrderTime(new Date());
 		order.setStatus("0");
 		order.setOrderNum(orderNum);
 		order.setOrderResource("APP");
+		order.setHaixinShopCode(shop.getHxShopId());
 		orderMapper.insert(order);
 
 		for (OrderProduct orderProduct : order.getProductList()) {

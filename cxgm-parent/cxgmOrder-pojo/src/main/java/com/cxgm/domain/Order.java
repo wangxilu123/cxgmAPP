@@ -86,4 +86,7 @@ public class Order implements Serializable{
 	
 	@ApiModelProperty(name = "goodNum",value = "商品种类")
     private Integer goodNum;
+	
+	@ApiModelProperty(name = "haixinShopCode",value = "海信门店编码")
+    private String haixinShopCode;
 }

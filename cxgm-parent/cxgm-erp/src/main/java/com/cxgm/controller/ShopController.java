@@ -88,8 +88,8 @@ public class ShopController {
 		shop.setShopAddress(request.getParameter("shopAddress"));
 		shop.setWeixinApikey(request.getParameter("weixinApikey"));
 		shop.setWeixinMchid(request.getParameter("weixinMchid"));
-		shop.setYzShopId(Integer.parseInt(request.getParameter("yzShopId")));
-		shop.setHxShopId(Integer.parseInt(request.getParameter("hxShopId")));
+		shop.setYzShopId(request.getParameter("yzShopId"));
+		shop.setHxShopId(request.getParameter("hxShopId"));
 		shopService.addShop(shop);
 		ModelAndView mv = new ModelAndView("redirect:/shop/list");
 		return mv;
