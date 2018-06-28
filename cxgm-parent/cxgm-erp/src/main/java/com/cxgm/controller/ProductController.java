@@ -23,9 +23,11 @@ import org.springframework.web.servlet.ModelAndView;
 import com.cxgm.common.RSResult;
 import com.cxgm.common.SystemConfig;
 import com.cxgm.domain.Admin;
+import com.cxgm.domain.HaixinGood;
 import com.cxgm.domain.ProductCategory;
 import com.cxgm.domain.ProductImage;
 import com.cxgm.domain.ProductTransfer;
+import com.cxgm.service.HaixinService;
 import com.cxgm.service.ProductCategoryService;
 import com.cxgm.service.ProductService;
 import com.github.pagehelper.PageHelper;
@@ -40,6 +42,8 @@ public class ProductController {
 	ProductService productService;
 	@Autowired
 	ProductCategoryService productCategoryService;
+	@Autowired
+	HaixinService haixinService;
 	
 	
 	@RequestMapping(value = "/admin/product/product", method = RequestMethod.GET)
@@ -86,11 +90,13 @@ public class ProductController {
 	    Admin admin = (Admin) auth.getPrincipal();
 		List<ProductCategory> productCategoryTreeList = productCategoryService.getProductCategory(0);
 		request.setAttribute("productCategoryTreeList", productCategoryTreeList);
+		List<HaixinGood> haixinGoodsList = haixinService.findAllHaixinGoods();
 		SystemConfig systemConfig = new SystemConfig();
 		systemConfig.setUploadLimit(10);
 		systemConfig.setAllowedUploadImageExtension("png,jpg");
 		request.setAttribute("systemConfig",systemConfig);
 		request.setAttribute("shopId",admin.getShopId());
+		request.setAttribute("haixinGoodsList", haixinGoodsList);
 		return new ModelAndView("admin/product_input");
 	}
 	
@@ -158,10 +164,12 @@ public class ProductController {
 		systemConfig.setAllowedUploadImageExtension("png,jpg");
 		
 		List<ProductImage> productImages = productService.getAllAttachmentImage(product);
+		List<HaixinGood> haixinGoodsList = haixinService.findAllHaixinGoods();
 		product.setProductImageList(productImages);
 		request.setAttribute("systemConfig",systemConfig);
 		request.setAttribute("product",product);
 		request.setAttribute("shopId", product.getShopId());
+		request.setAttribute("haixinGoodsList", haixinGoodsList);
 		return new ModelAndView("admin/product_input");
 	}
 	

@@ -18,6 +18,10 @@ productId = product.productCategoryTwoId;
 }else{
 productId = product.productCategoryId;
 }
+
+var haixinGoodId = 0;
+
+
 }
 %>
 </head>
@@ -48,7 +52,22 @@ productId = product.productCategoryId;
           <div class="am-form-group am-form-group-sm">
             <label class="am-u-sm-4 am-u-md-3 am-text-right am-form-label">商品名称</label>
             <div class="am-u-sm-8 am-u-md-9">
-              <input type="text" class="am-form-field" name="product.name" value="${product.name!}" required />
+            <%if(isAdd){%>
+              	<select name="product.name" data-am-selected="{searchBox: 1}">
+			  		<option value="0" selected>请选择...</option>
+			  		<%for(list in haixinGoodsList){%>
+			  			<option value="${list.id}">
+						  ${list.goodName}
+						</option>
+			  		<%}%>
+				</select>
+			<%}else{%>
+				<select name="product.name" data-am-selected="{searchBox: 1}">
+			  		<%for(list in haixinGoodsList){%>
+            			<option value="${list.id}" <%if (product.name! == list.goodName!){%>selected="selected" <%}%>>${list.goodName!}</option>
+					<%}%>
+				</select>
+			<%}%>
             </div>
           </div>
           <div class="am-form-group am-form-group-sm">
