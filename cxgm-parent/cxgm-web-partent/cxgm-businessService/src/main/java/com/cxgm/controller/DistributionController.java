@@ -1,6 +1,11 @@
 package com.cxgm.controller;
 
+import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+
 import javax.servlet.http.HttpServletRequest;
+import javax.xml.rpc.ServiceException;
+import javax.xml.soap.SOAPException;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -88,7 +93,7 @@ public class DistributionController {
     })
     @PostMapping("/completeDistribution")
     public ResultDto<Integer> completeDistribution(HttpServletRequest request, 
-    		@RequestParam(value = "orderId", required = false) Integer orderId){
+    		@RequestParam(value = "orderId", required = false) Integer orderId) throws UnsupportedEncodingException, SOAPException, ServiceException, IOException{
     	
 		boolean result = checkToken.checkAdmin(request.getHeader("token"));
     	

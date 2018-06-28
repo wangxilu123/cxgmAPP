@@ -54,9 +54,9 @@
               <th>序号</th>
               <th>订单编号</th>
               <th>订单来源</th>
-              <th>订单总额</th>
+              <th>订单金额</th>
               <th>状态</th>
-              <th>配送方式</th>
+              <th>支付方式</th>
               <th>下单时间</th>
               <th>收货时间</th>
               <th><div class="app-table-td-buttons-width-160">操作</div></th>
@@ -68,10 +68,17 @@
               <td>${listLP.index}</td>              
               
               <td>${list.orderNum}</td>
-              <td>${list.orderResource}</td>
-              <td>${list.totalAmount}</td>
+              
+              
+              <td><%if (list.orderResource == 'APP'){%> APP <%}%>
+              <%if (list.orderResource == 'YOUZAN'){%> 有赞 <%}%>
+              </td>
+              <td>${list.orderAmount}</td>
               <td>${list.status}</td>
-              <td>${list.payType}</td>
+              <td>
+              <%if (list.payType == 'wx'){%> 微信支付 <%}%>
+              <%if (list.payType == 'zfb'){%> 支付宝支付 <%}%>
+              </td>
               <td>${list.orderTime,dateFormat="yyyy-MM-dd HH:mm:ss"}</td>
               <td>${list.receiveTime}</td>
               <td>

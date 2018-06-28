@@ -15,8 +15,10 @@ public class HaixinService {
 	@Autowired
 	HaixinGoodMapper haixinGoodMapper;
 	
-	public List<HaixinGood> findAllHaixinGoods(){
+	public List<HaixinGood> findAllHaixinGoods(String goodName){
 		HaixinGoodExample haixinGoodExample = new HaixinGoodExample();
+		
+		haixinGoodExample.createCriteria().andGoodNameLike("%" + goodName + "%");
 		return haixinGoodMapper.selectByExample(haixinGoodExample);
 	}
 }

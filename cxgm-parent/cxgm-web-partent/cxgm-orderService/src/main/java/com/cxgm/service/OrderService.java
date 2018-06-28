@@ -17,6 +17,8 @@ public interface OrderService {
 	
     PageInfo<Order> orderList(Integer pageNum, Integer pageSize,Integer userId,String status);
     
+    List<Order> findOrders();
+    
     Order findById(Integer orderId);
     
     List<CouponDetail> checkCoupons(Integer userId,List<OrderProduct> productList,List<CategoryAndAmount> amountList,BigDecimal totalAmount);

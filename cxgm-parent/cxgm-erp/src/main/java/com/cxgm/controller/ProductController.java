@@ -2,6 +2,7 @@ package com.cxgm.controller;
 
 import java.math.BigDecimal;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -15,6 +16,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
@@ -90,32 +92,37 @@ public class ProductController {
 	    Admin admin = (Admin) auth.getPrincipal();
 		List<ProductCategory> productCategoryTreeList = productCategoryService.getProductCategory(0);
 		request.setAttribute("productCategoryTreeList", productCategoryTreeList);
-		List<HaixinGood> haixinGoodsList = haixinService.findAllHaixinGoods();
+		/*List<HaixinGood> haixinGoodsList = haixinService.findAllHaixinGoods();*/
 		SystemConfig systemConfig = new SystemConfig();
 		systemConfig.setUploadLimit(10);
 		systemConfig.setAllowedUploadImageExtension("png,jpg");
 		request.setAttribute("systemConfig",systemConfig);
 		request.setAttribute("shopId",admin.getShopId());
-		request.setAttribute("haixinGoodsList", haixinGoodsList);
+		/*request.setAttribute("haixinGoodsList", haixinGoodsList);*/
 		return new ModelAndView("admin/product_input");
+	}
+	
+	@RequestMapping(value = "/haixinGood/list", method = RequestMethod.POST)
+	@ResponseBody
+	public List<HaixinGood> haixinGood(HttpServletRequest request,@RequestParam(value = "goodName") String goodName) {
+		
+		List<HaixinGood> haixinGoodsList = new ArrayList<>();
+		if(!"".equals(goodName)){
+			haixinGoodsList = haixinService.findAllHaixinGoods(goodName);
+		}
+		return haixinGoodsList;
 	}
 	
 	@RequestMapping(value = "/product/save", method = RequestMethod.POST)
 	public ModelAndView productSave(HttpServletRequest request,
-			@RequestParam(value = "product.name") String name,
-			@RequestParam(value = "product.productSn") String productSn,
+			@RequestParam(value = "goodName") String name,
+			@RequestParam(value = "goodCode") String goodCode,
 			@RequestParam(value = "product.originPlace") String originPlace,
-			@RequestParam(value = "product.storageCondition") String storageCondition,
 			@RequestParam(value = "product.descriptionWeight") String descriptionWeight,
 			@RequestParam(value = "parentId") String pid,
-			@RequestParam(value = "product.brand") String brand,
 			@RequestParam(value = "originalPrice") BigDecimal originalPrice,
 			@RequestParam(value = "product.price") BigDecimal price,
-			@RequestParam(value = "product.marketPrice") BigDecimal marketPrice,
-			@RequestParam(value = "product.weight") Integer weight,
-			@RequestParam(value = "weightUnit") String unit,
 			@RequestParam(value = "warrantDays") String warrantDays,//保质期单位
-			@RequestParam(value = "product.stock") Integer stock,
 			@RequestParam(value = "product.isMarketable") boolean isMarketable,
 			@RequestParam(value = "product.isTop") boolean isTop,
 			@RequestParam(value = "product.introduction",required=false) String introduction,
@@ -125,9 +132,9 @@ public class ProductController {
 		
 		List<MultipartFile> files = ((MultipartHttpServletRequest) request).getFiles("productImages");
 		try {
-			productService.insert(name, productSn, originPlace, storageCondition,
-					descriptionWeight, pid, brand, price, marketPrice, weight, unit, 
-					stock, isMarketable, isTop, introduction, shop, files,originalPrice,warrantyPeriod,warrantDays);
+			productService.insert(name, goodCode, originPlace,
+					descriptionWeight, pid, price, 
+					isMarketable, isTop, introduction, shop, files,originalPrice,warrantyPeriod,warrantDays);
 			ModelAndView mv = new ModelAndView("redirect:/admin/product/product");
 			return mv;
 		}catch(Exception e) {
@@ -164,45 +171,38 @@ public class ProductController {
 		systemConfig.setAllowedUploadImageExtension("png,jpg");
 		
 		List<ProductImage> productImages = productService.getAllAttachmentImage(product);
-		List<HaixinGood> haixinGoodsList = haixinService.findAllHaixinGoods();
+		/*List<HaixinGood> haixinGoodsList = haixinService.findAllHaixinGoods();*/
 		product.setProductImageList(productImages);
 		request.setAttribute("systemConfig",systemConfig);
 		request.setAttribute("product",product);
 		request.setAttribute("shopId", product.getShopId());
-		request.setAttribute("haixinGoodsList", haixinGoodsList);
+		/*request.setAttribute("haixinGoodsList", haixinGoodsList);*/
 		return new ModelAndView("admin/product_input");
 	}
 	
 	@RequestMapping(value = "/product/update", method = RequestMethod.POST)
 	public ModelAndView productUpdate(HttpServletRequest request,
 			@RequestParam(value = "product.id") Integer id,
-			@RequestParam(value = "product.name") String name,
-			@RequestParam(value = "product.productSn") String productSn,
+			@RequestParam(value = "goodName") String name,
+			@RequestParam(value = "goodCode") String goodCode,
 			@RequestParam(value = "product.originPlace") String originPlace,
-			@RequestParam(value = "product.storageCondition") String storageCondition,
 			@RequestParam(value = "product.descriptionWeight") String descriptionWeight,
 			@RequestParam(value = "parentId") String pid,
-			@RequestParam(value = "product.brand") String brand,
 			@RequestParam(value = "originalPrice") BigDecimal originalPrice,
 			@RequestParam(value = "product.price") BigDecimal price,
-			@RequestParam(value = "product.marketPrice") BigDecimal marketPrice,
-			@RequestParam(value = "product.weight") Integer weight,
-			@RequestParam(value = "weightUnit") String unit,
 			@RequestParam(value = "warrantDays") String warrantDays,//保质期单位
-			@RequestParam(value = "product.stock") Integer stock,
 			@RequestParam(value = "product.isMarketable") boolean isMarketable,
 			@RequestParam(value = "product.isTop") boolean isTop,
-			@RequestParam(value = "product.warrantyPeriod") Integer warrantyPeriod,//保质期
 			@RequestParam(value = "product.introduction",required=false) String introduction,
+			@RequestParam(value = "product.warrantyPeriod") Integer warrantyPeriod,//保质期
 			@RequestParam(value = "product.shop") Integer shop
 			) throws SQLException {
 		
 		List<MultipartFile> files = ((MultipartHttpServletRequest) request).getFiles("productImages");
 		String[] productImageIds = request.getParameterValues("productImageIds");
 		try {
-			productService.update(id,name, productSn, originPlace, storageCondition,
-					descriptionWeight, pid, brand, price, marketPrice, weight, unit, 
-					stock, isMarketable, isTop, introduction, shop, files,productImageIds,originalPrice,warrantyPeriod,warrantDays);
+			productService.update(id,name, goodCode, originPlace,
+					descriptionWeight, pid, price,isMarketable, isTop, introduction, shop, files,productImageIds,originalPrice,warrantyPeriod,warrantDays);
 			ModelAndView mv = new ModelAndView("redirect:/admin/product/product");
 			return mv;
 		}catch(Exception e) {

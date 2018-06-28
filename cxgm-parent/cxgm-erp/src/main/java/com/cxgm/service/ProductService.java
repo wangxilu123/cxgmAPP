@@ -11,7 +11,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.cxgm.common.DateKit;
 import com.cxgm.common.UmmessageSend;
 import com.cxgm.dao.ProductImageMapper;
 import com.cxgm.dao.ProductMapper;
@@ -41,25 +40,19 @@ public class ProductService {
 	}
 	
 	@Transactional
-	public void insert(String name,String productSn,String originPlace,String storageCondition,
-			String descriptionWeight,String pid,String brand,
-			BigDecimal price,BigDecimal marketPrice,
-			Integer weight,String unit,Integer stock,
+	public void insert(String name,String goodCode,String originPlace,
+			String descriptionWeight,String pid,
+			BigDecimal price,
 			boolean isMarketable,boolean isTop,String introduction,
 			Integer shop,List<MultipartFile> files,BigDecimal originalPrice,Integer warrantyPeriod,String warrantDays) {
 		StringBuilder sb = new StringBuilder();
         try {
         	Product product = new Product();
         	product.setName(name);
-        	if(null == productSn || "".equals(productSn)) {
-        		product.setSn(DateKit.generateSn());
-        	}else {
-        		product.setSn(productSn);
-        	}
         	product.setOriginPlace(originPlace);
-        	product.setStorageCondition(storageCondition);
-        	product.setWeight(weight);
-        	product.setUnit(unit);
+        	/*product.setWeight(weight);
+        	product.setUnit(unit);*/
+        	product.setGoodCode(goodCode);
         	product.setWarrantyPeriod(warrantyPeriod+warrantDays);
         	product.setIsTop(isTop);
         	ProductCategory productCategory = productCategoryService.findById(Long.valueOf(pid));
@@ -69,9 +62,11 @@ public class ProductService {
         		product.setProductCategoryName(productCategory.getName());
         		String imagesValue = productCategory.getTreePath();
             	String oneCategoryImage = imagesValue.split(",")[0];
-            	ProductImage oneCategoryProductImage= productImageDao.findById(Long.valueOf(oneCategoryImage));
-            	String oneCategoryURL = oneCategoryProductImage.getUrl();
-        		product.setDetailImage(oneCategoryURL);
+            	if("".equals(oneCategoryImage)==false){
+            		ProductImage oneCategoryProductImage= productImageDao.findById(Long.valueOf(oneCategoryImage));
+                	String oneCategoryURL = oneCategoryProductImage.getUrl();
+            		product.setDetailImage(oneCategoryURL);
+            	}
         	}
         	if(productCategory.getGrade()==1) {
         		ProductCategory pcy = productCategoryService.findById(productCategory.getParentId());
@@ -81,9 +76,11 @@ public class ProductService {
         		product.setProductCategoryTwoName(productCategory.getName());
         		String imagesValue = pcy.getTreePath();
             	String oneCategoryImage = imagesValue.split(",")[0];
-            	ProductImage oneCategoryProductImage= productImageDao.findById(Long.valueOf(oneCategoryImage));
-            	String oneCategoryURL = oneCategoryProductImage.getUrl();
-        		product.setDetailImage(oneCategoryURL);
+            	if("".equals(oneCategoryImage)==false){
+            		ProductImage oneCategoryProductImage= productImageDao.findById(Long.valueOf(oneCategoryImage));
+                	String oneCategoryURL = oneCategoryProductImage.getUrl();
+            		product.setDetailImage(oneCategoryURL);
+            	}
         	}
         	if(productCategory.getGrade()==2) {
         		ProductCategory pc2 = productCategoryService.findById(productCategory.getParentId());
@@ -96,14 +93,13 @@ public class ProductService {
         		product.setProductCategoryThirdName(productCategory.getName());
         		String imagesValue = pc1.getTreePath();
             	String oneCategoryImage = imagesValue.split(",")[0];
-            	ProductImage oneCategoryProductImage= productImageDao.findById(Long.valueOf(oneCategoryImage));
-            	String oneCategoryURL = oneCategoryProductImage.getUrl();
-        		product.setDetailImage(oneCategoryURL);
+            	if("".equals(oneCategoryImage)==false){
+            		ProductImage oneCategoryProductImage= productImageDao.findById(Long.valueOf(oneCategoryImage));
+                	String oneCategoryURL = oneCategoryProductImage.getUrl();
+            		product.setDetailImage(oneCategoryURL);
+            	}
         	}
-        	product.setBrandName(brand);
         	product.setPrice(price);
-        	product.setMarketPrice(marketPrice);
-        	product.setStock(stock);
         	product.setIsMarketable(isMarketable);
         	product.setIntroduction(introduction);
         	product.setShopId(shop);
@@ -167,21 +163,18 @@ public class ProductService {
 	}
 	
 	@Transactional
-	public void update(Integer id,String name,String productSn,String originPlace,String storageCondition,
-			String descriptionWeight,String pid,String brand,
-			BigDecimal price,BigDecimal marketPrice,
-			Integer weight,String unit,Integer stock,
+	public void update(Integer id,String name,String goodCode,String originPlace,
+			String descriptionWeight,String pid,
+			BigDecimal price,
 			boolean isMarketable,boolean isTop,String introduction,
 			Integer shop,List<MultipartFile> files,String[] productImageIds,BigDecimal originalPrice,Integer warrantyPeriod,String warrantDays) {
 		StringBuilder sb = new StringBuilder();
         try {
         	Product product = productDao.findProductById(id.longValue());
         	product.setName(name);
-        	product.setSn(productSn);
         	product.setOriginPlace(originPlace);
-        	product.setStorageCondition(storageCondition);
-        	product.setWeight(weight);
-        	product.setUnit(unit);
+        	/*product.setWeight(weight);
+        	product.setUnit(unit);*/
         	product.setWarrantyPeriod(warrantyPeriod+warrantDays);
         	product.setIsTop(isTop);
         	if(pid==null || "".equals(pid)) {
@@ -224,10 +217,7 @@ public class ProductService {
             	String oneCategoryURL = oneCategoryProductImage.getUrl();
         		product.setDetailImage(oneCategoryURL);
         	}
-        	product.setBrandName(brand);
         	product.setPrice(price);
-        	product.setMarketPrice(marketPrice);
-        	product.setStock(stock);
         	product.setIsMarketable(isMarketable);
         	product.setIntroduction(introduction);
         	product.setShopId(shop);

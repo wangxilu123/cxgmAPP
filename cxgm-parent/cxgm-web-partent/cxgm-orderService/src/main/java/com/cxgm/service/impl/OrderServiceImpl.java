@@ -384,4 +384,17 @@ public class OrderServiceImpl implements OrderService {
 		
 	}
 
+	@Override
+	public List<Order> findOrders() {
+		
+		OrderExample example = new OrderExample();
+		
+		example.createCriteria().andStatusEqualTo("0");
+		
+		example.setOrderByClause("order_time desc");
+		
+		List<Order> list = orderMapper.selectByExample(example);
+		return list;
+	}
+
 }

@@ -1,8 +1,13 @@
 package com.cxgm.service.impl;
 
+import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.xml.rpc.ServiceException;
+import javax.xml.soap.SOAPException;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Primary;
@@ -23,6 +28,7 @@ import com.cxgm.domain.StaffDistributionExample;
 import com.cxgm.domain.UserAddress;
 import com.cxgm.domain.UserAddressExample;
 import com.cxgm.service.DistributionService;
+import com.cxgm.service.ThirdPartyHaixinUplodGoodsService;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 
@@ -44,6 +50,9 @@ public class DistributionServiceImpl implements DistributionService {
 
 	@Autowired
 	private ProductImageMapper productImageMapper;
+	
+	@Autowired
+	private ThirdPartyHaixinUplodGoodsService thirdPartyHaixinUplodGoodsService;
 
 	@Override
 	public PageInfo<DistributionOrder> orderList(Integer pageNum, Integer pageSize, Integer shopId, String status) {
@@ -128,7 +137,7 @@ public class DistributionServiceImpl implements DistributionService {
 	}
 
 	@Override
-	public Integer updateStatusByOrderId(Integer orderId) {
+	public Integer updateStatusByOrderId(Integer orderId) throws UnsupportedEncodingException, SOAPException, ServiceException, IOException {
 		// 根据订单ID查询配送单
 		StaffDistributionExample example = new StaffDistributionExample();
 
@@ -152,6 +161,33 @@ public class DistributionServiceImpl implements DistributionService {
 			Order order = orderList.get(0);
 			order.setStatus("5");
 			orderMapper.updateByExample(order, example1);
+			
+			//修改海信库存
+			List<OrderProductTransfer> productList = orderProductMapper.selectOrderDetail(order.getId());
+
+			for (OrderProductTransfer orderDetail : productList) {
+
+				BigDecimal price = orderDetail.getPrice();
+
+				BigDecimal productNum = new BigDecimal(orderDetail.getProductNum());
+
+				orderDetail.setAmount(price.multiply(productNum));
+				
+				if(orderDetail.getProductUrl()!=null&&!"".equals(orderDetail.getProductUrl())){
+					
+					String[] imageIds = orderDetail.getProductUrl().split(",");
+					
+					//根据图片ID查询图片url
+					ProductImage image  =productImageMapper.findById(Long.parseLong(imageIds[0]));
+					
+					orderDetail.setProductUrl(image!=null?image.getUrl():"");
+				}
+			}
+
+			order.setProductDetails(productList);
+			
+			thirdPartyHaixinUplodGoodsService.upload(order);
+			
 		}
 
 		return num;

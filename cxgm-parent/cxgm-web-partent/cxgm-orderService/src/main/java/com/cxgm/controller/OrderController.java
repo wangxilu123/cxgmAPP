@@ -7,6 +7,7 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -42,6 +43,31 @@ public class OrderController {
     
     @Autowired
 	private CheckToken checkToken;
+    
+    @Scheduled(cron = "0 */5 * * * ?")// 每5分钟执行一次
+	public void surplusTime() {
+
+    	List<Order> list = orderService.findOrders();
+    	
+    	for(Order order : list){
+    		
+    		Date orderTime = order.getOrderTime();
+			
+			Date nowTime = new Date();
+			
+			Long time = nowTime.getTime()-orderTime.getTime();
+			
+			if(time>=7200000){
+				
+				order.setStatus("8");
+				
+				orderService.updateOrder(order);
+			}
+    		
+    	}
+
+		System.out.println("1111111111111111111111111+定时任务启动+11111111111111111111111");
+	}
     
     @ApiOperation(value = "用户下单接口",nickname = "用户下单接口")
     @ApiImplicitParam(name = "order", value = "用户实体order", required = true, dataType = "Order")
@@ -173,7 +199,7 @@ public class OrderController {
 			
 			if(time>=7200000){
 				
-				return new ResultDto<>(201, "已超时！",null);
+				return new ResultDto<>(200, "已超时！",null);
 			}else{
 				
 				Long surplusTime =7200000-time;

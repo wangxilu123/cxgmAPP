@@ -296,7 +296,7 @@
       #{productCategoryThirdId,jdbcType=BIGINT}, #{productCategoryName,jdbcType=VARCHAR},#{productCategoryTwoName,jdbcType=VARCHAR},#{productCategoryThirdName,jdbcType=VARCHAR},#{shopId,jdbcType=INTEGER},
       #{createBy,jdbcType=VARCHAR},NOW(), #{lastUpdatedBy,jdbcType=VARCHAR}, 
       #{lastUpdatedDate,jdbcType=TIMESTAMP}, #{deleteFlag,jdbcType=BIT}, #{brandName,jdbcType=VARCHAR}, 
-      #{introduction,jdbcType=LONGVARCHAR},#{specifications,jdbcType=VARCHAR},0,#{goodCode,jdbcType=VARCHAR},#{originalPrice,jdbcType=DECIMAL},#{warrantyPeriod,jdbcType=VARCHAR},#{detailImage,jdbcType=VARCHAR},,#{barCode,jdbcType=VARCHAR})
+      #{introduction,jdbcType=LONGVARCHAR},#{specifications,jdbcType=VARCHAR},0,#{goodCode,jdbcType=VARCHAR},#{originalPrice,jdbcType=DECIMAL},#{warrantyPeriod,jdbcType=VARCHAR},#{detailImage,jdbcType=VARCHAR},#{barCode,jdbcType=VARCHAR})
   </insert>
   
   <update id="update" parameterType="com.cxgm.domain.Product">

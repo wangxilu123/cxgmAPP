@@ -10,12 +10,10 @@ import javax.xml.rpc.holders.StringHolder;
 import javax.xml.soap.SOAPException;
 
 import org.apache.axis.client.Service;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Primary;
 import org.tempuri.IHsMisWebSrvbindingStub;
 
 import com.cxgm.common.XmlUtil;
-import com.cxgm.dao.HaixinGoodMapper;
 import com.cxgm.domain.HaixinResult;
 import com.cxgm.domain.Order;
 import com.cxgm.domain.OrderProductTransfer;

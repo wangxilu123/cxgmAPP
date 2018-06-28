@@ -24,6 +24,16 @@ var haixinGoodId = 0;
 
 }
 %>
+
+<style type="text/css">
+css1{
+		display: nono;
+	}
+	css2{
+		display: block;
+	}
+</style>
+<script src="${ctxPath}/static/js/jquery-1.5.1.js"></script>
 </head>
 <body>
 <!-- content start -->
@@ -52,40 +62,22 @@ var haixinGoodId = 0;
           <div class="am-form-group am-form-group-sm">
             <label class="am-u-sm-4 am-u-md-3 am-text-right am-form-label">商品名称</label>
             <div class="am-u-sm-8 am-u-md-9">
-            <%if(isAdd){%>
-              	<select name="product.name" data-am-selected="{searchBox: 1}">
-			  		<option value="0" selected>请选择...</option>
-			  		<%for(list in haixinGoodsList){%>
-			  			<option value="${list.id}">
-						  ${list.goodName}
-						</option>
-			  		<%}%>
-				</select>
-			<%}else{%>
-				<select name="product.name" data-am-selected="{searchBox: 1}">
-			  		<%for(list in haixinGoodsList){%>
-            			<option value="${list.id}" <%if (product.name! == list.goodName!){%>selected="selected" <%}%>>${list.goodName!}</option>
-					<%}%>
-				</select>
-			<%}%>
-            </div>
+            <input type="text" class="am-form-field"  id="goodName" name="goodName" onkeyup="test(this.value,event)"><br/>
+			<select multiple="multiple" id="sel" onchange="test2()"
+				style="width:300px;display:none">
+			</select>
+			</div>
           </div>
           <div class="am-form-group am-form-group-sm">
             <label class="am-u-sm-4 am-u-md-3 am-text-right am-form-label">商品编号</label>
             <div class="am-u-sm-8 am-u-md-9">
-              <input type="text" class="am-form-field" name="product.productSn" value="${product.sn!}" placeholder="若留空则由系统随机生成" />
-            </div>
-          </div>
-                   <div class="am-form-group am-form-group-sm">
-            <label class="am-u-sm-4 am-u-md-3 am-text-right am-form-label">原产地</label>
-            <div class="am-u-sm-8 am-u-md-9">
-              <input type="text" class="am-form-field" name="product.originPlace" value="${product.originPlace!}" required />
+              <input type="text" class="am-form-field" id="goodCode" name="goodCode" value="${product.goodCode!}"/>
             </div>
           </div>
           <div class="am-form-group am-form-group-sm">
-            <label class="am-u-sm-4 am-u-md-3 am-text-right am-form-label">储存条件</label>
+            <label class="am-u-sm-4 am-u-md-3 am-text-right am-form-label">原产地</label>
             <div class="am-u-sm-8 am-u-md-9">
-              <input type="text" class="am-form-field" name="product.storageCondition" value="${product.storageCondition!}"  />
+              <input type="text" class="am-form-field" name="product.originPlace" value="${product.originPlace!}" required />
             </div>
           </div>
           <div class="am-form-group am-form-group-sm">
@@ -153,12 +145,6 @@ var haixinGoodId = 0;
         </div>
           </div>
           <div class="am-form-group am-form-group-sm">
-            <label class="am-u-sm-4 am-u-md-3 am-text-right am-form-label">商品品牌</label>
-            <div class="am-u-sm-8 am-u-md-9">
-              <input type="text" class="am-form-field" name="product.brand" value="${product.brandName!}" required />
-            </div>
-          </div>
-          <div class="am-form-group am-form-group-sm">
             <label class="am-u-sm-4 am-u-md-3 am-text-right am-form-label">本店原价</label>
             <div class="am-u-sm-8 am-u-md-9">
               <input type="number" class="am-form-field" name="originalPrice" value="${product.originalPrice!0}" min="0" required />
@@ -171,25 +157,6 @@ var haixinGoodId = 0;
             </div>
           </div>
           <div class="am-form-group am-form-group-sm">
-            <label class="am-u-sm-4 am-u-md-3 am-text-right am-form-label">市场售价</label>
-            <div class="am-u-sm-8 am-u-md-9">
-              <input type="number" class="am-form-field" name="product.marketPrice" value="${product.marketPrice!0}" min="0" required />
-            </div>
-          </div>
-          <div class="am-form-group am-form-group-sm">
-            <label class="am-u-sm-4 am-u-md-3 am-text-right am-form-label">商品重量</label>
-            <div class="am-u-sm-5 am-u-md-7">
-              <input type="number" class="am-form-field" name="product.weight" value="${product.weight!0}" placeholder="0表示不计重量" min="0" required />
-            </div>
-            <div class="am-u-sm-3 am-u-md-2">
-              <select name="weightUnit" data-am-selected="{btnWidth: '100%', maxHeight: '200px', btnSize: 'sm'}" required>
-              	<option value="盒" selected>盒</option>
-              	<option value="袋">袋</option>
-              	<option value="包">包</option>
-              </select>
-            </div>
-          </div>
-          <div class="am-form-group am-form-group-sm">
             <label class="am-u-sm-4 am-u-md-3 am-text-right am-form-label">保质期</label>
             <div class="am-u-sm-5 am-u-md-7">
               <input type="number" class="am-form-field" name="product.warrantyPeriod" value="${product.warrantyPeriod!0}" placeholder="保质期" min="10" required />
@@ -199,12 +166,6 @@ var haixinGoodId = 0;
               	<option value="月">月</option>
               	<option value="天" selected>日</option>
               </select>
-            </div>
-          </div>
-          <div class="am-form-group am-form-group-sm">
-            <label class="am-u-sm-4 am-u-md-3 am-text-right am-form-label">库存量</label>
-            <div class="am-u-sm-8 am-u-md-9">
-              <input type="number" class="am-form-field" name="product.stock" value="${product.stock!}" placeholder="只允许输入零或正整数，为空表示不计库存" min="0" max="10000" />
             </div>
           </div>
           <div class="am-form-group am-form-group-sm">
@@ -389,6 +350,57 @@ var haixinGoodId = 0;
       $('div.am-tab-panel').removeAttr("style");
     })
   });
+  
+  
+  //下拉选择商品
+  function test(keyword,event){
+	
+	//定义全局变量
+	var keyword = $("#goodName").val();
+	var sel = document.getElementById("sel");
+	
+	$.ajax({ 
+		type: "post", 
+		data:{'goodName':keyword}, 
+		url: "/haixinGood/list", 
+		success: function(data) {
+			
+			document.getElementById("sel").innerHTML="";
+			
+			for(var i=0;i<data.length;i++){//循环每一个满足条件的记录
+				//将当前循环满足条件的商品名称生成一个下拉的选项
+				sel.options[i]=new Option(data[i].goodName,data[i].goodCode);
+			}
+			//判断是否有满足条件的商品
+			if(data.length>0){
+				sel.style.display='block';
+			}else{
+				sel.style.display='none';
+			}
+			//当用户按下上下键时获取相应的值
+			if(event.keyCode==40){
+				sel.focus();
+			}	
+		} 
+		});
+}
+ 
+ function test2(){
+	//输入回车，获取输入框内容焦点
+	$("#sel").keypress(function(){
+			$("#goodName").focus();
+			$("#sel").css("display","none");
+	});
+	 //双击，获取输入框内容焦点
+	 $("#sel").dblclick(function(){
+		 $("#goodName").focus();
+		 $("#sel").css("display","none");
+	 });
+	 //将选中的下拉列表中的内容添加到输入框中
+	$("#goodName").val($("option:selected").html());
+	$("#goodCode").val($("option:selected").val());
+	
+}
 </script>
 </body>
 </html>
