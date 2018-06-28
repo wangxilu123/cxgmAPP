@@ -37,7 +37,6 @@ spring:
       readSize: 1
         # 使用druid数据源
       type: com.alibaba.druid.pool.DruidDataSource
-     
 
     redis:
         database: 0
