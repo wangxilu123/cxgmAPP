@@ -6,7 +6,7 @@ beetlsql:
 eureka:
     client:
         serviceUrl:
-            defaultZone: http://192.168.10.56:41201/eureka/
+            defaultZone: http://47.104.226.173:41201/eureka/
 
     instance:
       lease-renewal-interval-in-seconds: 48
@@ -37,23 +37,12 @@ spring:
       readSize: 1
         # 使用druid数据源
       type: com.alibaba.druid.pool.DruidDataSource
-      write:
-        url: jdbc:mysql://47.104.226.173:3306/cxgm?characterEncoding=utf-8
-        username: root
-        password: '*Cxgm@App2018*'
-        driver-class-name: com.mysql.jdbc.Driver
-        validationQuery: select 'x'
-
-      read:
-        url: jdbc:mysql://47.104.226.173:3306/cxgm?characterEncoding=utf-8
-        username: root
-        password: '*Cxgm@App2018*'
-        driver-class-name: com.mysql.jdbc.Driver
-        validationQuery: select 'x'
+     
 
     redis:
         database: 0
-        host: 47.104.226.173
+        host: 127.0.0.1
         port: 6379
- 
+logging:
+    config: classpath:logback.xml
     
