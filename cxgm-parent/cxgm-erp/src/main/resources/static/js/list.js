@@ -108,3 +108,21 @@ function updateOne(url) {
 	}
   });
 }
+
+function returnMonery(url) {
+	  Modal.register(['confirm','alert']);
+	  Modal.confirm("您确定要退款吗？",{
+	    relatedTarget: this,
+		onConfirm: function(options) {
+	      $.ajax({
+	    	url: url,
+			dataType: "json",
+			async: false,
+			success: function(data) {
+			  Modal.alert(data.message);
+			  window.location.reload(); 
+			}
+		  });
+		}
+	  });
+	}

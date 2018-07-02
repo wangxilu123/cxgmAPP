@@ -22,7 +22,7 @@ public class Product {
 
     private String unit;
 
-    private Integer weight;
+    private String weight;
 
     private Integer stock;
 
@@ -235,15 +235,16 @@ public class Product {
         this.unit = unit == null ? null : unit.trim();
     }
 
-    public Integer getWeight() {
-        return weight;
-    }
 
-    public void setWeight(Integer weight) {
-        this.weight = weight;
-    }
+    public String getWeight() {
+		return weight;
+	}
 
-    public Integer getStock() {
+	public void setWeight(String weight) {
+		this.weight = weight;
+	}
+
+	public Integer getStock() {
         return stock;
     }
 

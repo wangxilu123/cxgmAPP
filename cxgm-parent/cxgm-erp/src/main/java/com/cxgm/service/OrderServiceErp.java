@@ -6,6 +6,7 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.cxgm.common.WeixinReturnMonery;
 import com.cxgm.dao.OrderMapper;
 import com.cxgm.domain.Order;
 import com.cxgm.domain.OrderExample;
@@ -43,7 +44,16 @@ public class OrderServiceErp {
 		if(orders.size()>0) {
 			Order order = orders.get(0);
 			order.setStatus(String.valueOf(status));
-			return orderDao.updateByExample(order, orderExample);
+			
+			Integer num = orderDao.updateByExample(order, orderExample);
+			
+			if(num==1){
+				
+				WeixinReturnMonery.wechatRefund(order);//退款
+				
+			}
+			
+			return num;
 		}
 		return null;
 	}

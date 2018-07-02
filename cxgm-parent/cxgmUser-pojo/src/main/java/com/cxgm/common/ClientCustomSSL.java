@@ -52,14 +52,14 @@ public class ClientCustomSSL {
         KeyStore keyStore  = KeyStore.getInstance("PKCS12");
         FileInputStream instream = new FileInputStream(new File("E:/apiclient_cert.p12"));//P12文件目录
         try {
-            keyStore.load(instream, "".toCharArray());//这里写密码..默认是你的MCHID
+            keyStore.load(instream, "1505765861".toCharArray());//这里写密码..默认是你的MCHID
         } finally {
             instream.close();
         }
 
         // Trust own CA and all self-signed certs
         SSLContext sslcontext = SSLContexts.custom()
-                .loadKeyMaterial(keyStore, "".toCharArray())//这里也是写密码的
+                .loadKeyMaterial(keyStore, "1505765861".toCharArray())//这里也是写密码的
                 .build();
         // Allow TLSv1 protocol only
         SSLConnectionSocketFactory sslsf = new SSLConnectionSocketFactory(

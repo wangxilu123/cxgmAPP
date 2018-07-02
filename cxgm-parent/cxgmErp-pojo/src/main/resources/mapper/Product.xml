@@ -11,7 +11,7 @@
     <result column="market_price" jdbcType="DECIMAL" property="marketPrice" />
     <result column="image" jdbcType="VARCHAR" property="image" />
     <result column="unit" jdbcType="VARCHAR" property="unit" />
-    <result column="weight" jdbcType="INTEGER" property="weight" />
+    <result column="weight" jdbcType="VARCHAR" property="weight" />
     <result column="stock" jdbcType="INTEGER" property="stock" />
     <result column="allocated_stock" jdbcType="INTEGER" property="allocatedStock" />
     <result column="stock_memo" jdbcType="VARCHAR" property="stockMemo" />
@@ -283,7 +283,7 @@
     values (#{id,jdbcType=BIGINT}, #{sn,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, 
       #{fullName,jdbcType=VARCHAR}, #{price,jdbcType=DECIMAL}, #{cost,jdbcType=DECIMAL}, 
       #{marketPrice,jdbcType=DECIMAL}, #{image,jdbcType=VARCHAR}, #{unit,jdbcType=VARCHAR}, 
-      #{weight,jdbcType=INTEGER}, #{stock,jdbcType=INTEGER}, #{allocatedStock,jdbcType=INTEGER}, 
+      #{weight,jdbcType=VARCHAR}, #{stock,jdbcType=INTEGER}, #{allocatedStock,jdbcType=INTEGER}, 
       #{stockMemo,jdbcType=VARCHAR}, #{point,jdbcType=BIGINT}, #{isMarketable,jdbcType=BIT}, 
       #{isList,jdbcType=BIT}, #{isTop,jdbcType=BIT}, #{isGift,jdbcType=BIT}, #{memo,jdbcType=VARCHAR}, 
       #{keyword,jdbcType=VARCHAR}, #{seoTitle,jdbcType=VARCHAR}, #{seoKeywords,jdbcType=VARCHAR}, 
@@ -327,7 +327,7 @@
         unit = #{unit,jdbcType=VARCHAR},
       </if>
       <if test="weight != null">
-        weight = #{weight,jdbcType=INTEGER},
+        weight = #{weight,jdbcType=VARCHAR},
       </if>
       <if test="stock != null">
         stock = #{stock,jdbcType=INTEGER},

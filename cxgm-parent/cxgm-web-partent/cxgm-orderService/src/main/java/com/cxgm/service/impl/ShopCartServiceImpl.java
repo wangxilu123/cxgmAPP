@@ -106,7 +106,7 @@ public class ShopCartServiceImpl implements ShopCartService {
 				List<ProductTransfer> list = productMapper.findListAllWithCategory(map);
 
 				if(list.size()!=0){
-					Integer weight = list.get(0).getWeight();
+					String weight = list.get(0).getWeight();
 
 					String unit = list.get(0).getUnit();
 					

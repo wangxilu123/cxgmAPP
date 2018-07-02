@@ -17,6 +17,7 @@ import com.cxgm.common.ClientCustomSSL;
 import com.cxgm.common.CodeUtil;
 import com.cxgm.common.DateUtil;
 import com.cxgm.common.RequestHandler;
+import com.cxgm.common.TenpayUtil;
 import com.cxgm.dao.CouponCodeMapper;
 import com.cxgm.dao.CouponMapper;
 import com.cxgm.dao.OrderMapper;
@@ -287,46 +288,7 @@ public class OrderServiceImpl implements OrderService {
 		return newList;
 	}
 
-	// 微信退款业务逻辑
-	public void wechatRefund() {
-		String out_refund_no = "654232";// 退款单号
-		String out_trade_no = "12355";// 订单号
-		String total_fee = "1";// 总金额
-		String refund_fee = "1";// 退款金额
-		String nonce_str = "4232343765";// 随机字符串
-		String appid = "";
-		String appsecret = "";
-		String mch_id = "";
-		String op_user_id = "";// 就是MCHID
-		String partnerkey = "";// 商户平台上的那个KEY
-		SortedMap<String, String> packageParams = new TreeMap<String, String>();
-		packageParams.put("appid", appid);
-		packageParams.put("mch_id", mch_id);
-		packageParams.put("nonce_str", nonce_str);
-		packageParams.put("out_trade_no", out_trade_no);
-		packageParams.put("out_refund_no", out_refund_no);
-		packageParams.put("total_fee", total_fee);
-		packageParams.put("refund_fee", refund_fee);
-		packageParams.put("op_user_id", op_user_id);
-
-		RequestHandler reqHandler = new RequestHandler(null, null);
-		reqHandler.init(appid, appsecret, partnerkey);
-
-		String sign = reqHandler.createSign(packageParams);
-		String xml = "<xml>" + "<appid>" + appid + "</appid>" + "<mch_id>" + mch_id + "</mch_id>" + "<nonce_str>"
-				+ nonce_str + "</nonce_str>" + "<sign><![CDATA[" + sign + "]]></sign>" + "<out_trade_no>" + out_trade_no
-				+ "</out_trade_no>" + "<out_refund_no>" + out_refund_no + "</out_refund_no>" + "<total_fee>" + total_fee
-				+ "</total_fee>" + "<refund_fee>" + refund_fee + "</refund_fee>" + "<op_user_id>" + op_user_id
-				+ "</op_user_id>" + "</xml>";
-		String createOrderURL = "https://api.mch.weixin.qq.com/secapi/pay/refund";
-		try {
-			String s = ClientCustomSSL.doRefund(createOrderURL, xml);
-			System.out.println(s);
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
+	
 
 	@Override
 	public Order orderDetail(Integer userId, Integer orderId) {

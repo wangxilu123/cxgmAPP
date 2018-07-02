@@ -118,7 +118,6 @@ public class ProductController {
 			@RequestParam(value = "goodName") String name,
 			@RequestParam(value = "goodCode") String goodCode,
 			@RequestParam(value = "product.originPlace") String originPlace,
-			@RequestParam(value = "product.descriptionWeight") String descriptionWeight,
 			@RequestParam(value = "parentId") String pid,
 			@RequestParam(value = "originalPrice") BigDecimal originalPrice,
 			@RequestParam(value = "product.price") BigDecimal price,
@@ -133,7 +132,7 @@ public class ProductController {
 		List<MultipartFile> files = ((MultipartHttpServletRequest) request).getFiles("productImages");
 		try {
 			productService.insert(name, goodCode, originPlace,
-					descriptionWeight, pid, price, 
+					 pid, price, 
 					isMarketable, isTop, introduction, shop, files,originalPrice,warrantyPeriod,warrantDays);
 			ModelAndView mv = new ModelAndView("redirect:/admin/product/product");
 			return mv;
@@ -186,7 +185,6 @@ public class ProductController {
 			@RequestParam(value = "goodName") String name,
 			@RequestParam(value = "goodCode") String goodCode,
 			@RequestParam(value = "product.originPlace") String originPlace,
-			@RequestParam(value = "product.descriptionWeight") String descriptionWeight,
 			@RequestParam(value = "parentId") String pid,
 			@RequestParam(value = "originalPrice") BigDecimal originalPrice,
 			@RequestParam(value = "product.price") BigDecimal price,
@@ -202,7 +200,7 @@ public class ProductController {
 		String[] productImageIds = request.getParameterValues("productImageIds");
 		try {
 			productService.update(id,name, goodCode, originPlace,
-					descriptionWeight, pid, price,isMarketable, isTop, introduction, shop, files,productImageIds,originalPrice,warrantyPeriod,warrantDays);
+					 pid, price,isMarketable, isTop, introduction, shop, files,productImageIds,originalPrice,warrantyPeriod,warrantDays);
 			ModelAndView mv = new ModelAndView("redirect:/admin/product/product");
 			return mv;
 		}catch(Exception e) {

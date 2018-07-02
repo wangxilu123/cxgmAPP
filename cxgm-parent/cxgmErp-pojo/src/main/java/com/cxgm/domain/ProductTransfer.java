@@ -25,7 +25,7 @@ public class ProductTransfer {
 	
 	private String unit;
 
-	private Integer weight;
+	private String weight;
 
 	private Integer stock;
 
@@ -118,6 +118,8 @@ public class ProductTransfer {
 	private Integer shopCartId;
 	
 	private Boolean deleteFlag;
+	
+	private String barCode;
  
 	public Boolean getDeleteFlag() {
 		return deleteFlag;
@@ -145,6 +147,14 @@ public class ProductTransfer {
 
 	public String getWarrantyPeriod() {
 		return warrantyPeriod;
+	}
+
+	public String getBarCode() {
+		return barCode;
+	}
+
+	public void setBarCode(String barCode) {
+		this.barCode = barCode;
 	}
 
 	public void setWarrantyPeriod(String warrantyPeriod) {
@@ -271,11 +281,12 @@ public class ProductTransfer {
 		this.unit = unit;
 	}
 
-	public Integer getWeight() {
+
+	public String getWeight() {
 		return weight;
 	}
 
-	public void setWeight(Integer weight) {
+	public void setWeight(String weight) {
 		this.weight = weight;
 	}
 

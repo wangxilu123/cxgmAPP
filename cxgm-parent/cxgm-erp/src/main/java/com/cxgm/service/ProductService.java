@@ -11,9 +11,13 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.cxgm.common.DateKit;
 import com.cxgm.common.UmmessageSend;
+import com.cxgm.dao.HaixinGoodMapper;
 import com.cxgm.dao.ProductImageMapper;
 import com.cxgm.dao.ProductMapper;
+import com.cxgm.domain.HaixinGood;
+import com.cxgm.domain.HaixinGoodExample;
 import com.cxgm.domain.Product;
 import com.cxgm.domain.ProductCategory;
 import com.cxgm.domain.ProductImage;
@@ -34,6 +38,9 @@ public class ProductService {
 	@Autowired
 	ProductCategoryService productCategoryService;
 	
+	@Autowired
+	HaixinGoodMapper haixinGoodMapper;
+	
 	
 	public List<ProductTransfer> findListAllWithCategory(Map<String,Object> map){
 		return productDao.findListAllWithCategory(map);
@@ -41,20 +48,29 @@ public class ProductService {
 	
 	@Transactional
 	public void insert(String name,String goodCode,String originPlace,
-			String descriptionWeight,String pid,
+			String pid,
 			BigDecimal price,
 			boolean isMarketable,boolean isTop,String introduction,
 			Integer shop,List<MultipartFile> files,BigDecimal originalPrice,Integer warrantyPeriod,String warrantDays) {
 		StringBuilder sb = new StringBuilder();
+		//根据goodCode查询海信商品信息
+		HaixinGoodExample  example= new HaixinGoodExample();
+		
+		example.createCriteria().andGoodCodeEqualTo(goodCode);
+		
+		List<HaixinGood> haixinGoodList = haixinGoodMapper.selectByExample(example);
+		
         try {
         	Product product = new Product();
+        	product.setSn(DateKit.generateSn());
         	product.setName(name);
         	product.setOriginPlace(originPlace);
-        	/*product.setWeight(weight);
-        	product.setUnit(unit);*/
+        	product.setWeight(haixinGoodList.size()!=0?haixinGoodList.get(0).getSpecifications():"");
+        	product.setUnit(haixinGoodList.size()!=0?haixinGoodList.get(0).getUnit():"");
         	product.setGoodCode(goodCode);
         	product.setWarrantyPeriod(warrantyPeriod+warrantDays);
         	product.setIsTop(isTop);
+        	product.setBarCode(haixinGoodList.size()!=0?haixinGoodList.get(0).getBarCode():"");
         	ProductCategory productCategory = productCategoryService.findById(Long.valueOf(pid));
         	
         	if(productCategory.getGrade()==0) {
@@ -164,7 +180,7 @@ public class ProductService {
 	
 	@Transactional
 	public void update(Integer id,String name,String goodCode,String originPlace,
-			String descriptionWeight,String pid,
+			String pid,
 			BigDecimal price,
 			boolean isMarketable,boolean isTop,String introduction,
 			Integer shop,List<MultipartFile> files,String[] productImageIds,BigDecimal originalPrice,Integer warrantyPeriod,String warrantDays) {

@@ -22,6 +22,12 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+import com.alipay.api.AlipayApiException;
+import com.alipay.api.AlipayClient;
+import com.alipay.api.DefaultAlipayClient;
+import com.alipay.api.domain.AlipayTradeAppPayModel;
+import com.alipay.api.request.AlipayTradeAppPayRequest;
+import com.alipay.api.response.AlipayTradeAppPayResponse;
 import com.cxgm.common.GetWxOrderno;
 import com.cxgm.common.RequestHandler;
 import com.cxgm.common.ResultDto;
@@ -67,13 +73,19 @@ public class PaymentController {
 	public static final String partnerkey ="9a72407e88e9786148906a3400f9a44a";//不是商户登录密码，是商户在微信平台设置的32位长度的api秘钥，  
 	
 	public static final String appsecret = "c15e1da71829aa86776f9b4fc40514d0"; 
+	
+	public static final String alipay_appId = "";//支付宝APP应用ID
+	
+	public static final String alipay_private_key = "";//支付宝私钥
+	
+	public static final String alipay_public_key = "";//支付宝公钥
 
 	/**
 	 * 微信统一下单
 	 * @return
 	 * @throws UnsupportedEncodingException
 	 */
-	@ApiOperation(value = "支付接口",nickname = "支付接口")
+	@ApiOperation(value = "微信支付接口",nickname = "微信支付接口")
 	@RequestMapping(value = "/weixinPay", method = RequestMethod.POST, produces = "text/html;charset=UTF-8")
 	@ApiImplicitParam(name = "orderId", value = "订单ID", required = true, dataType = "Integer")
 	@ResponseBody
@@ -91,7 +103,6 @@ public class PaymentController {
 			    String json=null;  
 			       
 			    Order order=orderService.findById(Integer.parseInt(orderId));//获取订单数据  
-			    String userId = appUser.getId().toString();    
 			    String money = "0.01";//获取订单金额  
 			    //金额转化为分为单位  
 			    float sessionmoney = Float.parseFloat(money);  
@@ -356,5 +367,66 @@ public class PaymentController {
     public static String setXml(String return_code,String return_msg){    
            return "<xml><return_code><![CDATA["+return_code+"]]></return_code><return_msg><![CDATA["+return_msg+"]]></return_msg></xml>";    
    } 
+    
+    
+    /**
+	 * 支付宝统一下单
+	 * @return
+	 * @throws UnsupportedEncodingException
+	 */
+	@ApiOperation(value = "支付宝支付接口",nickname = "支付宝支付接口")
+	@RequestMapping(value = "/weixinPay", method = RequestMethod.POST, produces = "text/html;charset=UTF-8")
+	@ApiImplicitParam(name = "orderId", value = "订单ID", required = true, dataType = "Integer")
+	@ResponseBody
+    public String aliPay(HttpServletRequest request,HttpServletResponse response) throws Exception{
+		
+		AppUser appUser = checkToken.check(request.getHeader("token"));
+		
+		JSONObject retMsgJson=new JSONObject();
+		if(appUser!=null){
+			    request.setCharacterEncoding("UTF-8");  
+			    response.setCharacterEncoding("UTF-8");  
+			    response.setContentType("text/html;charset=UTF-8");  
+			    String orderId= request.getParameter("orderId");  
+			       
+			    Order order=orderService.findById(Integer.parseInt(orderId));//获取订单数据  
+			    String money = "0.01";//获取订单金额  
+			    //金额转化为分为单位  
+			    float sessionmoney = Float.parseFloat(money);  
+			    String finalmoney = String.format("%.2f", sessionmoney);  
+			    finalmoney = finalmoney.replace(".", "");
+			    
+			    //实例化客户端
+		        AlipayClient alipayClient = new DefaultAlipayClient("https://openapi.alipay.com/gateway.do", alipay_appId, alipay_private_key , "json", "UTF-8", alipay_public_key, "RSA2");
+			    
+		        //实例化具体API对应的request类,类名称和接口名称对应,当前调用接口名称：alipay.trade.app.pay
+		        AlipayTradeAppPayRequest aliRequest = new AlipayTradeAppPayRequest();
+		        //SDK已经封装掉了公共参数，这里只需要传入业务参数。以下方法为sdk的model入参方式(model和biz_content同时存在的情况下取biz_content)。
+		        AlipayTradeAppPayModel model = new AlipayTradeAppPayModel();
+		        model.setPassbackParams("测试数据");;  //描述信息  添加附加数据
+		        model.setSubject("魅格"); //商品标题
+		        model.setOutTradeNo(order.getOrderNum()); //商家订单编号
+		        model.setTimeoutExpress("30m"); //超时关闭该订单时间
+		        model.setTotalAmount(order.getOrderAmount().toString());  //订单总金额
+		        model.setProductCode("QUICK_MSECURITY_PAY"); //销售产品码，商家和支付宝签约的产品码，为固定值QUICK_MSECURITY_PAY
+		        aliRequest.setBizModel(model);
+		        aliRequest.setNotifyUrl("");  //回调地址
+		        String orderStr = "";
+		        try {
+		                //这里和普通的接口调用不同，使用的是sdkExecute
+		                AlipayTradeAppPayResponse aliResponse = alipayClient.sdkExecute(aliRequest);
+		                orderStr = aliResponse.getBody();
+		                System.out.println(orderStr);//就是orderString 可以直接给客户端请求，无需再做处理。
+		            } catch (AlipayApiException e) {
+		                e.printStackTrace();
+		        }
+		        return orderStr;
+			            
+		}else{
+			 retMsgJson.put("msg", 403);  
+		     retMsgJson.put("body", "token失效请重新登录！"); 
+		     return null;
+		}
+	}
 
 }
