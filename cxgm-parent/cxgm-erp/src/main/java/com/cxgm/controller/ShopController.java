@@ -40,7 +40,7 @@ public class ShopController {
 	
 	@RequestMapping(value = "/list", method = RequestMethod.GET)
 	public ModelAndView shopList(HttpServletRequest request,
-			@RequestParam(value = "pageNum", defaultValue = "1" , required = false) Integer pageNum,
+			@RequestParam(value = "pageNumber", defaultValue = "1" , required = false) Integer pageNum,
             @RequestParam(value = "pageSize", defaultValue = "10" , required = false) Integer pageSize){
 		
 		PageInfo<Shop> pager = shopService.findShopByPage(pageNum, pageSize);

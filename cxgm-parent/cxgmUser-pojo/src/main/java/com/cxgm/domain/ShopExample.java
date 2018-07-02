@@ -118,6 +118,11 @@ public class ShopExample {
             addCriterion("id =", value, "id");
             return (Criteria) this;
         }
+        
+        public Criteria andYzShopIdEqualTo(String value) {
+            addCriterion("yz_shop_id =", value, "yzShopId");
+            return (Criteria) this;
+        }
 
         public Criteria andIdNotEqualTo(Integer value) {
             addCriterion("id <>", value, "id");

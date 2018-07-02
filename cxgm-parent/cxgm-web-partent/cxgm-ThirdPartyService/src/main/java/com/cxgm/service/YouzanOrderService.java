@@ -10,7 +10,10 @@ import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
 
 import com.cxgm.dao.OrderMapper;
+import com.cxgm.dao.ShopMapper;
 import com.cxgm.domain.Order;
+import com.cxgm.domain.Shop;
+import com.cxgm.domain.ShopExample;
 import com.youzan.open.sdk.client.auth.Token;
 import com.youzan.open.sdk.client.core.DefaultYZClient;
 import com.youzan.open.sdk.client.core.YZClient;
@@ -30,6 +33,8 @@ public class YouzanOrderService {
 
 	@Autowired
 	private OrderMapper orderMapper;
+	@Autowired
+	private ShopMapper shopMapper;
 	
 	@Autowired
 	private YouzanShopService youzanShopService;
@@ -58,6 +63,14 @@ public class YouzanOrderService {
 		
 		for(TradeDetailV2 tradeDetailV2 : list){
 			
+			//根据有赞门店ID查询APP门店信息
+			
+			ShopExample  example = new ShopExample();
+			
+			example.createCriteria().andYzShopIdEqualTo(tradeDetailV2.getShopId().toString());
+			
+			List<Shop> shopList = shopMapper.selectByExample(example);
+			
 			Order order = new Order();
 			
 			order.setOrderAmount(new BigDecimal(tradeDetailV2.getPayment()));
@@ -66,9 +79,37 @@ public class YouzanOrderService {
 			order.setRemarks(tradeDetailV2.getBuyerMessage());
 			order.setOrderNum(tradeDetailV2.getTid());
 			order.setOrderTime(tradeDetailV2.getCreated());
-			order.setPayType(tradeDetailV2.getPayType());
-			order.setStoreId(tradeDetailV2.getShopId().intValue());
-			order.setStatus(tradeDetailV2.getStatus());
+			
+			if("WEIXIN".equals(tradeDetailV2.getPayType())){
+				order.setPayType("wx");
+			}
+			if("WEIXIN_DAIXIAO".equals(tradeDetailV2.getPayType())){
+				order.setPayType("wx");
+			}
+			if("ALIPAY".equals(tradeDetailV2.getPayType())){
+				order.setPayType("zfb");
+			}else{
+				order.setPayType("qt");
+			}
+			
+			order.setStoreId(shopList.size()!=0?shopList.get(0).getId():null);
+			if("WAIT_BUYER_PAY".equals(tradeDetailV2.getStatus())){
+				order.setStatus("0");
+			}
+			if("WAIT_SELLER_SEND_GOODS".equals(tradeDetailV2.getStatus())){
+				order.setStatus("1");
+			}
+			
+			if("WAIT_BUYER_CONFIRM_GOODS".equals(tradeDetailV2.getStatus())){
+				order.setStatus("4");
+			}
+			if("TRADE_BUYER_SIGNED".equals(tradeDetailV2.getStatus())){
+				order.setStatus("5");
+			}
+			if("TRADE_CLOSED".equals(tradeDetailV2.getStatus())){
+				order.setStatus("7");
+			}
+			
 			order.setOrderResource("YOUZAN");
 			orderMapper.insert(order);
 			//查询订单详情商品信息
