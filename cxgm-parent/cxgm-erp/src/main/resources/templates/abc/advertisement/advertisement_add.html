@@ -49,12 +49,10 @@ true; }%>
 							<div class="am-form-group am-form-group-sm">
 								<label class="am-u-sm-4 am-u-md-3 am-text-right am-form-label">广告位置</label>
 								<div class="am-u-sm-8 am-u-md-9">
-									<%if (isAdd){%> <input type="text"
-										class="am-form-field js-pattern-username" name="position"
-										placeholder="请选择广告类型" maxlength="20" required />
-									<div class="am-text-warning am-margin-top-xs am-text-xs">${position!}</div>
-									<%}else{%> ${advertisement.position!} <input type="hidden"
-										name="owner" value="${advertisement.position!}" /> <%}%>
+									  <select name="position" data-am-selected="{btnWidth: '100%', maxHeight: '200px', btnSize: 'sm'}" required>
+						              	<option value="1"selected>首页BANNER广告位</option>
+						              	<option value="2">首页第二广告位</option>
+						              </select>
 								</div>
 							</div>
 
@@ -79,19 +77,18 @@ true; }%>
 							<div class="am-form-group am-form-group-sm">
 								<label class="am-u-sm-4 am-u-md-3 am-text-right am-form-label">广告类型</label>
 								<div class="am-u-sm-8 am-u-md-9">
-									<%if (isAdd){%> <input type="text"
-										class="am-form-field js-pattern-username" name="type"
-										placeholder="请选择广告类型" maxlength="20" required />
-									<div class="am-text-warning am-margin-top-xs am-text-xs">${type!}</div>
-									<%}else{%> ${advertisement.type!} <input type="hidden"
-										name="type" value="${advertisement.type!}" /> <%}%>
+								
+								<select name="type" data-am-selected="{btnWidth: '100%', maxHeight: '200px', btnSize: 'sm'}" required>
+						              	<option value="1" selected>网站链接</option>
+						              	<option value="2">商品详情</option>
+						        </select>
 								</div>
 							</div>
 
 							<div class="am-form-group am-form-group-sm">
 								<label class="am-u-sm-4 am-u-md-3 am-text-right am-form-label">排列序号</label>
 								<div class="am-u-sm-8 am-u-md-9">
-									<%if (isAdd){%> <input type="text"
+									<%if (isAdd){%> <input type="number" min="0"
 										class="am-form-field js-pattern-username" name="number"
 										placeholder="广告序号" maxlength="20" required />
 									<div class="am-text-warning am-margin-top-xs am-text-xs">${number!}</div>
@@ -99,7 +96,18 @@ true; }%>
 										name="number" value="${advertisement.number!}" /> <%}%>
 								</div>
 							</div>
-
+							
+							<div class="am-form-group am-form-group-sm">
+					            <label class="am-u-sm-4 am-u-md-3 am-text-right am-form-label">是否上架</label>
+					            <div class="am-u-sm-8 am-u-md-9 am-btn-group" data-am-button>
+					                <label class="am-btn am-btn-default am-btn-xs">
+					                  <input type="radio" name="onShelf" value="1"<%if (isAdd || product.isMarketable == true){%> checked<%}%> required> 是
+					                </label>
+					                <label class="am-btn am-btn-default am-btn-xs">
+					                  <input type="radio" name="onShelf" value="0"<%if (product.isMarketable! == false){%> checked<%}%>> 否
+					                </label>
+					            </div>
+					          </div>
 							
 
 						</div>

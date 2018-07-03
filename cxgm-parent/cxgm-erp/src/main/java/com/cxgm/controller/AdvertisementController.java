@@ -68,7 +68,8 @@ public class AdvertisementController {
 			@RequestParam(value = "productCode",required=false) String productCode,
 			@RequestParam(value = "shopId",required=false) Integer shopId,
 			@RequestParam(value = "type",required=false) String type,
-			@RequestParam(value = "number",required=false) String number)
+			@RequestParam(value = "number",required=false) String number,
+			@RequestParam(value = "onShelf",required=false) Integer onShelf)
 			throws Exception {
 		List<MultipartFile> files = ((MultipartHttpServletRequest) request).getFiles("adverImages");
 		
@@ -81,23 +82,28 @@ public class AdvertisementController {
 		advertisement.setProductCode(productCode);
 		advertisement.setShopId(shopId);
 		advertisement.setType(type);
+		advertisement.setOnShelf(onShelf);
+		advertisement.setNumber(Integer.parseInt(number));
 		StringBuilder sb = new StringBuilder();
 		
-		if(files!=null){
-            for(int i=0;i<files.size();i++){  
-                MultipartFile file = files.get(i);
-                if (file.getSize() > 0) {
-                	String name = ossClient.uploadImg2Oss(file);
-            	    String imgUrl = ossClient.getImgUrl(name);
-                        sb.append(imgUrl);
-                        sb.append(",");
-                }
-            } 
-        }
-		sb.deleteCharAt(sb.length()-1);
-		advertisement.setImageUrl(sb.toString());
+		if(sb.length()>0){
+			if(files!=null){
+	            for(int i=0;i<files.size();i++){  
+	                MultipartFile file = files.get(i);
+	                if (file.getSize() > 0) {
+	                	String name = ossClient.uploadImg2Oss(file);
+	            	    String imgUrl = ossClient.getImgUrl(name);
+	                        sb.append(imgUrl);
+	                        sb.append(",");
+	                }
+	            } 
+	        }
+			sb.deleteCharAt(sb.length()-1);
+			advertisement.setImageUrl(sb.toString());
+		}
+		
 		advertisementService.addAdvertisement(advertisement);
-		ModelAndView mv = new ModelAndView("redirect:/advertisement/advertisement_list");
+		ModelAndView mv = new ModelAndView("redirect:/advertisement/list");
 		return mv;
 	}
 

@@ -64,11 +64,11 @@ public class ProductController {
 		return new ModelAndView("admin/product_list");
 	}
 	
-	@RequestMapping(value = "/product/list", method = RequestMethod.POST)
+	@RequestMapping(value = "/product/list", method = RequestMethod.GET)
 	public ModelAndView productList(HttpServletRequest request,
 			@RequestParam(value = "pageNumber", defaultValue = "1") Integer num,
-			@RequestParam(value = "keyword") String name,
-			@RequestParam(value = "property") String property) throws SQLException {
+			@RequestParam(value = "keyword",required=false) String name,
+			@RequestParam(value = "property",required=false) String property) throws SQLException {
 		if (null != name && !"".equals(name) ) {
 			PageHelper.startPage(1, 10);
 			SecurityContext ctx = SecurityContextHolder.getContext();  
@@ -134,7 +134,7 @@ public class ProductController {
 			productService.insert(name, goodCode, originPlace,
 					 pid, price, 
 					isMarketable, isTop, introduction, shop, files,originalPrice,warrantyPeriod,warrantDays);
-			ModelAndView mv = new ModelAndView("redirect:/admin/product/product");
+			ModelAndView mv = new ModelAndView("redirect:/product/list");
 			return mv;
 		}catch(Exception e) {
 			request.setAttribute("errorMessages", e.getMessage());
@@ -201,7 +201,7 @@ public class ProductController {
 		try {
 			productService.update(id,name, goodCode, originPlace,
 					 pid, price,isMarketable, isTop, introduction, shop, files,productImageIds,originalPrice,warrantyPeriod,warrantDays);
-			ModelAndView mv = new ModelAndView("redirect:/admin/product/product");
+			ModelAndView mv = new ModelAndView("redirect:/product/list");
 			return mv;
 		}catch(Exception e) {
 			request.setAttribute("errorMessages", e.getMessage());

@@ -13,8 +13,8 @@ public class UmmessageSend{
 	private String appkey = "5af6acadb27b0a761e000306";
 	private String appMasterSecret = "m72zniduleuccjevyabczru7sri1ec9e";
 	
-	private String iosappkey = "5b2c54328f4a9d3b2a00003f";
-	private String iosappMasterSecret = "p3qvfqpedv9vq0aluqe32ptcj8eey7wq";
+	private String iosappkey = "5b2c9d5d8f4a9d6fa1000018";
+	private String iosappMasterSecret = "j54rnbj3o3jtbuwzszmzlq1zlkk41iqg";
 	
 	private PushClient client = new PushClient();
 	

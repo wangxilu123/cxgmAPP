@@ -109,7 +109,7 @@
       on_shelf, shop_id,adver_name,number)
     values (#{position,jdbcType=VARCHAR}, #{type,jdbcType=VARCHAR}, #{imageUrl,jdbcType=VARCHAR}, 
       #{notifyUrl,jdbcType=VARCHAR}, #{productCode,jdbcType=VARCHAR}, NOW(), 
-      0, #{shopId,jdbcType=INTEGER},#{adverName,jdbcType=VARCHAR},#{number,jdbcType=INTEGER})
+      #{onShelf,jdbcType=INTEGER}, #{shopId,jdbcType=INTEGER},#{adverName,jdbcType=VARCHAR},#{number,jdbcType=INTEGER})
   </insert>
   <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="com.cxgm.domain.Advertisement" useGeneratedKeys="true">
     insert into advertisement

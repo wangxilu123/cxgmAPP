@@ -70,12 +70,15 @@
               <td>${listLP.index}</td>
               <td><img src="${list.imageUrl}" width="50" height="50"/></td>
               <td>${list.adverName}</td>
-              <td>${list.type}</td>
-              <td>${list.position}</td>
+              <td><%if (list.type == '1'){%> 网站链接 <%}%>
+              <%if (list.type == '2'){%> 商品详情 <%}%></td>
+              <td><%if (list.position == '1'){%> 首页BANNER广告位 <%}%>
+              <%if (list.position == '2'){%> 首页第二广告位 <%}%></td>
               <td>${list.notifyUrl}</td>
               <td>${list.productCode}</td>
-              <td>${list.shopId}</td>
-              <td>${list.onShelf}</td>
+              <td>${list.shopName}</td>
+              <td><%if (list.onShelf == 1){%> 已上架 <%}%>
+              <%if (list.onShelf == 0){%> 已下架 <%}%></td>
               <td>${list.createTime,dateFormat="yyyy-MM-dd HH:mm:ss"}</td>
             </tr>
             <%}%> 
