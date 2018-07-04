@@ -12,6 +12,7 @@
     <result column="dimension" jdbcType="VARCHAR" property="dimension" />
     <result column="is_def" jdbcType="INTEGER" property="isDef" />
     <result column="remarks" jdbcType="VARCHAR" property="remarks" />
+    <result column="yn" jdbcType="INTEGER" property="yn" />
   </resultMap>
   <sql id="Example_Where_Clause">
     <where>
@@ -72,7 +73,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    id, user_id, address, phone, real_name, area, longitude, dimension,is_def,remarks
+    id, user_id, address, phone, real_name, area, longitude, dimension,is_def,remarks,yn
   </sql>
   <select id="selectByExample" parameterType="com.cxgm.domain.UserAddressExample" resultMap="BaseResultMap">
     select
@@ -96,9 +97,9 @@
   </delete>
   <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.cxgm.domain.UserAddress" useGeneratedKeys="true">
     insert into user_address (user_id, address, phone, 
-      real_name, area, longitude, dimension,is_def,remarks)
+      real_name, area, longitude, dimension,is_def,remarks,yn)
     values (#{userId,jdbcType=INTEGER}, #{address,jdbcType=VARCHAR}, #{phone,jdbcType=VARCHAR}, 
-      #{realName,jdbcType=VARCHAR}, #{area,jdbcType=VARCHAR}, #{longitude,jdbcType=VARCHAR}, #{dimension,jdbcType=VARCHAR},0, #{remarks,jdbcType=VARCHAR})
+      #{realName,jdbcType=VARCHAR}, #{area,jdbcType=VARCHAR}, #{longitude,jdbcType=VARCHAR}, #{dimension,jdbcType=VARCHAR},#{isDef,jdbcType=INTEGER}, #{remarks,jdbcType=VARCHAR},1)
   </insert>
   <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="com.cxgm.domain.UserAddress" useGeneratedKeys="true">
     insert into user_address
@@ -171,6 +172,9 @@
       <if test="record.remarks != null">
         remarks = #{record.remarks,jdbcType=VARCHAR},
       </if>
+       <if test="record.yn != null">
+        yn = #{record.yn,jdbcType=INTEGER},
+      </if>
     </set>
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
@@ -187,7 +191,8 @@
       longitude = #{record.longitude,jdbcType=VARCHAR},
       dimension = #{record.dimension,jdbcType=VARCHAR},
       is_def = #{record.isDef,jdbcType=INTEGER},
-      remarks = #{record.remarks,jdbcType=VARCHAR}
+      remarks = #{record.remarks,jdbcType=VARCHAR},
+      yn = #{record.yn,jdbcType=INTEGER}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -204,7 +209,8 @@
       longitude = #{record.longitude,jdbcType=VARCHAR},
       dimension = #{record.dimension,jdbcType=VARCHAR},
       is_def = #{record.isDef,jdbcType=INTEGER},
-      remarks = #{record.remarks,jdbcType=VARCHAR}
+      remarks = #{record.remarks,jdbcType=VARCHAR},
+      yn = #{record.yn,jdbcType=INTEGER}
     where id = #{id,jdbcType=INTEGER}
   </update>
 </mapper>

@@ -41,5 +41,8 @@ public class UserAddress implements Serializable{
 	
 	@ApiModelProperty(name = "remarks",value = "备注")
     private String remarks;
+	
+	@ApiModelProperty(name = "yn",value = "是否有效")
+    private Integer yn;
 
 }

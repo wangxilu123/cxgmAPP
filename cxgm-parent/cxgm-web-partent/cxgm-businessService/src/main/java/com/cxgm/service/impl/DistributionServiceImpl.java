@@ -65,7 +65,7 @@ public class DistributionServiceImpl implements DistributionService {
 		} else {
 			example.createCriteria().andStoreIdEqualTo(shopId);
 		}
-		example.setOrderByClause("order_time asc");
+		example.setOrderByClause("order_time desc");
 		List<Order> list = orderMapper.selectByExample(example);
 
 		List<DistributionOrder> distributionOrderList = new ArrayList<DistributionOrder>();

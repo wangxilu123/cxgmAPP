@@ -77,8 +77,13 @@ public class UserAddressServiceImpl implements UserAddressService {
 		UserAddressExample example = new UserAddressExample();
 
 		example.createCriteria().andIdEqualTo(addressId).andUserIdEqualTo(userId);
-
-		return addressMapper.deleteByExample(example);
+		
+		List<UserAddress> addressList = addressMapper.selectByExample(example);
+		if(addressList.size()!=0){
+			addressList.get(0).setYn(0);
+			addressMapper.updateByExample(addressList.get(0), example);
+		}
+		return 1;
 	}
 
 	@Override
@@ -86,7 +91,7 @@ public class UserAddressServiceImpl implements UserAddressService {
 		
 		UserAddressExample example = new UserAddressExample();
 
-		example.createCriteria().andUserIdEqualTo(userId);
+		example.createCriteria().andUserIdEqualTo(userId).andYnEqualTo(Integer.parseInt("1"));
 		
 		example.setOrderByClause("is_def desc");
 		
