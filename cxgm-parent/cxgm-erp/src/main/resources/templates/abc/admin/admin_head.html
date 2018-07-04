@@ -54,7 +54,7 @@
 	    UE.Editor.prototype._bkGetActionUrl = UE.Editor.prototype.getActionUrl;
 	    UE.Editor.prototype.getActionUrl = function(action) {
 	        if (action == 'uploadimage' || action == 'uploadscrawl' || action == 'uploadimage') {
-	            return 'http://47.104.226.173:8076/uploadimages'; //在这里返回我们实际的上传图片地址
+	            return 'http://localhost:8076/uploadimages'; //在这里返回我们实际的上传图片地址
 	        } else {
 	            return this._bkGetActionUrl.call(this, action);
 	        }

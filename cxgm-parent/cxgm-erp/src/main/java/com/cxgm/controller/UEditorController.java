@@ -9,7 +9,6 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.json.JSONException;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.util.ClassUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -28,10 +27,11 @@ public class UEditorController {
 	@Autowired
 	UEditorService ueditorService;
 	
-	@RequestMapping(value="/config",method = RequestMethod.GET)  
+	@RequestMapping(value="/ueconfig",method = RequestMethod.GET)  
     public void config(HttpServletRequest request, HttpServletResponse response) {  
         response.setContentType("application/json");  
-        String rootPath =ClassUtils.getDefaultClassLoader().getResource("").getPath()+"static/UEditor/jsp";
+//        String rootPath =ClassUtils.getDefaultClassLoader().getResource("").getPath()+"/cxgmapp/jsp";//本地开发环境
+        String rootPath ="/cxgmapp/jsp";//线上环境
         try { 
         	response.setCharacterEncoding("UTF-8");
             String exec = new ActionEnter(request, rootPath).exec();  
