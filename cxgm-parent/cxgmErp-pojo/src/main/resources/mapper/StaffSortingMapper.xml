@@ -95,7 +95,7 @@
     insert into staff_sorting (admin_id, order_id, status, 
       create_time,shop_id,cancel_reason)
     values (#{adminId,jdbcType=INTEGER}, #{orderId,jdbcType=INTEGER}, #{status,jdbcType=VARCHAR}, 
-      #{createTime,jdbcType=TIMESTAMP},#{shopId,jdbcType=INTEGER},#{cancelReason,jdbcType=VARCHAR})
+      NOW(),#{shopId,jdbcType=INTEGER},#{cancelReason,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="com.cxgm.domain.StaffSorting" useGeneratedKeys="true">
     insert into staff_sorting

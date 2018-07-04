@@ -375,7 +375,7 @@ public class PaymentController {
 	 * @throws UnsupportedEncodingException
 	 */
 	@ApiOperation(value = "支付宝支付接口",nickname = "支付宝支付接口")
-	@RequestMapping(value = "/weixinPay", method = RequestMethod.POST, produces = "text/html;charset=UTF-8")
+	@RequestMapping(value = "/aliPay", method = RequestMethod.POST, produces = "text/html;charset=UTF-8")
 	@ApiImplicitParam(name = "orderId", value = "订单ID", required = true, dataType = "Integer")
 	@ResponseBody
     public String aliPay(HttpServletRequest request,HttpServletResponse response) throws Exception{

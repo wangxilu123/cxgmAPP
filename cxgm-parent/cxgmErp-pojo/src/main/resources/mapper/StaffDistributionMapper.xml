@@ -96,7 +96,7 @@
     insert into staff_distribution (admin_id, order_id, status, 
       address_id, create_time,cancel_reason,shop_id)
     values (#{adminId,jdbcType=INTEGER}, #{orderId,jdbcType=INTEGER}, #{status,jdbcType=VARCHAR}, 
-      #{addressId,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP},#{cancelReason,jdbcType=VARCHAR},#{shopId,jdbcType=INTEGER})
+      #{addressId,jdbcType=INTEGER}, NOW(),#{cancelReason,jdbcType=VARCHAR},#{shopId,jdbcType=INTEGER})
   </insert>
   <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="com.cxgm.domain.StaffDistribution" useGeneratedKeys="true">
     insert into staff_distribution
