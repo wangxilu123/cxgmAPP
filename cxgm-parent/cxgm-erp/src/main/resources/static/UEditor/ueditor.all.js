@@ -8081,6 +8081,10 @@ UE.Editor.defaultOptions = function(editor){
 
                 var configUrl = me.getActionUrl('config'),
                     isJsonp = utils.isCrossDomainUrl(configUrl);
+                console.log("=========================================")
+                console.log(configUrl)
+                
+                console.log("=========================================")
 
                 /* 发出ajax请求 */
                 me._serverConfigLoaded = false;

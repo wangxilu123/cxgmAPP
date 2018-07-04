@@ -28,7 +28,7 @@ public class UEditorController {
 	@Autowired
 	UEditorService ueditorService;
 	
-	@RequestMapping(value="/config")  
+	@RequestMapping(value="/config",method = RequestMethod.GET)  
     public void config(HttpServletRequest request, HttpServletResponse response) {  
         response.setContentType("application/json");  
         String rootPath =ClassUtils.getDefaultClassLoader().getResource("").getPath()+"static/UEditor/jsp";
