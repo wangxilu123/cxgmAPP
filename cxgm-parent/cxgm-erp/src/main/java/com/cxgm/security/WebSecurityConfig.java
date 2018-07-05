@@ -39,6 +39,7 @@ import org.springframework.security.web.session.HttpSessionEventPublisher;
 import org.springframework.security.web.session.SessionInformationExpiredStrategy;
 import org.springframework.security.web.session.SimpleRedirectSessionInformationExpiredStrategy;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.cxgm.security.login.CustomProvider;
 import com.cxgm.security.login.CustomUsernamePasswordAuthenticationFilter;
@@ -97,10 +98,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 	.logout()
                     	.invalidateHttpSession(false)
-                    	.logoutUrl("/logout")
+                    	.logoutUrl("/admin/logout")
                     //定义logoutSeccessHandler后logouturl和logoutsuccessurl无效，
                     //需要在logoutSeccessHandler中定义
-//                    .logoutSuccessHandler(new CustomLogoutSuccessHandler())
+                    .logoutSuccessHandler(new CustomLogoutSuccessHandler())
                     	.logoutSuccessUrl("/login?logout")
                     	.permitAll()
                 .and()
@@ -260,7 +261,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 map.put("message", "success");
                 map.put("sessionId", sessionId);
                 ObjectMapper mapper = new ObjectMapper();
-                response.getWriter().println(mapper.writeValueAsString(map));
+                response.sendRedirect(request.getContextPath() + "/login");
         }
     }
     @Bean
