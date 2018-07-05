@@ -34,4 +34,6 @@ public interface ProductMapper {
 	List<Product> findProducts(Map<String,Object> map);
 	
 	List<ProductTransfer> findPushProduct(Map<String,Object> map);
+	
+	long countByExample(boolean isMarketable);
 }

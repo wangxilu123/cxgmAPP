@@ -1,6 +1,7 @@
 package com.cxgm.controller;
 
 import java.sql.SQLException;
+import java.util.Arrays;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -23,7 +24,10 @@ import com.cxgm.common.ResultDto;
 import com.cxgm.config.CoreMessageSource;
 import com.cxgm.domain.Admin;
 import com.cxgm.domain.AdminLogin;
+import com.cxgm.domain.OrderExample;
 import com.cxgm.service.AdminService;
+import com.cxgm.service.OrderServiceErp;
+import com.cxgm.service.ProductService;
 
 import io.swagger.annotations.ApiOperation;
 
@@ -36,6 +40,11 @@ public class LoginController{
     @Autowired
     private AdminService adminService;
     
+    @Autowired
+    private OrderServiceErp orderService;
+    @Autowired
+    private ProductService productService;
+    
     @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_MANAGER')")
     @RequestMapping(value = "/center", method = RequestMethod.GET)
     public ModelAndView getCenter(HttpServletRequest request) throws SQLException{
@@ -45,7 +54,34 @@ public class LoginController{
          request.setAttribute("admin", admin);
         return new ModelAndView("admin/admin_center");
     }
-    
+    @RequestMapping(value = "/admin/home", method = RequestMethod.GET)
+    public ModelAndView adminCenter(HttpServletRequest request) throws SQLException{
+        SecurityContext ctx = SecurityContextHolder.getContext();  
+        Authentication auth = ctx.getAuthentication();
+    	 Admin admin = (Admin) auth.getPrincipal();
+    	 OrderExample orderExample = new OrderExample();
+    	 orderExample.setOrderByClause("order_time desc");
+    	 OrderExample hadOrderExample = new OrderExample();
+    	 hadOrderExample.createCriteria().andStatusEqualTo("0");
+    	 
+    	 OrderExample finishOrderExample = new OrderExample();
+    	 finishOrderExample.createCriteria().andStatusIn(Arrays.asList("5","7"));
+    	 
+    	 long totalOrderCount = orderService.countByExample(orderExample);
+    	 long hadOrderCount = orderService.countByExample(hadOrderExample);
+    	 long finishOrderCount = orderService.countByExample(finishOrderExample);
+    	 
+    	 long haveMarketable = productService.countByExample(true);
+    	 long unMarketable = productService.countByExample(false);
+    	 
+    	 request.setAttribute("totalOrderCount", totalOrderCount);
+    	 request.setAttribute("hadOrderCount", hadOrderCount);
+    	 request.setAttribute("finishOrderCount", finishOrderCount);
+    	 request.setAttribute("haveMarketable", haveMarketable);
+    	 request.setAttribute("unMarketable", unMarketable);
+         request.setAttribute("admin", admin);
+        return new ModelAndView("admin/admin_index");
+    }
     @RequestMapping(value = "/login", method = RequestMethod.GET)
     public ModelAndView getLogin() throws SQLException{
         

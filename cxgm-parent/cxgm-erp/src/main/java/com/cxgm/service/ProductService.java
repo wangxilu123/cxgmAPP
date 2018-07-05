@@ -294,4 +294,8 @@ public class ProductService {
 	public List<Product> findProducts(Map<String,Object> map){
 		return productDao.findProducts(map);
 	}
+	
+	public long countByExample(boolean isMarketable) {
+		return productDao.countByExample(isMarketable);
+	}
 }
