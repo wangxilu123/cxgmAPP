@@ -30,7 +30,7 @@ public class FjpsHomePageServiceImpl implements FjpsHomePageService {
 		HashMap<String, Object> map = new HashMap<>();
 		
 		map.put("adminId", adminId);
-		
+		map.put("shopId", shopId);
 		FjpsHomePage fjpsHomePage = distributionMapper.selectHomePageNum(map);
 		
 		//根据门店ID查询总分拣数量
