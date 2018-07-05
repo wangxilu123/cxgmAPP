@@ -36,7 +36,7 @@ public class LoginController{
     @Autowired
     private AdminService adminService;
     
-    @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_MANAGER')")
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_MANAGER','ROLE_USER')")
     @RequestMapping(value = "/center", method = RequestMethod.GET)
     public ModelAndView getCenter(HttpServletRequest request) throws SQLException{
         SecurityContext ctx = SecurityContextHolder.getContext();  

@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.cxgm.common.SystemConfig;
 import com.cxgm.domain.Shop;
 import com.cxgm.domain.ThirdOrg;
 import com.cxgm.service.ShopService;
@@ -51,13 +52,16 @@ public class ShopController {
 	
 	@RequestMapping(value = "/toAdd", method = RequestMethod.GET)
 	public ModelAndView shopToAdd(HttpServletRequest request) throws SQLException, UnsupportedEncodingException, SOAPException, ServiceException, IOException {
+		SystemConfig systemConfig = new SystemConfig();
+		systemConfig.setUploadLimit(10);
+		systemConfig.setAllowedUploadImageExtension("png,jpg");
 		
 		@SuppressWarnings("static-access")
 		List<AccountShopOffline> yzShopList = youzanShopService.findYouzanShopList();
 		request.setAttribute("yzShopList", yzShopList);
 		
 		List<ThirdOrg> hxShopList  = thirdPartyHaixinOrgService.findOrg();
-		
+		request.setAttribute("systemConfig",systemConfig);
 		request.setAttribute("hxShopList", hxShopList);
 		return new ModelAndView("shop/shop_add");
 	}
