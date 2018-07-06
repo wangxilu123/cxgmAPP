@@ -1,11 +1,14 @@
 package com.cxgm.service;
 
 import java.math.BigDecimal;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -24,6 +27,8 @@ import com.cxgm.domain.ProductImage;
 import com.cxgm.domain.ProductTransfer;
 import com.cxgm.domain.ShopCategory;
 import com.cxgm.exception.TipException;
+
+import net.sf.json.JSONArray;
 
 @Service
 public class ProductService {
@@ -138,9 +143,23 @@ public class ProductService {
         	Integer productId = productDao.insert(product);
         	//限时抢购消息推送
         	if(productId!=null&&!originalPrice.equals(price)){
+        		
+        		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        	    
+        	    Date nowTime =new Date();
+        	    
+        	    String time =sdf.format(nowTime);
+        		
         		String content=name+"原价"+originalPrice+"元，"+"现价"+price+"元";
-            	
-            	new UmmessageSend().sendMessage("限时抢购",content);
+        		
+        		Map <String, String> map = new HashMap <String, String>();
+        		map.put("content", content);
+        		map.put("time", time);
+        		map.put("type", "0");
+        		map.put("goodcode", goodCode);
+        		JSONArray json = JSONArray.fromObject(map); 
+        		
+            	new UmmessageSend().sendMessage("限时抢购",json.toString());
         	}
         	
         } catch (Exception e) {

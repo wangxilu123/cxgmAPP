@@ -21,11 +21,9 @@ public class UmmessageSend{
   
     public void sendMessage(String title,String content) {  
        try{  
-    	    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
     	    
     	    AndroidBroadcast androidbroadcast = new AndroidBroadcast(appkey,appMasterSecret);
     	    androidbroadcast.setTitle(title);
-    	    androidbroadcast.setText(sdf.format(new Date()));
     	    androidbroadcast.setCustomField(content);
     	    androidbroadcast.goAppAfterOpen();
     	    androidbroadcast.setDisplayType(AndroidNotification.DisplayType.MESSAGE);
@@ -43,7 +41,6 @@ public class UmmessageSend{
 			// Set customized fields
 	   		
 	   		iosbroadcast.setCustomizedField(title, content);
-	   		iosbroadcast.setDescription(sdf.format(new Date()));
 	   		client.send(iosbroadcast);
         }catch(Exception e){
         	e.printStackTrace();
