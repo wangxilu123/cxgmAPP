@@ -1,8 +1,5 @@
 package com.cxgm.common;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
-
 /** 
  * 接收消息的Listener,用于接收订阅到的消息.  
  * @author Administrator 
@@ -10,8 +7,8 @@ import java.util.Date;
  */  
 public class UmmessageSend{  
 	
-	private String appkey = "5af6acadb27b0a761e000306";
-	private String appMasterSecret = "m72zniduleuccjevyabczru7sri1ec9e";
+	private String appkey = "5b42fb3cf29d98568500000f";
+	private String appMasterSecret = "jzdhxdkwctmdizow9op5y3xrpwjc1hgs";
 	
 	private String iosappkey = "5b2c9d5d8f4a9d6fa1000018";
 	private String iosappMasterSecret = "j54rnbj3o3jtbuwzszmzlq1zlkk41iqg";

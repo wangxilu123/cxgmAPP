@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.cxgm.dao.AdvertisementMapper;
 import com.cxgm.dao.ShopMapper;
@@ -55,6 +56,22 @@ public class AdvertisementService {
 
 		PageInfo<Advertisement> page = new PageInfo<>(list);
 		return page;
+	}
+	
+	@Transactional
+	public int delete(String[] advIds) {
+		int resultDelete = 0;
+		if (advIds != null && advIds.length > 0) {
+			for(String advId : advIds) {
+				
+				AdvertisementExample example = new AdvertisementExample();
+				
+				example.createCriteria().andIdEqualTo(Integer.parseInt(advId));
+				advertisementMapper.deleteByExample(example);
+			}
+		}
+		resultDelete = 1;
+		return resultDelete;
 	}
 
 }

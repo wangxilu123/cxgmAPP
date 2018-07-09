@@ -156,7 +156,8 @@ public class ProductService {
         		map.put("content", content);
         		map.put("time", time);
         		map.put("type", "0");
-        		map.put("goodcode", goodCode);
+        		map.put("goodcode", product.getId().toString());
+        		map.put("shopId", shop.toString());
         		JSONArray json = JSONArray.fromObject(map); 
         		
             	new UmmessageSend().sendMessage("限时抢购",json.toString());

@@ -145,18 +145,19 @@ public class HomePageServiceImpl implements HomePageService {
 					
 					for(int i=0;i<ids.length;i++){
 						//根据商品ID查询商品信息
-						
 						ProductTransfer product = productDao.findById(Long.parseLong(ids[i]));
-						
-						if(product.getImage()!=null&&"".equals(product.getImage())==false){
-							String[] imageIds = product.getImage().split(",");
+						if(product!=null){
+							if(product.getImage()!=null&&"".equals(product.getImage())==false){
+								String[] imageIds = product.getImage().split(",");
+								
+								ProductImage image = productImageMapper.findById(Long.valueOf(imageIds[0]));
+								
+								product.setImage(image!=null?image.getUrl():"");
+							}
 							
-							ProductImage image = productImageMapper.findById(Long.valueOf(imageIds[0]));
-							
-							product.setImage(image!=null?image.getUrl():"");
+							productList.add(product);
 						}
 						
-						productList.add(product);
 					}
 				}
 				motion.setProductList(productList);

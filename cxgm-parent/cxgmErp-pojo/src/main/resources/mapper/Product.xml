@@ -118,6 +118,10 @@
 		<if test="goodCode !=null and goodCode != ''">
     		and good_code=#{goodCode,jdbcType=VARCHAR}
 		</if>
+		
+		<if test="goodName !=null and goodName != ''">
+    		and name  like "%"#{goodName,jdbcType=VARCHAR}"%"
+		</if>
    </sql>
    
    <sql id="queryMap">
@@ -265,7 +269,7 @@
     delete from product
     where id = #{id,jdbcType=BIGINT}
   </delete>
-  <insert id="insert" parameterType="com.cxgm.domain.Product">
+  <insert id="insert" parameterType="com.cxgm.domain.Product" keyProperty="id" useGeneratedKeys="true">
     insert into product (id, sn, name, 
       full_name, price, cost, 
       market_price, image, unit, 
