@@ -7,6 +7,9 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -16,12 +19,16 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.cxgm.common.OSSClientUtil;
+import com.cxgm.common.RSResult;
 import com.cxgm.common.SystemConfig;
+import com.cxgm.domain.Admin;
 import com.cxgm.domain.Motion;
 import com.cxgm.domain.Shop;
 import com.cxgm.service.MotionService;
 import com.cxgm.service.ShopService;
 import com.github.pagehelper.PageInfo;
+
+import net.sf.json.JSONObject;
 
 @RestController
 @RequestMapping("/motion")
@@ -43,6 +50,10 @@ public class MotionController {
 		
 		PageInfo<Motion> pager = motionService.findByPage(pageNum, pageSize);
 		
+		SecurityContext ctx = SecurityContextHolder.getContext();  
+	    Authentication auth = ctx.getAuthentication(); 
+	    Admin admin = (Admin) auth.getPrincipal();
+	    request.setAttribute("admin", admin);
 		request.setAttribute("pager", pager);
 		return new ModelAndView("motion/motion_list");
 	}
@@ -50,12 +61,17 @@ public class MotionController {
 	@RequestMapping(value = "/toAdd", method = RequestMethod.GET)
 	public ModelAndView motionToAdd(HttpServletRequest request) throws SQLException {
 		
+		SecurityContext ctx = SecurityContextHolder.getContext();  
+	    Authentication auth = ctx.getAuthentication(); 
+	    Admin admin = (Admin) auth.getPrincipal();
+		
 		SystemConfig systemConfig = new SystemConfig();
 		systemConfig.setUploadLimit(10);
 		systemConfig.setAllowedUploadImageExtension("png,jpg");
 		
 		List<Shop> shopList = shopService.findListAll();
 		request.setAttribute("shopList", shopList);
+		request.setAttribute("shopId",admin.getShopId());
 		request.setAttribute("systemConfig",systemConfig);
 		return new ModelAndView("motion/motion_add");
 	}
@@ -64,9 +80,12 @@ public class MotionController {
 	public ModelAndView save(HttpServletRequest request,
 			@RequestParam(value = "motionName",required=false) String motionName,
 			@RequestParam(value = "position",required=false) String position,
-			@RequestParam(value = "productCode",required=false) String productCode,
+			@RequestParam(value = "productIds",required=false) String productIds,
 			@RequestParam(value = "shopId",required=false) Integer shopId,
-			@RequestParam(value = "type",required=false) String type)
+			@RequestParam(value = "type",required=false) String type,
+			@RequestParam(value = "notifyUrl",required=false) String notifyUrl,
+			@RequestParam(value = "urlType",required=false) String urlType,
+			@RequestParam(value = "productId",required=false) String productId)
 			throws Exception {
 		List<MultipartFile> files = ((MultipartHttpServletRequest) request).getFiles("motionImage");
 		
@@ -74,10 +93,13 @@ public class MotionController {
 		
 		motion.setCreateTime(new Date());
 		motion.setMotionName(motionName);
-		
+		motion.setProductIds(productIds);
+		motion.setNotifyUrl(notifyUrl);
 		motion.setPosition(position);
 		motion.setType(type);
 		motion.setShopId(shopId);
+		motion.setUrlType(urlType);
+		motion.setProductCode(productId);
 		StringBuilder sb = new StringBuilder();
 		
 		if(files!=null){
@@ -91,12 +113,31 @@ public class MotionController {
                 }
             } 
         }
-		sb.deleteCharAt(sb.length()-1);
-		motion.setImageUrl(sb.toString());
+		if(sb.length()>0){
+			sb.deleteCharAt(sb.length()-1);
+			motion.setImageUrl(sb.toString());
+		}
 		
 		motionService.addMotion(motion);
 		ModelAndView mv = new ModelAndView("redirect:/motion/list");
 		return mv;
+	}
+	
+	@RequestMapping(value = "/delete", method = RequestMethod.GET, produces = "text/json;charset=UTF-8")
+	public String productDelete(HttpServletRequest request) throws SQLException {
+		RSResult rr = new RSResult();
+		String[] productIds = request.getParameterValues("ids");
+		int resultDelete = motionService.delete(productIds);
+		if (resultDelete == 1) {
+			rr.setMessage("删除成功！");
+			rr.setCode("200");
+			rr.setStatus("success");
+		} else {
+			rr.setMessage("删除失败！");
+			rr.setCode("0");
+			rr.setStatus("failure");
+		}
+		return JSONObject.fromObject(rr).toString();
 	}
 
 }

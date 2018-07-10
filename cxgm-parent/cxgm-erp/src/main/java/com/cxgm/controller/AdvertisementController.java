@@ -57,6 +57,10 @@ public class AdvertisementController {
 		
 		PageInfo<Advertisement> pager = advertisementService.findByPage(pageNum, pageSize);
 		
+		SecurityContext ctx = SecurityContextHolder.getContext();  
+	    Authentication auth = ctx.getAuthentication(); 
+	    Admin admin = (Admin) auth.getPrincipal();
+	    request.setAttribute("admin", admin);
 		request.setAttribute("pager", pager);
 		return new ModelAndView("advertisement/advertisement_list");
 	}
@@ -132,9 +136,11 @@ public class AdvertisementController {
 	                }
 	            } 
 	        }
-			sb.deleteCharAt(sb.length()-1);
-			advertisement.setImageUrl(sb.toString());
-		
+			
+			if(sb.length()>0){
+				sb.deleteCharAt(sb.length()-1);
+				advertisement.setImageUrl(sb.toString());
+			}
 		advertisementService.addAdvertisement(advertisement);
 		ModelAndView mv = new ModelAndView("redirect:/advertisement/list");
 		return mv;

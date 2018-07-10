@@ -20,6 +20,7 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.cxgm.common.OSSClientUtil;
+import com.cxgm.common.RSResult;
 import com.cxgm.common.SystemConfig;
 import com.cxgm.domain.Shop;
 import com.cxgm.domain.ThirdOrg;
@@ -28,6 +29,8 @@ import com.cxgm.service.ThirdPartyHaixinOrgService;
 import com.cxgm.service.YouzanShopService;
 import com.github.pagehelper.PageInfo;
 import com.youzan.open.sdk.gen.v3_0_0.model.YouzanMultistoreOfflineSearchResult.AccountShopOffline;
+
+import net.sf.json.JSONObject;
 
 @RestController
 @RequestMapping("/shop")
@@ -87,21 +90,24 @@ public class ShopController {
 			@RequestParam(value = "shopAddress",required=false) String shopAddress,
 			@RequestParam(value = "yzShopId",required=false) String yzShopId,
 			@RequestParam(value = "hxShopId",required=false) String hxShopId,
-			@RequestParam(value = "description",required=false) String description)
+			@RequestParam(value = "description",required=false) String description,
+			@RequestParam(value = "lonlat",required=false) String lonlat,
+			@RequestParam(value = "electronicFence",required=false) String electronicFence)
 			throws Exception {
 		List<MultipartFile> files = ((MultipartHttpServletRequest) request).getFiles("shopImages");
 		
 		Shop shop= new Shop();
-		String[] lonlat=request.getParameter("lonlat").split(",");
+		String[] newlonlat=lonlat.split(",");
 		
 		shop.setShopName(shopName);
 		shop.setDescription(description);
-		shop.setDimension(lonlat[1]);
-		shop.setLongitude(lonlat[0]);
+		shop.setDimension(newlonlat[1]);
+		shop.setLongitude(newlonlat[0]);
 		shop.setOwner(owner);
 		shop.setShopAddress(shopAddress);
 		shop.setYzShopId(yzShopId);
 		shop.setHxShopId(hxShopId);
+		shop.setElectronicFence(electronicFence);
 		
 		
         StringBuilder sb = new StringBuilder();
@@ -117,8 +123,11 @@ public class ShopController {
 	                }
 	            } 
 	        }
-			sb.deleteCharAt(sb.length()-1);
-			shop.setImageUrl(sb.toString());
+			if(sb.length()>0){
+				sb.deleteCharAt(sb.length()-1);
+				shop.setImageUrl(sb.toString());
+			}
+			
 		shopService.addShop(shop);
 		ModelAndView mv = new ModelAndView("redirect:/shop/list");
 		return mv;
@@ -131,6 +140,23 @@ public class ShopController {
 		shopService.updateShop(shop);
 		ModelAndView mv = new ModelAndView("redirect:/shop/list");
 		return mv;
+	}
+	
+	@RequestMapping(value = "/delete", method = RequestMethod.GET, produces = "text/json;charset=UTF-8")
+	public String productDelete(HttpServletRequest request) throws SQLException {
+		RSResult rr = new RSResult();
+		String[] productIds = request.getParameterValues("ids");
+		int resultDelete = shopService.delete(productIds);
+		if (resultDelete == 1) {
+			rr.setMessage("删除成功！");
+			rr.setCode("200");
+			rr.setStatus("success");
+		} else {
+			rr.setMessage("删除失败！");
+			rr.setCode("0");
+			rr.setStatus("failure");
+		}
+		return JSONObject.fromObject(rr).toString();
 	}
 
 }

@@ -11,6 +11,9 @@
     <result column="on_shelf" jdbcType="INTEGER" property="onShelf" />
     <result column="motion_name" jdbcType="VARCHAR" property="motionName" />
     <result column="type" jdbcType="VARCHAR" property="type" />
+    <result column="notify_url" jdbcType="VARCHAR" property="notifyUrl" />
+    <result column="url_type" jdbcType="VARCHAR" property="urlType" />
+    <result column="product_code" jdbcType="VARCHAR" property="productCode" />
     
   </resultMap>
   <sql id="Example_Where_Clause">
@@ -72,7 +75,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    id, image_url, product_ids, create_time, position, shop_id, on_shelf, motion_name,type
+    id, image_url, product_ids, create_time, position, shop_id, on_shelf, motion_name,type,notify_url,url_type,product_code
   </sql>
   <select id="selectByExample" parameterType="com.cxgm.domain.MotionExample" resultMap="BaseResultMap">
     select
@@ -97,10 +100,10 @@
   <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.cxgm.domain.Motion" useGeneratedKeys="true">
     insert into motion (image_url, product_ids, create_time, 
       position, shop_id, on_shelf, 
-      motion_name,type)
+      motion_name,type,notify_url,url_type,product_code)
     values (#{imageUrl,jdbcType=VARCHAR}, #{productIds,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, 
       #{position,jdbcType=VARCHAR}, #{shopId,jdbcType=INTEGER}, 1, 
-      #{motionName,jdbcType=VARCHAR},#{type,jdbcType=VARCHAR})
+      #{motionName,jdbcType=VARCHAR},#{type,jdbcType=VARCHAR},#{notifyUrl,jdbcType=VARCHAR},#{urlType,jdbcType=VARCHAR},#{productCode,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="com.cxgm.domain.Motion" useGeneratedKeys="true">
     insert into motion
@@ -129,6 +132,15 @@
       <if test="type != null">
         type,
       </if>
+      <if test="notifyUrl != null">
+        notify_url,
+      </if>
+      <if test="urlType != null">
+        url_type,
+      </if>
+      <if test="productCode != null">
+        product_code,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="imageUrl != null">
@@ -154,6 +166,15 @@
       </if>
       <if test="type != null">
         #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="notifyUrl != null">
+        #{notifyUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="urlType != null">
+        #{urlType,jdbcType=VARCHAR},
+      </if>
+      <if test="productCode != null">
+        #{productCode,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -193,6 +214,15 @@
       <if test="record.type != null">
         type = #{record.type,jdbcType=VARCHAR},
       </if>
+      <if test="record.notifyUrl != null">
+        notify_url = #{record.notifyUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="record.urlType != null">
+        url_type = #{record.urlType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.productCode != null">
+        product_code = #{record.productCode,jdbcType=VARCHAR},
+      </if>
     </set>
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
@@ -208,7 +238,10 @@
       shop_id = #{record.shopId,jdbcType=INTEGER},
       on_shelf = #{record.onShelf,jdbcType=INTEGER},
       motion_name = #{record.motionName,jdbcType=VARCHAR},
-      type = #{record.type,jdbcType=VARCHAR}
+      type = #{record.type,jdbcType=VARCHAR},
+      notify_url = #{record.notifyUrl,jdbcType=VARCHAR},
+      url_type = #{record.urlType,jdbcType=VARCHAR},
+      product_code = #{record.productCode,jdbcType=VARCHAR}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>

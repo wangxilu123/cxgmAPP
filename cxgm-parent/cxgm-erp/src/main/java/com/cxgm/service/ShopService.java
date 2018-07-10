@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.cxgm.dao.ShopMapper;
 import com.cxgm.domain.Shop;
@@ -27,9 +28,20 @@ public class ShopService {
 		return null;
 	}
 
-	public Integer deleteShop(Integer shopId) {
-
-		return null;
+	@Transactional
+	public int delete(String[] shopIds) {
+		int resultDelete = 0;
+		if (shopIds != null && shopIds.length > 0) {
+			for(String shopId : shopIds) {
+				
+				ShopExample example = new ShopExample();
+				
+				example.createCriteria().andIdEqualTo(Integer.parseInt(shopId));
+				shopMapper.deleteByExample(example);
+			}
+		}
+		resultDelete = 1;
+		return resultDelete;
 	}
 	
 	public PageInfo<Shop> findShopByPage(Integer pageNum,Integer pageSize) {

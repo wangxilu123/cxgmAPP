@@ -51,7 +51,7 @@ public class AdvertisementService {
 			//根据门店ID查询门店信息
 			Shop shop = shopMapper.selectByPrimaryKey(advertisement.getShopId());
 			
-			advertisement.setShopName(shop.getShopName());
+			advertisement.setShopName(shop!=null?shop.getShopName():"");
 		}
 
 		PageInfo<Advertisement> page = new PageInfo<>(list);

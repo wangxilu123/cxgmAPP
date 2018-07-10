@@ -26,6 +26,12 @@ public class Motion {
     private String motionName;
     
     private String type;
+
+    private String urlType;
+    
+    private String productCode;
     
     private List<ProductTransfer> productList;
+    
+    private String notifyUrl;
 }
