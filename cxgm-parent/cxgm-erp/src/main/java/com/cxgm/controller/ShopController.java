@@ -15,11 +15,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.cxgm.common.SystemConfig;
 import com.cxgm.domain.Shop;
 import com.cxgm.domain.ThirdOrg;
+import com.cxgm.service.ProductImageService;
 import com.cxgm.service.ShopService;
 import com.cxgm.service.ThirdPartyHaixinOrgService;
 import com.cxgm.service.YouzanShopService;
@@ -35,6 +38,9 @@ public class ShopController {
 	
 	@Autowired
 	private YouzanShopService youzanShopService;
+	
+	@Autowired
+	ProductImageService productImageService;
 	
 	@Autowired
 	private ThirdPartyHaixinOrgService thirdPartyHaixinOrgService;
@@ -77,7 +83,30 @@ public class ShopController {
 	@RequestMapping(value = "/save", method = RequestMethod.POST )
 	public ModelAndView save(HttpServletRequest request)
 			throws InterruptedException {
+		
+		List<MultipartFile> files = ((MultipartHttpServletRequest) request).getFiles("productImages");
+		StringBuilder sb = new StringBuilder();
+		if(files!=null){
+            for(int i=0;i<files.size();i++){  
+                MultipartFile file = files.get(i);
+                if (file.getSize() > 0) {
+                	try {
+                    	    Long	imgUrl = productImageService.insertImages(file);
+							sb.append(imgUrl);
+		                    sb.append(",");
+                	}catch(Exception e){
+                		
+                	}
+                       
+                }else{
+                	if(sb.length()>0) {
+                		sb.deleteCharAt(sb.length()-1);
+                	}
+                }
+            } 
+        }
 		Shop shop= new Shop();
+		shop.setImageUrl(sb.toString());
 		String[] lonlat=request.getParameter("lonlat").split(",");
 		
 		shop.setShopName(request.getParameter("shopName"));
