@@ -26,7 +26,6 @@ import com.cxgm.common.RSResult;
 import com.cxgm.common.SystemConfig;
 import com.cxgm.domain.Admin;
 import com.cxgm.domain.Advertisement;
-import com.cxgm.domain.HaixinGood;
 import com.cxgm.domain.Product;
 import com.cxgm.domain.Shop;
 import com.cxgm.service.AdvertisementService;
@@ -122,7 +121,6 @@ public class AdvertisementController {
 		advertisement.setNumber(Integer.parseInt(number));
 		StringBuilder sb = new StringBuilder();
 		
-		if(sb.length()>0){
 			if(files!=null){
 	            for(int i=0;i<files.size();i++){  
 	                MultipartFile file = files.get(i);
@@ -136,7 +134,6 @@ public class AdvertisementController {
 	        }
 			sb.deleteCharAt(sb.length()-1);
 			advertisement.setImageUrl(sb.toString());
-		}
 		
 		advertisementService.addAdvertisement(advertisement);
 		ModelAndView mv = new ModelAndView("redirect:/advertisement/list");

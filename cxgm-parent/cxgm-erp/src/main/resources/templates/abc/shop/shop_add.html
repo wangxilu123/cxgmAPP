@@ -50,12 +50,12 @@ body, html {
 
 			<form class="validator-form"
 				action="<%if (isAdd){%>/shop/save<%}else{%>/shop/update<%}%>"
-				method="post">
+				method="post" enctype="multipart/form-data">
 				<input type="hidden" name="id" value="${shop.id!}" />
 				<div class="am-tabs am-margin" data-am-tabs="{noSwipe: 1}">
 					<ul class="am-tabs-nav am-nav am-nav-tabs">
 						<li class="am-active"><a href="#tab1">基本信息</a></li>
-						<li><a href="#tab2">运营图片</a></li>
+						<li><a href="#tab2">门店图片</a></li>
 					</ul>
 
 					<div class="am-tabs-bd am-form">
@@ -213,13 +213,10 @@ body, html {
 							</div>
 						</div>
 
-					</div>
-				</div>
-				
 				<div class="am-tab-panel am-fade app-min-height app-product-image"
 							id="tab2">
 							<ul class="am-avg-sm-2 am-avg-md-4 am-thumbnails" id="file-list">
-								<%for(list in motion.imageUrl!){%>
+								<%for(list in shop.imageUrl!){%>
 								<li>
 									<div class="am-thumbnail">
 										<input type="hidden" name="productImageIds" value="${list.id}" />
@@ -285,7 +282,7 @@ body, html {
 														class="am-btn am-btn-default am-btn-xs am-center">
 														<i class="am-icon-cloud-upload"></i> 上传图片
 													</button>
-													<input class="doc-form-file" name="motionImage" type="file">
+													<input class="doc-form-file" name="shopImages" type="file">
 													<%}else{%>
 													<button type="button"
 														class="am-btn am-btn-danger am-btn-xs am-center"
@@ -330,8 +327,7 @@ body, html {
 </html>
 
 <script type="text/javascript">
-$()
-.ready(
+$().ready(
 		function() {
 
 			// 商品图片左移
@@ -383,7 +379,7 @@ $()
 					+ '<li><button type="button" class="am-btn am-btn-default am-text-danger am-btn-xs am-center opr-img-delete" disabled="disabled"><span class="am-icon-trash"></span></button></li>'
 					+ '<li><button type="button" class="am-btn am-btn-default am-text-warning am-btn-xs am-center opr-img-right"><span class="am-icon-chevron-right"></span></button></li>'
 					+ '</ul><hr data-am-widget="divider" class="am-divider am-divider-dashed am-margin-0" /><ul class="am-thumbnail-caption am-avg-sm-1">'
-					+ '<li><div class="am-form-group am-form-file"><button type="button" class="am-btn am-btn-default am-btn-xs am-center"><i class="am-icon-cloud-upload"></i> 上传图片</button><input class="doc-form-file" name="motionImage" type="file"></div></li>';
+					+ '<li><div class="am-form-group am-form-file"><button type="button" class="am-btn am-btn-default am-btn-xs am-center"><i class="am-icon-cloud-upload"></i> 上传图片</button><input class="doc-form-file" name="shopImages" type="file"></div></li>';
 			+'</ul></div></li>';
 
 			var index = 0;
@@ -425,8 +421,8 @@ $()
 									var productImageLiHtml = productImageLiHtmlTemp;
 									productImageLiHtml = productImageLiHtml
 											.replace(
-													"motionImage",
-													"motionImage");
+													"shopImages",
+													"shopImages");
 									$('#file-list').append(
 											productImageLiHtml);
 								}
@@ -439,7 +435,6 @@ $()
 								"style");
 					})
 		});
-
 	// 百度地图API功能
 	function G(id) {
 		return document.getElementById(id);

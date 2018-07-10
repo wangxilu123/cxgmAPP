@@ -15,8 +15,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.cxgm.common.OSSClientUtil;
 import com.cxgm.common.SystemConfig;
 import com.cxgm.domain.Shop;
 import com.cxgm.domain.ThirdOrg;
@@ -38,6 +41,9 @@ public class ShopController {
 	
 	@Autowired
 	private ThirdPartyHaixinOrgService thirdPartyHaixinOrgService;
+	
+	@Autowired
+	private OSSClientUtil ossClient;
 	
 	@RequestMapping(value = "/list", method = RequestMethod.GET)
 	public ModelAndView shopList(HttpServletRequest request,
@@ -75,25 +81,44 @@ public class ShopController {
 	}
 	
 	@RequestMapping(value = "/save", method = RequestMethod.POST )
-	public ModelAndView save(HttpServletRequest request)
-			throws InterruptedException {
+	public ModelAndView save(HttpServletRequest request,
+			@RequestParam(value = "shopName",required=false) String shopName,
+			@RequestParam(value = "owner",required=false) String owner,
+			@RequestParam(value = "shopAddress",required=false) String shopAddress,
+			@RequestParam(value = "yzShopId",required=false) String yzShopId,
+			@RequestParam(value = "hxShopId",required=false) String hxShopId,
+			@RequestParam(value = "description",required=false) String description)
+			throws Exception {
+		List<MultipartFile> files = ((MultipartHttpServletRequest) request).getFiles("shopImages");
+		
 		Shop shop= new Shop();
 		String[] lonlat=request.getParameter("lonlat").split(",");
 		
-		shop.setShopName(request.getParameter("shopName"));
-		shop.setAliPartnerid(request.getParameter("aliPartnerid"));
-		shop.setAliPrivatekey(request.getParameter("aliPrivatekey"));
-		shop.setDescription(request.getParameter("description"));
+		shop.setShopName(shopName);
+		shop.setDescription(description);
 		shop.setDimension(lonlat[1]);
 		shop.setLongitude(lonlat[0]);
-		shop.setElectronicFence(request.getParameter("electronicFence"));
-		/*shop.setImageUrl(request.getParameter("imageUrl"));*/
-		shop.setOwner(request.getParameter("owner"));
-		shop.setShopAddress(request.getParameter("shopAddress"));
-		shop.setWeixinApikey(request.getParameter("weixinApikey"));
-		shop.setWeixinMchid(request.getParameter("weixinMchid"));
-		shop.setYzShopId(request.getParameter("yzShopId"));
-		shop.setHxShopId(request.getParameter("hxShopId"));
+		shop.setOwner(owner);
+		shop.setShopAddress(shopAddress);
+		shop.setYzShopId(yzShopId);
+		shop.setHxShopId(hxShopId);
+		
+		
+        StringBuilder sb = new StringBuilder();
+		
+			if(files!=null){
+	            for(int i=0;i<files.size();i++){  
+	                MultipartFile file = files.get(i);
+	                if (file.getSize() > 0) {
+	                	String name = ossClient.uploadImg2Oss(file);
+	            	    String imgUrl = ossClient.getImgUrl(name);
+	                        sb.append(imgUrl);
+	                        sb.append(",");
+	                }
+	            } 
+	        }
+			sb.deleteCharAt(sb.length()-1);
+			shop.setImageUrl(sb.toString());
 		shopService.addShop(shop);
 		ModelAndView mv = new ModelAndView("redirect:/shop/list");
 		return mv;
