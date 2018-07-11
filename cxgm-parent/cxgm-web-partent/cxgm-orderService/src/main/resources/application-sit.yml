@@ -33,23 +33,6 @@ spring:
     session:
       store-type: redis
 
-    datasource:
-      readSize: 1
-        # 使用druid数据源
-      type: com.alibaba.druid.pool.DruidDataSource
-      write:
-        url: jdbc:mysql://47.104.226.173:3306/cxgm?characterEncoding=utf-8
-        username: root
-        password: '*Cxgm@App2018*'
-        driver-class-name: com.mysql.jdbc.Driver
-        validationQuery: select 'x'
-
-      read:
-        url: jdbc:mysql://47.104.226.173:3306/cxgm?characterEncoding=utf-8
-        username: root
-        password: '*Cxgm@App2018*'
-        driver-class-name: com.mysql.jdbc.Driver
-        validationQuery: select 'x'
         
     redis:
         database: 0
@@ -60,4 +43,5 @@ spring:
           max-idle: 8
           max-wait: -1
           min-idle: 0
-   
+logging:
+    config: classpath:logback.xml   
