@@ -55,12 +55,13 @@ public class AdvertisementController {
 			@RequestParam(value = "pageNum", defaultValue = "1" , required = false) Integer pageNum,
             @RequestParam(value = "pageSize", defaultValue = "10" , required = false) Integer pageSize){
 		
-		PageInfo<Advertisement> pager = advertisementService.findByPage(pageNum, pageSize);
-		
 		SecurityContext ctx = SecurityContextHolder.getContext();  
 	    Authentication auth = ctx.getAuthentication(); 
 	    Admin admin = (Admin) auth.getPrincipal();
 	    request.setAttribute("admin", admin);
+		PageInfo<Advertisement> pager = advertisementService.findByPage(admin.getShopId(),pageNum, pageSize);
+		
+		
 		request.setAttribute("pager", pager);
 		return new ModelAndView("advertisement/advertisement_list");
 	}

@@ -73,8 +73,8 @@ true; }%>
 							<div class="am-form-group am-form-group-sm">
 								<label class="am-u-sm-4 am-u-md-3 am-text-right am-form-label">运营商品</label>
 								<div class="am-u-sm-8 am-u-md-9">
-									<%if (isAdd){%> <input type="text" name="productIds"
-										placeholder="运营商品"/>
+									<%if (isAdd){%> <input type="text" id="productIds" name="productIds"
+										placeholder="运营商品" onclick="productShow('商品列表','/motion/toProductList')"/>
 									<div class="am-text-warning am-margin-top-xs am-text-xs">${motionName!}</div>
 									<%}else{%> ${motion.motionName!} <input type="hidden"
 										name="motionName" value="${motion.motionName!}" /> <%}%>
@@ -410,6 +410,16 @@ true; }%>
 			$("#productId").val($("#sel option:selected").val());
 			
 		}
+		 
+		 function productShow(title,url){
+			  var obj = window; 
+			  var iWidth=1200; //弹出窗口的宽度;
+			  var iHeight=600; //弹出窗口的高度;
+			  var iTop = (window.screen.availHeight-30-iHeight)/2; //获得窗口的垂直位置;
+			  var iLeft = (window.screen.availWidth-10-iWidth)/2; //获得窗口的水平位置;
+			  myWindow =window.open(url,"Child","height="+iHeight+", width="+iWidth+", top="+iTop+", left="+iLeft+",alwaysRaised=yes,z-look=yes,location=yes"); 
+			  myWindow.focus();	
+		 }
 	</script>
 </body>
 </html>

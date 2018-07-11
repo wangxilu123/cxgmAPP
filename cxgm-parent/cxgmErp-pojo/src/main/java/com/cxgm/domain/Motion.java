@@ -34,4 +34,5 @@ public class Motion {
     private List<ProductTransfer> productList;
     
     private String notifyUrl;
+    private String shopName;
 }

@@ -7,9 +7,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.cxgm.dao.MotionMapper;
-import com.cxgm.domain.AdvertisementExample;
+import com.cxgm.dao.ShopMapper;
 import com.cxgm.domain.Motion;
 import com.cxgm.domain.MotionExample;
+import com.cxgm.domain.Shop;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 
@@ -18,6 +19,9 @@ public class MotionService {
 
 	@Autowired
 	private MotionMapper motionMapper;
+	
+	@Autowired
+	private ShopMapper shopMapper;
 
 	public Integer addMotion(Motion motion) {
 
@@ -33,16 +37,23 @@ public class MotionService {
 		return motionMapper.updateByExample(motion, example);
 	}
 
-	public PageInfo<Motion> findByPage(Integer pageNum, Integer pageSize) {
+	public PageInfo<Motion> findByPage(Integer shopId, Integer pageNum, Integer pageSize) {
 
 		PageHelper.startPage(pageNum, pageSize);
 
 		MotionExample example = new MotionExample();
 
+		example.createCriteria().andShopIdEqualTo(shopId);
 		example.setOrderByClause("id desc");
 
 		List<Motion> list = motionMapper.selectByExample(example);
-
+		
+		for(Motion motion : list){
+			//根据门店ID查询门店信息
+			Shop shop = shopMapper.selectByPrimaryKey(shopId);
+			
+			motion.setShopName(shop!=null?shop.getShopName():"");
+		}
 		PageInfo<Motion> page = new PageInfo<>(list);
 		return page;
 	}

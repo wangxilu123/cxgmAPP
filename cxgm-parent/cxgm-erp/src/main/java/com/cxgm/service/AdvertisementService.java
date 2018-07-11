@@ -37,19 +37,20 @@ public class AdvertisementService {
 		return advertisementMapper.updateByExample(advertisement, example);
 	}
 
-	public PageInfo<Advertisement> findByPage(Integer pageNum, Integer pageSize) {
+	public PageInfo<Advertisement> findByPage(Integer shopId, Integer pageNum, Integer pageSize) {
 
 		PageHelper.startPage(pageNum, pageSize);
 
 		AdvertisementExample example = new AdvertisementExample();
 
+		example.createCriteria().andShopIdEqualTo(shopId);
 		example.setOrderByClause("id desc");
 
 		List<Advertisement> list = advertisementMapper.selectByExample(example);
 		
 		for(Advertisement advertisement : list){
 			//根据门店ID查询门店信息
-			Shop shop = shopMapper.selectByPrimaryKey(advertisement.getShopId());
+			Shop shop = shopMapper.selectByPrimaryKey(shopId);
 			
 			advertisement.setShopName(shop!=null?shop.getShopName():"");
 		}

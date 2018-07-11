@@ -2,7 +2,9 @@ package com.cxgm.controller;
 
 import java.sql.SQLException;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -23,9 +25,12 @@ import com.cxgm.common.RSResult;
 import com.cxgm.common.SystemConfig;
 import com.cxgm.domain.Admin;
 import com.cxgm.domain.Motion;
+import com.cxgm.domain.ProductTransfer;
 import com.cxgm.domain.Shop;
 import com.cxgm.service.MotionService;
+import com.cxgm.service.ProductService;
 import com.cxgm.service.ShopService;
+import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 
 import net.sf.json.JSONObject;
@@ -43,16 +48,20 @@ public class MotionController {
 	@Autowired
 	private OSSClientUtil ossClient;
 	
+	@Autowired
+	ProductService productService;
+	
 	@RequestMapping(value = "/list", method = RequestMethod.GET)
 	public ModelAndView motionList(HttpServletRequest request,
 			@RequestParam(value = "pageNum", defaultValue = "1" , required = false) Integer pageNum,
             @RequestParam(value = "pageSize", defaultValue = "10" , required = false) Integer pageSize){
 		
-		PageInfo<Motion> pager = motionService.findByPage(pageNum, pageSize);
-		
 		SecurityContext ctx = SecurityContextHolder.getContext();  
 	    Authentication auth = ctx.getAuthentication(); 
 	    Admin admin = (Admin) auth.getPrincipal();
+	    
+		PageInfo<Motion> pager = motionService.findByPage(admin.getShopId(),pageNum, pageSize);
+		
 	    request.setAttribute("admin", admin);
 		request.setAttribute("pager", pager);
 		return new ModelAndView("motion/motion_list");
@@ -74,6 +83,51 @@ public class MotionController {
 		request.setAttribute("shopId",admin.getShopId());
 		request.setAttribute("systemConfig",systemConfig);
 		return new ModelAndView("motion/motion_add");
+	}
+	
+	@RequestMapping(value = "/toProductList", method = RequestMethod.GET)
+	public ModelAndView toProductList(HttpServletRequest request,
+			@RequestParam(value = "num", defaultValue = "1") Integer num) throws SQLException {
+		PageHelper.startPage(num, 10);
+		SecurityContext ctx = SecurityContextHolder.getContext();  
+	    Authentication auth = ctx.getAuthentication(); 
+	    Admin admin = (Admin) auth.getPrincipal();
+		
+		SystemConfig systemConfig = new SystemConfig();
+		systemConfig.setUploadLimit(10);
+		systemConfig.setAllowedUploadImageExtension("png,jpg");
+	
+		Map<String,Object> map = new HashMap<>();
+	    map.put("shopId", admin.getShopId());
+		List<ProductTransfer> products = productService.findListAllWithCategory(map);
+		PageInfo<ProductTransfer> pager = new PageInfo<>(products);
+		request.setAttribute("pager", pager);
+		request.setAttribute("admin", admin);
+		request.setAttribute("admin",admin);
+		request.setAttribute("systemConfig",systemConfig);
+		return new ModelAndView("motion/product_show");
+	}
+	
+	@RequestMapping(value = "/product/list", method = RequestMethod.GET)
+	public ModelAndView productList(HttpServletRequest request,
+			@RequestParam(value = "pageNumber", defaultValue = "1") Integer num,
+			@RequestParam(value = "keyword",required=false) String name,
+			@RequestParam(value = "property",required=false) String property) throws SQLException {
+		if (null != name && !"".equals(name) ) {
+			PageHelper.startPage(1, 10);
+			SecurityContext ctx = SecurityContextHolder.getContext();  
+		    Authentication auth = ctx.getAuthentication(); 
+		    Admin admin = (Admin) auth.getPrincipal();
+		    Map<String,Object> map = new HashMap<>();
+		    map.put("shopId", admin.getShopId());
+		    map.put("name", name);
+			List<ProductTransfer> products = productService.findListAllWithCategory(map);
+			PageInfo<ProductTransfer> pager = new PageInfo<>(products);
+			request.setAttribute("pager", pager);
+			request.setAttribute("admin",admin);
+			return new ModelAndView("motion/product_show");
+		}
+		return this.toProductList(request, num);
 	}
 	
 	@RequestMapping(value = "/save", method = RequestMethod.POST )

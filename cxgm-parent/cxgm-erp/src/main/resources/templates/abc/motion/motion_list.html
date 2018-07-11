@@ -71,9 +71,16 @@
               <td>${listLP.index}</td>
               <td><img src="${list.imageUrl}" width="50" height="50"/></td>
               <td>${list.motionName}</td>
-              <td>${list.position}</td>
-              <td>${list.shopId}</td>
-              <td>${list.onShelf}</td>
+              <td><%if (list.position == '1'){%> 第一运营位 <%}%>
+              <%if (list.position == '2'){%> 第二运营位 <%}%>
+              <%if (list.position == '3'){%> 第三运营位 <%}%>
+              <%if (list.position == '4'){%> 第四运营位 <%}%>
+              <%if (list.position == '5'){%> 第五运营位 <%}%>
+              <%if (list.position == '6'){%> 第六运营位 <%}%>
+              </td>
+              <td>${list.shopName}</td>
+              <td><%if (list.onShelf == 1){%> 有效 <%}%>
+              <%if (list.onShelf == 0){%> 无效 <%}%></td>
               <td>${list.createTime,dateFormat="yyyy-MM-dd HH:mm:ss"}</td>
             </tr>
             <%}%> 

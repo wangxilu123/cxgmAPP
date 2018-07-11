@@ -82,8 +82,8 @@
               <td>${list.notifyUrl}</td>
               <td>${list.productCode}</td>
               <td>${list.shopName}</td>
-              <td><%if (list.onShelf == 1){%> 已上架 <%}%>
-              <%if (list.onShelf == 0){%> 已下架 <%}%></td>
+              <td><%if (list.onShelf == 1){%> 有效 <%}%>
+              <%if (list.onShelf == 0){%> 无效 <%}%></td>
               <td>${list.createTime,dateFormat="yyyy-MM-dd HH:mm:ss"}</td>
             </tr>
             <%}%> 

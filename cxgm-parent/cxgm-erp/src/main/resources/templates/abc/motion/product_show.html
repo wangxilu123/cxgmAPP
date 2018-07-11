@@ -8,27 +8,14 @@
     <div class="admin-content-body">
       <div class="am-cf app-padding-title">
         <div class="am-fl am-cf">
-          <strong class="am-text-primary am-text-lg">商品管理</strong> / <small>商品列表</small>
+          <strong class="am-text-primary am-text-lg">商品列表</strong>
         </div>
       </div>
       
       <hr data-am-widget="divider" class="am-divider am-divider-dotted am-margin-0" />
       
-      <form class="am-form" id="listForm" action="/product/list" method="get">
+      <form class="am-form" id="listForm" action="/motion/product/list" method="get">
       <div class="am-g app-padding-toolbar">
-        <div class="am-u-sm-7 am-u-md-4">
-          <div class="am-btn-toolbar app-padding-toolbar-item">
-            <div class="am-btn-group am-btn-group-sm">
-            <%if(admin.shopId == null || admin.shopId==""){%>
-            <button type="button" class="am-btn am-btn-default" disabled="disabled" onclick="location.href='/product/add?product.shop=${admin.shopId!}';"><span class="am-icon-plus"></span> 新增</button>
-            <%}else{%>
-            <button type="button" class="am-btn am-btn-default" onclick="location.href='/product/add?product.shop=${admin.shopId!}';"><span class="am-icon-plus"></span> 新增</button>
-            <%}%>
-              
-              <button type="button" class="am-btn am-btn-default" onclick="deleteAll('/product/delete');" id="deleteButton" disabled="disabled"><span class="am-icon-trash-o"></span> 删除</button>
-            </div>
-          </div>
-        </div>
         <div class="am-u-sm-5 am-u-md-4 am-padding-0">
           <div class="app-padding-toolbar-item">
             <select name="property" data-am-selected="{btnWidth: '100%', btnSize: 'sm'}">
@@ -57,7 +44,6 @@
             <tr>
               <th><input type="checkbox" id="allCheck"></th>
               <th>编号</th>
-              <th><div class="app-table-td-buttons-width-120">操作</div></th>
               <th>商品名称</th>
               <th>本店价格</th>
               <th>上架</th>
@@ -71,16 +57,6 @@
             <tr id="listTr${listLP.index}">
               <td><input type="checkbox" name="ids" value="${list.id}"></td>
               <td>${list.sn}</td>
-              <td>
-                <div class="am-btn-group am-btn-group-xs">
-                  <button type="button" class="am-btn am-btn-default am-btn-xs am-text-secondary app-table-button-padding" onclick="location.href='/product/edit?id=${list.id}'">
-                    <span class="am-icon-pencil"> 编辑</span>
-                  </button>
-                  <button type="button" class="am-btn am-btn-default am-btn-xs am-text-danger app-table-button-padding" onclick="deleteOne('/product/delete?ids=${list.id}',${listLP.index})">
-                    <span class="am-icon-trash-o"> 删除</span>
-                  </button>
-                </div>
-              </td>
               <td><div class="am-text-truncate app-text-truncate-product-name">${list.name}</div></td>
               <td>${list.price}</td>
               <td>
@@ -116,8 +92,27 @@
       <h3 class="am-kai am-text-center am-margin-xs">没有找到任何记录!</h3>
       <%}%>
       </form>
+      <div style="float:left">
+							<button onclick="addProduct()" class="am-btn am-btn-primary">
+								<span class="am-icon-save"> 保 存</span>
+							</button>
+	  </div>
     </div>
   </div>
   <!-- content end -->
+  
+  <script>
+		 function addProduct(){
+			 var ch = "&ids=";
+			 var reg = "/"+ch+"/g";
+			 var $idsCheckedCheck = $("[name='ids']:checked");
+			 var ids =$idsCheckedCheck.serialize();
+             
+			 var str=ids.replace(eval(reg),",");
+			 var newids =str.replace("ids=","");
+			 this.opener.document.getElementById("productIds").value = newids;//控制父窗口 
+			 window.close();
+			}
+	</script>
 </body>
 </html>

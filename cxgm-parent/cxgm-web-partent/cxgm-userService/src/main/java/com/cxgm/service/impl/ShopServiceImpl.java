@@ -55,19 +55,23 @@ public class ShopServiceImpl implements ShopService {
 		List<Shop> shopList = shopMapper.selectByExample(example);
 		
 		for(Shop shop :shopList){
-			boolean location = LocationUtil.isInPolygon(longitude, dimension, shop.getElectronicFence());
 			
-			if(location==true){
-				ShopResponse shopResponse = new ShopResponse();
+			if(shop.getElectronicFence()!=null){
+				boolean location = LocationUtil.isInPolygon(longitude, dimension, shop.getElectronicFence());
 				
-				shopResponse.setDescription(shop.getDescription());
-				shopResponse.setId(shop.getId());
-				shopResponse.setImageUrl(shop.getImageUrl());
-				shopResponse.setShopAddress(shop.getShopAddress());
-				shopResponse.setShopName(shop.getShopName());
-				
-				list.add(shopResponse);
+				if(location==true){
+					ShopResponse shopResponse = new ShopResponse();
+					
+					shopResponse.setDescription(shop.getDescription());
+					shopResponse.setId(shop.getId());
+					shopResponse.setImageUrl(shop.getImageUrl());
+					shopResponse.setShopAddress(shop.getShopAddress());
+					shopResponse.setShopName(shop.getShopName());
+					
+					list.add(shopResponse);
+				}
 			}
+			
 		}
 		return list;
 	}
