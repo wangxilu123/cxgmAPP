@@ -62,7 +62,7 @@ css1{
           <div class="am-form-group am-form-group-sm">
             <label class="am-u-sm-4 am-u-md-3 am-text-right am-form-label">商品名称</label>
             <div class="am-u-sm-8 am-u-md-9">
-            <input type="text" class="am-form-field"  id="goodName" name="goodName" onkeyup="test(this.value,event)"><br/>
+            <input type="text" class="am-form-field"  id="goodName" name="goodName" onkeyup="test(this.value,event)" required><br/>
 			<select multiple="multiple" id="sel" onchange="test2()"
 				style="width:300px;display:none">
 			</select>
@@ -71,13 +71,25 @@ css1{
           <div class="am-form-group am-form-group-sm">
             <label class="am-u-sm-4 am-u-md-3 am-text-right am-form-label">商品编号</label>
             <div class="am-u-sm-8 am-u-md-9">
-              <input type="text" class="am-form-field" id="goodCode" name="goodCode" value="${product.goodCode!}"/>
+              <input type="text" class="am-form-field" id="goodCode" name="goodCode" value="${product.goodCode!}" required/>
             </div>
           </div>
           <div class="am-form-group am-form-group-sm">
             <label class="am-u-sm-4 am-u-md-3 am-text-right am-form-label">原产地</label>
             <div class="am-u-sm-8 am-u-md-9">
-              <input type="text" class="am-form-field" name="product.originPlace" value="${product.originPlace!}" required />
+              <input type="text" class="am-form-field" name="product.originPlace" value="${product.originPlace!}"/>
+            </div>
+          </div>
+          <div class="am-form-group am-form-group-sm">
+            <label class="am-u-sm-4 am-u-md-3 am-text-right am-form-label">品牌</label>
+            <div class="am-u-sm-8 am-u-md-9">
+              <input type="text" class="am-form-field" name="brandName" value="${product.brandName!}"/>
+            </div>
+          </div>
+          <div class="am-form-group am-form-group-sm">
+            <label class="am-u-sm-4 am-u-md-3 am-text-right am-form-label">储藏条件</label>
+            <div class="am-u-sm-8 am-u-md-9">
+              <input type="text" class="am-form-field" name="storageCondition" value="${product.storageCondition!}"/>
             </div>
           </div>
           <div class="am-form-group am-form-group-sm">
@@ -152,10 +164,10 @@ css1{
           <div class="am-form-group am-form-group-sm">
             <label class="am-u-sm-4 am-u-md-3 am-text-right am-form-label">保质期</label>
             <div class="am-u-sm-5 am-u-md-7">
-              <input type="number" class="am-form-field" name="product.warrantyPeriod" value="${product.warrantyPeriod!0}" placeholder="保质期" min="10" required />
+              <input type="number" class="am-form-field" name="product.warrantyPeriod" value="${product.warrantyPeriod!0}" placeholder="保质期"  />
             </div>
             <div class="am-u-sm-3 am-u-md-2">
-              <select name="warrantDays" data-am-selected="{btnWidth: '100%', maxHeight: '200px', btnSize: 'sm'}" required>
+              <select name="warrantDays" data-am-selected="{btnWidth: '100%', maxHeight: '200px', btnSize: 'sm'}"> 
               	<option value="月">月</option>
               	<option value="天" selected>日</option>
               </select>

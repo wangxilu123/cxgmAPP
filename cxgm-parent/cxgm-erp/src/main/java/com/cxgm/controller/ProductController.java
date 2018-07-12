@@ -126,6 +126,8 @@ public class ProductController {
 			@RequestParam(value = "product.isTop") boolean isTop,
 			@RequestParam(value = "product.introduction",required=false) String introduction,
 			@RequestParam(value = "product.warrantyPeriod") Integer warrantyPeriod,//保质期
+			@RequestParam(value = "brandName",required=false) String brandName,
+			@RequestParam(value = "storageCondition",required=false) String storageCondition,
 			@RequestParam(value = "product.shop") Integer shop
 			) throws SQLException {
 		
@@ -133,7 +135,7 @@ public class ProductController {
 		try {
 			productService.insert(name, goodCode, originPlace,
 					 pid, price, 
-					isMarketable, isTop, introduction, shop, files,originalPrice,warrantyPeriod,warrantDays);
+					isMarketable, isTop, introduction, shop, files,originalPrice,warrantyPeriod,warrantDays,brandName,storageCondition);
 			ModelAndView mv = new ModelAndView("redirect:/product/list");
 			return mv;
 		}catch(Exception e) {
@@ -193,6 +195,8 @@ public class ProductController {
 			@RequestParam(value = "product.isTop") boolean isTop,
 			@RequestParam(value = "product.introduction",required=false) String introduction,
 			@RequestParam(value = "product.warrantyPeriod") Integer warrantyPeriod,//保质期
+			@RequestParam(value = "brandName",required=false) String brandName,
+			@RequestParam(value = "storageCondition",required=false) String storageCondition,
 			@RequestParam(value = "product.shop") Integer shop
 			) throws SQLException {
 		
@@ -200,7 +204,7 @@ public class ProductController {
 		String[] productImageIds = request.getParameterValues("productImageIds");
 		try {
 			productService.update(id,name, goodCode, originPlace,
-					 pid, price,isMarketable, isTop, introduction, shop, files,productImageIds,originalPrice,warrantyPeriod,warrantDays);
+					 pid, price,isMarketable, isTop, introduction, shop, files,productImageIds,originalPrice,warrantyPeriod,warrantDays,brandName,storageCondition);
 			ModelAndView mv = new ModelAndView("redirect:/product/list");
 			return mv;
 		}catch(Exception e) {

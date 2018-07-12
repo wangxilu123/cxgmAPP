@@ -56,7 +56,7 @@ public class ProductService {
 			String pid,
 			BigDecimal price,
 			boolean isMarketable,boolean isTop,String introduction,
-			Integer shop,List<MultipartFile> files,BigDecimal originalPrice,Integer warrantyPeriod,String warrantDays) {
+			Integer shop,List<MultipartFile> files,BigDecimal originalPrice,Integer warrantyPeriod,String warrantDays,String brandName,String storageCondition) {
 		StringBuilder sb = new StringBuilder();
 		//根据goodCode查询海信商品信息
 		HaixinGoodExample  example= new HaixinGoodExample();
@@ -67,13 +67,17 @@ public class ProductService {
 		
         try {
         	Product product = new Product();
+        	product.setBrandName(brandName);
+        	product.setStorageCondition(storageCondition);
         	product.setSn(DateKit.generateSn());
         	product.setName(name);
         	product.setOriginPlace(originPlace);
         	product.setWeight(haixinGoodList.size()!=0?haixinGoodList.get(0).getSpecifications():"");
         	product.setUnit(haixinGoodList.size()!=0?haixinGoodList.get(0).getUnit():"");
         	product.setGoodCode(goodCode);
-        	product.setWarrantyPeriod(warrantyPeriod+warrantDays);
+        	if(warrantyPeriod!=null&&warrantyPeriod!=0){
+        		product.setWarrantyPeriod(warrantyPeriod+warrantDays);
+        	}
         	product.setIsTop(isTop);
         	product.setBarCode(haixinGoodList.size()!=0?haixinGoodList.get(0).getBarCode():"");
         	ProductCategory productCategory = productCategoryService.findById(Long.valueOf(pid));
@@ -203,14 +207,14 @@ public class ProductService {
 			String pid,
 			BigDecimal price,
 			boolean isMarketable,boolean isTop,String introduction,
-			Integer shop,List<MultipartFile> files,String[] productImageIds,BigDecimal originalPrice,Integer warrantyPeriod,String warrantDays) {
+			Integer shop,List<MultipartFile> files,String[] productImageIds,BigDecimal originalPrice,Integer warrantyPeriod,String warrantDays,String brandName,String storageCondition) {
 		StringBuilder sb = new StringBuilder();
         try {
         	Product product = productDao.findProductById(id.longValue());
         	product.setName(name);
         	product.setOriginPlace(originPlace);
-        	/*product.setWeight(weight);
-        	product.setUnit(unit);*/
+        	product.setBrandName(brandName);
+        	product.setStorageCondition(storageCondition);
         	product.setWarrantyPeriod(warrantyPeriod+warrantDays);
         	product.setIsTop(isTop);
         	if(pid==null || "".equals(pid)) {
