@@ -112,6 +112,28 @@ public class ProductController {
 		}
 		return haixinGoodsList;
 	}
+	@RequestMapping(value = "/secondCategory/list", method = RequestMethod.POST)
+	@ResponseBody
+	public List<ProductCategory> secondCategory(HttpServletRequest request,@RequestParam(value = "firstCategoryId") String firstCategoryId) {
+		List<ProductCategory> secondCategorys = productCategoryService.findCategoryByParentId(1, Long.valueOf(firstCategoryId));
+		return secondCategorys;
+	}
+	
+	@RequestMapping(value = "/product/id", method = RequestMethod.POST)
+	@ResponseBody
+	public ProductTransfer getProduct(HttpServletRequest request) {
+		String productId = request.getParameter("id");
+		ProductTransfer product = productService.findById(Long.valueOf(productId));
+		return product;
+	}
+	
+	
+	@RequestMapping(value = "/thirdCategory/list", method = RequestMethod.POST)
+	@ResponseBody
+	public List<ProductCategory> thirdCategory(HttpServletRequest request,@RequestParam(value = "secondCategoryId") String secondCategoryId) {
+		List<ProductCategory> thirdCategorys = productCategoryService.findCategoryByParentId(2, Long.valueOf(secondCategoryId));
+		return thirdCategorys;
+	}
 	
 	@RequestMapping(value = "/product/save", method = RequestMethod.POST)
 	public ModelAndView productSave(HttpServletRequest request,
@@ -119,6 +141,8 @@ public class ProductController {
 			@RequestParam(value = "goodCode") String goodCode,
 			@RequestParam(value = "product.originPlace") String originPlace,
 			@RequestParam(value = "parentId") String pid,
+			@RequestParam(value = "parentSecondId") String parentSecondId,
+			@RequestParam(value = "parentThirdId") String parentThirdId,
 			@RequestParam(value = "originalPrice") BigDecimal originalPrice,
 			@RequestParam(value = "product.price") BigDecimal price,
 			@RequestParam(value = "warrantDays") String warrantDays,//保质期单位
@@ -132,9 +156,19 @@ public class ProductController {
 			) throws SQLException {
 		
 		List<MultipartFile> files = ((MultipartHttpServletRequest) request).getFiles("productImages");
+		String parentId;
+		if(!parentThirdId.equals("0")) {
+			parentId = parentThirdId;
+		}else {
+			if(!parentSecondId.equals("0")) {
+				parentId = parentSecondId;
+			}else {
+				parentId = pid;
+			}
+		}
 		try {
 			productService.insert(name, goodCode, originPlace,
-					 pid, price, 
+					parentId, price, 
 					isMarketable, isTop, introduction, shop, files,originalPrice,warrantyPeriod,warrantDays,brandName,storageCondition);
 			ModelAndView mv = new ModelAndView("redirect:/product/list");
 			return mv;

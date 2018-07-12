@@ -11,18 +11,23 @@ if(isEmpty(product.id)){
   isEdit = true;
   
   var productId = 0;
+  var productGrade = 3;
 if(product.productCategoryThirdId!=null){
 productId = product.productCategoryThirdId;
+productGrade = 2;
 }else if(product.productCategoryTwoId!=null){
 productId = product.productCategoryTwoId;
+productGrade = 1;
 }else{
 productId = product.productCategoryId;
+productGrade = 0;
 }
 
 var haixinGoodId = 0;
 
 
 }
+var productCategoryTreeList = productCategoryTreeList;
 %>
 
 <style type="text/css">
@@ -48,7 +53,7 @@ css1{
     <hr data-am-widget="divider" class="am-divider am-divider-dashed am-margin-0" />
     
     <form class="validator-form" action="<%if (isAdd){%>/product/save<%}else{%>/product/update<%}%>" enctype="multipart/form-data" method="post">
-    <input type="hidden" name="product.id" value="${product.id!}" />
+    <input type="hidden" id="productId" name="product.id" value="${product.id!}" />
     <input type="hidden" name="product.shop" value="${shopId!}" />
     <div class="am-tabs am-margin" data-am-tabs="{noSwipe: 1}" id="doc-my-tabs">
       <ul class="am-tabs-nav am-nav am-nav-tabs">
@@ -96,56 +101,31 @@ css1{
             <label class="am-u-sm-4 am-u-md-3 am-text-right am-form-label">商品分类</label>
             <div class="am-u-sm-8 am-u-md-9">
           <%if(isAdd){%>
-          <select name="parentId" data-am-selected="{btnWidth: '100%', maxHeight: '200px', btnSize: 'sm', btnStyle: 'secondary'}">
+          <select id="firstCategory" name="parentId" data-am-selected="{btnWidth: '30%', maxHeight: '200px', btnSize: 'sm', btnStyle: 'secondary'}">
             <option value="0" selected>请选择...</option>
             <%for(list in productCategoryTreeList){%>
             <option value="${list.id}">
 			  ${list.name}
 			</option>
 			
-			<%for(child in list.childCategory){%>
-					<option value="${child.id}">
-					  <%if (child.grade == 1){%>
-					  <%for( i in range(0,child.grade)){%>--<%}%>
-					  <%}%>
-					  ${child.name}
-					</option>
-					
-						<%for(childTwo in child.childCategory){%>
-							<option value="${childTwo.id}">
-							  <%if (childTwo.grade == 2){%>
-							  <%for( i in range(0,childTwo.grade)){%>--<%}%>
-							  <%}%>
-							  ${childTwo.name}
-							</option>
-				<%}%>
-				<%}%>
+		
             <%}%>
           </select>
+          <select id="secondCategory" name="parentSecondId" data-am-selected="{btnWidth: '35%', maxHeight: '200px', btnSize: 'sm', btnStyle: 'secondary'}">
+          </select>
+          <select id="thirdCategory" name="parentThirdId" data-am-selected="{btnWidth: '30%', maxHeight: '200px', btnSize: 'sm', btnStyle: 'secondary'}">
+          </select>
           <%}else{%>
-          <select name="parentId" data-am-selected="{btnWidth: '100%', btnSize: 'sm'}">
+          <select id="firstCategoryUpdate" name="parentId" data-am-selected="{btnWidth: '30%', btnSize: 'sm'}">
            <%for(list in productCategoryTreeList){%>
-            <option value="${list.id}" <%if (productId! == list.id!){%>selected="selected" <%}%>>${list.name!}</option>
-			
-			<%for(child in list.childCategory){%>
-					<option value="${child.id}" <%if (productId! == child.id!){%>selected="selected" <%}%>>
-					  <%if (child.grade == 1){%>
-					  <%for( i in range(0,child.grade)){%>--<%}%>
-					  <%}%>
-					  ${child.name}
-					</option>
-					<%for(childTwo in child.childCategory){%>
-							<option value="${childTwo.id}" <%if (productId! == childTwo.id!){%>selected="selected" <%}%>>
-							  <%if (childTwo.grade == 2){%>
-							  <%for( i in range(0,childTwo.grade)){%>--<%}%>
-							  <%}%>
-							  ${childTwo.name}
-							</option>
-				<%}%>
-				<%}%>
+            <option value="${list.id}" <%if (product.productCategoryId! == list.id!){%>selected="selected" <%}%>>${list.name!}</option>
             <%}%>
            
 		</select>
+		 <select id="secondCategoryUpdate" name="parentSecondId" data-am-selected="{btnWidth: '35%', maxHeight: '200px', btnSize: 'sm', btnStyle: 'secondary'}">
+          </select>
+          <select id="thirdCategoryUpdate" name="parentThirdId" data-am-selected="{btnWidth: '30%', maxHeight: '200px', btnSize: 'sm', btnStyle: 'secondary'}">
+          </select>
           <%}%>
         </div>
           </div>
@@ -294,6 +274,64 @@ css1{
 <!-- content end -->
 <script>
   $().ready(function() {
+	  
+	  var firtstCategoryUpdateId = $("#firstCategoryUpdate").val();
+		 var productId = $("#productId").val();
+		 var product=null;
+		 alert(productId)
+		 if(productId!=null && productId!=''&&productId!=undefined){
+			 $.ajax({
+					type: "post", 
+					data:{'id':productId}, 
+					url: "/product/id", 
+					success: function(data) {
+						product = data;
+					} 
+				})
+		 }
+		 
+		 $("#secondCategory").html('')
+			$.ajax({
+				type: "post", 
+				data:{'firstCategoryId':firtstCategoryUpdateId}, 
+				url: "/secondCategory/list", 
+				success: function(data) {
+					$("#secondCategoryUpdate").append("<option value='0' selected>请选择...</option>");
+					$.each(data,function(index,val){
+						if(val.id == product.productCategoryTwoId){
+							$("#secondCategoryUpdate").append("<option selected='selected' value='"+val.id+"'>"+val.name+"</option>");
+						}else{
+							$("#secondCategoryUpdate").append("<option value='"+val.id+"'>"+val.name+"</option>");
+						}
+						
+					})
+					
+				} 
+				
+			})
+			
+			 $("#secondCategory").change(function(){
+				 var secondCategoryUpdateId = $("#secondCategoryUpdate").val();
+				$("#thirdCategoryUpdate").html('')
+				$.ajax({
+					type: "post", 
+					data:{'secondCategoryId':secondCategoryUpdateId}, 
+					url: "/thirdCategory/list", 
+					success: function(data) {
+						$("#thirdCategoryUpdate").append("<option value='0' selected>请选择...</option>");
+						$.each(data,function(index,val){
+							if(val.id == product.productCategoryThirdId){
+								$("#thirdCategoryUpdate").append("<option selected='selected'  value='"+val.id+"'>"+val.name+"</option>");
+							}else{
+								$("#thirdCategoryUpdate").append("<option value='"+val.id+"'>"+val.name+"</option>");
+							}
+							
+						})
+						
+					} 
+					
+				})
+			})
     
     // 商品图片左移
     $(".opr-img-left").livequery("click", function() {
@@ -406,6 +444,42 @@ css1{
 	$("#goodCode").val($("option:selected").val());
 	
 }
+ $("#firstCategory").change(function(){
+	 var firtstCategoryId = $("#firstCategory").val();
+	$("#secondCategory").html('')
+	$.ajax({
+		type: "post", 
+		data:{'firstCategoryId':firtstCategoryId}, 
+		url: "/secondCategory/list", 
+		success: function(data) {
+			$("#secondCategory").append("<option value='0' selected>请选择...</option>");
+			$.each(data,function(index,value){
+				$("#secondCategory").append("<option value='"+value.id+"'>"+value.name+"</option>");
+			})
+			
+		} 
+		
+	})
+ })
+ 
+  $("#secondCategory").change(function(){
+	 var secondCategoryId = $("#secondCategory").val();
+	$("#thirdCategory").html('')
+	$.ajax({
+		type: "post", 
+		data:{'secondCategoryId':secondCategoryId}, 
+		url: "/thirdCategory/list", 
+		success: function(data) {
+			$("#thirdCategory").append("<option value='0' selected>请选择...</option>");
+			$.each(data,function(index,val){
+				$("#thirdCategory").append("<option value='"+val.id+"'>"+val.name+"</option>");
+			})
+			
+		} 
+		
+	})
+ })
+
 </script>
 </body>
 </html>

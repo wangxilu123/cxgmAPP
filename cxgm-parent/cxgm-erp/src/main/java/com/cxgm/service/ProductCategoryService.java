@@ -46,6 +46,16 @@ public class ProductCategoryService {
 		return productCategoryList;
 	}
 	
+	public List<ProductCategory> findCategoryByParentId(Integer grade,Long parentId){
+		List<ProductCategory> childOneCategory = new ArrayList<>();
+		if(grade==1) {
+			childOneCategory = this.findByGradeAndParentId(1, parentId);
+		}
+		if(grade == 2) {
+			childOneCategory = this.findByGradeAndParentId(2, parentId);
+		}
+		return childOneCategory;
+	}
 	
 	public List<ProductCategory> getProductCategory(Integer grade){
 		List<ProductCategory> productCategoryTreeList = this.findByGrade(grade);
