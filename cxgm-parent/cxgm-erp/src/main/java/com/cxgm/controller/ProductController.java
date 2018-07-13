@@ -114,7 +114,7 @@ public class ProductController {
 	}
 	@RequestMapping(value = "/secondCategory/list", method = RequestMethod.POST)
 	@ResponseBody
-	public List<ProductCategory> secondCategory(HttpServletRequest request,@RequestParam(value = "firstCategoryId") String firstCategoryId) {
+	public List<ProductCategory> secondCategory(HttpServletRequest request,@RequestParam(value = "firstCategoryId",required=false) String firstCategoryId) {
 		List<ProductCategory> secondCategorys = productCategoryService.findCategoryByParentId(1, Long.valueOf(firstCategoryId));
 		return secondCategorys;
 	}
@@ -130,7 +130,7 @@ public class ProductController {
 	
 	@RequestMapping(value = "/thirdCategory/list", method = RequestMethod.POST)
 	@ResponseBody
-	public List<ProductCategory> thirdCategory(HttpServletRequest request,@RequestParam(value = "secondCategoryId") String secondCategoryId) {
+	public List<ProductCategory> thirdCategory(HttpServletRequest request,@RequestParam(value = "secondCategoryId",required=false) String secondCategoryId) {
 		List<ProductCategory> thirdCategorys = productCategoryService.findCategoryByParentId(2, Long.valueOf(secondCategoryId));
 		return thirdCategorys;
 	}

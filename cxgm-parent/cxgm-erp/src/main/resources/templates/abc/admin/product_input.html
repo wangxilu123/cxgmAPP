@@ -67,7 +67,7 @@ css1{
           <div class="am-form-group am-form-group-sm">
             <label class="am-u-sm-4 am-u-md-3 am-text-right am-form-label">商品名称</label>
             <div class="am-u-sm-8 am-u-md-9">
-            <input type="text" class="am-form-field"  id="goodName" name="goodName" onkeyup="test(this.value,event)" required><br/>
+            <input type="text" class="am-form-field"  id="goodName" name="goodName" value="${product.name!0}" onkeyup="test(this.value,event)" required><br/>
 			<select multiple="multiple" id="sel" onchange="test2()"
 				style="width:300px;display:none">
 			</select>
@@ -278,7 +278,6 @@ css1{
 	  var firtstCategoryUpdateId = $("#firstCategoryUpdate").val();
 		 var productId = $("#productId").val();
 		 var product=null;
-		 alert(productId)
 		 if(productId!=null && productId!=''&&productId!=undefined){
 			 $.ajax({
 					type: "post", 
