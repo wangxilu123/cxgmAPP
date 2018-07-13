@@ -222,6 +222,8 @@ public class ProductController {
 			@RequestParam(value = "goodCode") String goodCode,
 			@RequestParam(value = "product.originPlace") String originPlace,
 			@RequestParam(value = "parentId") String pid,
+			@RequestParam(value = "parentSecondId") String parentSecondId,
+			@RequestParam(value = "parentThirdId") String parentThirdId,
 			@RequestParam(value = "originalPrice") BigDecimal originalPrice,
 			@RequestParam(value = "product.price") BigDecimal price,
 			@RequestParam(value = "warrantDays") String warrantDays,//保质期单位
@@ -236,9 +238,19 @@ public class ProductController {
 		
 		List<MultipartFile> files = ((MultipartHttpServletRequest) request).getFiles("productImages");
 		String[] productImageIds = request.getParameterValues("productImageIds");
+		String parentId;
+		if(!parentThirdId.equals("0")) {
+			parentId = parentThirdId;
+		}else {
+			if(!parentSecondId.equals("0")) {
+				parentId = parentSecondId;
+			}else {
+				parentId = pid;
+			}
+		}
 		try {
 			productService.update(id,name, goodCode, originPlace,
-					 pid, price,isMarketable, isTop, introduction, shop, files,productImageIds,originalPrice,warrantyPeriod,warrantDays,brandName,storageCondition);
+					parentId, price,isMarketable, isTop, introduction, shop, files,productImageIds,originalPrice,warrantyPeriod,warrantDays,brandName,storageCondition);
 			ModelAndView mv = new ModelAndView("redirect:/product/list");
 			return mv;
 		}catch(Exception e) {

@@ -276,9 +276,11 @@ css1{
   $().ready(function() {
 	  
 	  var firtstCategoryUpdateId = $("#firstCategoryUpdate").val();
+	 
 		 var productId = $("#productId").val();
+		 $("#secondCategoryUpdate").html('')
+		 $("#thirdCategoryUpdate").html('')
 		 var product=null;
-		 alert(productId)
 		 if(productId!=null && productId!=''&&productId!=undefined){
 			 $.ajax({
 					type: "post", 
@@ -286,52 +288,53 @@ css1{
 					url: "/product/id", 
 					success: function(data) {
 						product = data;
-					} 
-				})
-		 }
-		 
-		 $("#secondCategory").html('')
-			$.ajax({
-				type: "post", 
-				data:{'firstCategoryId':firtstCategoryUpdateId}, 
-				url: "/secondCategory/list", 
-				success: function(data) {
-					$("#secondCategoryUpdate").append("<option value='0' selected>请选择...</option>");
-					$.each(data,function(index,val){
-						if(val.id == product.productCategoryTwoId){
-							$("#secondCategoryUpdate").append("<option selected='selected' value='"+val.id+"'>"+val.name+"</option>");
-						}else{
-							$("#secondCategoryUpdate").append("<option value='"+val.id+"'>"+val.name+"</option>");
-						}
 						
-					})
-					
-				} 
-				
-			})
-			
-			 $("#secondCategory").change(function(){
-				 var secondCategoryUpdateId = $("#secondCategoryUpdate").val();
-				$("#thirdCategoryUpdate").html('')
-				$.ajax({
-					type: "post", 
-					data:{'secondCategoryId':secondCategoryUpdateId}, 
-					url: "/thirdCategory/list", 
-					success: function(data) {
-						$("#thirdCategoryUpdate").append("<option value='0' selected>请选择...</option>");
-						$.each(data,function(index,val){
-							if(val.id == product.productCategoryThirdId){
-								$("#thirdCategoryUpdate").append("<option selected='selected'  value='"+val.id+"'>"+val.name+"</option>");
-							}else{
-								$("#thirdCategoryUpdate").append("<option value='"+val.id+"'>"+val.name+"</option>");
-							}
+						$.ajax({
+							type: "post", 
+							data:{'firstCategoryId':firtstCategoryUpdateId}, 
+							url: "/secondCategory/list", 
+							success: function(data) {
+								$("#secondCategoryUpdate").append("<option value='0' selected>请选择...</option>");
+								$.each(data,function(index,val){
+									if(val.id == product.productCategoryTwoId){
+										$("#secondCategoryUpdate").append("<option selected='selected' value='"+val.id+"'>"+val.name+"</option>");
+									}else{
+										$("#secondCategoryUpdate").append("<option value='"+val.id+"'>"+val.name+"</option>");
+									}
+									
+								})
+								 var secondCategoryUpdateId = $("#secondCategoryUpdate").val();
+								
+								$.ajax({
+									type: "post", 
+									data:{'secondCategoryId':secondCategoryUpdateId}, 
+									url: "/thirdCategory/list", 
+									success: function(data) {
+										$("#thirdCategoryUpdate").append("<option value='0' selected>请选择...</option>");
+										$.each(data,function(index,val){
+											if(val.id == product.productCategoryThirdId){
+												$("#thirdCategoryUpdate").append("<option selected='selected'  value='"+val.id+"'>"+val.name+"</option>");
+											}else{
+												$("#thirdCategoryUpdate").append("<option value='"+val.id+"'>"+val.name+"</option>");
+											}
+											
+										})
+										
+									} 
+									
+								})
+							} 
 							
 						})
 						
 					} 
-					
 				})
-			})
+				
+		
+		 }
+		 
+		
+			
     
     // 商品图片左移
     $(".opr-img-left").livequery("click", function() {
