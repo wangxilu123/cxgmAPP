@@ -74,11 +74,11 @@ public class PaymentController {
 	
 	public static final String appsecret = "c15e1da71829aa86776f9b4fc40514d0"; 
 	
-	public static final String alipay_appId = "";//支付宝APP应用ID
+	public static final String alipay_appId = "2018051860090884";//支付宝APP应用ID
 	
-	public static final String alipay_private_key = "";//支付宝私钥
+	public static final String alipay_private_key = "MIICdgIBADANBgkqhkiG9w0BAQEFAASCAmAwggJcAgEAAoGBAMKRYdKPzksg6JKDAPpNKKY7ddFCDZGapOVc/vIsd/r623PObxRUaIF88SKyadn1aHxRrv/fclQe5ujlFvDFrSSyQ1AcudYDCQVVdtbq+aYGBIPI/4LV2KkDcCAcaOuvFxRnVINZ+WFdXgS8/JVc3UVZkzPbpJTzD/vnWjrUKZMhAgMBAAECgYBW8GdpkuB3KYlCjk8NiRS00rTegElX2mX8JwW0aLJj71vH72IrD1xzH8UP3/D0d3fstQMhSlLny7caMeOCSpIGnrlIOyrvI4JjXT4sWn5Q7ph6y3241u32mXY4hpFGLeJMpaOsCUeVdfxWItjZRMzvfYb3nBDodQMQ44SQkzs3kQJBAPxz7y3Qtlmmv+NrlhCoPYzSmU+Fy4l19dkQBUE/bxVbzB81kzsjO82yg4aDhfbHG9j9AlEWx2beFIJnyHNAuDcCQQDFTTy8zxZfsXLNVOqvokJHztb2cjrgfC2X2kzjZhReWhWdIAHgNlq70ZVubi8inT2WWad2IM2rtIcADU0jt7NnAkEA3HMswHhKVD1NwX04fPE9VlStNgki9LWCavsXa6PGEAOqWvKA0BpzZatmOTdu61FxmulNdZwLomN5y2pvW11/vwJANtJpSAU6sEg8H/WyaC7rv8wnSr8ewPWALauIpb7ddgIN82TLYKN5vqpTnSWcjz+ltzseHuKqg0VcJZWMk5odjQJACza4jfqjefaMY4ieFX7/b1hQEOO/O/IPi0LEQItQpcFD0EgxikYQfnS1IG38rmc7ELuv0XPL91mH6zp0Il5FJA==";//支付宝私钥
 	
-	public static final String alipay_public_key = "";//支付宝公钥
+	public static final String alipay_public_key = "MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDCkWHSj85LIOiSgwD6TSimO3XRQg2RmqTlXP7yLHf6+ttzzm8UVGiBfPEismnZ9Wh8Ua7/33JUHubo5Rbwxa0kskNQHLnWAwkFVXbW6vmmBgSDyP+C1dipA3AgHGjrrxcUZ1SDWflhXV4EvPyVXN1FWZMz26SU8w/751o61CmTIQIDAQAB";//支付宝公钥
 
 	/**
 	 * 微信统一下单
@@ -389,7 +389,7 @@ public class PaymentController {
 			    response.setContentType("text/html;charset=UTF-8");  
 			    String orderId= request.getParameter("orderId");  
 			       
-			    Order order=orderService.findById(Integer.parseInt(orderId));//获取订单数据  
+			    Order order=orderService.findById(!"".equals(orderId)?Integer.parseInt(orderId):null);//获取订单数据  
 			    String money = "0.01";//获取订单金额  
 			    //金额转化为分为单位  
 			    float sessionmoney = Float.parseFloat(money);  
@@ -405,9 +405,9 @@ public class PaymentController {
 		        AlipayTradeAppPayModel model = new AlipayTradeAppPayModel();
 		        model.setPassbackParams("测试数据");;  //描述信息  添加附加数据
 		        model.setSubject("魅格"); //商品标题
-		        model.setOutTradeNo(order.getOrderNum()); //商家订单编号
+		        model.setOutTradeNo(order!=null?order.getOrderNum():""); //商家订单编号
 		        model.setTimeoutExpress("30m"); //超时关闭该订单时间
-		        model.setTotalAmount(order.getOrderAmount().toString());  //订单总金额
+		        model.setTotalAmount(order!=null?order.getOrderAmount().toString():"");  //订单总金额
 		        model.setProductCode("QUICK_MSECURITY_PAY"); //销售产品码，商家和支付宝签约的产品码，为固定值QUICK_MSECURITY_PAY
 		        aliRequest.setBizModel(model);
 		        aliRequest.setNotifyUrl("");  //回调地址
