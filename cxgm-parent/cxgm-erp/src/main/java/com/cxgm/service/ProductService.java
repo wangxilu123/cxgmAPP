@@ -8,7 +8,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.json.JSONObject;
+import net.sf.json.JSONArray;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -27,8 +28,6 @@ import com.cxgm.domain.ProductImage;
 import com.cxgm.domain.ProductTransfer;
 import com.cxgm.domain.ShopCategory;
 import com.cxgm.exception.TipException;
-
-import net.sf.json.JSONArray;
 
 @Service
 public class ProductService {
@@ -56,7 +55,7 @@ public class ProductService {
 			String pid,
 			BigDecimal price,
 			boolean isMarketable,boolean isTop,String introduction,
-			Integer shop,List<MultipartFile> files,BigDecimal originalPrice,Integer warrantyPeriod,String warrantDays,String brandName,String storageCondition) {
+			Integer shop,List<MultipartFile> files,BigDecimal originalPrice,Integer warrantyPeriod,String warrantDays,String brandName,String storageCondition,String fullName,String weight) {
 		StringBuilder sb = new StringBuilder();
 		//根据goodCode查询海信商品信息
 		HaixinGoodExample  example= new HaixinGoodExample();
@@ -71,8 +70,13 @@ public class ProductService {
         	product.setStorageCondition(storageCondition);
         	product.setSn(DateKit.generateSn());
         	product.setName(name);
+        	product.setFullName(fullName);
         	product.setOriginPlace(originPlace);
-        	product.setWeight(haixinGoodList.size()!=0?haixinGoodList.get(0).getSpecifications():"");
+        	if("0".equals(weight)){
+        		product.setWeight(haixinGoodList.size()!=0?haixinGoodList.get(0).getSpecifications():"");
+        	}else{
+        		product.setWeight(weight+"Kg");
+        	}
         	product.setUnit(haixinGoodList.size()!=0?haixinGoodList.get(0).getUnit():"");
         	product.setGoodCode(goodCode);
         	if(warrantyPeriod!=null&&warrantyPeriod!=0){
@@ -146,7 +150,7 @@ public class ProductService {
         	product.setImage(sb.toString());
         	Integer productId = productDao.insert(product);
         	//限时抢购消息推送
-        	if(productId!=null&&!originalPrice.equals(price)){
+        	if(productId!=null&&originalPrice.compareTo(price)==1){
         		
         		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         	    
@@ -207,13 +211,14 @@ public class ProductService {
 			String pid,
 			BigDecimal price,
 			boolean isMarketable,boolean isTop,String introduction,
-			Integer shop,List<MultipartFile> files,String[] productImageIds,BigDecimal originalPrice,Integer warrantyPeriod,String warrantDays,String brandName,String storageCondition) {
+			Integer shop,List<MultipartFile> files,String[] productImageIds,BigDecimal originalPrice,Integer warrantyPeriod,String warrantDays,String brandName,String storageCondition,String fullName,String weight) {
 		StringBuilder sb = new StringBuilder();
         try {
         	Product product = productDao.findProductById(id.longValue());
         	product.setName(name);
         	product.setOriginPlace(originPlace);
         	product.setBrandName(brandName);
+        	product.setFullName(fullName);
         	product.setStorageCondition(storageCondition);
         	product.setWarrantyPeriod(warrantyPeriod+warrantDays);
         	product.setIsTop(isTop);

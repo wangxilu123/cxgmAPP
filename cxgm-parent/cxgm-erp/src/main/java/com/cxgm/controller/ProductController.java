@@ -140,6 +140,8 @@ public class ProductController {
 			@RequestParam(value = "goodName") String name,
 			@RequestParam(value = "goodCode") String goodCode,
 			@RequestParam(value = "product.originPlace") String originPlace,
+			@RequestParam(value = "fullName") String fullName,
+			@RequestParam(value = "weight") String weight,
 			@RequestParam(value = "parentId") String pid,
 			@RequestParam(value = "parentSecondId") String parentSecondId,
 			@RequestParam(value = "parentThirdId") String parentThirdId,
@@ -169,7 +171,7 @@ public class ProductController {
 		try {
 			productService.insert(name, goodCode, originPlace,
 					parentId, price, 
-					isMarketable, isTop, introduction, shop, files,originalPrice,warrantyPeriod,warrantDays,brandName,storageCondition);
+					isMarketable, isTop, introduction, shop, files,originalPrice,warrantyPeriod,warrantDays,brandName,storageCondition,fullName,weight);
 			ModelAndView mv = new ModelAndView("redirect:/product/list");
 			return mv;
 		}catch(Exception e) {
@@ -222,6 +224,8 @@ public class ProductController {
 			@RequestParam(value = "goodCode") String goodCode,
 			@RequestParam(value = "product.originPlace") String originPlace,
 			@RequestParam(value = "parentId") String pid,
+			@RequestParam(value = "fullName") String fullName,
+			@RequestParam(value = "weight") String weight,
 			@RequestParam(value = "parentSecondId") String parentSecondId,
 			@RequestParam(value = "parentThirdId") String parentThirdId,
 			@RequestParam(value = "originalPrice") BigDecimal originalPrice,
@@ -250,7 +254,7 @@ public class ProductController {
 		}
 		try {
 			productService.update(id,name, goodCode, originPlace,
-					parentId, price,isMarketable, isTop, introduction, shop, files,productImageIds,originalPrice,warrantyPeriod,warrantDays,brandName,storageCondition);
+					parentId, price,isMarketable, isTop, introduction, shop, files,productImageIds,originalPrice,warrantyPeriod,warrantDays,brandName,storageCondition,fullName,weight);
 			ModelAndView mv = new ModelAndView("redirect:/product/list");
 			return mv;
 		}catch(Exception e) {

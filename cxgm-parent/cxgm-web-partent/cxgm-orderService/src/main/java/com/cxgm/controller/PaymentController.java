@@ -407,10 +407,10 @@ public class PaymentController {
 		        model.setSubject("魅格"); //商品标题
 		        model.setOutTradeNo(order!=null?order.getOrderNum():""); //商家订单编号
 		        model.setTimeoutExpress("30m"); //超时关闭该订单时间
-		        model.setTotalAmount(order!=null?order.getOrderAmount().toString():"");  //订单总金额
+		        model.setTotalAmount("0.01");  //订单总金额
 		        model.setProductCode("QUICK_MSECURITY_PAY"); //销售产品码，商家和支付宝签约的产品码，为固定值QUICK_MSECURITY_PAY
 		        aliRequest.setBizModel(model);
-		        aliRequest.setNotifyUrl("");  //回调地址
+		        aliRequest.setNotifyUrl("https://api.xx.com/receive_notify.htm");  //回调地址
 		        String orderStr = "";
 		        try {
 		                //这里和普通的接口调用不同，使用的是sdkExecute

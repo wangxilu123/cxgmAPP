@@ -99,7 +99,7 @@ public class OrderServiceImpl implements OrderService {
 			orderProduct.setCreateTime(new Date());
 			orderProductMapper.insert(orderProduct);
 			// 修改销量
-			Product product = productMapper.findProductByGoodCode(orderProduct.getGoodCode());
+			Product product = productMapper.findProductById(new Long(orderProduct.getProductId()));
 
 			if (product != null) {
 				product.setSales(product.getSales() != null ? product.getSales()

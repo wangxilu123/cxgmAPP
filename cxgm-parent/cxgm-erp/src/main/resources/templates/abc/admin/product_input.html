@@ -67,11 +67,17 @@ css1{
           <div class="am-form-group am-form-group-sm">
             <label class="am-u-sm-4 am-u-md-3 am-text-right am-form-label">商品名称</label>
             <div class="am-u-sm-8 am-u-md-9">
-            <input type="text" class="am-form-field"  id="goodName" name="goodName" value="${product.name!0}" onkeyup="test(this.value,event)" required><br/>
+            <input type="text" class="am-form-field"  id="goodName" name="goodName" value="${product.name!}" onkeyup="test(this.value,event)" required><br/>
 			<select multiple="multiple" id="sel" onchange="test2()"
 				style="width:300px;display:none">
 			</select>
 			</div>
+          </div>
+          <div class="am-form-group am-form-group-sm">
+            <label class="am-u-sm-4 am-u-md-3 am-text-right am-form-label">商品副标题</label>
+            <div class="am-u-sm-8 am-u-md-9">
+              <input type="text" class="am-form-field" id="fullName" name="fullName" value="${product.fullName!}"/>
+            </div>
           </div>
           <div class="am-form-group am-form-group-sm">
             <label class="am-u-sm-4 am-u-md-3 am-text-right am-form-label">商品编号</label>
@@ -141,6 +147,15 @@ css1{
               <input type="number" class="am-form-field" name="product.price" value="${product.price!0}" min="0"  step="0.01" required />
             </div>
           </div>
+          <div class="am-form-group am-form-group-sm">
+            <label class="am-u-sm-4 am-u-md-3 am-text-right am-form-label">商品重量</label>
+            <div class="am-u-sm-5 am-u-md-7">
+              <input type="number" class="am-form-field" name="weight" value="${product.weight!0}" min="0" step="0.1" placeholder="商品重量"  />
+            </div>
+            <div class="am-u-sm-3 am-u-md-2">kg
+            </div>
+          </div>
+          
           <div class="am-form-group am-form-group-sm">
             <label class="am-u-sm-4 am-u-md-3 am-text-right am-form-label">保质期</label>
             <div class="am-u-sm-5 am-u-md-7">
