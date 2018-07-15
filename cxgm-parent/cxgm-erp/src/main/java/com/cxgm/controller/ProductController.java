@@ -2,6 +2,7 @@ package com.cxgm.controller;
 
 import java.math.BigDecimal;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -142,9 +143,9 @@ public class ProductController {
 			@RequestParam(value = "product.originPlace") String originPlace,
 			@RequestParam(value = "fullName") String fullName,
 			@RequestParam(value = "weight") String weight,
-			@RequestParam(value = "parentId") String pid,
-			@RequestParam(value = "parentSecondId") String parentSecondId,
-			@RequestParam(value = "parentThirdId") String parentThirdId,
+			@RequestParam(value = "parentId",required=false) String pid,
+			@RequestParam(value = "parentSecondId",required=false) String parentSecondId,
+			@RequestParam(value = "parentThirdId",required=false) String parentThirdId,
 			@RequestParam(value = "originalPrice") BigDecimal originalPrice,
 			@RequestParam(value = "product.price") BigDecimal price,
 			@RequestParam(value = "warrantDays") String warrantDays,//保质期单位
@@ -154,7 +155,9 @@ public class ProductController {
 			@RequestParam(value = "product.warrantyPeriod") Integer warrantyPeriod,//保质期
 			@RequestParam(value = "brandName",required=false) String brandName,
 			@RequestParam(value = "storageCondition",required=false) String storageCondition,
-			@RequestParam(value = "product.shop") Integer shop
+			@RequestParam(value = "product.shop") Integer shop,
+			@RequestParam(value = "startTime") String startTime,
+			@RequestParam(value = "endTime") String endTime
 			) throws SQLException {
 		
 		List<MultipartFile> files = ((MultipartHttpServletRequest) request).getFiles("productImages");
@@ -171,7 +174,7 @@ public class ProductController {
 		try {
 			productService.insert(name, goodCode, originPlace,
 					parentId, price, 
-					isMarketable, isTop, introduction, shop, files,originalPrice,warrantyPeriod,warrantDays,brandName,storageCondition,fullName,weight);
+					isMarketable, isTop, introduction, shop, files,originalPrice,warrantyPeriod,warrantDays,brandName,storageCondition,fullName,weight,startTime,endTime);
 			ModelAndView mv = new ModelAndView("redirect:/product/list");
 			return mv;
 		}catch(Exception e) {
@@ -201,6 +204,10 @@ public class ProductController {
 	public ModelAndView productEdit(HttpServletRequest request) {
 		String productId = request.getParameter("id");
 		ProductTransfer product = productService.findById(Long.valueOf(productId));
+		SimpleDateFormat str = new SimpleDateFormat("yyyy-MM-dd"); 
+		product.setNewendTime(str.format(product.getEndTime()));
+		product.setNewstartTime(str.format(product.getStartTime()));
+		
 		List<ProductCategory> productCategoryTreeList = productCategoryService.getProductCategory(0);
 		request.setAttribute("productCategoryTreeList", productCategoryTreeList);
 		SystemConfig systemConfig = new SystemConfig();
@@ -237,7 +244,9 @@ public class ProductController {
 			@RequestParam(value = "product.warrantyPeriod") Integer warrantyPeriod,//保质期
 			@RequestParam(value = "brandName",required=false) String brandName,
 			@RequestParam(value = "storageCondition",required=false) String storageCondition,
-			@RequestParam(value = "product.shop") Integer shop
+			@RequestParam(value = "product.shop") Integer shop,
+			@RequestParam(value = "startTime") String startTime,
+			@RequestParam(value = "endTime") String endTime
 			) throws SQLException {
 		
 		List<MultipartFile> files = ((MultipartHttpServletRequest) request).getFiles("productImages");
@@ -254,7 +263,7 @@ public class ProductController {
 		}
 		try {
 			productService.update(id,name, goodCode, originPlace,
-					parentId, price,isMarketable, isTop, introduction, shop, files,productImageIds,originalPrice,warrantyPeriod,warrantDays,brandName,storageCondition,fullName,weight);
+					parentId, price,isMarketable, isTop, introduction, shop, files,productImageIds,originalPrice,warrantyPeriod,warrantDays,brandName,storageCondition,fullName,weight,startTime,endTime);
 			ModelAndView mv = new ModelAndView("redirect:/product/list");
 			return mv;
 		}catch(Exception e) {

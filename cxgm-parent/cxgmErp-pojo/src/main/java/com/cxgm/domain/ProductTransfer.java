@@ -120,9 +120,49 @@ public class ProductTransfer {
 	private Boolean deleteFlag;
 	
 	private String barCode;
+	
+    private Date startTime;
+    
+    private Date endTime;
+    
+    private String newstartTime;
+    
+    private String newendTime;
  
 	public Boolean getDeleteFlag() {
 		return deleteFlag;
+	}
+
+	public Date getStartTime() {
+		return startTime;
+	}
+
+	public String getNewstartTime() {
+		return newstartTime;
+	}
+
+	public void setNewstartTime(String newstartTime) {
+		this.newstartTime = newstartTime;
+	}
+
+	public String getNewendTime() {
+		return newendTime;
+	}
+
+	public void setNewendTime(String newendTime) {
+		this.newendTime = newendTime;
+	}
+
+	public void setStartTime(Date startTime) {
+		this.startTime = startTime;
+	}
+
+	public Date getEndTime() {
+		return endTime;
+	}
+
+	public void setEndTime(Date endTime) {
+		this.endTime = endTime;
 	}
 
 	public void setDeleteFlag(Boolean deleteFlag) {

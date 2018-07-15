@@ -52,7 +52,7 @@ css1{
 
     <hr data-am-widget="divider" class="am-divider am-divider-dashed am-margin-0" />
     
-    <form class="validator-form" action="<%if (isAdd){%>/product/save<%}else{%>/product/update<%}%>" enctype="multipart/form-data" method="post">
+    <form class="validator-form" action="<%if (isAdd){%>/product/save<%}else{%>/product/update<%}%>" enctype="multipart/form-data" method="post" name="myForm">
     <input type="hidden" id="productId" name="product.id" value="${product.id!}" />
     <input type="hidden" name="product.shop" value="${shopId!}" />
     <div class="am-tabs am-margin" data-am-tabs="{noSwipe: 1}" id="doc-my-tabs">
@@ -138,9 +138,23 @@ css1{
           <div class="am-form-group am-form-group-sm">
             <label class="am-u-sm-4 am-u-md-3 am-text-right am-form-label">本店原价</label>
             <div class="am-u-sm-8 am-u-md-9">
-              <input type="number" class="am-form-field" name="originalPrice" value="${product.originalPrice!0}" min="0" step="0.01" required />
+              <input type="number" class="am-form-field" name="originalPrice" value="${product.originalPrice!0}" min="0" step="0.01" required  onkeyup="showSelectValue(this)"/>
             </div>
           </div>
+          
+          <div id="startTime" class="am-form-group am-form-group-sm"  style="display:none;">
+            <label class="am-u-sm-4 am-u-md-3 am-text-right am-form-label">限时优惠开始时间</label>
+            <div class="am-u-sm-8 am-u-md-9">
+              <input type="text" name="startTime" class="am-form-field" placeholder="限时优惠开始时间" value="${product.newstartTime!}" data-am-datepicker readonly required />
+            </div>
+          </div>
+          <div id="endTime" class="am-form-group am-form-group-sm"  style="display:none;">
+            <label class="am-u-sm-4 am-u-md-3 am-text-right am-form-label">限时优惠结束时间</label>
+            <div class="am-u-sm-8 am-u-md-9">
+              <input type="text" name="endTime" class="am-form-field" placeholder="限时优惠结束时间" value="${product.newendTime!}" data-am-datepicker readonly required />
+            </div>
+          </div>
+          
           <div class="am-form-group am-form-group-sm">
             <label class="am-u-sm-4 am-u-md-3 am-text-right am-form-label">本店现价</label>
             <div class="am-u-sm-8 am-u-md-9">
@@ -498,6 +512,17 @@ css1{
 	})
  })
 
+ function showSelectValue(){
+	        var selectvalue=document.myForm.originalPrice.value;  
+	        if(selectvalue==0){
+	        	document.getElementById('startTime').style.display = "none";
+	        	document.getElementById('endTime').style.display = "none";
+	        }else{
+	        	document.getElementById('startTime').style.display = "block";
+	        	document.getElementById('endTime').style.display = "block";
+	        }
+	       
+	   }
 </script>
 </body>
 </html>

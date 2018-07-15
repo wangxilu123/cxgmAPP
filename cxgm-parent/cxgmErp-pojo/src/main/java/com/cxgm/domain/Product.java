@@ -122,7 +122,9 @@ public class Product {
     
     private String barCode;
     
+    private Date startTime;
     
+    private Date endTime;
 	public String getDetailImage() {
 		return detailImage;
 	}
@@ -149,6 +151,22 @@ public class Product {
 
 	public String getGoodCode() {
 		return goodCode;
+	}
+
+	public Date getStartTime() {
+		return startTime;
+	}
+
+	public void setStartTime(Date startTime) {
+		this.startTime = startTime;
+	}
+
+	public Date getEndTime() {
+		return endTime;
+	}
+
+	public void setEndTime(Date endTime) {
+		this.endTime = endTime;
 	}
 
 	public void setGoodCode(String goodCode) {

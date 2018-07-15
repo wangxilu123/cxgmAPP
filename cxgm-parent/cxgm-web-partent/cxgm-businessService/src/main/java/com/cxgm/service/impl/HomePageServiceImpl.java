@@ -1,6 +1,8 @@
 package com.cxgm.service.impl;
 
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -169,6 +171,28 @@ public class HomePageServiceImpl implements HomePageService {
 	@Override
 	public ProductTransfer findProductDetail(Integer productId,Integer shopId,Integer userId) {
 		ProductTransfer product = productDao.findById((long)productId);
+		
+		if(product.getStartTime()!=null&&product.getEndTime()!=null){
+			Calendar date = Calendar.getInstance();
+			
+			date.setTime(new Date());
+
+	        Calendar begin = Calendar.getInstance();
+	        begin.setTime(product.getStartTime());
+
+	        Calendar end = Calendar.getInstance();
+	        end.setTime(product.getEndTime());
+			
+			if(date.after(begin) && date.before(end)){
+				product.setPrice(product.getPrice());
+				product.setOriginalPrice(product.getOriginalPrice());
+			}else{
+				product.setPrice(product.getOriginalPrice());
+				product.setOriginalPrice(null);
+			}
+		}else{
+			product.setOriginalPrice(null);
+		}
 		
 		if(product.getImage()!=null&&"".equals(product.getImage())==false){
 			String[] imageIds = product.getImage().split(",");

@@ -55,7 +55,7 @@ public class ProductService {
 			String pid,
 			BigDecimal price,
 			boolean isMarketable,boolean isTop,String introduction,
-			Integer shop,List<MultipartFile> files,BigDecimal originalPrice,Integer warrantyPeriod,String warrantDays,String brandName,String storageCondition,String fullName,String weight) {
+			Integer shop,List<MultipartFile> files,BigDecimal originalPrice,Integer warrantyPeriod,String warrantDays,String brandName,String storageCondition,String fullName,String weight,String startTime,String endTime) {
 		StringBuilder sb = new StringBuilder();
 		//根据goodCode查询海信商品信息
 		HaixinGoodExample  example= new HaixinGoodExample();
@@ -64,6 +64,7 @@ public class ProductService {
 		
 		List<HaixinGood> haixinGoodList = haixinGoodMapper.selectByExample(example);
 		
+		SimpleDateFormat str = new SimpleDateFormat("yyyy-MM-dd"); 
         try {
         	Product product = new Product();
         	product.setBrandName(brandName);
@@ -72,6 +73,8 @@ public class ProductService {
         	product.setName(name);
         	product.setFullName(fullName);
         	product.setOriginPlace(originPlace);
+        	product.setStartTime(str.parse(startTime));
+        	product.setEndTime(str.parse(endTime));
         	if("0".equals(weight)){
         		product.setWeight(haixinGoodList.size()!=0?haixinGoodList.get(0).getSpecifications():"");
         	}else{
@@ -211,8 +214,9 @@ public class ProductService {
 			String pid,
 			BigDecimal price,
 			boolean isMarketable,boolean isTop,String introduction,
-			Integer shop,List<MultipartFile> files,String[] productImageIds,BigDecimal originalPrice,Integer warrantyPeriod,String warrantDays,String brandName,String storageCondition,String fullName,String weight) {
+			Integer shop,List<MultipartFile> files,String[] productImageIds,BigDecimal originalPrice,Integer warrantyPeriod,String warrantDays,String brandName,String storageCondition,String fullName,String weight,String startTime,String endTime) {
 		StringBuilder sb = new StringBuilder();
+		SimpleDateFormat str = new SimpleDateFormat("yyyy-MM-dd"); 
         try {
         	Product product = productDao.findProductById(id.longValue());
         	product.setName(name);
@@ -221,6 +225,8 @@ public class ProductService {
         	product.setFullName(fullName);
         	product.setStorageCondition(storageCondition);
         	product.setWarrantyPeriod(warrantyPeriod+warrantDays);
+        	product.setStartTime(str.parse(startTime));
+        	product.setEndTime(str.parse(endTime));
         	product.setIsTop(isTop);
         	if(pid==null || "".equals(pid)) {
         		throw new TipException("请选择商品分类");
