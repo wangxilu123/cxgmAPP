@@ -70,8 +70,8 @@ true; }%>
 								<label class="am-u-sm-4 am-u-md-3 am-text-right am-form-label" >广告地址</label>
 								<div class="am-u-sm-8 am-u-md-9">
 									<%if (isAdd){%> <input type="text"
-										class="am-form-field js-pattern-username" name="notifyUrl"
-										placeholder="广告地址" minlength="2" maxlength="20" required />
+										class="am-form-field" name="notifyUrl"
+										placeholder="广告地址" required />
 									<div class="am-text-warning am-margin-top-xs am-text-xs">${notifyUrl!}</div>
 									<%}else{%> ${advertisement.notifyUrl!} <input type="hidden"
 										name="notifyUrl" value="${advertisement.notifyUrl!}" /> <%}%>
@@ -93,7 +93,7 @@ true; }%>
 								<label class="am-u-sm-4 am-u-md-3 am-text-right am-form-label">排列序号</label>
 								<div class="am-u-sm-8 am-u-md-9">
 									<%if (isAdd){%> <input type="number" min="0"
-										class="am-form-field js-pattern-username" name="number"
+										class="am-form-field" name="number"
 										placeholder="广告序号" maxlength="20" required />
 									<div class="am-text-warning am-margin-top-xs am-text-xs">${number!}</div>
 									<%}else{%> ${advertisement.number!} <input type="hidden"

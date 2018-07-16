@@ -89,6 +89,80 @@ public class HomePageServiceImpl implements HomePageService {
 	}
 	
 	@Override
+	public List<ProductTransfer> findHotProduct(Map<String,Object> map,Integer userId){
+		
+		List<ProductTransfer> list = productDao.findHotProduct(map);
+		
+		for(ProductTransfer productTransfer : list){
+			if(productTransfer.getImage()!=null&&"".equals(productTransfer.getImage())==false){
+				String[] imageIds = productTransfer.getImage().split(",");
+				
+				ProductImage image = productImageMapper.findById(Long.valueOf(imageIds[0]));
+				
+				productTransfer.setImage(image!=null?image.getUrl():"");
+			}
+			//根据商品ID和门店ID查询促销信息
+			List<Promotion> promotionList = promotionMapper.findByProductId(map);
+			
+			productTransfer.setPromotionList(promotionList);
+			
+			//根据商品ID和门店ID查询购物车信息
+			if(userId!=null){
+				
+				ShopCartExample example = new ShopCartExample();
+				example.createCriteria().andShopIdEqualTo(productTransfer.getShopId()).andProductIdEqualTo(productTransfer.getId().intValue()).andUserIdEqualTo(userId);
+				
+				List<ShopCart> cartList = shopCartMapper.selectByExample(example);
+				if(cartList!=null&&cartList.size()!=0){
+					productTransfer.setShopCartNum(cartList.get(0).getGoodNum());
+					productTransfer.setShopCartId(cartList.get(0).getId());
+				}
+				
+			}
+			
+			
+		}
+		return list;
+	}
+	
+	@Override
+	public List<ProductTransfer> findNewProduct(Map<String,Object> map,Integer userId){
+		
+		List<ProductTransfer> list = productDao.findNewProduct(map);
+		
+		for(ProductTransfer productTransfer : list){
+			if(productTransfer.getImage()!=null&&"".equals(productTransfer.getImage())==false){
+				String[] imageIds = productTransfer.getImage().split(",");
+				
+				ProductImage image = productImageMapper.findById(Long.valueOf(imageIds[0]));
+				
+				productTransfer.setImage(image!=null?image.getUrl():"");
+			}
+			//根据商品ID和门店ID查询促销信息
+			List<Promotion> promotionList = promotionMapper.findByProductId(map);
+			
+			productTransfer.setPromotionList(promotionList);
+			
+			//根据商品ID和门店ID查询购物车信息
+			if(userId!=null){
+				
+				ShopCartExample example = new ShopCartExample();
+				example.createCriteria().andShopIdEqualTo(productTransfer.getShopId()).andProductIdEqualTo(productTransfer.getId().intValue()).andUserIdEqualTo(userId);
+				
+				List<ShopCart> cartList = shopCartMapper.selectByExample(example);
+				if(cartList!=null&&cartList.size()!=0){
+					productTransfer.setShopCartNum(cartList.get(0).getGoodNum());
+					productTransfer.setShopCartId(cartList.get(0).getId());
+				}
+				
+			}
+			
+			
+		}
+		return list;
+	}
+	
+	@Override
 	public List<ProductTransfer> findHotCategory(Map<String,Object> map){
 		return productDao.findHotCategory(map);
 	}

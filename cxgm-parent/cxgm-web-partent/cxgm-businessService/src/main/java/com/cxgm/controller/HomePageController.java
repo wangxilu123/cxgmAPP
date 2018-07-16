@@ -148,8 +148,7 @@ public class HomePageController {
 		Map<String,Object> map = new HashMap<>();
 		map.put("isMarketable", 1);
 		map.put("shopId", shopId);
-		map.put("isHot", 1);
-		List<ProductTransfer> list=homePageService.findListAllWithCategory(map,userId);
+		List<ProductTransfer> list=homePageService.findHotProduct(map,userId);
 		PageInfo<ProductTransfer> page = new PageInfo<>(list);
 		
 		return new ResultDto<>(200, "查询成功", page);
@@ -173,7 +172,7 @@ public class HomePageController {
 		map.put("isMarketable", 1);
 		map.put("shopId", shopId);
 		
-		List<ProductTransfer> list=homePageService.findListAllWithCategory(map,userId);
+		List<ProductTransfer> list=homePageService.findNewProduct(map,userId);
 		PageInfo<ProductTransfer> page = new PageInfo<>(list);
 		
 		return new ResultDto<>(200, "查询成功", page);

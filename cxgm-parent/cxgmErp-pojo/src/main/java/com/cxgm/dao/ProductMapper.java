@@ -12,6 +12,10 @@ public interface ProductMapper {
 
 	public List<ProductTransfer> findListAllWithCategory(Map<String,Object> map);
 	
+	public List<ProductTransfer> findHotProduct(Map<String,Object> map);
+	
+	public List<ProductTransfer> findNewProduct(Map<String,Object> map);
+	
 	public List<ProductTransfer> findHotCategory(Map<String,Object> map);
 	
 	int insert(Product product);

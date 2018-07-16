@@ -29,5 +29,9 @@ public interface HomePageService {
 	ProductTransfer findProductDetail(Integer productId,Integer shopId,Integer userId);
 	
 	List<ProductTransfer> pushProducts(Integer productCategoryTwoId,Integer productCategoryThirdId,Integer shopId,Integer userId);
+
+	List<ProductTransfer> findHotProduct(Map<String, Object> map, Integer userId);
+
+	List<ProductTransfer> findNewProduct(Map<String, Object> map, Integer userId);
   
 }
