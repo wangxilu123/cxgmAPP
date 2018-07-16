@@ -49,8 +49,19 @@ public class Coupon {
     private Integer dispatchNumber;
     
     private Integer overdueNumber;
+    
+    private Integer type;
+    
 
-    public Integer getTotalNumber() {
+    public Integer getType() {
+		return type;
+	}
+
+	public void setType(Integer type) {
+		this.type = type;
+	}
+
+	public Integer getTotalNumber() {
 		return totalNumber;
 	}
 

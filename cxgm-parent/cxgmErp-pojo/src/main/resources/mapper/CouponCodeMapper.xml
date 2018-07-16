@@ -8,11 +8,32 @@
     <result column="coupon_id" jdbcType="BIGINT" property="couponId" />
     <result column="status" jdbcType="INTEGER" property="status" />
     <result column="used_date" jdbcType="TIMESTAMP" property="usedDate" />
+    <result column="accept_date" jdbcType="TIMESTAMP" property="acceptDate" />
     <result column="creation_date" jdbcType="TIMESTAMP" property="creationDate" />
     <result column="type" jdbcType="INTEGER" property="type" />
+    
+  </resultMap>
+  <resultMap id="BaseResultMapUserAccount" type="com.cxgm.domain.CouponCode">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="user_id" jdbcType="BIGINT" property="userId" />
+    <result column="code" jdbcType="VARCHAR" property="code" />
+    <result column="coupon_id" jdbcType="BIGINT" property="couponId" />
+    <result column="status" jdbcType="INTEGER" property="status" />
+    <result column="used_date" jdbcType="TIMESTAMP" property="usedDate" />
+    <result column="accept_date" jdbcType="TIMESTAMP" property="acceptDate" />
+    <result column="creation_date" jdbcType="TIMESTAMP" property="creationDate" />
+    <result column="type" jdbcType="INTEGER" property="type" />
+    
+    <result column="user_account" jdbcType="VARCHAR" property="userAccount" />
   </resultMap>
   <sql id="Base_Column_List">
-    id, user_id, code, coupon_id, status, used_date, creation_date, type
+    id, user_id, code, coupon_id, status, used_date,accept_date, creation_date, type
+  </sql>
+  <sql id="Base_Column_List_User_Account">
+    cc.id as id, user_id, code, coupon_id, status, used_date,accept_date, creation_date, type
+  </sql>
+  <sql id="user_account">
+  user_account
   </sql>
    <sql id="queryMap">
 		<if test="userId !=null and userId != ''">
@@ -37,6 +58,14 @@
     select 
     <include refid="Base_Column_List" />
     from coupon_code
+    where 1=1
+    <include refid="queryMap" />
+  </select>
+  <select id="findCouponsWithParamExt" parameterType="map" resultMap="BaseResultMapUserAccount">
+    select 
+    <include refid="Base_Column_List_User_Account" />,
+    <include refid="user_account" />
+    from coupon_code cc left join user_login ul on cc.user_id=ul.id
     where 1=1
     <include refid="queryMap" />
   </select>
@@ -69,14 +98,14 @@
   </delete>
   <insert id="insert" parameterType="com.cxgm.domain.CouponCode">
     insert into coupon_code (id, user_id, code, 
-      coupon_id, status, used_date, 
+      coupon_id, status, used_date, accept_date,
       creation_date, type)
     values (#{id,jdbcType=BIGINT}, #{userId,jdbcType=BIGINT}, #{code,jdbcType=VARCHAR}, 
-      #{couponId,jdbcType=BIGINT}, #{status,jdbcType=INTEGER}, #{usedDate,jdbcType=TIMESTAMP}, 
+      #{couponId,jdbcType=BIGINT}, #{status,jdbcType=INTEGER}, #{usedDate,jdbcType=TIMESTAMP}, #{acceptDate,jdbcType=TIMESTAMP},
       #{creationDate,jdbcType=TIMESTAMP}, #{type,jdbcType=INTEGER})
   </insert>
  
-  <update id="updateByPrimaryKeySelective" parameterType="com.cxgm.domain.CouponCode">
+  <update id="update" parameterType="com.cxgm.domain.CouponCode">
     update coupon_code
     <set>
       <if test="userId != null">
@@ -93,6 +122,9 @@
       </if>
       <if test="usedDate != null">
         used_date = #{usedDate,jdbcType=TIMESTAMP},
+      </if>
+       <if test="acceptDate != null">
+        accept_date = #{acceptDate,jdbcType=TIMESTAMP},
       </if>
       <if test="creationDate != null">
         creation_date = #{creationDate,jdbcType=TIMESTAMP},

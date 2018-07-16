@@ -57,6 +57,12 @@ public class CouponController {
 		Map<String, Object> map = new HashMap<>();
 		map.put("shopId", admin.getShopId());
 		List<Coupon> coupons = couponService.findCouponsWithParam(map);
+		for(Coupon coupon:coupons) {
+			int usedNumber = couponService.findCouponCodeListCount(coupon.getId(), 2);
+			int unusedNumber = couponService.findCouponCodeListCount(coupon.getId(), 1);
+			coupon.setUsedNumber(usedNumber);
+			coupon.setUnusedNumber(unusedNumber);
+		}
 		PageInfo<Coupon> pager = new PageInfo<>(coupons);
 		request.setAttribute("pager", pager);
 		request.setAttribute("admin", admin);
@@ -128,7 +134,7 @@ public class CouponController {
 		}
 	}
 
-	@RequestMapping(value = "/coupon/delete", method = RequestMethod.GET, produces = "text/json;charset=UTF-8")
+	@RequestMapping(value = "/coupon/delete", method = RequestMethod.GET,produces = "text/json;charset=UTF-8")
 	public String couponDelete(HttpServletRequest request) throws SQLException {
 		RSResult rr = new RSResult();
 		String[] couponIds = request.getParameterValues("ids");
@@ -161,6 +167,26 @@ public class CouponController {
 		request.setAttribute("coupon", coupon);
 		request.setAttribute("products", products);
 		return new ModelAndView("admin/coupon_input");
+	}
+	
+	@RequestMapping(value = "/couponcode/edit", method = RequestMethod.GET,produces = "text/json;charset=UTF-8")
+	public String couponCodeEdit(HttpServletRequest request) {
+		RSResult rr = new RSResult();
+		String id = request.getParameter("id");
+		CouponCode couponCode = couponCodeService.selectById(Long.valueOf(id));
+		couponCode.setStatus(1);
+		int updateResult = couponCodeService.updateCouponCode(couponCode);
+		if (updateResult == 1) {
+			rr.setMessage("设置成功！");
+			rr.setCode("200");
+			rr.setStatus("success");
+		} else {
+			rr.setMessage("设置失败失败！");
+			rr.setCode("0");
+			rr.setStatus("failure");
+		}
+		
+		return JSONObject.fromObject(rr).toString();
 	}
 	
 	@RequestMapping(value = "/coupon/update", method = RequestMethod.POST)
@@ -219,20 +245,30 @@ public class CouponController {
 	}
 	
 	@RequestMapping(value = "/coupon/couponcode", method = RequestMethod.GET)
-	public ModelAndView getCouponCode(HttpServletRequest request) {
+	public ModelAndView getCouponCode(HttpServletRequest request,@RequestParam(value = "page", defaultValue = "1") Integer page,
+			@RequestParam(value = "size", defaultValue = "10") Integer size) {
 		String id = request.getParameter("id");
-		Coupon coupon = couponService.select(Long.valueOf(id));
-		int totalNumber  = couponService.findCouponCodeListCount(coupon.getId(), null);
-		int usedNumber = couponService.findCouponCodeListCount(coupon.getId(), 2);
-		int unusedNumber = couponService.findCouponCodeListCount(coupon.getId(), 1);
-		int dispatchNumber = couponService.findCouponCodeDispatch(coupon.getId());
-		int overdueNumber = couponService.findCouponCodeListCount(coupon.getId(), 3);
-		coupon.setTotalNumber(totalNumber);
-		coupon.setUsedNumber(usedNumber);
-		coupon.setUnusedNumber(unusedNumber);
-		coupon.setDispatchNumber(dispatchNumber);
-		coupon.setOverdueNumber(overdueNumber);
-		request.setAttribute("coupon", coupon);
+		int usedNumber = couponService.findCouponCodeListCount(Long.valueOf(id), 2);
+		int unusedNumber = couponService.findCouponCodeListCount(Long.valueOf(id), 1);
+		PageHelper.startPage(page, size);
+		List<CouponCode> couponCodes = couponService.findCouponCodeById(Long.valueOf(id));
+		PageInfo<CouponCode> pager = new PageInfo<>(couponCodes);
+		request.setAttribute("pager", pager);
+		request.setAttribute("usedNumber", usedNumber);
+		request.setAttribute("unusedNumber", unusedNumber);
+		request.setAttribute("couponID", id);
+		return new ModelAndView("admin/coupon_code_list");
+	}
+	
+	@RequestMapping(value = "/coupon/couponcode/list", method = RequestMethod.POST)
+	public ModelAndView getCouponCodeList(HttpServletRequest request,@RequestParam(value = "pageNumber", defaultValue = "1") Integer page,
+			@RequestParam(value = "size", defaultValue = "10") Integer size) {
+		String id = request.getParameter("couponID");
+		PageHelper.startPage(page, size);
+		List<CouponCode> couponCodes = couponService.findCouponCodeById(Long.valueOf(id));
+		PageInfo<CouponCode> pager = new PageInfo<>(couponCodes);
+		request.setAttribute("pager", pager);
+		request.setAttribute("couponID", id);
 		return new ModelAndView("admin/coupon_code_list");
 	}
 	
@@ -241,7 +277,7 @@ public class CouponController {
 		String id = request.getParameter("id");
 		Map<String,Object> map = new HashMap<>();
 		map.put("couponId", id);
-		map.put("type", 1);
+		map.put("status", 0);
 		List<CouponCode> emps = couponCodeService.findCouponsWithParam(map);
 		return PoiUtils.exportCoupon2Excel(emps);
 	}

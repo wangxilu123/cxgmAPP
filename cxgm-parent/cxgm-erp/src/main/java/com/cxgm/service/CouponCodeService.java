@@ -16,4 +16,11 @@ public class CouponCodeService {
 	public List<CouponCode> findCouponsWithParam(Map<String,Object> map){
 		return couponCodeDao.findCouponsWithParam(map);
 	}
+	
+	public CouponCode selectById(Long couponCodeId) {
+		return couponCodeDao.select(couponCodeId);
+	}
+	public int updateCouponCode(CouponCode couponCode) {
+		return couponCodeDao.update(couponCode);
+	}
 }

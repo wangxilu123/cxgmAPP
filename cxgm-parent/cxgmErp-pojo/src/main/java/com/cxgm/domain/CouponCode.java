@@ -14,10 +14,30 @@ public class CouponCode {
     private Integer status;
 
     private Date usedDate;
+    
+    private Date acceptDate;
 
     private Date creationDate;
+    
+    private String userAccount;
 
-    private Integer type;
+    public String getUserAccount() {
+		return userAccount;
+	}
+
+	public void setUserAccount(String userAccount) {
+		this.userAccount = userAccount;
+	}
+
+	public Date getAcceptDate() {
+		return acceptDate;
+	}
+
+	public void setAcceptDate(Date acceptDate) {
+		this.acceptDate = acceptDate;
+	}
+
+	private Integer type;
 
     public Long getId() {
         return id;

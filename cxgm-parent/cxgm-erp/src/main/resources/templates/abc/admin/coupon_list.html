@@ -53,10 +53,12 @@
               <th><input type="checkbox" id="allCheck"></th>
               <th>编号</th>
               <th>名称</th>
-              <th>前缀</th>
+              <th>类型</th>
+              <th>金额</th>
               <th>使用起始日期</th>
               <th>使用结束日期</th>
               <th>是否启用</th>
+              <th>详情</th>
               <th><div class="app-table-td-buttons-width-120">操作</div></th>
             </tr>
           </thead>
@@ -66,7 +68,14 @@
               <td><input type="checkbox" name="ids" value="${list.id}"></td>
               <td>${listLP.index}</td>
               <td><div class="am-text-truncate app-text-truncate-product-name">${list.name}</div></td>
-              <td>${list.prefix}</td>
+              <%if(1== list.type!){%>
+              <td>满减</td>
+              <%}else if(2 == list.type!){%>
+              <td>消费</td>
+              <%}else if(3 == list.type!){%>
+              <td>代金</td>
+              <%}%>
+              <td>${list.minimumPrice!}</td>
                <td>
                ${list.beginDate,dateFormat="yyyy-MM-dd HH:mm:ss"}
               </td>
@@ -81,22 +90,28 @@
                 <%}%>
               </td>
               <td>
+              <div>已使用: ${list.usedNumber}</div>
+              <div>
+             未使用: ${list.unusedNumber}
+             </div>
+              </td>
+              <td>
                 <div class="am-btn-group am-btn-group-xs">
                 <button type="button" class="am-btn am-btn-default am-btn-xs am-text-secondary app-table-button-padding" onclick="location.href='/couponcode/add?type=0&id=${list.id}'">
-                    <span class="am-icon-pencil"> 生成虚拟优惠码</span>
+                    <span class="am-icon-pencil"> 生成券码</span>
                   </button>
-                  <button type="button" class="am-btn am-btn-default am-btn-xs am-text-secondary app-table-button-padding" onclick="location.href='/couponcode/add?type=1&id=${list.id}'">
+                  <!-- <button type="button" class="am-btn am-btn-default am-btn-xs am-text-secondary app-table-button-padding" onclick="location.href='/couponcode/add?type=1&id=${list.id}'">
                     <span class="am-icon-pencil"> 生成实体优惠码</span>
-                  </button>
+                  </button> -->
                   <button type="button" class="am-btn am-btn-default am-btn-xs am-text-secondary app-table-button-padding" onclick="location.href='/coupon/couponcode?id=${list.id}'">
                     <span class="am-icon-tags"> 优惠码详情</span>
                   </button>
-                  <button type="button" class="am-btn am-btn-default am-btn-xs am-text-secondary app-table-button-padding" onclick="location.href='/coupon/edit?id=${list.id}'">
+                 <!--  <button type="button" class="am-btn am-btn-default am-btn-xs am-text-secondary app-table-button-padding" onclick="location.href='/coupon/edit?id=${list.id}'">
                     <span class="am-icon-pencil"> 编辑</span>
                   </button>
                   <button type="button" class="am-btn am-btn-default am-btn-xs am-text-secondary app-table-button-padding" onclick="location.href='/coupon/export?id=${list.id}'">
                     <span class="am-icon-share"> 导出实体优惠码</span>
-                  </button>
+                  </button> -->
                   <button type="button" class="am-btn am-btn-default am-btn-xs am-text-danger app-table-button-padding" onclick="deleteOne('/coupon/delete?ids=${list.id}',${listLP.index})">
                     <span class="am-icon-trash-o"> 删除</span>
                   </button>

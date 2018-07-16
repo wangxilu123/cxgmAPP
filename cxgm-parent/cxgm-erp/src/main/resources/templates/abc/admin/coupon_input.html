@@ -41,45 +41,27 @@ if(isEmpty(coupon.id)){
             </div>
           </div>
           <div class="am-form-group am-form-group-sm">
-            <label class="am-u-sm-4 am-u-md-3 am-text-right am-form-label">前缀</label>
+            <label class="am-u-sm-4 am-u-md-3 am-text-right am-form-label">优惠券类型</label>
             <div class="am-u-sm-8 am-u-md-9">
-              <input type="text" class="am-form-field" name="coupon.prefix" value="${coupon.prefix!}" />
+              <select name="coupon.productId" data-am-selected="{btnWidth: '100%', maxHeight: '200px', btnSize: 'sm', btnStyle: 'secondary'}">
+	            <option value="1" selected>满减</option>
+	            <option value="2" >消费</option>
+	            <option value="3" >代金</option>
+				</option>
+	          </select>
             </div>
           </div>
            <div class="am-form-group am-form-group-sm">
-            <label class="am-u-sm-4 am-u-md-3 am-text-right am-form-label">使用起始日期</label>
-            <div class="am-u-sm-8 am-u-md-9">
-              <input type="text" class="am-form-field Wdate"  id="startDate" onfocus="WdatePicker({ dateFmt:'yyyy-MM-dd HH:mm',maxDate:'#F{$dp.$D(\'endDate\')}'})" name="coupon.beginDate" value="${coupon.beginDate!,dateFormat='yyyy-MM-dd HH:mm'}" required />
-            </div>
-          </div>
-          <div class="am-form-group am-form-group-sm">
-            <label class="am-u-sm-4 am-u-md-3 am-text-right am-form-label">使用结束日期</label>
-            <div class="am-u-sm-8 am-u-md-9">
-              <input type="text" class="am-form-field Wdate" id="endDate" onfocus="WdatePicker({ dateFmt:'yyyy-MM-dd HH:mm',minDate:'#F{$dp.$D(\'startDate\')}',maxDate:'2120-10-01'})" name="coupon.endDate" value="${coupon.endDate!,dateFormat='yyyy-MM-dd HH:mm'}"  />
-            </div>
-          </div>
-           <div class="am-form-group am-form-group-sm">
-            <label class="am-u-sm-4 am-u-md-3 am-text-right am-form-label">最小商品价格</label>
+            <label class="am-u-sm-4 am-u-md-3 am-text-right am-form-label">优惠券满</label>
             <div class="am-u-sm-8 am-u-md-9">
               <input type="text" class="am-form-field" name="coupon.minimumPrice" value="${coupon.minimumPrice!}" required />
             </div>
           </div>
-           <div class="am-form-group am-form-group-sm">
-            <label class="am-u-sm-4 am-u-md-3 am-text-right am-form-label">最大商品价格</label>
-            <div class="am-u-sm-8 am-u-md-9">
-              <input type="text" class="am-form-field" name="coupon.maximumPrice" value="${coupon.maximumPrice!}" required />
-            </div>
-          </div>
+           
           <div class="am-form-group am-form-group-sm">
-            <label class="am-u-sm-4 am-u-md-3 am-text-right am-form-label">最小商品数量</label>
+            <label class="am-u-sm-4 am-u-md-3 am-text-right am-form-label">优惠券减</label>
             <div class="am-u-sm-8 am-u-md-9">
-              <input type="text" class="am-form-field" name="coupon.minimumQuantity" value="${coupon.minimumQuantity!}" required />
-            </div>
-          </div>
-           <div class="am-form-group am-form-group-sm">
-            <label class="am-u-sm-4 am-u-md-3 am-text-right am-form-label">最大商品数量</label>
-            <div class="am-u-sm-8 am-u-md-9">
-              <input type="text" class="am-form-field" name="coupon.maximumQuantity" value="${coupon.maximumQuantity!}" required />
+              <input type="text" class="am-form-field" name="coupon.priceExpression" value="${coupon.priceExpression!}" required />
             </div>
           </div>
           <div class="am-form-group am-form-group-sm">
@@ -157,14 +139,18 @@ if(isEmpty(coupon.id)){
           <%}%>
         </div>
           </div>
-          
-          <div class="am-form-group am-form-group-sm">
-            <label class="am-u-sm-4 am-u-md-3 am-text-right am-form-label">价格运算表达式</label>
+       <div class="am-form-group am-form-group-sm">
+            <label class="am-u-sm-4 am-u-md-3 am-text-right am-form-label">使用起始日期</label>
             <div class="am-u-sm-8 am-u-md-9">
-              <input type="text" class="am-form-field" name="coupon.priceExpression" value="${coupon.priceExpression!}" required />
+              <input type="text" class="am-form-field Wdate"  id="startDate" onfocus="WdatePicker({ dateFmt:'yyyy-MM-dd HH:mm',maxDate:'#F{$dp.$D(\'endDate\')}'})" name="coupon.beginDate" value="${coupon.beginDate!,dateFormat='yyyy-MM-dd HH:mm'}" required />
             </div>
           </div>
-      
+          <div class="am-form-group am-form-group-sm">
+            <label class="am-u-sm-4 am-u-md-3 am-text-right am-form-label">使用结束日期</label>
+            <div class="am-u-sm-8 am-u-md-9">
+              <input type="text" class="am-form-field Wdate" id="endDate" onfocus="WdatePicker({ dateFmt:'yyyy-MM-dd HH:mm',minDate:'#F{$dp.$D(\'startDate\')}',maxDate:'2120-10-01'})" name="coupon.endDate" value="${coupon.endDate!,dateFormat='yyyy-MM-dd HH:mm'}"  />
+            </div>
+          </div>
          </div>
         <div class="am-tab-panel am-fade" id="tab3">
           <div class="am-form-group am-form-group-sm">

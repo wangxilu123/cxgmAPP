@@ -67,9 +67,17 @@ public class CouponService {
 	@Transactional
 	public int delete(String[] couponIds) {
 		int resultDelete = 0;
+		Map<String,Object> map = new HashMap<>();
+		
 		if (couponIds != null && couponIds.length > 0) {
 			for(String couponId : couponIds) {
-				couponDao.delete(Long.valueOf(couponId));
+				map.put("couponId", couponId);
+				List<CouponCode> couponCodes = couponCodeDao.findCouponsWithParam(map);
+				if(couponCodes.size()>0) {
+					return 0;
+				}else {
+					couponDao.delete(Long.valueOf(couponId));
+				}
 			}
 		}
 		resultDelete = 1;
@@ -110,15 +118,18 @@ public class CouponService {
 	@Transactional
 	public void couponCodeInsert(Long couponid,Integer codesNumber,Integer type) {
 		Coupon coupon = couponDao.select(couponid);
+		int generateBatch = Integer.valueOf(coupon.getPrefix())+1;
 		for(int i=0;i<codesNumber;i++) {
 			CouponCode cc = new CouponCode();
 			cc.setCouponId(couponid);
 			cc.setType(type);
-			cc.setCode(UUID.generateCouponCode(32, coupon.getPrefix()));
+			cc.setCode(UUID.generateCouponCode(6, String.valueOf(generateBatch)));
 			cc.setStatus(0);
 			cc.setCreationDate(new Date());
 			couponCodeDao.insert(cc);
 		}
+		coupon.setPrefix(String.valueOf(generateBatch));
+		couponDao.update(coupon);
 	}
 	
 	/**
@@ -143,5 +154,19 @@ public class CouponService {
 		Map<String,Object> map = new HashMap<>();
 		map.put("couponId", couponId);
 		return couponCodeDao.findDispatchCount(map);
+	}
+	
+	
+	
+	/**
+	 * 根据优惠券id查询优惠券code列表
+	 * @param couponId
+	 * @return
+	 */
+	public List<CouponCode> findCouponCodeById(Long couponId){
+		Map<String,Object> map = new HashMap<>();
+		map.put("couponId", couponId);
+		return couponCodeDao.findCouponsWithParamExt(map);
+		
 	}
 }

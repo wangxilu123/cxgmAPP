@@ -12,6 +12,7 @@ public interface CouponCodeMapper {
     CouponCode select(Long id);
     int update(CouponCode record);
     List<CouponCode> findCouponsWithParam(Map<String,Object> map);
+    List<CouponCode> findCouponsWithParamExt(Map<String,Object> map);
     
     List<CouponDetail> findCouponsByUserId(Map<String,Object> map);
     

@@ -18,11 +18,71 @@
       <div class="am-fl am-cf">
         <strong class="am-text-primary am-text-lg">优惠码</strong> / <small>优惠码详情</small>
       </div>
+              
     </div>
+    <hr data-am-widget="divider" class="am-divider am-divider-dashed am-margin-0" />
+    <div><span class="am-badge am-badge-success">已使用:</span> ${usedNumber}   <span class="am-badge"> 未使用:</span>${unusedNumber}  
+    <button type="button" class="am-btn am-btn-default am-btn-xs am-text-secondary app-table-button-padding" onclick="location.href='/coupon/export?id=${couponID!}'">
+                    <span class="am-icon-share"> 导出实体优惠码</span>
+     </button>
+     </div>
   
     <hr data-am-widget="divider" class="am-divider am-divider-dashed am-margin-0" />
+    <form class="am-form" id="listForm" action="/coupon/couponcode/list" method="post">
+    <input type="hidden" name="couponID" value="${couponID!}" />
+    <div class="am-scrollable-horizontal">
+    <table class="am-table am-table-striped am-table-hover table-main am-text-nowrap am-margin-bottom-0">
+          <thead>
+            <tr>
+              <th><input type="checkbox" id="allCheck"></th>
+              <th>编号</th>
+              <th>券码</th>
+              <th>状态</th>
+              <th>用户</th>
+              <th>领取时间</th>
+              <th>使用时间</th>
+              <th><div class="app-table-td-buttons-width-120">操作</div></th>
+            </tr>
+          </thead>
+          <tbody>
+            <%for(list in pager.list){%>
+            <tr id="listTr${listLP.index}">
+              <td><input type="checkbox" name="ids" value="${list.id}"></td>
+              <td>${listLP.index}</td>
+              <td><div class="am-text-truncate app-text-truncate-product-name">${list.code}</div></td>
+              <%if(0==list.status){%>
+              <td>未领取</td>
+              <%}else if(1== list.status!){%>
+              <td>已领取</td>
+              <%}else if(2 == list.status!){%>
+              <td>已使用</td>
+              <%}else if(3 == list.status!){%>
+              <td>已过期</td>
+              <%}%>
+              <td>${list.userAccount!}</td>
+               <td>
+               ${list.acceptDate,dateFormat="yyyy-MM-dd HH:mm:ss"}
+              </td>
+               <td>
+               ${list.usedDate,dateFormat="yyyy-MM-dd HH:mm:ss"}
+              </td>
+               <td>
+                <div class="am-btn-group am-btn-group-xs">
+                 <button type="button" class="am-btn am-btn-default am-btn-xs am-text-secondary app-table-button-padding" onclick="editCouponCode(${list.id})">
+                    <span class="am-icon-pencil"> 设置已领取</span>
+                  </button>
+                  <!-- <button type="button" class="am-btn am-btn-default am-btn-xs am-text-danger app-table-button-padding" onclick="deleteOne('/couponcode/delete?ids=${list.id}',${listLP.index})">
+                    <span class="am-icon-trash-o"> 删除</span>
+                  </button> -->
+                </div>
+              </td>
+            </tr>
+            <%}%>
+          </tbody>
+        </table>
+    </div>
     
-    <form class="validator-form" class="am-form" action="/couponcode/save" method="post">
+    <!-- <form class="validator-form" class="am-form" action="/couponcode/save" method="post">
     <input type="hidden" name="coupon.id" value="${coupon.id!}" />
     <input type="hidden" name="type" value="${type!}" />
     <div class="am-form am-margin am-form-horizontal" >
@@ -81,9 +141,38 @@
         </div>
       </div>
     </div>
+    </form> -->
+      <!-- 分页 -->
+      <%if (pager.list.~size > 0){%>
+      <hr data-am-widget="divider" class="am-divider am-divider-dashed am-margin-0" />    
+      <div class="am-margin-left am-text-xs"><% include("pager.html"){}%></div>
+      <%}else{%>
+      <h3 class="am-kai am-text-center am-margin-xs">没有找到任何记录!</h3>
+      <%}%>
     </form>
   </div> 
 </div>
 <!-- content end -->
+<script>
+
+	function editCouponCode(id) {
+	  Modal.register(['confirm','alert']);
+	  Modal.confirm("您确定要更新吗？",{
+	    relatedTarget: this,
+		onConfirm: function(options) {
+	      $.ajax({
+	    	url: '/couponcode/edit',
+			dataType: "json",
+			data:{'id':id},
+			async: false,
+			success: function(data) {
+			  Modal.alert(data.message);
+			  window.history.back(-1); 
+			}
+		  });
+		}
+	  });
+	}
+</script>
 </body>
 </html>
