@@ -59,6 +59,7 @@
               <th>门店地址</th>
               <th>门店描述</th>
               <th>创建日期</th>
+              <th><div class="app-table-td-buttons-width-120">操作</div></th>
             </tr>
           </thead>
           <tbody>
@@ -72,6 +73,13 @@
               <td>${list.shopAddress}</td>
               <td>${list.description}</td>
               <td>${list.createTime,dateFormat="yyyy-MM-dd HH:mm:ss"}</td>
+              <td>
+                <div class="am-btn-group am-btn-group-xs">
+                  <button type="button" class="am-btn am-btn-default am-btn-xs am-text-secondary app-table-button-padding" onclick="location.href='/shop/toEdit?shopId=${list.id}'">
+                    <span class="am-icon-pencil"> 编辑</span>
+                  </button>
+                </div>
+              </td>
             </tr>
             <%}%> 
           </tbody>

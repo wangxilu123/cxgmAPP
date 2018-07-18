@@ -76,10 +76,23 @@ public class ShopController {
 	}
 	
 	@RequestMapping(value = "/toEdit", method = RequestMethod.GET)	public ModelAndView shopToEdit(HttpServletRequest request,
-			@RequestParam(value = "shopId", required = false) Integer shopId) throws SQLException {
+			@RequestParam(value = "shopId", required = false) Integer shopId) throws SQLException, UnsupportedEncodingException, SOAPException, ServiceException, IOException {
 		
 		Shop shop = shopService.findShopById(shopId);
 		request.setAttribute("shop", shop);
+		request.setAttribute("shopId", shop.getId());
+		
+		SystemConfig systemConfig = new SystemConfig();
+		systemConfig.setUploadLimit(10);
+		systemConfig.setAllowedUploadImageExtension("png,jpg");
+		
+		@SuppressWarnings("static-access")
+		List<AccountShopOffline> yzShopList = youzanShopService.findYouzanShopList();
+		request.setAttribute("yzShopList", yzShopList);
+		
+		List<ThirdOrg> hxShopList  = thirdPartyHaixinOrgService.findOrg();
+		request.setAttribute("systemConfig",systemConfig);
+		request.setAttribute("hxShopList", hxShopList);
 		return new ModelAndView("shop/shop_add");
 	}
 	
@@ -97,12 +110,14 @@ public class ShopController {
 		List<MultipartFile> files = ((MultipartHttpServletRequest) request).getFiles("shopImages");
 		
 		Shop shop= new Shop();
-		String[] newlonlat=lonlat.split(",");
-		
+		if(!"".equals(lonlat)){
+			String[] newlonlat=lonlat.split(",");	
+			shop.setDimension(newlonlat[1]);
+			shop.setLongitude(newlonlat[0]);
+		}
 		shop.setShopName(shopName);
 		shop.setDescription(description);
-		shop.setDimension(newlonlat[1]);
-		shop.setLongitude(newlonlat[0]);
+		
 		shop.setOwner(owner);
 		shop.setShopAddress(shopAddress);
 		shop.setYzShopId(yzShopId);
@@ -134,9 +149,52 @@ public class ShopController {
 	}
 	
 	@RequestMapping(value = "/update", method = RequestMethod.POST)
-	public ModelAndView update(HttpServletRequest request, @RequestBody Shop shop)
-			throws InterruptedException {
+	public ModelAndView update(HttpServletRequest request,
+			@RequestParam(value = "shopId",required=false) Integer shopId,
+			@RequestParam(value = "shopName",required=false) String shopName,
+			@RequestParam(value = "owner",required=false) String owner,
+			@RequestParam(value = "shopAddress",required=false) String shopAddress,
+			@RequestParam(value = "yzShopId",required=false) String yzShopId,
+			@RequestParam(value = "hxShopId",required=false) String hxShopId,
+			@RequestParam(value = "description",required=false) String description,
+			@RequestParam(value = "lonlat",required=false) String lonlat,
+			@RequestParam(value = "electronicFence",required=false) String electronicFence)
+			throws Exception {
+        List<MultipartFile> files = ((MultipartHttpServletRequest) request).getFiles("shopImages");
 		
+        Shop shop = shopService.findShopById(shopId);
+		if(!"".equals(lonlat)){
+			String[] newlonlat=lonlat.split(",");	
+			shop.setDimension(newlonlat[1]);
+			shop.setLongitude(newlonlat[0]);
+		}
+		shop.setShopName(shopName);
+		shop.setDescription(description);
+		
+		shop.setOwner(owner);
+		shop.setShopAddress(shopAddress);
+		shop.setYzShopId(yzShopId);
+		shop.setHxShopId(hxShopId);
+		shop.setElectronicFence(electronicFence);
+		
+		
+        StringBuilder sb = new StringBuilder();
+		
+			if(files!=null){
+	            for(int i=0;i<files.size();i++){  
+	                MultipartFile file = files.get(i);
+	                if (file.getSize() > 0) {
+	                	String name = ossClient.uploadImg2Oss(file);
+	            	    String imgUrl = ossClient.getImgUrl(name);
+	                        sb.append(imgUrl);
+	                        sb.append(",");
+	                }
+	            } 
+	        }
+			if(sb.length()>0){
+				sb.deleteCharAt(sb.length()-1);
+				shop.setImageUrl(sb.toString());
+			}
 		shopService.updateShop(shop);
 		ModelAndView mv = new ModelAndView("redirect:/shop/list");
 		return mv;

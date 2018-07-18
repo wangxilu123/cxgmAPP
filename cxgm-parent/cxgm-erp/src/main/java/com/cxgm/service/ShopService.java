@@ -59,7 +59,8 @@ public class ShopService {
 	}
 
 	public Shop findShopById(Integer shopId) {
-		return null;
+		
+		return shopMapper.selectByPrimaryKey(shopId);
 	}
     
 	public List<Shop> findListAll(){

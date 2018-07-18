@@ -42,15 +42,16 @@ public class MotionService {
 		PageHelper.startPage(pageNum, pageSize);
 
 		MotionExample example = new MotionExample();
-
-		example.createCriteria().andShopIdEqualTo(shopId);
+        if(shopId!=null){
+        	example.createCriteria().andShopIdEqualTo(shopId);
+        }
 		example.setOrderByClause("id desc");
 
 		List<Motion> list = motionMapper.selectByExample(example);
 		
 		for(Motion motion : list){
 			//根据门店ID查询门店信息
-			Shop shop = shopMapper.selectByPrimaryKey(shopId);
+			Shop shop = shopMapper.selectByPrimaryKey(motion.getShopId());
 			
 			motion.setShopName(shop!=null?shop.getShopName():"");
 		}

@@ -65,12 +65,7 @@ body, html {
 							<div class="am-form-group am-form-group-sm">
 								<label class="am-u-sm-4 am-u-md-3 am-text-right am-form-label">门店名称</label>
 								<div class="am-u-sm-8 am-u-md-9">
-									<%if (isAdd){%> <input type="text"
-										class="am-form-field js-pattern-username" name="shopName"
-										placeholder="门店名称" minlength="2" maxlength="20" required />
-									<div class="am-text-warning am-margin-top-xs am-text-xs">${usernameMessages!}</div>
-									<%}else{%> ${shop.shopName!} <input type="hidden"
-										name="shopName" value="${shop.shopName!}" /> <%}%>
+									<input type="text"class="am-form-field js-pattern-username" name="shopName" placeholder="门店名称" value="${shop.shopName!}"required />
 								</div>
 							</div>
 							
@@ -84,10 +79,10 @@ body, html {
 										<option value="${list.id}">${list.name}</option> <%}%>
 									</select> <%}else{%> <select name="yzShopId"
 										data-am-selected="{btnWidth: '100%', btnSize: 'sm'}">
-										<option value="0" selected>顶级分类</option> <%for(list in
+										<%for(list in
 										yzShopList){%>
-										<option value="${list.id}"<%if (shop.yzShopId! ==
-											list.id!){%>selected="selected" <%}%>>${list.name!}</option> <%}%>
+										<option value="${list.id}"<%if (shop.shopName! ==
+											list.name){%>selected="selected" <%}%>>${list.name!}</option> <%}%>
 									</select> <%}%>
 								</div>
 							</div>
@@ -112,12 +107,7 @@ body, html {
 							<div class="am-form-group am-form-group-sm">
 								<label class="am-u-sm-4 am-u-md-3 am-text-right am-form-label">负责人</label>
 								<div class="am-u-sm-8 am-u-md-9">
-									<%if (isAdd){%> <input type="text"
-										class="am-form-field js-pattern-username" name="owner"
-										placeholder="负责人" minlength="2" maxlength="20" required />
-									<div class="am-text-warning am-margin-top-xs am-text-xs">${usernameMessages!}</div>
-									<%}else{%> ${shop.owner!} <input type="hidden" name="owner"
-										value="${shop.owner!}" /> <%}%>
+									<input type="text" class="am-form-field js-pattern-username" name="owner" placeholder="负责人" minlength="2"  value="${shop.owner!}" required />
 								</div>
 							</div>
 
@@ -172,18 +162,13 @@ body, html {
 							<div class="am-form-group am-form-group-sm">
 								<label class="am-u-sm-4 am-u-md-3 am-text-right am-form-label">门店描述</label>
 								<div class="am-u-sm-8 am-u-md-9">
-									<%if (isAdd){%> <input type="text"
-										class="am-form-field js-pattern-username" name="aliPrivatekey"
-										placeholder="门店描述" minlength="2" maxlength="20" required />
-									<div class="am-text-warning am-margin-top-xs am-text-xs">${usernameMessages!}</div>
-									<%}else{%> ${shop.aliPrivatekey!} <input type="hidden"
-										name="aliPrivatekey" value="${shop.aliPrivatekey!}" /> <%}%>
+									<input type="text"class="am-form-field js-pattern-username" name="aliPrivatekey"placeholder="门店描述" minlength="2" value="${shop.aliPrivatekey!}" required />
 								</div>
 							</div>
 
 							<div class="am-form-group am-form-group-sm">
 								<label class="am-u-sm-4 am-u-md-3 am-text-right am-form-label">电子围栏（配送区域）</label>
-                                <input type="hidden" id="electronicFence" name="electronicFence" />
+                                <input type="hidden" id="electronicFence" name="electronicFence" value="${shop.electronicFence!}"/>
 								<div style="width: 640px; height: 540px; border: 1px solid gray" id="map"></div>
 								<div id="result">
 									<input type="button" value="获取电子围栏"
@@ -199,16 +184,13 @@ body, html {
 									<div
 										style="width: 320px; height: 240px; border: 1px solid gray"
 										id="l-map"></div>
-									<%if (isAdd){%> <input type="text" id="suggestId"
+									<input type="text" id="suggestId"
 										style="width: 520px;" am-form-field
 										js-pattern-username" name="shopAddress" placeholder="门店地址"
+										value="${shop.shopAddress!}"
 										required />
-									<div id="searchResultPanel"
-										style="border: 1px solid #C0C0C0; width: 150px; height: auto; display: none;"></div>
+									<div id="searchResultPanel" style="border: 1px solid #C0C0C0; width: 150px; height: auto; display: none;"></div>
 									<input type="hidden" id="lonlat" name="lonlat" />
-									<div class="am-text-warning am-margin-top-xs am-text-xs">${usernameMessages!}</div>
-									<%}else{%> ${shop.shopName!} <input type="hidden"
-										name="shopName" value="${shop.shopName!}" /> <%}%>
 								</div>
 							</div>
 						</div>

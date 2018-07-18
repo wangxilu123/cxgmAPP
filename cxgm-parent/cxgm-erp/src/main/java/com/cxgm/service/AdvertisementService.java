@@ -42,15 +42,17 @@ public class AdvertisementService {
 		PageHelper.startPage(pageNum, pageSize);
 
 		AdvertisementExample example = new AdvertisementExample();
-
-		example.createCriteria().andShopIdEqualTo(shopId);
+        if(shopId!=null){
+        	example.createCriteria().andShopIdEqualTo(shopId);
+        }
+		
 		example.setOrderByClause("id desc");
 
 		List<Advertisement> list = advertisementMapper.selectByExample(example);
 		
 		for(Advertisement advertisement : list){
 			//根据门店ID查询门店信息
-			Shop shop = shopMapper.selectByPrimaryKey(shopId);
+			Shop shop = shopMapper.selectByPrimaryKey(advertisement.getShopId());
 			
 			advertisement.setShopName(shop!=null?shop.getShopName():"");
 		}

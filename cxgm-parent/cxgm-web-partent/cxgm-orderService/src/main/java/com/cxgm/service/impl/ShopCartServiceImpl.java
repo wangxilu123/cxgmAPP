@@ -125,7 +125,7 @@ public class ShopCartServiceImpl implements ShopCartService {
 				}
 				
 				// 根据商品唯一标识查询商品优惠券信息
-				HashMap<String, Object> map1 = new HashMap<String, Object>();
+				/*HashMap<String, Object> map1 = new HashMap<String, Object>();
 
 				map1.put("shopId", shopCart.getShopId());
 				map1.put("goodCode", shopCart.getGoodCode());
@@ -140,7 +140,7 @@ public class ShopCartServiceImpl implements ShopCartService {
 				//根据商品ID和门店ID查询促销信息
 				List<Promotion> promotionList = promotionMapper.findByProductId(map);
 				
-				shopCart.setPromotionList(promotionList);
+				shopCart.setPromotionList(promotionList);*/
 			}
 		}
 
