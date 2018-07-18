@@ -14,8 +14,10 @@ import com.cxgm.common.DateKit;
 import com.cxgm.common.UUID;
 import com.cxgm.dao.CouponCodeMapper;
 import com.cxgm.dao.CouponMapper;
+import com.cxgm.dao.ProductMapper;
 import com.cxgm.domain.Coupon;
 import com.cxgm.domain.CouponCode;
+import com.cxgm.domain.Product;
 import com.cxgm.exception.TipException;
 
 /**
@@ -29,16 +31,17 @@ public class CouponService {
 	CouponMapper couponDao;
 	@Autowired
 	CouponCodeMapper couponCodeDao;
+	@Autowired
+	ProductMapper productDao;
 	
 	public List<Coupon> findCouponsWithParam(Map<String,Object> map){
 		return couponDao.findCouponsWithParam(map);
 	}
 	
 	@Transactional
-	public void insert(String name, String prefix,String beginDate,String endDate,BigDecimal minimumPrice,
-			BigDecimal maximumPrice,Integer minimumQuantity,
-			Integer maximumQuantity,boolean isEnabled,Long pid,
-			String priceExpression,String introduction,Integer shopId,Long productId) {
+	public void insert(String name, String prefix,String beginDate,String endDate,Integer type, BigDecimal minimumPrice,
+		     boolean isEnabled,Long pid,
+			String priceExpression,String introduction,Integer shopId,String productName) {
 		Coupon coupon = new Coupon();
 		Map<String,Object> map = new HashMap<>();
 		map.put("name", name);
@@ -48,16 +51,22 @@ public class CouponService {
 			throw new TipException("已经存在相同的优惠券");
 		}
 		coupon.setName(name);
-		coupon.setPrefix(prefix);
+		coupon.setPrefix("0");
 		coupon.setBeginDate(DateKit.dateFormat(beginDate,"yyyy-MM-dd HH:mm"));
 		coupon.setEndDate(DateKit.dateFormat(endDate,"yyyy-MM-dd HH:mm"));
 		coupon.setMinimumPrice(minimumPrice);
-		coupon.setMaximumPrice(maximumPrice);
 		coupon.setCreationDate(new Date());
-		coupon.setMinimumQuantity(minimumQuantity);
-		coupon.setMaximumQuantity(maximumQuantity);
 		coupon.setIsEnabled(isEnabled);
-		coupon.setProductId(productId);
+		coupon.setType(type);
+		if(productName!=null) {
+			Map<String,Object> productMap = new HashMap<>();
+			productMap.put("goodName", productName);
+			List<Product> products = productDao.findProducts(productMap);
+			if(products.size()>0) {
+				coupon.setProductId(products.get(0).getId());
+			}
+		}
+		
 		coupon.setProductCategoryId(pid);
 		coupon.setIntroduction(introduction);
 		coupon.setPriceExpression(priceExpression);
@@ -123,7 +132,7 @@ public class CouponService {
 			CouponCode cc = new CouponCode();
 			cc.setCouponId(couponid);
 			cc.setType(type);
-			cc.setCode(UUID.generateCouponCode(6, String.valueOf(generateBatch)));
+			cc.setCode(UUID.generateCouponCode(6, String.valueOf(generateBatch)+String.valueOf(coupon.getId())));
 			cc.setStatus(0);
 			cc.setCreationDate(new Date());
 			couponCodeDao.insert(cc);

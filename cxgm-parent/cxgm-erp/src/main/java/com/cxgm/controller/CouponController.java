@@ -107,24 +107,37 @@ public class CouponController {
 	}
 
 	@RequestMapping(value = "/coupon/save", method = RequestMethod.POST)
-	public ModelAndView couponSave(HttpServletRequest request, @RequestParam(value = "coupon.name") String name,
-			@RequestParam(value = "coupon.prefix") String prefix,
-			@RequestParam(value = "coupon.beginDate") String beginDate,
-			@RequestParam(value = "coupon.endDate") String endDate,
-			@RequestParam(value = "coupon.minimumPrice") BigDecimal minimumPrice,
-			@RequestParam(value = "coupon.maximumPrice") BigDecimal maximumPrice,
-			@RequestParam(value = "coupon.minimumQuantity") Integer minimumQuantity,
-			@RequestParam(value = "coupon.maximumQuantity") Integer maximumQuantity,
-			@RequestParam(value = "coupon.isEnabled") boolean isEnabled, @RequestParam(value = "parentId",required=false) Long pid,
+	public ModelAndView couponSave(HttpServletRequest request, @RequestParam(value = "coupon.name",required=false) String name,
+			@RequestParam(value = "coupon.prefix",required=false) String prefix,
+			@RequestParam(value = "coupon.beginDate",required=false) String beginDate,
+			@RequestParam(value = "coupon.type",required=false) Integer type,
+			@RequestParam(value = "coupon.endDate",required=false) String endDate,
+			@RequestParam(value = "coupon.minimumPrice",required=false) BigDecimal minimumPrice,
+			@RequestParam(value = "coupon.maximumPrice",required=false) BigDecimal maximumPrice,
+			@RequestParam(value = "coupon.minimumQuantity",required=false) Integer minimumQuantity,
+			@RequestParam(value = "coupon.maximumQuantity",required=false) Integer maximumQuantity,
+			@RequestParam(value = "coupon.isEnabled",required=false) boolean isEnabled, 
+			@RequestParam(value = "parentId",required=false) String pid,
+			@RequestParam(value = "parentSecondId",required=false) String parentSecondId,
+			@RequestParam(value = "parentThirdId",required=false) String parentThirdId,
 			@RequestParam(value = "coupon.priceExpression") String priceExpression,
 			@RequestParam(value = "coupon.introduction",required=false) String introduction,
-			@RequestParam(value = "coupon.shop") Integer shopId,
-			@RequestParam(value = "coupon.productId",required=false) Long productId) throws SQLException {
+			@RequestParam(value = "coupon.shop",required=false) Integer shopId,
+			@RequestParam(value = "coupon.productName",required=false) String productName) throws SQLException {
 		try {
-			if(pid==-1)pid=null;
-			if(productId==-1)productId=null;
-			couponService.insert(name, prefix, beginDate, endDate, minimumPrice, maximumPrice, minimumQuantity,
-					maximumQuantity, isEnabled, pid, priceExpression, introduction, shopId,productId);
+			String parentId;
+			if(!parentThirdId.equals("0")) {
+				parentId = parentThirdId;
+			}else {
+				if(!parentSecondId.equals("0")) {
+					parentId = parentSecondId;
+				}else {
+					parentId = pid;
+				}
+			}
+			if(productName==null)productName=null;
+			couponService.insert(name, prefix, beginDate, endDate, type, minimumPrice,
+					isEnabled, Long.valueOf(parentId), priceExpression, introduction, shopId,productName);
 			ModelAndView mv = new ModelAndView("redirect:/admin/coupon");
 			return mv;
 		} catch (Exception e) {
@@ -192,18 +205,18 @@ public class CouponController {
 	@RequestMapping(value = "/coupon/update", method = RequestMethod.POST)
 	public ModelAndView couponUpdate(HttpServletRequest request, 
 			@RequestParam(value = "coupon.id") Long id,
-			@RequestParam(value = "coupon.name") String name,
-			@RequestParam(value = "coupon.prefix") String prefix,
-			@RequestParam(value = "coupon.beginDate") String beginDate,
-			@RequestParam(value = "coupon.endDate") String endDate,
-			@RequestParam(value = "coupon.minimumPrice") BigDecimal minimumPrice,
-			@RequestParam(value = "coupon.maximumPrice") BigDecimal maximumPrice,
-			@RequestParam(value = "coupon.minimumQuantity") Integer minimumQuantity,
-			@RequestParam(value = "coupon.maximumQuantity") Integer maximumQuantity,
-			@RequestParam(value = "coupon.isEnabled") boolean isEnabled, @RequestParam(value = "parentId",required=false) Long pid,
-			@RequestParam(value = "coupon.priceExpression") String priceExpression,
+			@RequestParam(value = "coupon.name",required=false) String name,
+			@RequestParam(value = "coupon.prefix",required=false) String prefix,
+			@RequestParam(value = "coupon.beginDate",required=false) String beginDate,
+			@RequestParam(value = "coupon.endDate",required=false) String endDate,
+			@RequestParam(value = "coupon.minimumPrice",required=false) BigDecimal minimumPrice,
+			@RequestParam(value = "coupon.maximumPrice",required=false) BigDecimal maximumPrice,
+			@RequestParam(value = "coupon.minimumQuantity",required=false) Integer minimumQuantity,
+			@RequestParam(value = "coupon.maximumQuantity",required=false) Integer maximumQuantity,
+			@RequestParam(value = "coupon.isEnabled",required=false) boolean isEnabled, @RequestParam(value = "parentId",required=false) Long pid,
+			@RequestParam(value = "coupon.priceExpression",required=false) String priceExpression,
 			@RequestParam(value = "coupon.introduction",required=false) String introduction,
-			@RequestParam(value = "coupon.shop") Integer shopId,
+			@RequestParam(value = "coupon.shop",required=false) Integer shopId,
 			@RequestParam(value = "coupon.productId",required=false) Long productId) throws SQLException {
 		try {
 			if(pid==-1)pid=null;

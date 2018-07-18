@@ -27,6 +27,7 @@ import com.cxgm.common.RSResult;
 import com.cxgm.common.SystemConfig;
 import com.cxgm.domain.Admin;
 import com.cxgm.domain.HaixinGood;
+import com.cxgm.domain.Product;
 import com.cxgm.domain.ProductCategory;
 import com.cxgm.domain.ProductImage;
 import com.cxgm.domain.ProductTransfer;
@@ -112,6 +113,19 @@ public class ProductController {
 			haixinGoodsList = haixinService.findAllHaixinGoods(goodName);
 		}
 		return haixinGoodsList;
+	}
+	
+	@RequestMapping(value = "/appGood/list", method = RequestMethod.POST)
+	@ResponseBody
+	public List<Product> getGoodsByParam(HttpServletRequest request,@RequestParam(value = "goodName") String goodName) {
+		
+		List<Product> appGoodsList = new ArrayList<>();
+		if(!"".equals(goodName)){
+			Map<String,Object> map = new HashMap<String,Object>();
+			map.put("goodName", goodName);
+			appGoodsList = productService.findProducts(map);
+		}
+		return appGoodsList;
 	}
 	@RequestMapping(value = "/secondCategory/list", method = RequestMethod.POST)
 	@ResponseBody

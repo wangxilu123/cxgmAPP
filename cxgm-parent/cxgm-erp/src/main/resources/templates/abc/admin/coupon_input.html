@@ -43,7 +43,7 @@ if(isEmpty(coupon.id)){
           <div class="am-form-group am-form-group-sm">
             <label class="am-u-sm-4 am-u-md-3 am-text-right am-form-label">优惠券类型</label>
             <div class="am-u-sm-8 am-u-md-9">
-              <select name="coupon.productId" data-am-selected="{btnWidth: '100%', maxHeight: '200px', btnSize: 'sm', btnStyle: 'secondary'}">
+              <select name="coupon.type" data-am-selected="{btnWidth: '100%', maxHeight: '200px', btnSize: 'sm', btnStyle: 'secondary'}">
 	            <option value="1" selected>满减</option>
 	            <option value="2" >消费</option>
 	            <option value="3" >代金</option>
@@ -78,7 +78,13 @@ if(isEmpty(coupon.id)){
        
             <div class="am-form-group am-form-group-sm">
             <label class="am-u-sm-4 am-u-md-3 am-text-right am-form-label">所有商品</label>
-             <div class="am-u-sm-8 am-u-md-9">
+            <div class="am-u-sm-8 am-u-md-9">
+            <input type="text" class="am-form-field"  id="goodName" name="coupon.productName" value="${coupon.productId!}" onkeyup="test(this.value,event)"><br/>
+			<select multiple="multiple" id="sel" onchange="test2()"
+				style="width:300px;display:none">
+			</select>
+			</div>
+           <!--   <div class="am-u-sm-8 am-u-md-9">
               <%if(isAdd){%>
                <select name="coupon.productId" data-am-selected="{btnWidth: '100%', maxHeight: '200px', btnSize: 'sm', btnStyle: 'secondary'}">
             <option value="-1" selected>请选择...</option>
@@ -98,14 +104,28 @@ if(isEmpty(coupon.id)){
             <%}%>
              </select>
             <%}%>
-             </div>
+             </div> -->
            </div>
        
        
           <div class="am-form-group am-form-group-sm">
             <label class="am-u-sm-4 am-u-md-3 am-text-right am-form-label">商品分类</label>
             <div class="am-u-sm-8 am-u-md-9">
-          <%if(isAdd){%>
+             <select id="firstCategory" name="parentId" data-am-selected="{btnWidth: '30%', maxHeight: '200px', btnSize: 'sm', btnStyle: 'secondary'}">
+            <option value="0" selected>请选择...</option>
+            <%for(list in productCategoryTreeList){%>
+            <option value="${list.id}">
+			  ${list.name}
+			</option>
+			
+		
+            <%}%>
+          </select>
+          <select id="secondCategory" name="parentSecondId" data-am-selected="{btnWidth: '35%', maxHeight: '200px', btnSize: 'sm', btnStyle: 'secondary'}">
+          </select>
+          <select id="thirdCategory" name="parentThirdId" data-am-selected="{btnWidth: '30%', maxHeight: '200px', btnSize: 'sm', btnStyle: 'secondary'}">
+          </select>
+          <!-- <%if(isAdd){%>
           <select name="parentId" data-am-selected="{btnWidth: '100%', maxHeight: '200px', btnSize: 'sm', btnStyle: 'secondary'}">
             <option value="-1" selected>请选择...</option>
             <%for(list in productCategoryTreeList){%>
@@ -136,7 +156,7 @@ if(isEmpty(coupon.id)){
             <%}%>
            
 		</select>
-          <%}%>
+          <%}%> -->
         </div>
           </div>
        <div class="am-form-group am-form-group-sm">
@@ -176,6 +196,91 @@ if(isEmpty(coupon.id)){
       $('div.am-tab-panel').removeAttr("style");
     })
   });
+//下拉选择商品
+  function test(keyword,event){
+	
+	//定义全局变量
+	var keyword = $("#goodName").val();
+	var sel = document.getElementById("sel");
+	
+	$.ajax({ 
+		type: "post", 
+		data:{'goodName':keyword}, 
+		url: "/appGood/list", 
+		success: function(data) {
+			
+			document.getElementById("sel").innerHTML="";
+			
+			for(var i=0;i<data.length;i++){//循环每一个满足条件的记录
+				//将当前循环满足条件的商品名称生成一个下拉的选项
+				sel.options[i]=new Option(data[i].name,data[i].goodCode);
+			}
+			//判断是否有满足条件的商品
+			if(data.length>0){
+				sel.style.display='block';
+			}else{
+				sel.style.display='none';
+			}
+			//当用户按下上下键时获取相应的值
+			if(event.keyCode==40){
+				sel.focus();
+			}	
+		} 
+		});
+}
+ 
+ function test2(){
+	//输入回车，获取输入框内容焦点
+	$("#sel").keypress(function(){
+			$("#goodName").focus();
+			$("#sel").css("display","none");
+	});
+	 //双击，获取输入框内容焦点
+	 $("#sel").dblclick(function(){
+		 $("#goodName").focus();
+		 $("#sel").css("display","none");
+	 });
+	 //将选中的下拉列表中的内容添加到输入框中
+	$("#goodName").val($("#sel option:selected").html());
+	
+}
+ 
+ $("#firstCategory").change(function(){
+	 var firtstCategoryId = $("#firstCategory").val();
+	$("#secondCategory").html('')
+	$.ajax({
+		type: "post", 
+		data:{'firstCategoryId':firtstCategoryId}, 
+		url: "/secondCategory/list", 
+		success: function(data) {
+			$("#secondCategory").append("<option value='0' selected>请选择...</option>");
+			$.each(data,function(index,value){
+				$("#secondCategory").append("<option value='"+value.id+"'>"+value.name+"</option>");
+			})
+			
+		} 
+		
+	})
+ })
+ 
+  $("#secondCategory").change(function(){
+	 var secondCategoryId = $("#secondCategory").val();
+	$("#thirdCategory").html('')
+	$.ajax({
+		type: "post", 
+		data:{'secondCategoryId':secondCategoryId}, 
+		url: "/thirdCategory/list", 
+		success: function(data) {
+			$("#thirdCategory").append("<option value='0' selected>请选择...</option>");
+			$.each(data,function(index,val){
+				$("#thirdCategory").append("<option value='"+val.id+"'>"+val.name+"</option>");
+			})
+			
+		} 
+		
+	})
+ })
+
 </script>
 </body>
 </html>
