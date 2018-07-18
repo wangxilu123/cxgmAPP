@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 
 import com.cxgm.dao.AdvertisementMapper;
 import com.cxgm.dao.MotionMapper;
+import com.cxgm.dao.ProductCategoryMapper;
 import com.cxgm.dao.ProductImageMapper;
 import com.cxgm.dao.ProductMapper;
 import com.cxgm.dao.PromotionMapper;
@@ -21,6 +22,7 @@ import com.cxgm.domain.Advertisement;
 import com.cxgm.domain.AdvertisementExample;
 import com.cxgm.domain.Motion;
 import com.cxgm.domain.MotionExample;
+import com.cxgm.domain.ProductCategory;
 import com.cxgm.domain.ProductImage;
 import com.cxgm.domain.ProductTransfer;
 import com.cxgm.domain.Promotion;
@@ -50,6 +52,8 @@ public class HomePageServiceImpl implements HomePageService {
 	
 	@Autowired
 	private ShopCartMapper shopCartMapper;
+	@Autowired
+	private ProductCategoryMapper  productCategoryMapper;
 	
 	@Override
 	public List<ProductTransfer> findListAllWithCategory(Map<String,Object> map,Integer userId){
@@ -170,7 +174,16 @@ public class HomePageServiceImpl implements HomePageService {
 	@Override
 	public List<ShopCategory> findShopOneCategory(Integer shopId) {
 		
-		return productDao.findShopCategory(shopId);
+		List<ShopCategory> catList = productDao.findShopCategory(shopId);
+		for(ShopCategory shopCategory : catList){
+			ProductCategory productCategory = productCategoryMapper.findById(shopCategory.getId());
+			
+			ProductImage productImage = productImageMapper.findById(Long.valueOf(productCategory.getTreePath()));
+			
+			shopCategory.setImageUrl(productImage.getUrl());
+		}
+		
+		return catList;
 	}
 	
 	@Override

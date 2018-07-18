@@ -79,6 +79,7 @@ public class ProductController {
 		    Map<String,Object> map = new HashMap<>();
 		    map.put("shopId", admin.getShopId());
 		    map.put("name", name);
+		    request.setAttribute("admin", admin);
 			List<ProductTransfer> products = productService.findListAllWithCategory(map);
 			PageInfo<ProductTransfer> pager = new PageInfo<>(products);
 			request.setAttribute("pager", pager);
@@ -219,8 +220,8 @@ public class ProductController {
 		String productId = request.getParameter("id");
 		ProductTransfer product = productService.findById(Long.valueOf(productId));
 		SimpleDateFormat str = new SimpleDateFormat("yyyy-MM-dd"); 
-		product.setNewendTime(str.format(product.getEndTime()));
-		product.setNewstartTime(str.format(product.getStartTime()));
+		product.setNewendTime(product.getEndTime()!=null?str.format(product.getEndTime()):"");
+		product.setNewstartTime(product.getStartTime()!=null?str.format(product.getStartTime()):"");
 		
 		List<ProductCategory> productCategoryTreeList = productCategoryService.getProductCategory(0);
 		request.setAttribute("productCategoryTreeList", productCategoryTreeList);
