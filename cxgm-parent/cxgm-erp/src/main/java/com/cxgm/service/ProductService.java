@@ -73,8 +73,8 @@ public class ProductService {
         	product.setName(name);
         	product.setFullName(fullName);
         	product.setOriginPlace(originPlace);
-        	product.setStartTime(str.parse(startTime));
-        	product.setEndTime(str.parse(endTime));
+        	product.setStartTime(!"".equals(startTime)?str.parse(startTime):null);
+        	product.setEndTime(!"".equals(endTime)?str.parse(endTime):null);
         	if("0".equals(weight)){
         		product.setWeight(haixinGoodList.size()!=0?haixinGoodList.get(0).getSpecifications():"");
         	}else{
@@ -223,10 +223,11 @@ public class ProductService {
         	product.setOriginPlace(originPlace);
         	product.setBrandName(brandName);
         	product.setFullName(fullName);
+        	product.setWeight(weight);
         	product.setStorageCondition(storageCondition);
         	product.setWarrantyPeriod(warrantyPeriod+warrantDays);
-        	product.setStartTime(str.parse(startTime));
-        	product.setEndTime(str.parse(endTime));
+        	product.setStartTime(!"".equals(startTime)?str.parse(startTime):null);
+        	product.setEndTime(!"".equals(endTime)?str.parse(endTime):null);
         	product.setIsTop(isTop);
         	if(pid==null || "".equals(pid)) {
         		throw new TipException("请选择商品分类");

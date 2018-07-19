@@ -182,9 +182,9 @@
   </select>
   
   <select id="findShopCategory" parameterType="java.lang.Integer" resultMap="GenerallyCategoryQueryMap">
-  	select product_category_id as id,product_category_name as name,detail_image as imageUrl from product where 
+  	select product_category_id as id,product_category_name as name from product where 
   	shop_id=#{shopId,jdbcType=INTEGER}
- 	GROUP BY product_category_id,product_category_name,detail_image
+ 	GROUP BY product_category_id,product_category_name
   </select>
   
   <select id="findShopCategoryTwo" parameterType="map" resultMap="GenerallyCategoryQueryMap">

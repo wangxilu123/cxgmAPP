@@ -51,7 +51,7 @@ body, html {
 			<form class="validator-form"
 				action="<%if (isAdd){%>/shop/save<%}else{%>/shop/update<%}%>"
 				method="post" enctype ="multipart/form-data">
-				<input type="hidden" name="id" value="${shop.id!}" />
+				<input type="hidden" name="shopId" value="${shop.id!}" />
 				<div class="am-tabs am-margin" data-am-tabs="{noSwipe: 1}">
 					<ul class="am-tabs-nav am-nav am-nav-tabs">
 						<li class="am-active"><a href="#tab1">基本信息</a></li>
@@ -65,7 +65,7 @@ body, html {
 							<div class="am-form-group am-form-group-sm">
 								<label class="am-u-sm-4 am-u-md-3 am-text-right am-form-label">门店名称</label>
 								<div class="am-u-sm-8 am-u-md-9">
-									<input type="text"class="am-form-field js-pattern-username" name="shopName" placeholder="门店名称" value="${shop.shopName!}"required />
+									<input type="text"class="am-form-field" name="shopName" placeholder="门店名称" value="${shop.shopName!}"required />
 								</div>
 							</div>
 							
@@ -107,7 +107,7 @@ body, html {
 							<div class="am-form-group am-form-group-sm">
 								<label class="am-u-sm-4 am-u-md-3 am-text-right am-form-label">负责人</label>
 								<div class="am-u-sm-8 am-u-md-9">
-									<input type="text" class="am-form-field js-pattern-username" name="owner" placeholder="负责人" minlength="2"  value="${shop.owner!}" required />
+									<input type="text" class="am-form-field" name="owner" placeholder="负责人" minlength="2"  value="${shop.owner!}" required />
 								</div>
 							</div>
 
@@ -162,10 +162,9 @@ body, html {
 							<div class="am-form-group am-form-group-sm">
 								<label class="am-u-sm-4 am-u-md-3 am-text-right am-form-label">门店描述</label>
 								<div class="am-u-sm-8 am-u-md-9">
-									<input type="text"class="am-form-field js-pattern-username" name="aliPrivatekey"placeholder="门店描述" minlength="2" value="${shop.aliPrivatekey!}" required />
+									<input type="text"class="am-form-field" name="description"placeholder="门店描述" minlength="2" value="${shop.description!}" required />
 								</div>
 							</div>
-
 							<div class="am-form-group am-form-group-sm">
 								<label class="am-u-sm-4 am-u-md-3 am-text-right am-form-label">电子围栏（配送区域）</label>
                                 <input type="hidden" id="electronicFence" name="electronicFence" value="${shop.electronicFence!}"/>
@@ -185,10 +184,8 @@ body, html {
 										style="width: 320px; height: 240px; border: 1px solid gray"
 										id="l-map"></div>
 									<input type="text" id="suggestId"
-										style="width: 520px;" am-form-field
-										js-pattern-username" name="shopAddress" placeholder="门店地址"
-										value="${shop.shopAddress!}"
-										required />
+										style="width: 520px;" class="am-form-field" name="shopAddress" placeholder="门店地址"
+										value="${shop.shopAddress!}"/>
 									<div id="searchResultPanel" style="border: 1px solid #C0C0C0; width: 150px; height: auto; display: none;"></div>
 									<input type="hidden" id="lonlat" name="lonlat" />
 								</div>

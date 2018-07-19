@@ -25,7 +25,9 @@ public class ShopService {
 
 	public Integer updateShop(Shop shop) {
 
-		return null;
+		ShopExample example = new ShopExample();
+		example.createCriteria().andIdEqualTo(shop.getId());
+		return shopMapper.updateByExample(shop, example);
 	}
 
 	@Transactional
