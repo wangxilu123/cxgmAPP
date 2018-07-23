@@ -494,6 +494,24 @@ css1{
 	})
  })
  
+ $("#firstCategoryUpdate").change(function(){
+	 var firtstCategoryId = $("#firstCategoryUpdate").val();
+	$("#secondCategoryUpdate").html('')
+	$.ajax({
+		type: "post", 
+		data:{'firstCategoryId':firtstCategoryId}, 
+		url: "/secondCategory/list", 
+		success: function(data) {
+			$("#secondCategoryUpdate").append("<option value='0' selected>请选择...</option>");
+			$.each(data,function(index,value){
+				$("#secondCategoryUpdate").append("<option value='"+value.id+"'>"+value.name+"</option>");
+			})
+			
+		} 
+		
+	})
+ })
+ 
   $("#secondCategory").change(function(){
 	 var secondCategoryId = $("#secondCategory").val();
 	$("#thirdCategory").html('')
@@ -511,7 +529,23 @@ css1{
 		
 	})
  })
-
+  $("#secondCategoryUpdate").change(function(){
+	 var secondCategoryId = $("#secondCategoryUpdate").val();
+	$("#thirdCategoryUpdate").html('')
+	$.ajax({
+		type: "post", 
+		data:{'secondCategoryId':secondCategoryId}, 
+		url: "/thirdCategory/list", 
+		success: function(data) {
+			$("#thirdCategoryUpdate").append("<option value='0' selected>请选择...</option>");
+			$.each(data,function(index,val){
+				$("#thirdCategoryUpdate").append("<option value='"+val.id+"'>"+val.name+"</option>");
+			})
+			
+		} 
+		
+	})
+ })
  function showSelectValue(){
 	        var selectvalue=document.myForm.originalPrice.value;  
 	        if(selectvalue==0){
