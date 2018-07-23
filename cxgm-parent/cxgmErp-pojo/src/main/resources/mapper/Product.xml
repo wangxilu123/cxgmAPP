@@ -93,7 +93,7 @@
     month_hits, sales, week_sales, month_sales, week_hits_date, month_hits_date, week_sales_date, 
     month_sales_date, origin_place, storage_condition, product_category_id,product_category_two_id,product_category_third_id,
     product_category_name,product_category_two_name,product_category_third_name, p.shop_id as shop_id,
-    p.create_by as create_by, p.creation_date as creation_date, p.last_updated_by as last_updated_by, p.last_updated_date as last_updated_date, brand_name,specifications,is_hot,good_code,original_price,warranty_period,detail_image,bar_code,start_time,end_time,number
+    p.create_by as create_by, p.creation_date as creation_date, p.last_updated_by as last_updated_by, p.last_updated_date as last_updated_date, brand_name,specifications,is_hot,good_code,original_price,warranty_period,detail_image,bar_code,start_time,end_time,p.number as number
   </sql>
   
   <resultMap id="GenerallyCategoryQueryMap" type="com.cxgm.domain.ShopCategory">
