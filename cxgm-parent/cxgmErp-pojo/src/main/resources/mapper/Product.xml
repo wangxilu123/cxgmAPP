@@ -230,7 +230,7 @@
     <if test="productCategoryThirdId != null and productCategoryThirdId != ''">
       and  product_category_third_id = #{productCategoryThirdId,jdbcType=BIGINT}
     </if>
-      and is_marketable="1"
+      and is_marketable="1" limit 0,10
   </select>
   
   <select id="findProductByGoodCode" parameterType="java.lang.String" resultMap="ResultMapWithBLOBs">
