@@ -128,6 +128,8 @@ public class ProductTransfer {
     private String newstartTime;
     
     private String newendTime;
+    
+    private Integer number;
  
 	public Boolean getDeleteFlag() {
 		return deleteFlag;
@@ -135,6 +137,14 @@ public class ProductTransfer {
 
 	public Date getStartTime() {
 		return startTime;
+	}
+
+	public Integer getNumber() {
+		return number;
+	}
+
+	public void setNumber(Integer number) {
+		this.number = number;
 	}
 
 	public String getNewstartTime() {

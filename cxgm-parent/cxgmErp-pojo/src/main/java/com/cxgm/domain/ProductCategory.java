@@ -38,7 +38,17 @@ public class ProductCategory {
 
     private Boolean deleteFlag;
     
-    private List<ProductCategory> childCategory;
+    private Integer number;
+    
+    public Integer getNumber() {
+		return number;
+	}
+
+	public void setNumber(Integer number) {
+		this.number = number;
+	}
+
+	private List<ProductCategory> childCategory;
     
     private ProductCategory parentProductCategory;
     

@@ -18,11 +18,12 @@
     <result column="last_updated_date" jdbcType="TIMESTAMP" property="lastUpdatedDate" />
     <result column="delete_flag" jdbcType="BIT" property="deleteFlag" />
     <result column="shop_id" jdbcType="INTEGER" property="shopId" />
+    <result column="number" jdbcType="INTEGER" property="number" />
   </resultMap>
   <sql id="Base_Column_List">
     id, name, seo_title, seo_keywords, seo_description, tree_path, grade, parent_id, 
     two_parent_id, orders, create_by, creation_date, last_updated_by, last_updated_date, 
-    delete_flag,shop_id
+    delete_flag,shop_id,number
   </sql>
   
   <sql id="queryMap">
@@ -71,13 +72,13 @@
       seo_keywords, seo_description, tree_path, 
       grade, parent_id, two_parent_id, 
       orders, create_by, creation_date, 
-      last_updated_by, last_updated_date, delete_flag,shop_id
+      last_updated_by, last_updated_date, delete_flag,shop_id,number
       )
     values (#{id,jdbcType=BIGINT}, #{name,jdbcType=VARCHAR}, #{seoTitle,jdbcType=VARCHAR}, 
       #{seoKeywords,jdbcType=VARCHAR}, #{seoDescription,jdbcType=VARCHAR}, #{treePath,jdbcType=VARCHAR}, 
       #{grade,jdbcType=INTEGER}, #{parentId,jdbcType=BIGINT}, #{twoParentId,jdbcType=INTEGER}, 
       #{orders,jdbcType=INTEGER}, #{createBy,jdbcType=VARCHAR}, #{creationDate,jdbcType=TIMESTAMP}, 
-      #{lastUpdatedBy,jdbcType=VARCHAR}, #{lastUpdatedDate,jdbcType=TIMESTAMP}, #{deleteFlag,jdbcType=BIT},#{shopId,jdbcType=INTEGER}
+      #{lastUpdatedBy,jdbcType=VARCHAR}, #{lastUpdatedDate,jdbcType=TIMESTAMP}, #{deleteFlag,jdbcType=BIT},#{shopId,jdbcType=INTEGER},#{number,jdbcType=INTEGER}
       )
   </insert>
   
@@ -125,7 +126,10 @@
         delete_flag = #{deleteFlag,jdbcType=BIT},
       </if>
        <if test="shopId != null">
-        shop_id = #{shopId,jdbcType=INTEGER}
+        shop_id = #{shopId,jdbcType=INTEGER},
+      </if>
+      <if test="number != null">
+        number = #{number,jdbcType=INTEGER}
       </if>
     </set>
     where id = #{id,jdbcType=BIGINT}

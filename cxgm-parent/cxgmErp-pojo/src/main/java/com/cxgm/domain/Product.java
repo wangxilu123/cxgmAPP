@@ -125,8 +125,17 @@ public class Product {
     private Date startTime;
     
     private Date endTime;
+    private Integer number;
 	public String getDetailImage() {
 		return detailImage;
+	}
+
+	public Integer getNumber() {
+		return number;
+	}
+
+	public void setNumber(Integer number) {
+		this.number = number;
 	}
 
 	public void setDetailImage(String detailImage) {
