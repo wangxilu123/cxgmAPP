@@ -10,10 +10,19 @@ public class ShopCategory {
 	
 	private String imageUrl;
 	
+	private Integer number;
 	private List<ShopCategory> shopCategoryList;
 
 	public Long getId() {
 		return id;
+	}
+
+	public Integer getNumber() {
+		return number;
+	}
+
+	public void setNumber(Integer number) {
+		this.number = number;
 	}
 
 	public void setId(Long id) {

@@ -100,6 +100,7 @@
     <id column="id" jdbcType="BIGINT" property="id" />
     <result column="name" jdbcType="VARCHAR" property="name" />
     <result column="imageUrl" jdbcType="VARCHAR" property="imageUrl" />
+    <result column="number" jdbcType="INTEGER" property="number" />
     </resultMap>
    <sql id="categoryQueryMap">
    	<if test="shopId !=null and shopId != ''">
@@ -183,9 +184,9 @@
   </select>
   
   <select id="findShopCategory" parameterType="java.lang.Integer" resultMap="GenerallyCategoryQueryMap">
-  	select product_category_id as id,product_category_name as name from product where 
+  	select product_category_id as id,product_category_name as name,number from product where 
   	shop_id=#{shopId,jdbcType=INTEGER}
- 	GROUP BY product_category_id,product_category_name
+ 	GROUP BY product_category_id,product_category_name,number order by number asc
   </select>
   
   <select id="findShopCategoryTwo" parameterType="map" resultMap="GenerallyCategoryQueryMap">
