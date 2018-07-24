@@ -82,12 +82,14 @@ public class HomePageController {
 	@ApiOperation(value = "根据门店ID和商品类别ID查询商品信息", nickname = "根据门店ID和商品类别ID查询商品信息")
 	@ApiImplicitParams({
         @ApiImplicitParam(name = "shopId", value = "门店ID", required = false, paramType = "query", dataType = "int"),
+        @ApiImplicitParam(name = "productCategoryId", value = "一级类别ID", required = false, paramType = "query", dataType = "int"),
         @ApiImplicitParam(name = "productCategoryTwoId", value = "二级类别ID", required = false, paramType = "query", dataType = "int"),
         @ApiImplicitParam(name = "productCategoryThirdId", value = "三级类别ID", required = false, paramType = "query", dataType = "int"),
     })
 	@GetMapping("/findProductByCategory")
 	public ResultDto<List<ProductTransfer>> findProductByPage(HttpServletRequest request,
 			@RequestParam(value = "shopId", required = false) Integer shopId,
+			@RequestParam(value = "productCategoryId", required = false) Integer productCategoryId,
             @RequestParam(value = "productCategoryTwoId", required = false) Integer productCategoryTwoId,
             @RequestParam(value = "productCategoryThirdId", required = false) Integer productCategoryThirdId){
 		
@@ -101,6 +103,7 @@ public class HomePageController {
 		
 		map.put("isMarketable", 1);
 		map.put("shopId", shopId);
+		map.put("productCategoryId", productCategoryId);
 		map.put("productCategoryTwoId", productCategoryTwoId);
 		map.put("productCategoryThirdId", productCategoryThirdId);
 		List<ProductTransfer> list=homePageService.findListAllWithCategory(map,userId);

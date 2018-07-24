@@ -328,7 +328,7 @@ public class OrderServiceImpl implements OrderService {
         	
         	UserAddressExample example1 = new UserAddressExample();
         	
-        	example1.createCriteria().andUserIdEqualTo(userId);
+        	example1.createCriteria().andUserIdEqualTo(userId).andIdEqualTo(Integer.parseInt(orders.get(0).getAddressId()));
         	List<UserAddress> addressList = userAddressMapper.selectByExample(example1);
         	
         	orders.get(0).setAddress(addressList.size()!=0?addressList.get(0):null);
