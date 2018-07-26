@@ -103,7 +103,7 @@
     insert into order_product (order_id, product_name, product_id, 
       product_num, create_time,good_code,haixin_url)
     values (#{orderId,jdbcType=INTEGER}, #{productName,jdbcType=VARCHAR}, #{productId,jdbcType=INTEGER}, 
-      #{productNum,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP},#{goodCode,jdbcType=VARCHAR},,#{haixinUrl,jdbcType=VARCHAR})
+      #{productNum,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP},#{goodCode,jdbcType=VARCHAR},#{haixinUrl,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="com.cxgm.domain.OrderProduct" useGeneratedKeys="true">
     insert into order_product
