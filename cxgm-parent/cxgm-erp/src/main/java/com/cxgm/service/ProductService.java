@@ -131,6 +131,7 @@ public class ProductService {
             		product.setDetailImage(oneCategoryURL);
             	}
         	}
+        	product.setNumber(productCategory.getNumber());
         	product.setPrice(price);
         	product.setIsMarketable(isMarketable);
         	product.setIntroduction(introduction);
@@ -269,6 +270,7 @@ public class ProductService {
             	String oneCategoryURL = oneCategoryProductImage.getUrl();
         		product.setDetailImage(oneCategoryURL);
         	}
+        	product.setNumber(productCategory.getNumber());
         	product.setPrice(price);
         	product.setIsMarketable(isMarketable);
         	product.setIntroduction(introduction);

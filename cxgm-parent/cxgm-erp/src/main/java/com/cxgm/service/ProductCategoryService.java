@@ -71,7 +71,7 @@ public class ProductCategoryService {
 	}
 	
 	@Transactional
-	public void insert(Long parentId, String name,List<MultipartFile> files) {
+	public void insert(Long parentId, String name,Integer number,List<MultipartFile> files) {
 		StringBuilder sb = new StringBuilder();
 		ProductCategory productCategory = null;
 		try {
@@ -96,6 +96,7 @@ public class ProductCategoryService {
 				}
 				productCategory = new ProductCategory();
 				productCategory.setName(name);
+				productCategory.setNumber(number);
 				productCategory.setGrade(0);
 				productCategory.setTreePath(sb.toString());
 				productCategoryDao.insert(productCategory);
@@ -104,6 +105,7 @@ public class ProductCategoryService {
 				productCategory = productCategoryDao.findById(parentId);
 				ProductCategory pcy = new ProductCategory();
 				pcy.setName(name);
+				pcy.setNumber(number);
 				pcy.setParentId(parentId);
 				pcy.setDeleteFlag(false);
 				if(productCategory.getGrade()==0) {
