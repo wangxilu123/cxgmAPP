@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 import com.cxgm.dao.HaixinGoodMapper;
 import com.cxgm.domain.GOODS_DATA;
 import com.cxgm.domain.HaixinGood;
+import com.cxgm.domain.Order;
 
 /**
  * 有赞业务对接 User: CQL
@@ -25,6 +26,9 @@ public class HaixinGoodService {
 
 	@Autowired
 	private ThirdPartyHaixinGoodService thirdPartyHaixinGoodService;
+	
+	@Autowired
+	private ThirdPartyHaixinUplodGoodsService thirdPartyHaixinUplodGoodsService;
 	
 	@Autowired
 	private HaixinGoodMapper haixinGoodMapper;
@@ -57,6 +61,13 @@ public class HaixinGoodService {
 		   }	
 		
 		return goodList;
+		
+	}
+	
+public  String upload(Order order) throws UnsupportedEncodingException, SOAPException, ServiceException, IOException {
+		
+		return thirdPartyHaixinUplodGoodsService.upload(order);
+		
 		
 	}
 }

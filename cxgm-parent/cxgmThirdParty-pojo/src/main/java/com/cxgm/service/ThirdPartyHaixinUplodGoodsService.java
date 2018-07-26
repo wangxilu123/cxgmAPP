@@ -58,6 +58,7 @@ public class ThirdPartyHaixinUplodGoodsService  {
 	       sb.append("<ORGCODE>"+order.getHaixinShopCode()+"</ORGCODE>");
 	       sb.append("<CKCODE>01</CKCODE>");
 	       sb.append("<PFCUSTCODE>99998</PFCUSTCODE>");
+	       sb.append("<ISKFP>0</ISKFP>");
 	       sb.append("<JSCODE>00</JSCODE>");
 	       sb.append("<DATE>"+date+"</DATE>");
 	       sb.append("<TIME>"+time+"</TIME>");
@@ -81,7 +82,7 @@ public class ThirdPartyHaixinUplodGoodsService  {
 	       sb.append("<DEVBRAND>*</DEVBRAND>");
 	       sb.append("<DEVNO>*</DEVNO>");
 	       sb.append("<CERTYPE>01</CERTYPE>");
-	       sb.append("<CERSIGN>112556653728E050D8350900446C390E93B6CBA90DD8D4135C09CCBC3C9C05FEE241FC1CE3DAF0EE1D5499060D46CD62D0B04CA0C4300819BC755e164aa45664fded1b54ae2fdbd818e</CERSIGN>");
+	       sb.append("<CERSIGN>14438E0B7D0777FF9914FE36515A716E4B54C3A5E4BE1C65AEF848374C4A2B05AFA142249205DD67381E8E467DAE07D0CC9499060D46CD62D0BC6BF9A5B4450CB4D8054BEBA397235F588a4024632f059a4bc424e0d8e6450db</CERSIGN>");
 	       sb.append("</IMPORTDATA>");
 	       
 	       String  pInData = sb.toString();

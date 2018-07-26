@@ -10,8 +10,10 @@ import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
 
 import com.cxgm.dao.OrderMapper;
+import com.cxgm.dao.OrderProductMapper;
 import com.cxgm.dao.ShopMapper;
 import com.cxgm.domain.Order;
+import com.cxgm.domain.OrderProduct;
 import com.cxgm.domain.Shop;
 import com.cxgm.domain.ShopExample;
 import com.youzan.open.sdk.client.auth.Token;
@@ -22,6 +24,7 @@ import com.youzan.open.sdk.gen.v3_0_0.api.YouzanTradesSoldGet;
 import com.youzan.open.sdk.gen.v3_0_0.model.YouzanTradesSoldGetParams;
 import com.youzan.open.sdk.gen.v3_0_0.model.YouzanTradesSoldGetResult;
 import com.youzan.open.sdk.gen.v3_0_0.model.YouzanTradesSoldGetResult.TradeDetailV2;
+import com.youzan.open.sdk.gen.v3_0_0.model.YouzanTradesSoldGetResult.TradeOrderV2;
 
 /**
  * 有赞业务对接 User: CQL
@@ -38,6 +41,9 @@ public class YouzanOrderService {
 	
 	@Autowired
 	private YouzanShopService youzanShopService;
+	
+	@Autowired
+	private OrderProductMapper orderProductMapper;
 	/**
 	 * 获取门店订单信息接口
 	 */
@@ -113,7 +119,21 @@ public class YouzanOrderService {
 			order.setOrderResource("YOUZAN");
 			orderMapper.insert(order);
 			//查询订单详情商品信息
-			tradeDetailV2.getOrders();
+			TradeOrderV2[] tradeist = tradeDetailV2.getOrders();
+			
+			for(int i=0;i<tradeist.length; i++){
+				TradeOrderV2 tradeOrderV2 = tradeist[i];
+				
+				OrderProduct orderProduct= new OrderProduct();
+				
+				orderProduct.setOrderId(order.getId());
+				orderProduct.setCreateTime(new Date());
+				orderProduct.setGoodCode(tradeOrderV2.getSkuUniqueCode());
+				orderProduct.setProductName(tradeOrderV2.getTitle());
+				orderProduct.setProductNum(tradeOrderV2.getNum().intValue());
+				orderProduct.setHaixinUrl(tradeOrderV2.getPicPath());
+				orderProductMapper.insert(orderProduct);
+			}
 			
 			//同步海信业务接口
 		}

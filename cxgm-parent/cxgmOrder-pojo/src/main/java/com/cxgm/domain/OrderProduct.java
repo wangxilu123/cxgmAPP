@@ -21,5 +21,7 @@ public class OrderProduct {
     private Integer productNum;
 
     private Date createTime;
+    
+    private String haixinUrl;
 
 }
