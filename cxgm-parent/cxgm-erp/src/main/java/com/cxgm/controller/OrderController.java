@@ -1,6 +1,5 @@
 package com.cxgm.controller;
 
-import java.math.BigDecimal;
 import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.List;
@@ -21,7 +20,6 @@ import org.springframework.web.servlet.ModelAndView;
 import com.cxgm.common.RSResult;
 import com.cxgm.domain.Admin;
 import com.cxgm.domain.Order;
-import com.cxgm.domain.OrderExample;
 import com.cxgm.service.OrderServiceErp;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
@@ -36,7 +34,10 @@ public class OrderController {
 	
 	@RequestMapping(value = "/admin/order", method = RequestMethod.GET)
 	public ModelAndView getOrder(HttpServletRequest request,
-			@RequestParam(value = "num", defaultValue = "1") Integer num) {
+			@RequestParam(value = "num", defaultValue = "1") Integer num,
+			@RequestParam(value = "property",required=false) String property,
+			@RequestParam(value = "startDate",required=false) String startDate,
+			@RequestParam(value = "endDate",required=false) String endDate) {
 		PageHelper.startPage(num, 10);
 		SecurityContext ctx = SecurityContextHolder.getContext();
 		Authentication auth = ctx.getAuthentication();
@@ -45,6 +46,7 @@ public class OrderController {
 		PageInfo<Order> pager = new PageInfo<>(orders);
 		request.setAttribute("pager", pager);
 		request.setAttribute("admin", admin);
+		request.setAttribute("property",property);
 		return new ModelAndView("admin/order_list");
 	}
 	
@@ -52,58 +54,73 @@ public class OrderController {
 	public ModelAndView orderList(HttpServletRequest request,
 			@RequestParam(value = "pageNumber", defaultValue = "1") Integer num,
 			@RequestParam(value = "keyword") String name,
-			@RequestParam(value = "property") String property)
+			@RequestParam(value = "property") String property,
+			@RequestParam(value = "startDate",required=false) String startDate,
+			@RequestParam(value = "endDate",required=false) String endDate)
 			throws SQLException {
-		if (null != name && !"".equals(name) ) {
+		if ("".equals(name)&&"".equals(startDate)&&"".equals(endDate)) {
+			return this.getOrder(request, num,property,startDate,endDate);
+		}else{
 			SecurityContext ctx = SecurityContextHolder.getContext();
 			Authentication auth = ctx.getAuthentication();
 			Admin admin = (Admin) auth.getPrincipal();
 			Map<String, Object> map = new HashMap<>();
 			map.put("storeId", admin.getShopId());
 			if(property.equals("orderNum")) {
-				PageHelper.startPage(1, 10);
+				PageHelper.startPage(num, 10);
 				map.put("orderNum", name);
 			}else if(property.equals("status")) {
-				OrderExample orderExample = new OrderExample();
 				if(name.equals("下单")) {
 					map.put("status", 0);
-					orderExample.createCriteria().andStatusEqualTo("0");
 				}else if(name.equals("已经支付")) {
 					map.put("status", 1);
-					orderExample.createCriteria().andStatusEqualTo("1");
 				}else if(name.equals("分拣中")) {
 					map.put("status", 2);
-					orderExample.createCriteria().andStatusEqualTo("2");
 				}else if(name.equals("分拣完成")) {
 					map.put("status", 3);
-					orderExample.createCriteria().andStatusEqualTo("3");
 				}else if(name.equals("配送中")) {
 					map.put("status", 4);
-					orderExample.createCriteria().andStatusEqualTo("4");
 				}else if(name.equals("配送完成")) {
 					map.put("status", 5);
-					orderExample.createCriteria().andStatusEqualTo("5");
 				}else if(name.equals("待退款")) {
 					map.put("status",6);
-					orderExample.createCriteria().andStatusEqualTo("6");
 				}else if(name.equals("已退款")) {
 					map.put("status",7);
-					orderExample.createCriteria().andStatusEqualTo("7");
+				}else if(name.equals("已取消")) {
+					map.put("status",8);
+				}else{
+					map.put("status",name);
 				}
-				PageHelper.startPage(1, orderService.countByExample(orderExample).intValue());
+				PageHelper.startPage(num, 10);
 			}else if(property.equals("totalAmount")) {
 				map.put("totalAmount",Double.valueOf(name));
-				OrderExample orderExample = new OrderExample();
-				orderExample.createCriteria().andTotalAmountEqualTo(BigDecimal.valueOf(Double.valueOf(name)));
-				PageHelper.startPage(1, orderService.countByExample(orderExample).intValue());
+				PageHelper.startPage(num, 10);
+			}else if(property.equals("phone")){
+				map.put("phone",name);
+				PageHelper.startPage(num, 10);
+			}else if(property.equals("orderResource")){
+				if(name.equals("APP")) {
+					map.put("orderResource", "APP");
+				}else if(name.equals("有赞")) {
+					map.put("orderResource", "YOUZAN");
+				}else{
+					map.put("orderResource",name);
+				}
+				PageHelper.startPage(num, 10);
 			}
+			map.put("startDate", startDate);
+			map.put("endDate", endDate);
 			List<Order> orders = orderService.findOrdersWithParam(map);
 			PageInfo<Order> pager = new PageInfo<>(orders);
 			request.setAttribute("pager", pager);
 			request.setAttribute("admin", admin);
+			request.setAttribute("property",property);
+			request.setAttribute("keyword",name);
+			request.setAttribute("startDate",startDate);
+			request.setAttribute("endDate",endDate);
 			return new ModelAndView("admin/order_list");
 		}
-		return this.getOrder(request, num);
+		
 	}
 	
 	@RequestMapping(value = "/order/process", method = RequestMethod.GET, produces = "text/json;charset=UTF-8")
@@ -121,6 +138,13 @@ public class OrderController {
 			rr.setStatus("failure");
 		}
 		return JSONObject.fromObject(rr).toString();
+	}
+	
+	@RequestMapping(value = "/order/detail", method = RequestMethod.GET, produces = "text/json;charset=UTF-8")
+	public ModelAndView productDelete(HttpServletRequest request,@RequestParam(value = "orderId") Integer orderId) throws SQLException {
+		Order order = orderService.orderDetail(orderId);
+		request.setAttribute("order",order);
+		return new ModelAndView("admin/orderDetail");
 	}
 	
 }

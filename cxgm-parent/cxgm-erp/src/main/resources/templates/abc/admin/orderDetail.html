@@ -1,0 +1,72 @@
+<!doctype html>
+<html class="no-js">
+<head>
+<% include("admin_head.html",{title: '订单详情', loadListJS: true}){}%>
+</head>
+<body>
+  <div class="admin-content">
+    <div class="admin-content-body">
+      <article class="page-container">
+		<table class="table" style="position: relative;left:13px">
+			<tbody>
+				<tr>
+					<td class="text-r" width="80">订单编号：</td>
+					<td style="color: #867777">${order.orderNum}</td>
+					<td style="color: #fff">.....................</td>
+					<td class="text-r">订单来源：</td>
+					<td style="color: #867777"><%if (order.orderResource == 'APP'){%> APP <%}%>
+              <%if (order.orderResource == 'YOUZAN'){%> 有赞 <%}%></td>
+					<td style="color: #fff">.....................</td>
+					<td class="text-r">订单状态：</td>
+					<td style="color: #867777"><%if (order.status == '0'){%> 下单 <%}%>
+              <%if (order.status == '1'){%> 已经支付 <%}%>
+              <%if (order.status == '2'){%> 分拣中 <%}%>
+              <%if (order.status == '3'){%> 分拣完成 <%}%>
+              <%if (order.status == '4'){%> 配送中 <%}%>
+              <%if (order.status == '5'){%> 配送完成 <%}%>
+              <%if (order.status == '6'){%> 待退款 <%}%>
+              <%if (order.status == '7'){%> 已退款 <%}%>
+              <%if (order.status == '8'){%> 已取消 <%}%></td>
+				</tr>
+				<tr>
+					<td class="text-r" width="80">订单金额：</td>
+					<td style="color: #867777">${order.orderAmount}</td>
+					<td style="color: #fff">.....................</td>
+					<td class="text-r">支付方式：</td>
+					<td style="color: #867777"><%if (order.payType == 'wx'){%> 微信支付 <%}%>
+              <%if (order.payType == 'zfb'){%> 支付宝支付 <%}%></td>
+					<td style="color: #fff">.....................</td>
+					<td class="text-r">下单时间：</td>
+					<td style="color: #867777">${order.orderTime,dateFormat="yyyy-MM-dd HH:mm:ss"}</td>
+				</tr>
+			</tbody>
+		</table>
+		<div class="am-scrollable-horizontal">
+        <table class="am-table am-table-striped am-table-hover table-main am-text-nowrap am-margin-bottom-0">
+          <thead>
+            <tr>
+             <th>商品图片</th>
+             <th>商品名称</th>
+             <th>商品条码</th>
+			 <th>商品数量</th>
+			 <th>商品价格</th>
+            </tr>
+          </thead>
+          <tbody>
+            <%for(list in order.productDetails){%>
+            <tr id="listTr${listLP.index}">
+              <td><img class="picture-thumb" src="${list.productUrl}" width="50" height="50"></td>
+              <td>${list.productName}</td>
+              <td>${list.barCode}</td>
+              <td>${list.productNum}</td>
+              <td>${list.price}</td>
+            </tr>
+            <%}%>
+          </tbody>
+        </table>
+      </div>
+	</article>
+    </div>
+  </div>
+</body>
+</html>

@@ -126,3 +126,12 @@ function returnMonery(url) {
 		}
 	  });
 	}
+function orderDetail(url){
+	  var obj = window; 
+	  var iWidth=1200; //弹出窗口的宽度;
+	  var iHeight=600; //弹出窗口的高度;
+	  var iTop = (window.screen.availHeight-30-iHeight)/2; //获得窗口的垂直位置;
+	  var iLeft = (window.screen.availWidth-10-iWidth)/2; //获得窗口的水平位置;
+	  myWindow =window.open(url,"Child","height="+iHeight+", width="+iWidth+", top="+iTop+", left="+iLeft+",alwaysRaised=yes,z-look=yes,location=yes"); 
+	  myWindow.focus();	
+}

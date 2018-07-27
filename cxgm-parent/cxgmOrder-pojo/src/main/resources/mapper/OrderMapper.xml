@@ -92,6 +92,18 @@
 		<if test="status !=null">
     		and status=#{status,jdbcType=VARCHAR}
 		</if>
+		<if test="startDate !=null and startDate != ''">
+    		<![CDATA[and DATE_FORMAT(order_time, '%Y-%m-%d') >=  DATE_FORMAT(#{startDate}, '%Y-%m-%d')]]>
+		</if>
+		<if test="endDate !=null and endDate != ''">
+    		<![CDATA[and DATE_FORMAT(order_time, '%Y-%m-%d') <=  DATE_FORMAT(#{endDate}, '%Y-%m-%d')]]>
+		</if>
+		<if test="orderResource !=null">
+    		and order_resource=#{orderResource,jdbcType=VARCHAR}
+		</if>
+		<if test="phone !=null">
+    		and au.mobile=#{phone,jdbcType=VARCHAR}
+		</if>
 		<if test="totalAmount !=null and totalAmount != ''">
     		and total_amount=#{totalAmount,jdbcType=DECIMAL}
 		</if>
@@ -104,14 +116,14 @@
   </sql>
   <select id="selectParseStatus" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select
-   <include refid="Base_Column_List1" />,(case when status=0 then "下单" when status=1 then "已经支付" when status=2 then "分拣中" when status=3 then "分拣完成" when status=4 then "配送中" when status=5 then "配送完成" when status=6 then "待退款" when status=7 then "已退款" END) as status
-    from user_order where 1=1 <include refid="queryMap" /> order by order_time desc
+   uo.id, user_id, order_num, store_id, pay_type, order_time, order_amount, remarks,address_id,receive_time,total_amount,preferential,order_resource,(case when status=0 then "下单" when status=1 then "已经支付" when status=2 then "分拣中" when status=3 then "分拣完成" when status=4 then "配送中" when status=5 then "配送完成" when status=6 then "待退款" when status=7 then "已退款" when status=8 then "已取消" END) as status,au.mobile as phone
+    from user_order as uo left join app_user as au on uo.user_id=au.id where 1=1 <include refid="queryMap" /> order by order_time desc
   </select>
   
   <select id="findOrdersWithParam" parameterType="map" resultMap="BaseResultMap">
     select 
-   <include refid="Base_Column_List1" />,(case when status=0 then "下单" when status=1 then "已经支付" when status=2 then "分拣中" when status=3 then "分拣完成" when status=4 then "配送中" when status=5 then "配送完成" when status=6 then "待退款" when status=7 then "已退款" END) as status
-   from user_order where 1=1 <include refid="queryMap1" /> order by order_time desc
+   uo.id, user_id, order_num, store_id, pay_type, order_time, order_amount, remarks,address_id,receive_time,total_amount,preferential,order_resource,(case when status=0 then "下单" when status=1 then "已经支付" when status=2 then "分拣中" when status=3 then "分拣完成" when status=4 then "配送中" when status=5 then "配送完成" when status=6 then "待退款" when status=7 then "已退款" when status=8 then "已取消" END) as status,au.mobile as phone
+   from user_order as uo left join app_user as au on uo.user_id=au.id where 1=1 <include refid="queryMap1" /> order by order_time desc
   </select>
   
   <select id="selectByExample" parameterType="com.cxgm.domain.OrderExample" resultMap="BaseResultMap">
