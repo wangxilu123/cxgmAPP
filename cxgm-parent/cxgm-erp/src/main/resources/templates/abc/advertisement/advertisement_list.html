@@ -66,6 +66,7 @@
               <th>所属门店</th>
               <th>是否有效</th>
               <th>创建日期</th>
+              <th><div class="app-table-td-buttons-width-120">操作</div></th>
             </tr>
           </thead>
           <tbody>
@@ -85,6 +86,13 @@
               <td><%if (list.onShelf == 1){%> 有效 <%}%>
               <%if (list.onShelf == 0){%> 无效 <%}%></td>
               <td>${list.createTime,dateFormat="yyyy-MM-dd HH:mm:ss"}</td>
+              <td>
+                <div class="am-btn-group am-btn-group-xs">
+                  <button type="button" class="am-btn am-btn-default am-btn-xs am-text-secondary app-table-button-padding" onclick="location.href='/advertisement/toEdit?advertisementId=${list.id}'">
+                    <span class="am-icon-pencil"> 编辑</span>
+                  </button>
+                </div>
+              </td>
             </tr>
             <%}%> 
           </tbody>

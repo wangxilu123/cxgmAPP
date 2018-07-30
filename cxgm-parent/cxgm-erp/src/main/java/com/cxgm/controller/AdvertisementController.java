@@ -1,5 +1,7 @@
 package com.cxgm.controller;
 
+import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Date;
@@ -7,6 +9,8 @@ import java.util.HashMap;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.xml.rpc.ServiceException;
+import javax.xml.soap.SOAPException;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -27,6 +31,7 @@ import com.cxgm.common.SystemConfig;
 import com.cxgm.domain.Admin;
 import com.cxgm.domain.Advertisement;
 import com.cxgm.domain.Product;
+import com.cxgm.domain.ProductTransfer;
 import com.cxgm.domain.Shop;
 import com.cxgm.service.AdvertisementService;
 import com.cxgm.service.ProductService;
@@ -81,6 +86,28 @@ public class AdvertisementController {
 		request.setAttribute("shopList", shopList);
 		request.setAttribute("systemConfig",systemConfig);
 		request.setAttribute("shopId",admin.getShopId());
+		return new ModelAndView("advertisement/advertisement_add");
+	}
+	
+	@RequestMapping(value = "/toEdit", method = RequestMethod.GET)	public ModelAndView advertisementToEdit(HttpServletRequest request,
+			@RequestParam(value = "advertisementId", required = false) Integer advertisementId) throws SQLException, UnsupportedEncodingException, SOAPException, ServiceException, IOException {
+		
+		Advertisement advertisement = advertisementService.findAdvertisementById(advertisementId);
+		
+		//根据商品ID查询商品信息
+		if(!"".equals(advertisement.getProductCode())&&advertisement.getProductCode()!=null){
+			ProductTransfer product = productService.findById(Long.parseLong(advertisement.getProductCode()));
+			
+			advertisement.setGoodName(product!=null?product.getName():"");
+		}
+		
+		request.setAttribute("advertisement", advertisement);
+		request.setAttribute("advertisementId", advertisement.getId());
+		
+		SystemConfig systemConfig = new SystemConfig();
+		systemConfig.setUploadLimit(10);
+		systemConfig.setAllowedUploadImageExtension("png,jpg");
+		request.setAttribute("systemConfig",systemConfig);
 		return new ModelAndView("advertisement/advertisement_add");
 	}
 	
@@ -161,6 +188,49 @@ public class AdvertisementController {
 			rr.setStatus("failure");
 		}
 		return JSONObject.fromObject(rr).toString();
+	}
+	
+	@RequestMapping(value = "/update", method = RequestMethod.POST)
+	public ModelAndView update(HttpServletRequest request,
+			@RequestParam(value = "advertisementId",required=false) Integer advertisementId,
+			@RequestParam(value = "adverName",required=false) String adverName,
+			@RequestParam(value = "notifyUrl",required=false) String notifyUrl,
+			@RequestParam(value = "position",required=false) String position,
+			@RequestParam(value = "productId",required=false) String productId,
+			@RequestParam(value = "shopId",required=false) Integer shopId,
+			@RequestParam(value = "type",required=false) String type,
+			@RequestParam(value = "number",required=false) String number,
+			@RequestParam(value = "onShelf",required=false) Integer onShelf)
+			throws Exception {
+        List<MultipartFile> files = ((MultipartHttpServletRequest) request).getFiles("adverImages");
+		
+        Advertisement advertisement = advertisementService.findAdvertisementById(advertisementId);
+        
+        advertisement.setAdverName(adverName);
+        advertisement.setNotifyUrl(notifyUrl);
+        advertisement.setNumber(Integer.parseInt(number));
+        if(!"".equals(productId)&&productId!=null){
+        	advertisement.setProductCode(productId);
+        }
+        StringBuilder sb = new StringBuilder();
+		if(files!=null){
+            for(int i=0;i<files.size();i++){  
+                MultipartFile file = files.get(i);
+                if (file.getSize() > 0) {
+                	String name = ossClient.uploadImg2Oss(file);
+            	    String imgUrl = ossClient.getImgUrl(name);
+                        sb.append(imgUrl);
+                        sb.append(",");
+                }
+            } 
+        }
+		if(sb.length()>0){
+			sb.deleteCharAt(sb.length()-1);
+			advertisement.setImageUrl(sb.toString());
+		}
+		advertisementService.updateAdvertisement(advertisement);
+		ModelAndView mv = new ModelAndView("redirect:/advertisement/list");
+		return mv;
 	}
 
 }

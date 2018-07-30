@@ -76,5 +76,24 @@ public class AdvertisementService {
 		resultDelete = 1;
 		return resultDelete;
 	}
+	
+	  public Advertisement findAdvertisementById(Integer advertisementId) {
+			
+		  AdvertisementExample example = new AdvertisementExample();
+	    	
+	    	example.createCriteria().andIdEqualTo(advertisementId);
+	    	
+	    	List<Advertisement> advertisementList = advertisementMapper.selectByExample(example);
+	    	
+			return advertisementList.get(0);
+		}
+	  
+	  public Integer updateAdvertisement(Advertisement advertisement) {
+
+		    AdvertisementExample example = new AdvertisementExample();
+		    
+			example.createCriteria().andIdEqualTo(advertisement.getId());
+			return advertisementMapper.updateByExample(advertisement, example);
+		}
 
 }

@@ -31,4 +31,6 @@ public class Advertisement {
     private Integer number;
     
     private String shopName;
+    
+    private String goodName;
 }

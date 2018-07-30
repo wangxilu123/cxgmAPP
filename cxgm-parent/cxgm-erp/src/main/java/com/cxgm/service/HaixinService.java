@@ -21,4 +21,17 @@ public class HaixinService {
 		haixinGoodExample.createCriteria().andGoodNameLike("%" + goodName + "%");
 		return haixinGoodMapper.selectByExample(haixinGoodExample);
 	}
+	
+	public HaixinGood findAllHaixinGoodByCode(String goodCode){
+		HaixinGoodExample haixinGoodExample = new HaixinGoodExample();
+		
+		haixinGoodExample.createCriteria().andGoodCodeEqualTo(goodCode);
+		List<HaixinGood> list = haixinGoodMapper.selectByExample(haixinGoodExample);
+		if(list.size()!=0){
+			return list.get(0);
+		}else{
+			return null;
+		}
+		
+	}
 }

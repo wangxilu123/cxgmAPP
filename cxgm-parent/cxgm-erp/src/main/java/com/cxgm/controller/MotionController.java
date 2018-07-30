@@ -1,5 +1,7 @@
 package com.cxgm.controller;
 
+import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.sql.SQLException;
 import java.util.Date;
 import java.util.HashMap;
@@ -7,6 +9,8 @@ import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.xml.rpc.ServiceException;
+import javax.xml.soap.SOAPException;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -51,6 +55,7 @@ public class MotionController {
 	@Autowired
 	ProductService productService;
 	
+	
 	@RequestMapping(value = "/list", method = RequestMethod.GET)
 	public ModelAndView motionList(HttpServletRequest request,
 			@RequestParam(value = "pageNum", defaultValue = "1" , required = false) Integer pageNum,
@@ -81,6 +86,28 @@ public class MotionController {
 		List<Shop> shopList = shopService.findListAll();
 		request.setAttribute("shopList", shopList);
 		request.setAttribute("shopId",admin.getShopId());
+		request.setAttribute("systemConfig",systemConfig);
+		return new ModelAndView("motion/motion_add");
+	}
+	
+	@RequestMapping(value = "/toEdit", method = RequestMethod.GET)	public ModelAndView motionToEdit(HttpServletRequest request,
+			@RequestParam(value = "motionId", required = false) Integer motionId) throws SQLException, UnsupportedEncodingException, SOAPException, ServiceException, IOException {
+		
+		Motion motion = motionService.findMotionById(motionId);
+		
+		//根据商品ID查询商品信息
+		if(!"".equals(motion.getProductCode())&&motion.getProductCode()!=null){
+			ProductTransfer product = productService.findById(Long.parseLong(motion.getProductCode()));
+			
+			motion.setGoodName(product!=null?product.getName():"");
+		}
+		
+		request.setAttribute("motion", motion);
+		request.setAttribute("motionId", motion.getId());
+		
+		SystemConfig systemConfig = new SystemConfig();
+		systemConfig.setUploadLimit(10);
+		systemConfig.setAllowedUploadImageExtension("png,jpg");
 		request.setAttribute("systemConfig",systemConfig);
 		return new ModelAndView("motion/motion_add");
 	}
@@ -192,6 +219,49 @@ public class MotionController {
 			rr.setStatus("failure");
 		}
 		return JSONObject.fromObject(rr).toString();
+	}
+	
+	@RequestMapping(value = "/update", method = RequestMethod.POST)
+	public ModelAndView update(HttpServletRequest request,
+			@RequestParam(value = "motionId",required=false) Integer motionId,
+			@RequestParam(value = "motionName",required=false) String motionName,
+			@RequestParam(value = "position",required=false) String position,
+			@RequestParam(value = "productIds",required=false) String productIds,
+			@RequestParam(value = "shopId",required=false) Integer shopId,
+			@RequestParam(value = "type",required=false) String type,
+			@RequestParam(value = "notifyUrl",required=false) String notifyUrl,
+			@RequestParam(value = "urlType",required=false) String urlType,
+			@RequestParam(value = "productId",required=false) String productId)
+			throws Exception {
+        List<MultipartFile> files = ((MultipartHttpServletRequest) request).getFiles("motionImage");
+		
+        Motion motion = motionService.findMotionById(motionId);
+        
+        motion.setMotionName(motionName);
+        motion.setProductIds(productIds);
+        motion.setNotifyUrl(notifyUrl);
+        if(!"".equals(productId)&&productId!=null){
+        	motion.setProductCode(productId);
+        }
+        StringBuilder sb = new StringBuilder();
+		if(files!=null){
+            for(int i=0;i<files.size();i++){  
+                MultipartFile file = files.get(i);
+                if (file.getSize() > 0) {
+                	String name = ossClient.uploadImg2Oss(file);
+            	    String imgUrl = ossClient.getImgUrl(name);
+                        sb.append(imgUrl);
+                        sb.append(",");
+                }
+            } 
+        }
+		if(sb.length()>0){
+			sb.deleteCharAt(sb.length()-1);
+			motion.setImageUrl(sb.toString());
+		}
+		motionService.updateMotion(motion);
+		ModelAndView mv = new ModelAndView("redirect:/motion/list");
+		return mv;
 	}
 
 }

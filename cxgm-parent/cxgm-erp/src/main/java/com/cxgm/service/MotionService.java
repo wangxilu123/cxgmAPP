@@ -74,5 +74,23 @@ public class MotionService {
 		resultDelete = 1;
 		return resultDelete;
 	}
+	
+    public Motion findMotionById(Integer motionId) {
+		
+    	MotionExample example = new MotionExample();
+    	
+    	example.createCriteria().andIdEqualTo(motionId);
+    	
+    	List<Motion> motionList = motionMapper.selectByExample(example);
+    	
+		return motionList.get(0);
+	}
+    
+    public Integer updateMotion(Motion motion) {
+
+		MotionExample example = new MotionExample();
+		example.createCriteria().andIdEqualTo(motion.getId());
+		return motionMapper.updateByExample(motion, example);
+	}
 
 }

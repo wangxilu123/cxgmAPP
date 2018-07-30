@@ -35,4 +35,6 @@ public class Motion {
     
     private String notifyUrl;
     private String shopName;
+    
+    private String goodName;
 }

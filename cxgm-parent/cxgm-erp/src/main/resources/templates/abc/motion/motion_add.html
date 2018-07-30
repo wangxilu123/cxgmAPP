@@ -1,8 +1,9 @@
 <!doctype html>
 <html class="no-js">
-<head><% include("admin_head.html",{title: '添加/编辑运营位信息',loadUE:
+<head>
+<% include("admin_head.html",{title: '添加/编辑运营位信息',loadUE:
 true,validatorJS: true, livequeryJS: true}){}%> <%var isAdd = false; var
-isEdit = false; if(isEmpty(shop.id)){ isAdd = true; }else{ isEdit =
+isEdit = false; if(isEmpty(motion.id)){ isAdd = true; }else{ isEdit =
 true; }%>
 
 
@@ -23,6 +24,7 @@ true; }%>
 			<form class="validator-form"
 				action="<%if (isAdd){%>/motion/save<%}else{%>/motion/update<%}%>"
 				enctype="multipart/form-data" method="post" name="myForm">
+				<input type="hidden" id="motionId" name="motionId" value="${motionId!}" />
 				<input type="hidden" id="shopId" name="shopId" value="${shopId!}" />
 				<div class="am-tabs am-margin" data-am-tabs="{noSwipe: 1}">
 					<ul class="am-tabs-nav am-nav am-nav-tabs">
@@ -37,15 +39,11 @@ true; }%>
 							<div class="am-form-group am-form-group-sm">
 								<label class="am-u-sm-4 am-u-md-3 am-text-right am-form-label">运营名称</label>
 								<div class="am-u-sm-8 am-u-md-9">
-									<%if (isAdd){%> <input type="text"
-										class="am-form-field js-pattern-username" name="motionName"
-										placeholder="运营名称" minlength="2" maxlength="20" required />
-									<div class="am-text-warning am-margin-top-xs am-text-xs">${motionName!}</div>
-									<%}else{%> ${motion.motionName!} <input type="hidden"
-										name="motionName" value="${motion.motionName!}" /> <%}%>
+									<input type="text"class="am-form-field js-pattern-username" name="motionName"
+										placeholder="运营名称" minlength="2" maxlength="20" required  value="${motion.motionName!}"/>
 								</div>
 							</div>
-							
+							<%if (isAdd){%>
 							<div class="am-form-group am-form-group-sm">
 								<label class="am-u-sm-4 am-u-md-3 am-text-right am-form-label">运营类型</label>
 								<div class="am-u-sm-8 am-u-md-9">
@@ -55,7 +53,8 @@ true; }%>
 									</select> 
 								</div>
 							</div>
-
+                            <%}%>
+                            <%if (isAdd){%>
 							<div id="motionPosition"class="am-form-group am-form-group-sm" style="display:block;">
 								<label class="am-u-sm-4 am-u-md-3 am-text-right am-form-label">运营位置</label>
 								<div class="am-u-sm-8 am-u-md-9">
@@ -69,18 +68,16 @@ true; }%>
 						              </select>
 								</div>
 							</div>
+							<%}%>
 							
 							<div class="am-form-group am-form-group-sm">
 								<label class="am-u-sm-4 am-u-md-3 am-text-right am-form-label">运营商品</label>
 								<div class="am-u-sm-8 am-u-md-9">
-									<%if (isAdd){%> <input type="text" id="productIds" name="productIds"
-										placeholder="运营商品" onclick="productShow('商品列表','/motion/toProductList')"/>
-									<div class="am-text-warning am-margin-top-xs am-text-xs">${motionName!}</div>
-									<%}else{%> ${motion.motionName!} <input type="hidden"
-										name="motionName" value="${motion.motionName!}" /> <%}%>
+								<input type="text" id="productIds" name="productIds"
+										placeholder="运营商品" onclick="productShow('商品列表','/motion/toProductList')" value="${motion.productIds!}"/>
 								</div>
 							</div>
-
+                            <%if (isAdd){%>
 							<div id="urlType" class="am-form-group am-form-group-sm">
 								<label class="am-u-sm-4 am-u-md-3 am-text-right am-form-label">跳转类型</label>
 								<div class="am-u-sm-8 am-u-md-9">
@@ -90,19 +87,38 @@ true; }%>
 									</select> 
 								</div>
 							</div>
-							
+							<%}%>
+							<%if (isEdit){%>
+							<%if (motion.urlType=="1"){%>
 							<div id="adverAddress" class="am-form-group am-form-group-sm" style="display:block;">
 								<label class="am-u-sm-4 am-u-md-3 am-text-right am-form-label" >跳转地址</label>
 								<div class="am-u-sm-8 am-u-md-9">
-									<%if (isAdd){%> <input type="text"
-										class="am-form-field" name="notifyUrl"
-										placeholder="广告地址" minlength="2" required />
-									<div class="am-text-warning am-margin-top-xs am-text-xs">${notifyUrl!}</div>
-									<%}else{%> ${advertisement.notifyUrl!} <input type="hidden"
-										name="notifyUrl" value="${advertisement.notifyUrl!}" /> <%}%>
+								<input type="text"class="am-form-field" name="notifyUrl"
+										placeholder="广告地址" minlength="2" required  value="${motion.notifyUrl!}"/>
 								</div>
 							</div>
-							
+							<%}%>
+							<%if (motion.urlType=="2"){%>
+							<div id="goodId" class="am-form-group am-form-group-sm" style="display:block;">
+								<label class="am-u-sm-4 am-u-md-3 am-text-right am-form-label" >商品名称</label>
+								<div class="am-u-sm-8 am-u-md-9">
+								<input type="hidden" id="productId" name="productId" />
+					            <input type="text" class="am-form-field"  id="goodName" name="goodName" value="${motion.goodName!}" onkeyup="test(this.value,event)"><br/>
+								<select multiple="multiple" id="sel" onchange="test2()"
+									style="width:300px;display:none">
+								</select>
+								</div>
+							</div>
+                            <%}%>
+                            <%}%>
+                            <%if (isAdd){%>
+							<div id="adverAddress" class="am-form-group am-form-group-sm" style="display:block;">
+								<label class="am-u-sm-4 am-u-md-3 am-text-right am-form-label" >跳转地址</label>
+								<div class="am-u-sm-8 am-u-md-9">
+								<input type="text"class="am-form-field" name="notifyUrl"
+										placeholder="广告地址" minlength="2" required  value="${motion.notifyUrl!}"/>
+								</div>
+							</div>
 							<div id="goodId" class="am-form-group am-form-group-sm" style="display:none;">
 								<label class="am-u-sm-4 am-u-md-3 am-text-right am-form-label" >商品名称</label>
 								<div class="am-u-sm-8 am-u-md-9">
@@ -113,12 +129,13 @@ true; }%>
 								</select>
 								</div>
 							</div>
-
+                            <%}%>
 						</div>
 						<div class="am-tab-panel am-fade app-min-height app-product-image"
 							id="tab2">
 							<ul class="am-avg-sm-2 am-avg-md-4 am-thumbnails" id="file-list">
-								<%for(list in motion.imageUrl!){%>
+							    <%if (isAdd){%>
+							    <%for(list in motion.imageUrl!){%>
 								<li>
 									<div class="am-thumbnail">
 										<input type="hidden" name="productImageIds" value="${list.id}" />
@@ -153,7 +170,44 @@ true; }%>
 											</li>
 										</ul>
 									</div>
-								</li> <%}%>
+								</li> <%}%><%}else{%>
+								
+								<li>
+									<div class="am-thumbnail">
+										<input type="hidden" name="productImageIds" value="${motion.imageUrl}" />
+										<input type="hidden" name="productImageParameterTypes"
+											value="productImageId" /> <img src="${motion.imageUrl}"
+											class="am-img-bdrs">
+										<ul class="am-thumbnail-caption am-avg-sm-3">
+											<li><button type="button"
+													class="am-btn am-btn-default am-text-warning am-btn-xs am-center opr-img-left">
+													<span class="am-icon-chevron-left"></span>
+												</button></li>
+											<li><button type="button"
+													class="am-btn am-btn-default am-text-danger am-btn-xs am-center opr-img-delete">
+													<span class="am-icon-trash"></span>
+												</button></li>
+											<li><button type="button"
+													class="am-btn am-btn-default am-text-warning am-btn-xs am-center opr-img-right">
+													<span class="am-icon-chevron-right"></span>
+												</button></li>
+										</ul>
+										<hr data-am-widget="divider"
+											class="am-divider am-divider-dashed am-margin-0" />
+										<ul class="am-thumbnail-caption am-avg-sm-1">
+											<li>
+												<div class="am-form-group am-form-file">
+													<button type="button"
+														class="am-btn am-btn-success am-btn-xs am-center"
+														disabled="disabled">
+														<i class="am-icon-info-circle"></i> 已经上传
+													</button>
+												</div>
+											</li>
+										</ul>
+									</div>
+								</li>
+								<%}%>
 								<li>
 									<div class="am-thumbnail">
 										<div
