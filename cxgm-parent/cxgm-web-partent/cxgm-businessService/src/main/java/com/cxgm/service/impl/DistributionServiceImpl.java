@@ -29,6 +29,7 @@ import com.cxgm.domain.UserAddress;
 import com.cxgm.domain.UserAddressExample;
 import com.cxgm.service.DistributionService;
 import com.cxgm.service.ThirdPartyHaixinUplodGoodsService;
+import com.cxgm.service.ThirdPartyHaixinUplodOrderService;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 
@@ -53,6 +54,9 @@ public class DistributionServiceImpl implements DistributionService {
 	
 	@Autowired
 	private ThirdPartyHaixinUplodGoodsService thirdPartyHaixinUplodGoodsService;
+	
+	@Autowired
+	private ThirdPartyHaixinUplodOrderService thirdPartyHaixinUplodOrderService;
 
 	@Override
 	public PageInfo<DistributionOrder> orderList(Integer pageNum, Integer pageSize, Integer shopId, String status) {
@@ -186,7 +190,11 @@ public class DistributionServiceImpl implements DistributionService {
 
 			order.setProductDetails(productList);
 			
-			thirdPartyHaixinUplodGoodsService.upload(order);
+			String code = thirdPartyHaixinUplodOrderService.checkOrder(order.getOrderNum());
+			if("1".equals(code)){
+				thirdPartyHaixinUplodGoodsService.upload(order);
+			}
+			
 			
 		}
 

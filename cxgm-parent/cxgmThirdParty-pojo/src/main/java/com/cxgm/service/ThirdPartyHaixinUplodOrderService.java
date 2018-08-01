@@ -27,7 +27,7 @@ public class ThirdPartyHaixinUplodOrderService  {
 	/**
 	  *上传订单到海信接口
 	  */
-	  public static String checkOrder() throws SOAPException, ServiceException, UnsupportedEncodingException, IOException {
+	  public static String checkOrder(String orderNum) throws SOAPException, ServiceException, UnsupportedEncodingException, IOException {
 		  
 		 String endpoint = "http://221.219.243.5:8099/HsMisWebSrv.dll/soap/IHsMisWebSrv";
 		   
@@ -44,7 +44,7 @@ public class ThirdPartyHaixinUplodOrderService  {
 	       sb.append("<DEVBRAND>*</DEVBRAND>");
 	       sb.append("<DEVNO>*</DEVNO>");
 	       sb.append("<BILLTYPE>PSYS</BILLTYPE>");
-	       sb.append("<BILLNO>20180606142124kJx34J</BILLNO>");
+	       sb.append("<BILLNO>"+orderNum+"</BILLNO>");
 	       sb.append("<CERTYPE>01</CERTYPE>");
 	       sb.append("<CERSIGN>14438E0B7D0777FF9914FE36515A716E4B54C3A5E4BE1C65AEF848374C4A2B05AFA142249205DD67381E8E467DAE07D0CC9499060D46CD62D0BC6BF9A5B4450CB4D8054BEBA397235F588a4024632f059a4bc424e0d8e6450db</CERSIGN>");
 	       sb.append("</IMPORTDATA>");
@@ -69,9 +69,6 @@ public class ThirdPartyHaixinUplodOrderService  {
 	       
 	   return code;
 	   }
-	  public static void main(String[] args) throws UnsupportedEncodingException, SOAPException, ServiceException, IOException{
-		  System.out.println(checkOrder());
-	  } 
 }
 	
 	

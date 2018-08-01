@@ -77,20 +77,16 @@ public class ShopCartController {
 
 	@ApiOperation(value = "我的购物车列表", nickname = "我的购物车列表")
 	@ApiImplicitParams({
-			@ApiImplicitParam(name = "pageNum", value = "第几页，默认1", required = false, paramType = "query", dataType = "int"),
-			@ApiImplicitParam(name = "pageSize", value = "每页多少条，默认10", required = false, paramType = "query", dataType = "int"),
 			@ApiImplicitParam(name = "shopId",  required = false, paramType = "query", dataType = "int"),})
 	@GetMapping("/list")
 	public ResultDto<PageInfo<ShopCart>> homeList(HttpServletRequest request,
-			@RequestParam(value = "pageNum", defaultValue = "1", required = false) Integer pageNum,
-			@RequestParam(value = "pageSize", defaultValue = "10", required = false) Integer pageSize,
 			@RequestParam(value = "shopId", required = false) Integer shopId) {
 
 		AppUser appUser = checkToken.check(request.getHeader("token"));
 
 		if (appUser != null) {
 
-			PageInfo<ShopCart> result = shopCartService.shopCartList(pageNum, pageSize, appUser.getId(),shopId);
+			PageInfo<ShopCart> result = shopCartService.shopCartList(appUser.getId(),shopId);
 
 			return new ResultDto<>(200, "查询成功！", result);
 		} else {

@@ -83,10 +83,7 @@ public class ShopCartServiceImpl implements ShopCartService {
 	}
 
 	@Override
-	public PageInfo<ShopCart> shopCartList(Integer pageNum, Integer pageSize,
-			Integer userId,Integer shopId) {
-
-		PageHelper.startPage(pageNum, pageSize);
+	public PageInfo<ShopCart> shopCartList(Integer userId,Integer shopId) {
 
 		ShopCartExample example = new ShopCartExample();
 

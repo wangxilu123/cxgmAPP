@@ -1,9 +1,14 @@
 package com.cxgm.service;
 
+import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.math.BigDecimal;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
+
+import javax.xml.rpc.ServiceException;
+import javax.xml.soap.SOAPException;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Primary;
@@ -44,10 +49,20 @@ public class YouzanOrderService {
 	
 	@Autowired
 	private OrderProductMapper orderProductMapper;
+	
+	@Autowired
+	private ThirdPartyHaixinUplodGoodsService thirdPartyHaixinUplodGoodsService;
+	
+	@Autowired
+	private ThirdPartyHaixinUplodOrderService thirdPartyHaixinUplodOrderService;
 	/**
 	 * 获取门店订单信息接口
+	 * @throws IOException 
+	 * @throws ServiceException 
+	 * @throws SOAPException 
+	 * @throws UnsupportedEncodingException 
 	 */
-	public  TradeDetailV2[] findYouZanOrder() {
+	public  TradeDetailV2[] findYouZanOrder() throws UnsupportedEncodingException, SOAPException, ServiceException, IOException {
 		@SuppressWarnings("static-access")
 		OAuthToken oAuthToken = youzanShopService.getToken();
 		
@@ -136,6 +151,10 @@ public class YouzanOrderService {
 			}
 			
 			//同步海信业务接口
+			String code = thirdPartyHaixinUplodOrderService.checkOrder(order.getOrderNum());
+			if("1".equals(code)){
+				thirdPartyHaixinUplodGoodsService.upload(order);
+			}
 		}
 		return tradeDetail;
 	}

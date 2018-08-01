@@ -11,5 +11,5 @@ public interface ShopCartService {
 	
     Integer deleteShopCart(String shopCartIds,Integer userId);
     
-    PageInfo<ShopCart> shopCartList(Integer pageNum, Integer pageSize,Integer userId,Integer shopId);
+    PageInfo<ShopCart> shopCartList(Integer userId,Integer shopId);
 }
