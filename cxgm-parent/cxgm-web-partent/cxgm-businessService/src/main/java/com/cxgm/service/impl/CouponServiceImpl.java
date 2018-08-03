@@ -48,9 +48,12 @@ public class CouponServiceImpl implements CouponService {
 			
 			CouponCode couponCode = couponCodeMapper.select((long)couponDetail.getCodeId());
 			
-			couponCode.setUserId((long)userId);
-			
-			couponCodeMapper.update(couponCode);
+			if(couponCode.getUserId()==null){
+				couponCode.setUserId((long)userId);
+				
+				couponCodeMapper.update(couponCode);
+				
+			}
 			
 			return couponDetail;
 		}else{
