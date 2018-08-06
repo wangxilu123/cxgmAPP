@@ -43,20 +43,22 @@ public class SortingController {
         @ApiImplicitParam(name = "pageNum", value = "第几页，默认1", required = false, paramType = "query", dataType = "int"),
 		@ApiImplicitParam(name = "pageSize", value = "每页多少条，默认10", required = false, paramType = "query", dataType = "int"),
         @ApiImplicitParam(name = "status", value = "待分拣1，分拣中2，已完成3，退单7", required = false, paramType = "query", dataType = "int"),
-        @ApiImplicitParam(name = "shopId", required = false, paramType = "query", dataType = "int")
+        @ApiImplicitParam(name = "shopId", required = false, paramType = "query", dataType = "int"),
+        @ApiImplicitParam(name = "adminId", required = false, paramType = "query", dataType = "int")
     })
 	@GetMapping("/findSorting")
 	public ResultDto<PageInfo<Order>> findFirstCategory(HttpServletRequest request,
 			@RequestParam(value = "pageNum", defaultValue = "1", required = false) Integer pageNum,
 			@RequestParam(value = "pageSize", defaultValue = "10", required = false) Integer pageSize,
 			@RequestParam(value = "status", required = false) String status,
-			@RequestParam(value = "shopId", required = false) Integer shopId){
+			@RequestParam(value = "shopId", required = false) Integer shopId,
+			@RequestParam(value = "adminId", required = false) Integer adminId){
 		
 		boolean result = checkToken.checkAdmin(request.getHeader("token"));
 
 		if (result == true) {
 
-			PageInfo<Order> list = sortingService.orderList(pageNum, pageSize, shopId, status);
+			PageInfo<Order> list = sortingService.orderList(pageNum, pageSize, shopId, status,adminId);
 
 			return new ResultDto<>(200, "查询成功！", list);
 		} else {

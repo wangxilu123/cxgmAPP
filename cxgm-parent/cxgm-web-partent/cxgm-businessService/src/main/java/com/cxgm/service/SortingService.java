@@ -6,7 +6,7 @@ import com.github.pagehelper.PageInfo;
 
 public interface SortingService {
 
-	PageInfo<Order> orderList(Integer pageNum, Integer pageSize,Integer shopId ,String status);
+	PageInfo<Order> orderList(Integer pageNum, Integer pageSize,Integer shopId ,String status,Integer adminId);
 	
 	Integer addSorting(StaffSorting staffSorting);
 	

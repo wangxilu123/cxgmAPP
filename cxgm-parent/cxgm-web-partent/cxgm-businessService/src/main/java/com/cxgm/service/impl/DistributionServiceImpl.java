@@ -59,15 +59,30 @@ public class DistributionServiceImpl implements DistributionService {
 	private ThirdPartyHaixinUplodOrderService thirdPartyHaixinUplodOrderService;
 
 	@Override
-	public PageInfo<DistributionOrder> orderList(Integer pageNum, Integer pageSize, Integer shopId, String status) {
-
+	public PageInfo<DistributionOrder> orderList(Integer pageNum, Integer pageSize, Integer shopId, String status ,Integer adminId) {
+        
 		// 根据门店ID和状态
 		PageHelper.startPage(pageNum, pageSize);
 		OrderExample example = new OrderExample();
-		if ("".equals(status) == false && status != null) {
+		if ("3".equals(status)) {
 			example.createCriteria().andStoreIdEqualTo(shopId).andStatusEqualTo(status);
 		} else {
-			example.createCriteria().andStoreIdEqualTo(shopId);
+			//根据当前登录者查询订单
+			StaffDistributionExample example2 = new StaffDistributionExample();
+			example2.createCriteria().andAdminIdEqualTo(adminId).andStatusEqualTo(status);
+			List<StaffDistribution> staffList = distributionMapper.selectByExample(example2);
+			
+			List<Integer> orderIds = new ArrayList<>();
+			if(staffList.size()!=0){
+				for(StaffDistribution staffDistribution : staffList){
+					orderIds.add(staffDistribution.getOrderId());
+		        }
+			}
+			if(orderIds.size()!=0){
+				example.createCriteria().andStoreIdEqualTo(shopId).andIdIn(orderIds);
+			}else{
+				example.createCriteria().andStoreIdEqualTo(shopId).andStatusEqualTo("111");
+			}
 		}
 		example.setOrderByClause("order_time desc");
 		List<Order> list = orderMapper.selectByExample(example);

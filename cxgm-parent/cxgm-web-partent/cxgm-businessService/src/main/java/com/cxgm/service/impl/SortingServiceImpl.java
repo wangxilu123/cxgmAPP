@@ -1,6 +1,7 @@
 package com.cxgm.service.impl;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,16 +39,32 @@ public class SortingServiceImpl implements SortingService {
 	private StaffSortingMapper staffSortingMapper;
 
 	@Override
-	public PageInfo<Order> orderList(Integer pageNum, Integer pageSize, Integer shopId, String status) {
-
+	public PageInfo<Order> orderList(Integer pageNum, Integer pageSize, Integer shopId, String status,Integer adminId) {
+		
 		PageHelper.startPage(pageNum, pageSize);
 
 		OrderExample example = new OrderExample();
-		if ("".equals(status) == false && status != null) {
+		if("1".equals(status)){
 			example.createCriteria().andStoreIdEqualTo(shopId).andStatusEqualTo(status);
-		} else {
-			example.createCriteria().andStoreIdEqualTo(shopId);
-		}
+		}else {
+			//根据当前登录者查询订单
+			StaffSortingExample example2 = new StaffSortingExample();
+			example2.createCriteria().andAdminIdEqualTo(adminId).andStatusEqualTo(status);
+			List<StaffSorting> staffList = staffSortingMapper.selectByExample(example2);
+			
+			List<Integer> orderIds = new ArrayList<>();
+			if(staffList.size()!=0){
+				for(StaffSorting staffSorting : staffList){
+					orderIds.add(staffSorting.getOrderId());
+		        }
+			}
+			if(orderIds.size()!=0){
+				example.createCriteria().andStoreIdEqualTo(shopId).andIdIn(orderIds);
+			}else{
+				example.createCriteria().andStoreIdEqualTo(shopId).andStatusEqualTo("111");
+			}
+			
+		} 
 		example.setOrderByClause("order_time desc");
 		List<Order> list = orderMapper.selectByExample(example);
 
