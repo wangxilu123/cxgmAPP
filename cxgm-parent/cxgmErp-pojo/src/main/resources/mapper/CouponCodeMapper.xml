@@ -137,7 +137,7 @@
   </update>
   
   <select id="findCouponsByUserId" parameterType="map" resultType="com.cxgm.domain.CouponDetail">
-    select cu.id as codeId,cu.`status`,co.`name`,co.introduction,co.begin_date as beginDate,co.end_date as endDate,co.product_category_id as categoryId,co.product_id as productId,co.price_expression as priceExpression
+    select cu.id as codeId,cu.`status`,co.`name`,co.introduction,co.begin_date as beginDate,co.end_date as endDate,co.product_category_id as categoryId,co.product_id as productId,co.price_expression as priceExpression,co.minimum_price as maximumPrice
     from coupon_code as cu left join coupon as co on cu.coupon_id=co.id where cu.user_id =#{userId,jdbcType=BIGINT}
     <if test="status != null and status==0">
         <![CDATA[and co.begin_date <=  NOW()]]> <![CDATA[and co.end_date >=  NOW()]]> and cu.`status`=0
@@ -150,7 +150,7 @@
   </select>
   
   <select id="findCouponsByCode" parameterType="java.lang.String" resultType="com.cxgm.domain.CouponDetail">
-    select cu.id as codeId,cu.`status`,co.`name`,co.introduction,co.begin_date as beginDate,co.end_date as endDate,co.product_category_id as categoryId,co.product_id as productId,co.price_expression as priceExpression
+    select cu.id as codeId,cu.`status`,co.`name`,co.introduction,co.begin_date as beginDate,co.end_date as endDate,co.product_category_id as categoryId,co.product_id as productId,co.price_expression as priceExpression,co.minimum_price as maximumPrice
     from coupon_code as cu left join coupon as co on cu.coupon_id=co.id where cu.code =#{code,jdbcType=VARCHAR} and cu.user_id is null
   </select>
   
