@@ -8,17 +8,24 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.cxgm.common.WeixinReturnMonery;
+import com.cxgm.dao.AdminMapper;
 import com.cxgm.dao.OrderMapper;
 import com.cxgm.dao.OrderProductMapper;
 import com.cxgm.dao.ProductImageMapper;
-import com.cxgm.dao.ShopCartMapper;
 import com.cxgm.dao.ShopMapper;
+import com.cxgm.dao.StaffDistributionMapper;
+import com.cxgm.dao.StaffSortingMapper;
 import com.cxgm.dao.UserAddressMapper;
+import com.cxgm.domain.Admin;
 import com.cxgm.domain.Order;
 import com.cxgm.domain.OrderExample;
 import com.cxgm.domain.OrderProductTransfer;
 import com.cxgm.domain.ProductImage;
 import com.cxgm.domain.Shop;
+import com.cxgm.domain.StaffDistribution;
+import com.cxgm.domain.StaffDistributionExample;
+import com.cxgm.domain.StaffSorting;
+import com.cxgm.domain.StaffSortingExample;
 import com.cxgm.domain.UserAddress;
 import com.cxgm.domain.UserAddressExample;
 
@@ -34,12 +41,20 @@ public class OrderServiceErp {
 	
 	@Autowired
 	private OrderProductMapper orderProductMapper;
+	@Autowired
+	AdminMapper adminDao;
 	
 	@Autowired
 	private UserAddressMapper userAddressMapper;
 	
 	@Autowired
 	private ShopMapper shopMapper;
+	
+	@Autowired
+	private StaffSortingMapper staffSortingMapper;
+	
+	@Autowired
+	private StaffDistributionMapper distributionMapper;
 	
 	public List<Order> findAllOrders(Integer storeId){
 		OrderExample example = new OrderExample();
@@ -132,5 +147,30 @@ public class OrderServiceErp {
 		        	return null;
 		        }
 		
+	}
+	
+	public String getAdminName(String type,int orderId) {
+		if(type.equals("sorting")) {
+			StaffSortingExample example = new StaffSortingExample();
+			example.createCriteria().andOrderIdEqualTo(orderId);
+			List<StaffSorting> list = staffSortingMapper.selectByExample(example);
+			if(list.size()>0) {
+				Admin admin = adminDao.findById(Long.valueOf(list.get(0).getAdminId()));
+				return admin.getName();
+			}
+			
+		}else if(type.equals("distribution")) {
+			
+			StaffDistributionExample example = new StaffDistributionExample();
+
+			example.createCriteria().andOrderIdEqualTo(orderId);
+
+			List<StaffDistribution> list = distributionMapper.selectByExample(example);
+			if(list.size()>0) {
+				Admin admin = adminDao.findById(Long.valueOf(list.get(0).getAdminId()));
+				return admin.getName();
+			}
+		}
+		return null;
 	}
 }

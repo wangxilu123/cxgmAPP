@@ -143,6 +143,10 @@ public class OrderController {
 	@RequestMapping(value = "/order/detail", method = RequestMethod.GET, produces = "text/json;charset=UTF-8")
 	public ModelAndView productDelete(HttpServletRequest request,@RequestParam(value = "orderId") Integer orderId) throws SQLException {
 		Order order = orderService.orderDetail(orderId);
+		String sortingMan = orderService.getAdminName("sorting", order.getId());
+		String distributionMan = orderService.getAdminName("distribution", order.getId());
+		request.setAttribute("sorting", sortingMan);
+		request.setAttribute("distribution", distributionMan);
 		request.setAttribute("order",order);
 		return new ModelAndView("admin/orderDetail");
 	}
