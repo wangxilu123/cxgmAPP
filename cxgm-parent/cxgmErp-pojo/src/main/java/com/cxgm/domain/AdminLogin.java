@@ -14,9 +14,19 @@ public class AdminLogin {
 	private String token;
 	
 	private String password;
+	
+	private String role;
 
 	public Integer getShopId() {
 		return shopId;
+	}
+
+	public String getRole() {
+		return role;
+	}
+
+	public void setRole(String role) {
+		this.role = role;
 	}
 
 	public void setShopId(Integer shopId) {

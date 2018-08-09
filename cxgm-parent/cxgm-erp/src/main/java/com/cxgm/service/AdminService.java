@@ -14,12 +14,14 @@ import com.cxgm.common.DateKit;
 import com.cxgm.common.TokenUtils;
 import com.cxgm.dao.AdminMapper;
 import com.cxgm.dao.AdminRoleMapper;
+import com.cxgm.dao.RoleMapper;
 import com.cxgm.dao.ShopMapper;
 import com.cxgm.dao.UserLoginMapper;
 import com.cxgm.domain.Admin;
 import com.cxgm.domain.AdminLogin;
 import com.cxgm.domain.AdminRole;
 import com.cxgm.domain.LoginEntity;
+import com.cxgm.domain.Role;
 import com.cxgm.domain.Shop;
 import com.cxgm.domain.UserLogin;
 import com.cxgm.domain.UserLoginExample;
@@ -32,6 +34,9 @@ public class AdminService {
 	AdminMapper adminDao;
 	@Autowired
 	AdminRoleMapper adminRoleDao;
+	
+	@Autowired
+	RoleMapper roleMapper;
 	
 	@Autowired
 	UserLoginMapper userLoginMapper;
@@ -54,7 +59,9 @@ public class AdminService {
 		map.put("username", username);
 		
 		Admin admin = adminDao.findAdmin(map);
+		List<AdminRole> adminRole = adminRoleDao.findByAdmins(admin.getId());
 		
+		Role role= roleMapper.findById(adminRole.get(0).getRoles());
 		if(admin!=null){
 			
 			BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
@@ -101,6 +108,7 @@ public class AdminService {
 				adminLogin.setToken(newToken);
 				adminLogin.setUsername(admin.getUsername());
 				adminLogin.setShopName(shop.getShopName());
+				adminLogin.setRole(role.getValue());
 				return adminLogin;
 			}else{
 				return null;

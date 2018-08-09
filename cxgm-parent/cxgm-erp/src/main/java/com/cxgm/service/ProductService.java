@@ -152,28 +152,6 @@ public class ProductService {
                 } 
             }
         	product.setImage(sb.toString());
-        	Integer productId = productDao.insert(product);
-        	//限时抢购消息推送
-        	if(productId!=null&&originalPrice.compareTo(price)==1){
-        		
-        		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        	    
-        	    Date nowTime =new Date();
-        	    
-        	    String time =sdf.format(nowTime);
-        		
-        		String content=name+"原价"+originalPrice+"元，"+"现价"+price+"元";
-        		
-        		Map <String, String> map = new HashMap <String, String>();
-        		map.put("content", content);
-        		map.put("time", time);
-        		map.put("type", "0");
-        		map.put("goodcode", product.getId().toString());
-        		map.put("shopId", shop.toString());
-        		JSONArray json = JSONArray.fromObject(map); 
-        		
-            	new UmmessageSend().sendMessage("限时抢购",json.toString());
-        	}
         	
         } catch (Exception e) {
             e.printStackTrace();
