@@ -3,12 +3,9 @@ package com.cxgm.service;
 import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import net.sf.json.JSONArray;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,7 +13,6 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.cxgm.common.DateKit;
-import com.cxgm.common.UmmessageSend;
 import com.cxgm.dao.HaixinGoodMapper;
 import com.cxgm.dao.ProductImageMapper;
 import com.cxgm.dao.ProductMapper;
@@ -55,7 +51,8 @@ public class ProductService {
 			String pid,
 			BigDecimal price,
 			boolean isMarketable,boolean isTop,String introduction,
-			Integer shop,List<MultipartFile> files,BigDecimal originalPrice,Integer warrantyPeriod,String warrantDays,String brandName,String storageCondition,String fullName,String weight,String startTime,String endTime) {
+			Integer shop,List<MultipartFile> files,BigDecimal originalPrice,Integer warrantyPeriod,String warrantDays,String brandName,String storageCondition,String fullName,String weight,String startTime,String endTime,
+			String pidForNumber) {
 		StringBuilder sb = new StringBuilder();
 		//根据goodCode查询海信商品信息
 		HaixinGoodExample  example= new HaixinGoodExample();
@@ -75,6 +72,7 @@ public class ProductService {
         	product.setOriginPlace(originPlace);
         	product.setStartTime(!"".equals(startTime)?str.parse(startTime):null);
         	product.setEndTime(!"".equals(endTime)?str.parse(endTime):null);
+        	ProductCategory firstProductCategory = productCategoryService.findById(Long.valueOf(pidForNumber));
         	if("0".equals(weight)){
         		product.setWeight(haixinGoodList.size()!=0?haixinGoodList.get(0).getSpecifications():"");
         	}else{
@@ -131,7 +129,7 @@ public class ProductService {
             		product.setDetailImage(oneCategoryURL);
             	}
         	}
-        	product.setNumber(productCategory.getNumber());
+        	product.setNumber(firstProductCategory.getNumber());
         	product.setPrice(price);
         	product.setIsMarketable(isMarketable);
         	product.setIntroduction(introduction);
@@ -193,7 +191,8 @@ public class ProductService {
 			String pid,
 			BigDecimal price,
 			boolean isMarketable,boolean isTop,String introduction,
-			Integer shop,List<MultipartFile> files,String[] productImageIds,BigDecimal originalPrice,Integer warrantyPeriod,String warrantDays,String brandName,String storageCondition,String fullName,String weight,String startTime,String endTime) {
+			Integer shop,List<MultipartFile> files,String[] productImageIds,BigDecimal originalPrice,Integer warrantyPeriod,String warrantDays,String brandName,String storageCondition,String fullName,String weight,String startTime,String endTime,
+			String pidForNumber) {
 		StringBuilder sb = new StringBuilder();
 		SimpleDateFormat str = new SimpleDateFormat("yyyy-MM-dd"); 
         try {
@@ -211,6 +210,7 @@ public class ProductService {
         	if(pid==null || "".equals(pid)) {
         		throw new TipException("请选择商品分类");
         	}
+        	ProductCategory firstProductCategory = productCategoryService.findById(Long.valueOf(pidForNumber));
         	ProductCategory productCategory = productCategoryService.findById(Long.valueOf(pid));
         	if(productCategory.getGrade()==0) {
         		product.setProductCategoryId(productCategory.getId());
@@ -248,7 +248,7 @@ public class ProductService {
             	String oneCategoryURL = oneCategoryProductImage.getUrl();
         		product.setDetailImage(oneCategoryURL);
         	}
-        	product.setNumber(productCategory.getNumber());
+        	product.setNumber(firstProductCategory.getNumber());
         	product.setPrice(price);
         	product.setIsMarketable(isMarketable);
         	product.setIntroduction(introduction);

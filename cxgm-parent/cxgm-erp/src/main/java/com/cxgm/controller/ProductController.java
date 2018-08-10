@@ -189,7 +189,7 @@ public class ProductController {
 		try {
 			productService.insert(name, goodCode, originPlace,
 					parentId, price, 
-					isMarketable, isTop, introduction, shop, files,originalPrice,warrantyPeriod,warrantDays,brandName,storageCondition,fullName,weight,startTime,endTime);
+					isMarketable, isTop, introduction, shop, files,originalPrice,warrantyPeriod,warrantDays,brandName,storageCondition,fullName,weight,startTime,endTime,pid);
 			ModelAndView mv = new ModelAndView("redirect:/product/list");
 			return mv;
 		}catch(Exception e) {
@@ -278,7 +278,7 @@ public class ProductController {
 		}
 		try {
 			productService.update(id,name, goodCode, originPlace,
-					parentId, price,isMarketable, isTop, introduction, shop, files,productImageIds,originalPrice,warrantyPeriod,warrantDays,brandName,storageCondition,fullName,weight,startTime,endTime);
+					parentId, price,isMarketable, isTop, introduction, shop, files,productImageIds,originalPrice,warrantyPeriod,warrantDays,brandName,storageCondition,fullName,weight,startTime,endTime,pid);
 			ModelAndView mv = new ModelAndView("redirect:/product/list");
 			return mv;
 		}catch(Exception e) {
