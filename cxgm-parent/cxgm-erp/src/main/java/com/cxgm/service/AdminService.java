@@ -199,6 +199,7 @@ public class AdminService {
 		admin.setDepartment(department);
 		admin.setLastUpdatedDate(DateKit.dateFormat(DateKit.dateFormat(new Date())));
 		admin.setShopId(shopId);
+		admin.setName(name);
 		adminDao.update(admin);
 	}
 }
