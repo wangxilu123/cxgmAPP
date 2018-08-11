@@ -84,27 +84,6 @@ if(isEmpty(coupon.id)){
 				style="width:300px;display:none">
 			</select>
 			</div>
-           <!--   <div class="am-u-sm-8 am-u-md-9">
-              <%if(isAdd){%>
-               <select name="coupon.productId" data-am-selected="{btnWidth: '100%', maxHeight: '200px', btnSize: 'sm', btnStyle: 'secondary'}">
-            <option value="-1" selected>请选择...</option>
-            <%for(list in products){%>
-            <option value="${list.id}">
-			  ${list.name}
-			</option>
-            <%}%>
-          </select>
-          <%}else{%>
-           <select name="coupon.productId" data-am-selected="{btnWidth: '100%', maxHeight: '200px', btnSize: 'sm', btnStyle: 'secondary'}">
-            <option value="-1" selected>请选择...</option>
-            <%for(list in products){%>
-            <option value="${list.id}" <%if(coupon.productId == list.id){%>selected="selected"<%}%>>
-			  ${list.name}
-			</option>
-            <%}%>
-             </select>
-            <%}%>
-             </div> -->
            </div>
        
        
@@ -127,38 +106,6 @@ if(isEmpty(coupon.id)){
           <select id="thirdCategory" name="parentThirdId" data-am-selected="{btnWidth: '30%', maxHeight: '200px', btnSize: 'sm', btnStyle: 'secondary'}">
           <option value="0" selected>请选择...</option>
           </select>
-          <!-- <%if(isAdd){%>
-          <select name="parentId" data-am-selected="{btnWidth: '100%', maxHeight: '200px', btnSize: 'sm', btnStyle: 'secondary'}">
-            <option value="-1" selected>请选择...</option>
-            <%for(list in productCategoryTreeList){%>
-			<%for(child in list.childCategory){%>
-					<option value="${child.id}">
-					  <%if (child.grade == 1){%>
-					  <%for( i in range(0,child.grade)){%>--<%}%>
-					  <%}%>
-					  ${child.name}
-					</option>
-					
-				<%}%>
-            <%}%>
-          </select>
-          <%}else{%>
-          <select name="parentId" data-am-selected="{btnWidth: '100%', maxHeight: '200px', btnSize: 'sm', btnStyle: 'secondary'}">
-          <option value="-1" selected>请选择...</option>
-           <%for(list in productCategoryTreeList){%>
-			
-			<%for(child in list.childCategory){%>
-					<option value="${child.id}" <%if (coupon.productCategoryId! == child.id!){%>selected="selected" <%}%>>
-					  <%if (child.grade == 1){%>
-					  <%for( i in range(0,child.grade)){%>--<%}%>
-					  <%}%>
-					  ${child.name}
-					</option>
-				<%}%>
-            <%}%>
-           
-		</select>
-          <%}%> -->
         </div>
           </div>
        <div class="am-form-group am-form-group-sm">

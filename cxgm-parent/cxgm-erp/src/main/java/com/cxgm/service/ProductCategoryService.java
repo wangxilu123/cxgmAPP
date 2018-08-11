@@ -58,6 +58,7 @@ public class ProductCategoryService {
 	}
 	
 	public List<ProductCategory> getProductCategory(Integer grade){
+		long startTime=System.currentTimeMillis();
 		List<ProductCategory> productCategoryTreeList = this.findByGrade(grade);
 		for(ProductCategory pc : productCategoryTreeList) {
 			List<ProductCategory> childOneCategory = this.findByGradeAndParentId(1, pc.getId());
@@ -67,6 +68,15 @@ public class ProductCategoryService {
 				p.setChildCategory(childTwoCategory);
 			}
 		}
+		long endTime=System.currentTimeMillis(); //获取结束时间
+		 
+		System.out.println("程序运行时间： "+(endTime-startTime)+"ms");
+		
+		return productCategoryTreeList;
+	}
+	
+	public List<ProductCategory> getFisrsrProductCategory(Integer grade){
+		List<ProductCategory> productCategoryTreeList = this.findByGrade(grade);
 		return productCategoryTreeList;
 	}
 	

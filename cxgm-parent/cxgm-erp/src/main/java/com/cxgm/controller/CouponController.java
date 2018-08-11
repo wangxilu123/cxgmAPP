@@ -98,11 +98,11 @@ public class CouponController {
 		Admin admin = (Admin) auth.getPrincipal();
 		Map<String, Object> map = new HashMap<>();
 		map.put("shopId", admin.getShopId());
-		List<Product> products = productService.findProducts(map);
-		List<ProductCategory> productCategoryTreeList = productCategoryService.getProductCategory(0);
+//		List<Product> products = productService.findProducts(map);
+		List<ProductCategory> productCategoryTreeList = productCategoryService.getFisrsrProductCategory(0);
 		request.setAttribute("productCategoryTreeList", productCategoryTreeList);
 		request.setAttribute("shopId", admin.getShopId());
-		request.setAttribute("products", products);
+//		request.setAttribute("products", products);
 		return new ModelAndView("admin/coupon_input");
 	}
 
