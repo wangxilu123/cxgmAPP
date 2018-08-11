@@ -240,6 +240,11 @@ public class OrderExample {
             addCriterion("order_num =", value, "orderNum");
             return (Criteria) this;
         }
+        
+        public Criteria andOrderResourceTo(String value) {
+            addCriterion("order_resource =", value, "orderResource");
+            return (Criteria) this;
+        }
 
         public Criteria andOrderNumNotEqualTo(String value) {
             addCriterion("order_num <>", value, "orderNum");

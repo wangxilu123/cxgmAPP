@@ -45,7 +45,7 @@ public class SortingServiceImpl implements SortingService {
 
 		OrderExample example = new OrderExample();
 		if("1".equals(status)){
-			example.createCriteria().andStoreIdEqualTo(shopId).andStatusEqualTo(status);
+			example.createCriteria().andStoreIdEqualTo(shopId).andStatusEqualTo(status).andOrderResourceTo("APP");
 		}else {
 			//根据当前登录者查询订单
 			StaffSortingExample example2 = new StaffSortingExample();
@@ -59,9 +59,9 @@ public class SortingServiceImpl implements SortingService {
 		        }
 			}
 			if(orderIds.size()!=0){
-				example.createCriteria().andStoreIdEqualTo(shopId).andIdIn(orderIds);
+				example.createCriteria().andStoreIdEqualTo(shopId).andIdIn(orderIds).andOrderResourceTo("APP");
 			}else{
-				example.createCriteria().andStoreIdEqualTo(shopId).andStatusEqualTo("111");
+				example.createCriteria().andStoreIdEqualTo(shopId).andStatusEqualTo("111").andOrderResourceTo("APP");
 			}
 			
 		} 

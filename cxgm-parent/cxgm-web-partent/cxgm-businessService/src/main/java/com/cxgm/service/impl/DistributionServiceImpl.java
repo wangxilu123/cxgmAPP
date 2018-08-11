@@ -65,7 +65,7 @@ public class DistributionServiceImpl implements DistributionService {
 		PageHelper.startPage(pageNum, pageSize);
 		OrderExample example = new OrderExample();
 		if ("3".equals(status)) {
-			example.createCriteria().andStoreIdEqualTo(shopId).andStatusEqualTo(status);
+			example.createCriteria().andStoreIdEqualTo(shopId).andStatusEqualTo(status).andOrderResourceTo("APP");
 		} else {
 			//根据当前登录者查询订单
 			StaffDistributionExample example2 = new StaffDistributionExample();
@@ -79,9 +79,9 @@ public class DistributionServiceImpl implements DistributionService {
 		        }
 			}
 			if(orderIds.size()!=0){
-				example.createCriteria().andStoreIdEqualTo(shopId).andIdIn(orderIds);
+				example.createCriteria().andStoreIdEqualTo(shopId).andIdIn(orderIds).andOrderResourceTo("APP");
 			}else{
-				example.createCriteria().andStoreIdEqualTo(shopId).andStatusEqualTo("111");
+				example.createCriteria().andStoreIdEqualTo(shopId).andStatusEqualTo("111").andOrderResourceTo("APP");
 			}
 		}
 		example.setOrderByClause("order_time desc");
