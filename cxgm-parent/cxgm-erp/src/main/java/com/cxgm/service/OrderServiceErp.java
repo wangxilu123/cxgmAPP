@@ -110,8 +110,9 @@ public class OrderServiceErp {
 					BigDecimal price = orderDetail.getPrice();
 
 					BigDecimal num = new BigDecimal(orderDetail.getProductNum());
-
-					orderDetail.setAmount(price.multiply(num));
+                    if(price!=null){
+                    	orderDetail.setAmount(price.multiply(num));
+                    }
 					
 					if(orderDetail.getProductUrl()!=null&&!"".equals(orderDetail.getProductUrl())){
 						
@@ -130,8 +131,10 @@ public class OrderServiceErp {
 		        	//根据用户ID查询用户收货地址信息
 		        	
 		        	UserAddressExample example1 = new UserAddressExample();
+		        	if(orders.get(0).getUserId()!=null){
+		        		example1.createCriteria().andUserIdEqualTo(orders.get(0).getUserId()).andIdEqualTo(Integer.parseInt(orders.get(0).getAddressId()));
+		        	}
 		        	
-		        	example1.createCriteria().andUserIdEqualTo(orders.get(0).getUserId()).andIdEqualTo(Integer.parseInt(orders.get(0).getAddressId()));
 		        	List<UserAddress> addressList = userAddressMapper.selectByExample(example1);
 		        	
 		        	orders.get(0).setAddress(addressList.size()!=0?addressList.get(0):null);

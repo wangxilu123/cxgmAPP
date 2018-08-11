@@ -41,7 +41,7 @@ public class CouponService {
 	@Transactional
 	public void insert(String name, String prefix,String beginDate,String endDate,Integer type, BigDecimal minimumPrice,
 		     boolean isEnabled,Long pid,
-			String priceExpression,String introduction,Integer shopId,String productName) {
+			String priceExpression,String introduction,Integer shopId,Long productId) {
 		Coupon coupon = new Coupon();
 		Map<String,Object> map = new HashMap<>();
 		map.put("name", name);
@@ -58,15 +58,7 @@ public class CouponService {
 		coupon.setCreationDate(new Date());
 		coupon.setIsEnabled(isEnabled);
 		coupon.setType(type);
-		if(productName!=null) {
-			Map<String,Object> productMap = new HashMap<>();
-			productMap.put("goodName", productName);
-			List<Product> products = productDao.findProducts(productMap);
-			if(products.size()>0) {
-				coupon.setProductId(products.get(0).getId());
-			}
-		}
-		
+		coupon.setProductId(productId);
 		coupon.setProductCategoryId(pid);
 		coupon.setIntroduction(introduction);
 		coupon.setPriceExpression(priceExpression);
@@ -133,7 +125,6 @@ public class CouponService {
 			cc.setCouponId(couponid);
 			cc.setType(type);
 			cc.setCode(UUID.generateCouponCode(6, String.valueOf(generateBatch)+String.valueOf(coupon.getId())));
-			cc.setStatus(0);
 			cc.setCreationDate(new Date());
 			couponCodeDao.insert(cc);
 		}

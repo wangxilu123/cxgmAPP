@@ -123,7 +123,7 @@ public class CouponController {
 			@RequestParam(value = "coupon.priceExpression") String priceExpression,
 			@RequestParam(value = "coupon.introduction",required=false) String introduction,
 			@RequestParam(value = "coupon.shop",required=false) Integer shopId,
-			@RequestParam(value = "coupon.productName",required=false) String productName) throws SQLException {
+			@RequestParam(value = "productId",required=false) Long productId) throws SQLException {
 		try {
 			String parentId;
 			if(!parentThirdId.equals("0")) {
@@ -135,9 +135,8 @@ public class CouponController {
 					parentId = pid;
 				}
 			}
-			if(productName==null)productName=null;
 			couponService.insert(name, prefix, beginDate, endDate, type, minimumPrice,
-					isEnabled, Long.valueOf(parentId), priceExpression, introduction, shopId,productName);
+					isEnabled, Long.valueOf(parentId), priceExpression, introduction, shopId,productId);
 			ModelAndView mv = new ModelAndView("redirect:/admin/coupon");
 			return mv;
 		} catch (Exception e) {
@@ -187,7 +186,7 @@ public class CouponController {
 		RSResult rr = new RSResult();
 		String id = request.getParameter("id");
 		CouponCode couponCode = couponCodeService.selectById(Long.valueOf(id));
-		couponCode.setStatus(1);
+		couponCode.setStatus(0);
 		int updateResult = couponCodeService.updateCouponCode(couponCode);
 		if (updateResult == 1) {
 			rr.setMessage("设置成功！");
@@ -292,10 +291,7 @@ public class CouponController {
 	@RequestMapping(value = "/coupon/export", method = RequestMethod.GET)
 	public ResponseEntity<byte[]> exportCouponCode(HttpServletRequest request) {
 		String id = request.getParameter("id");
-		Map<String,Object> map = new HashMap<>();
-		map.put("couponId", id);
-		map.put("status", 0);
-		List<CouponCode> emps = couponCodeService.findCouponsWithParam(map);
+		List<CouponCode> emps = couponCodeService.findCouponsWithStatus(Long.valueOf(id));
 		return PoiUtils.exportCoupon2Excel(emps);
 	}
 }

@@ -14,6 +14,8 @@ public interface CouponCodeMapper {
     List<CouponCode> findCouponsWithParam(Map<String,Object> map);
     List<CouponCode> findCouponsWithParamExt(Map<String,Object> map);
     
+    List<CouponCode> findCouponsWithStatus(Long couponId);
+    
     List<CouponDetail> findCouponsByUserId(Map<String,Object> map);
     
     CouponDetail findCouponsByCode(String code);

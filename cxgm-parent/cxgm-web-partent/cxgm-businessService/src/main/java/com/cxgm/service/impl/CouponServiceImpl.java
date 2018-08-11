@@ -50,7 +50,7 @@ public class CouponServiceImpl implements CouponService {
 			
 			if(couponCode.getUserId()==null){
 				couponCode.setUserId((long)userId);
-				
+				couponCode.setStatus(0);
 				couponCodeMapper.update(couponCode);
 				
 			}

@@ -50,11 +50,11 @@
               <td><input type="checkbox" name="ids" value="${list.id}"></td>
               <td>${listLP.index}</td>
               <td><div class="am-text-truncate app-text-truncate-product-name">${list.code}</div></td>
-              <%if(0==list.status){%>
+              <%if(null==list.status){%>
               <td>未领取</td>
-              <%}else if(1== list.status!){%>
+              <%}else if(0== list.status!){%>
               <td>已领取</td>
-              <%}else if(2 == list.status!){%>
+              <%}else if(1 == list.status!){%>
               <td>已使用</td>
               <%}else if(3 == list.status!){%>
               <td>已过期</td>

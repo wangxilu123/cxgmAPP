@@ -6,18 +6,13 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedHashSet;
 import java.util.List;
-import java.util.SortedMap;
-import java.util.TreeMap;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
 
-import com.cxgm.common.ClientCustomSSL;
 import com.cxgm.common.CodeUtil;
 import com.cxgm.common.DateUtil;
-import com.cxgm.common.RequestHandler;
-import com.cxgm.common.TenpayUtil;
 import com.cxgm.dao.CouponCodeMapper;
 import com.cxgm.dao.CouponMapper;
 import com.cxgm.dao.OrderMapper;
@@ -246,19 +241,22 @@ public class OrderServiceImpl implements OrderService {
 
 			// 该商品的总价
 			BigDecimal amount = new BigDecimal(0);
-			if (orderProduct.getProductNum() != null && productTransfer.getPrice() != null) {
-				amount = productTransfer.getPrice().multiply(new BigDecimal(orderProduct.getProductNum()));
+			if(productTransfer!=null){
+				if (orderProduct.getProductNum() != null && productTransfer.getPrice() != null) {
+					amount = productTransfer.getPrice().multiply(new BigDecimal(orderProduct.getProductNum()));
+				}
+				// 根据商品ID查询优惠券
+
+				HashMap<String, Object> map = new HashMap<String, Object>();
+
+				map.put("userId", userId);
+				map.put("amount", amount);
+				map.put("productId", orderProduct.getProductId());
+				List<CouponDetail> list = couponMapper.findCouponsByProduct(map);
+
+				newList.addAll(list);
 			}
-			// 根据商品ID查询优惠券
-
-			HashMap<String, Object> map = new HashMap<String, Object>();
-
-			map.put("userId", userId);
-			map.put("amount", amount);
-			map.put("productId", orderProduct.getProductId());
-			List<CouponDetail> list = couponMapper.findCouponsByProduct(map);
-
-			newList.addAll(list);
+			
 		}
 
 		// 根据商品二级分类及金额查询优惠券

@@ -17,6 +17,10 @@ public class CouponCodeService {
 		return couponCodeDao.findCouponsWithParam(map);
 	}
 	
+	public List<CouponCode> findCouponsWithStatus(Long couponId){
+		return couponCodeDao.findCouponsWithStatus(couponId);
+	}
+	
 	public CouponCode selectById(Long couponCodeId) {
 		return couponCodeDao.select(couponCodeId);
 	}

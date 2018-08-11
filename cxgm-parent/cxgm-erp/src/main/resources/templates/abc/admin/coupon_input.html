@@ -79,7 +79,8 @@ if(isEmpty(coupon.id)){
             <div class="am-form-group am-form-group-sm">
             <label class="am-u-sm-4 am-u-md-3 am-text-right am-form-label">所有商品</label>
             <div class="am-u-sm-8 am-u-md-9">
-            <input type="text" class="am-form-field"  id="goodName" name="coupon.productName" value="${coupon.productId!}" onkeyup="test(this.value,event)"><br/>
+            <input type="hidden" id="productId" name="productId" />
+            <input type="text" class="am-form-field"  id="goodName" name="goodName" value="${coupon.productId!}" onkeyup="test(this.value,event)"><br/>
 			<select multiple="multiple" id="sel" onchange="test2()"
 				style="width:300px;display:none">
 			</select>
@@ -151,10 +152,10 @@ if(isEmpty(coupon.id)){
 	//定义全局变量
 	var keyword = $("#goodName").val();
 	var sel = document.getElementById("sel");
-	
+	var shopId = $("#shopId").val();
 	$.ajax({ 
 		type: "post", 
-		data:{'goodName':keyword}, 
+		data:{'goodName':keyword,'shopId':shopId}, 
 		url: "/appGood/list", 
 		success: function(data) {
 			
@@ -162,7 +163,7 @@ if(isEmpty(coupon.id)){
 			
 			for(var i=0;i<data.length;i++){//循环每一个满足条件的记录
 				//将当前循环满足条件的商品名称生成一个下拉的选项
-				sel.options[i]=new Option(data[i].name,data[i].goodCode);
+				sel.options[i]=new Option(data[i].name,data[i].id);
 			}
 			//判断是否有满足条件的商品
 			if(data.length>0){
@@ -191,6 +192,7 @@ if(isEmpty(coupon.id)){
 	 });
 	 //将选中的下拉列表中的内容添加到输入框中
 	$("#goodName").val($("#sel option:selected").html());
+	$("#productId").val($("#sel option:selected").val());
 	
 }
  

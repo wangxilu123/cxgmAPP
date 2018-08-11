@@ -95,9 +95,6 @@
               -->
               <%if (list.status == '待退款'){%>
                 <div class="am-btn-group am-btn-group-xs">
-                  <button type="button" class="am-btn am-btn-default am-btn-xs am-text-success app-table-button-padding" onclick="location.href='/order/view?orders.id=${list.id}'">
-                    <span class="am-icon-file-o">查看详情</span>
-                  </button>
                   <!--    <%if ((list.status != 'completed') && (list.status != 'invalid') && (list.status == 'unpaid') && (list.status == 'unshipped')){%>
                   <button type="button" class="am-btn am-btn-default am-btn-xs am-text-secondary app-table-button-padding" onclick="location.href='/order/edit?orders.id=${list.id}'">
                     <span class="am-icon-pencil"> 编辑</span>
@@ -109,7 +106,7 @@
                 </div>
                 <%}%>
                  <div class="am-btn-group am-btn-group-xs">
-                  <button type="button" class="am-btn am-btn-default am-btn-xs am-text-success app-table-button-padding" onclick="orderDetail('/order/detail?orderId=${list.id}')">
+                  <button type="button" class="am-btn am-btn-default am-btn-xs am-text-success app-table-button-padding" onclick="location.href='/order/detail?orderId=${list.id}'">
                     <span class="am-icon-file-up">查看详情</span>
                   </button>
                 </div>

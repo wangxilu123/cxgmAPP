@@ -33,7 +33,7 @@
     cc.id as id, user_id, code, coupon_id, status, used_date,accept_date, creation_date, type
   </sql>
   <sql id="user_account">
-  user_account
+  user_name as user_account
   </sql>
    <sql id="queryMap">
 		<if test="userId !=null and userId != ''">
@@ -61,11 +61,19 @@
     where 1=1
     <include refid="queryMap" />
   </select>
+  
+  <select id="findCouponsWithStatus" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from coupon_code
+    where  coupon_id=#{couponId,jdbcType=BIGINT} and status is null 
+  </select>
+  
   <select id="findCouponsWithParamExt" parameterType="map" resultMap="BaseResultMapUserAccount">
     select 
     <include refid="Base_Column_List_User_Account" />,
     <include refid="user_account" />
-    from coupon_code cc left join user_login ul on cc.user_id=ul.id
+    from coupon_code cc left join app_user ul on cc.user_id=ul.id
     where 1=1
     <include refid="queryMap" />
   </select>
