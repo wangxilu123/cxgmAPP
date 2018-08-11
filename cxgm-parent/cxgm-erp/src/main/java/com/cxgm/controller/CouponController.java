@@ -280,7 +280,11 @@ public class CouponController {
 		PageHelper.startPage(page, size);
 		List<CouponCode> couponCodes = couponService.findCouponCodeById(Long.valueOf(id));
 		PageInfo<CouponCode> pager = new PageInfo<>(couponCodes);
+		int usedNumber = couponService.findCouponCodeListCount(Long.valueOf(id), 2);
+		int unusedNumber = couponService.findCouponCodeListCount(Long.valueOf(id), 1);
 		request.setAttribute("pager", pager);
+		request.setAttribute("usedNumber", usedNumber);
+		request.setAttribute("unusedNumber", unusedNumber);
 		request.setAttribute("couponID", id);
 		return new ModelAndView("admin/coupon_code_list");
 	}
