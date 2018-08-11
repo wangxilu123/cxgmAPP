@@ -49,7 +49,7 @@
     		and product_id=#{productId,jdbcType=BIGINT}
 		</if>
 		<if test="name !=null and name != ''">
-    		and name  like "%"#{name,jdbcType=VARCHAR}"%"
+    		and name = #{name,jdbcType=VARCHAR}
 		</if>
 	</sql>
   
