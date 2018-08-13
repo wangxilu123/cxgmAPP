@@ -8,6 +8,10 @@ public class Version {
     private String versionNum;
 
     private String url;
+    
+    private Integer sign;
+    
+    private String iOSVersionNum;
 
     private Date createTime;
 
@@ -42,4 +46,21 @@ public class Version {
     public void setCreateTime(Date createTime) {
         this.createTime = createTime;
     }
+
+	public Integer getSign() {
+		return sign;
+	}
+
+	public void setSign(Integer sign) {
+		this.sign = sign;
+	}
+
+	public String getiOSVersionNum() {
+		return iOSVersionNum;
+	}
+
+	public void setiOSVersionNum(String iOSVersionNum) {
+		this.iOSVersionNum = iOSVersionNum;
+	}
+    
 }

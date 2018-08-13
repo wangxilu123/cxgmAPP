@@ -90,13 +90,14 @@ public class AdminController {
 			@RequestParam(value = "admin.isEnabled") Boolean isAccountEnabled,
 			@RequestParam(value = "admin.email") String email,
 			@RequestParam(value = "admin.department") String department,
-			@RequestParam(value = "admin.shopId") Integer shopId) throws SQLException {
+			@RequestParam(value = "admin.shopId") Integer shopId,
+			@RequestParam(value = "admin.phone") String phone) throws SQLException {
 		String[] roleIds = request.getParameterValues("roleList.id");
 		try {
 			if ("".equals(rePassword) || null == rePassword) {
 				throw new TipException("需要输入确认密码");
 			} else {
-				adminService.insert(username, password, name, isAccountEnabled, email, department, roleIds,shopId);
+				adminService.insert(username, password, name, isAccountEnabled, email, department, roleIds,shopId,phone);
 				ModelAndView mv = new ModelAndView("redirect:/admin/admin");
 				return mv;
 			}
@@ -115,7 +116,8 @@ public class AdminController {
 			@RequestParam(value = "admin.isEnabled") Boolean isAccountEnabled,
 			@RequestParam(value = "admin.email") String email,
 			@RequestParam(value = "admin.department") String department,
-			@RequestParam(value = "admin.shopId") Integer shopId) throws SQLException {
+			@RequestParam(value = "admin.shopId") Integer shopId,
+			@RequestParam(value = "admin.phone") String phone) throws SQLException {
 		String[] roleIds = request.getParameterValues("roleList.id");
 		String id = request.getParameter("admin.id");
 		try {
@@ -123,7 +125,7 @@ public class AdminController {
 				throw new TipException("需要输入确认密码");
 			}else {
 			adminService.update(username, password, name, isAccountEnabled, email, department, roleIds,
-					Long.valueOf(id),shopId);
+					Long.valueOf(id),shopId,phone);
 			ModelAndView mv = new ModelAndView("redirect:/admin/admin");
 			return mv;
 			}

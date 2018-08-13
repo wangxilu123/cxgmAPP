@@ -29,7 +29,6 @@ if(isEmpty(coupon.id)){
     <div class="am-tabs am-margin" data-am-tabs="{noSwipe: 1}" id="doc-my-tabs">
       <ul class="am-tabs-nav am-nav am-nav-tabs">
         <li class="am-active"><a href="#tab1">基本信息</a></li>
-        <li><a href="#tab3">介绍</a></li>
       </ul>
 
       <div class="am-tabs-bd am-form am-tabs-bd-ofv">
@@ -40,6 +39,13 @@ if(isEmpty(coupon.id)){
               <input type="text" class="am-form-field" name="coupon.name" value="${coupon.name!}" required />
             </div>
           </div>
+          <div class="am-form-group am-form-group-sm">
+            <label class="am-u-sm-4 am-u-md-3 am-text-right am-form-label">介绍</label>
+            <div class="am-u-sm-8 am-u-md-9">
+              <input type="text" class="am-form-field" name="coupon.introduction" value="${coupon.introduction!}" required />
+            </div>
+          </div>
+          
           <div class="am-form-group am-form-group-sm">
             <label class="am-u-sm-4 am-u-md-3 am-text-right am-form-label">优惠券类型</label>
             <div class="am-u-sm-8 am-u-md-9">
@@ -122,13 +128,6 @@ if(isEmpty(coupon.id)){
             </div>
           </div>
          </div>
-        <div class="am-tab-panel am-fade" id="tab3">
-          <div class="am-form-group am-form-group-sm">
-            <script id="editor" name="coupon.introduction" type="text/plain">
-              ${coupon.introduction!}
-            </script>
-          </div>
-        </div>
       </div>
     </div>
     <div class="am-margin">

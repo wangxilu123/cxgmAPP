@@ -23,12 +23,13 @@
     <result column="delete_flag" jdbcType="BIT" property="deleteFlag" />
     <result column="shop_id" jdbcType="INTEGER" property="shopId" />
     <result column="shop_name" jdbcType="VARCHAR" property="shopName" />
+    <result column="phone" jdbcType="VARCHAR" property="phone" />
     
   </resultMap>
   <sql id="Base_Column_List">
     id, name, username, password, hasher, salt, department, email, is_enabled, is_locked, 
     locked_date, login_date, login_ip, login_failure_count, create_by, creation_date, 
-    last_updated_by, last_updated_date, delete_flag,shop_id,shop_name
+    last_updated_by, last_updated_date, delete_flag,shop_id,shop_name,phone
   </sql>
   
   
@@ -57,14 +58,14 @@
       is_locked, locked_date, login_date, 
       login_ip, login_failure_count, create_by, 
       creation_date, last_updated_by, last_updated_date, 
-      delete_flag,shop_id)
+      delete_flag,shop_id,phone)
     values (#{id,jdbcType=BIGINT}, #{name,jdbcType=VARCHAR}, #{username,jdbcType=VARCHAR}, 
       #{password,jdbcType=VARCHAR}, #{hasher,jdbcType=VARCHAR}, #{salt,jdbcType=VARCHAR}, 
       #{department,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR}, #{isEnabled,jdbcType=BIT}, 
       #{isLocked,jdbcType=BIT}, #{lockedDate,jdbcType=TIMESTAMP}, #{loginDate,jdbcType=TIMESTAMP}, 
       #{loginIp,jdbcType=VARCHAR}, #{loginFailureCount,jdbcType=INTEGER}, #{createBy,jdbcType=VARCHAR}, 
       #{creationDate,jdbcType=TIMESTAMP}, #{lastUpdatedBy,jdbcType=VARCHAR}, #{lastUpdatedDate,jdbcType=TIMESTAMP}, 
-      #{deleteFlag,jdbcType=BIT},#{shopId,jdbcType=INTEGER})
+      #{deleteFlag,jdbcType=BIT},#{shopId,jdbcType=INTEGER},#{phone,jdbcType=VARCHAR})
   </insert>
   <delete id="delete" parameterType="java.lang.Long">
     delete from admin
@@ -129,6 +130,9 @@
       </if>
       <if test="shopId != null">
         shop_id = #{shopId,jdbcType=INTEGER},
+      </if>
+      <if test="phone != null">
+        phone = #{phone,jdbcType=VARCHAR},
       </if>
     </set>
     where id = #{id,jdbcType=BIGINT}

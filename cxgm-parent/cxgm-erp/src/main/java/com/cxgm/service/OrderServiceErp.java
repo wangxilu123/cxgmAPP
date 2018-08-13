@@ -18,6 +18,7 @@ import com.cxgm.dao.StaffSortingMapper;
 import com.cxgm.dao.UserAddressMapper;
 import com.cxgm.domain.Admin;
 import com.cxgm.domain.Order;
+import com.cxgm.domain.OrderAdmin;
 import com.cxgm.domain.OrderExample;
 import com.cxgm.domain.OrderProductTransfer;
 import com.cxgm.domain.ProductImage;
@@ -152,14 +153,18 @@ public class OrderServiceErp {
 		
 	}
 	
-	public String getAdminName(String type,int orderId) {
+	public OrderAdmin getAdminName(String type,int orderId) {
 		if(type.equals("sorting")) {
 			StaffSortingExample example = new StaffSortingExample();
 			example.createCriteria().andOrderIdEqualTo(orderId);
 			List<StaffSorting> list = staffSortingMapper.selectByExample(example);
 			if(list.size()>0) {
 				Admin admin = adminDao.findById(Long.valueOf(list.get(0).getAdminId()));
-				return admin.getName();
+				
+				OrderAdmin orderAdmin = new OrderAdmin();
+				orderAdmin.setSortingName(admin.getName());
+				orderAdmin.setSortingPhone(admin.getPhone());
+				return orderAdmin;
 			}
 			
 		}else if(type.equals("distribution")) {
@@ -171,7 +176,10 @@ public class OrderServiceErp {
 			List<StaffDistribution> list = distributionMapper.selectByExample(example);
 			if(list.size()>0) {
 				Admin admin = adminDao.findById(Long.valueOf(list.get(0).getAdminId()));
-				return admin.getName();
+				OrderAdmin orderAdmin = new OrderAdmin();
+				orderAdmin.setDistributionName(admin.getName());
+				orderAdmin.setDistributionPhone(admin.getPhone());
+				return orderAdmin;
 			}
 		}
 		return null;

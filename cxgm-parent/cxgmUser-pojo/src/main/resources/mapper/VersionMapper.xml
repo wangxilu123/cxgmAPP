@@ -5,6 +5,8 @@
     <result column="id" jdbcType="INTEGER" property="id" />
     <result column="version_num" jdbcType="VARCHAR" property="versionNum" />
     <result column="url" jdbcType="VARCHAR" property="url" />
+    <result column="sign" jdbcType="INTEGER" property="sign" />
+    <result column="iOSVersionNum" jdbcType="VARCHAR" property="iOSVersionNum" />
     <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
   </resultMap>
   <sql id="Example_Where_Clause">
@@ -66,7 +68,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    id, version_num, url, create_time
+    id, version_num, url, create_time,sign,iOSVersionNum
   </sql>
   <select id="selectByExample" parameterType="com.cxgm.domain.VersionExample" resultMap="BaseResultMap">
     select
@@ -89,9 +91,9 @@
     </if>
   </delete>
   <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.cxgm.domain.Version" useGeneratedKeys="true">
-    insert into version (version_num, url, create_time
+    insert into version (version_num, url, create_time,sign,iOSVersionNum
       )
-    values (#{versionNum,jdbcType=VARCHAR}, #{url,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}
+    values (#{versionNum,jdbcType=VARCHAR}, #{url,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP},#{sign,jdbcType=INTEGER}, #{iOSVersionNum,jdbcType=VARCHAR}
       )
   </insert>
   <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="com.cxgm.domain.Version" useGeneratedKeys="true">

@@ -252,7 +252,7 @@ public class OrderServiceImpl implements OrderService {
 				map.put("userId", userId);
 				map.put("amount", amount);
 				map.put("productId", orderProduct.getProductId());
-				List<CouponDetail> list = couponMapper.findCouponsByProduct(map);
+				List<CouponDetail> list = couponMapper.findCouponsByProduct1(map);
 
 				newList.addAll(list);
 			}
@@ -277,8 +277,7 @@ public class OrderServiceImpl implements OrderService {
 
 		map2.put("userId", userId);
 		map2.put("totalAmount", totalAmount);
-
-		List<CouponDetail> list2 = couponMapper.findCouponsByProduct(map2);
+		List<CouponDetail> list2 = couponMapper.findCouponsByProduct2(map2);
 
 		newList.addAll(list2);
 		newList = new ArrayList<CouponDetail>(new LinkedHashSet<>(newList));

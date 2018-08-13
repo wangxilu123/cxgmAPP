@@ -12,36 +12,38 @@
 				<tr>
 					<td class="text-r" width="80">订单编号：</td>
 					<td style="color: #867777">${order.orderNum}</td>
-					<td style="color: #fff">.....................</td>
 					<td class="text-r">订单来源：</td>
 					<td style="color: #867777"><%if (order.orderResource == 'APP'){%> APP <%}%>
               <%if (order.orderResource == 'YOUZAN'){%> 有赞 <%}%></td>
-					<td style="color: #fff">.....................</td>
-					<td class="text-r">订单状态：</td>
-					<td style="color: #867777"><%if (order.status == '0'){%> 下单 <%}%>
-              <%if (order.status == '1'){%> 已经支付 <%}%>
-              <%if (order.status == '2'){%> 分拣中 <%}%>
-              <%if (order.status == '3'){%> 分拣完成 <%}%>
-              <%if (order.status == '4'){%> 配送中 <%}%>
-              <%if (order.status == '5'){%> 配送完成 <%}%>
-              <%if (order.status == '6'){%> 待退款 <%}%>
-              <%if (order.status == '7'){%> 已退款 <%}%>
-              <%if (order.status == '8'){%> 已取消 <%}%></td>
 				</tr>
 				<tr>
-					<td class="text-r" width="80">订单金额：</td>
-					<td style="color: #867777">${order.orderAmount}</td>
-					<td style="color: #fff">.....................</td>
+				<td class="text-r" width="80">订单金额：</td>
+				<td style="color: #867777">${order.orderAmount}</td>
+				<td class="text-r">订单状态：</td>
+				<td style="color: #867777"><%if (order.status == '0'){%> 下单 <%}%>
+	              <%if (order.status == '1'){%> 已经支付 <%}%>
+	              <%if (order.status == '2'){%> 分拣中 <%}%>
+	              <%if (order.status == '3'){%> 分拣完成 <%}%>
+	              <%if (order.status == '4'){%> 配送中 <%}%>
+	              <%if (order.status == '5'){%> 配送完成 <%}%>
+	              <%if (order.status == '6'){%> 待退款 <%}%>
+	              <%if (order.status == '7'){%> 已退款 <%}%>
+	              <%if (order.status == '8'){%> 已取消 <%}%></td>
+				</tr>
+				<tr>
 					<td class="text-r">支付方式：</td>
 					<td style="color: #867777"><%if (order.payType == 'wx'){%> 微信支付 <%}%>
               <%if (order.payType == 'zfb'){%> 支付宝支付 <%}%></td>
-					<td style="color: #fff">.....................</td>
 					<td class="text-r">下单时间：</td>
 					<td style="color: #867777">${order.orderTime,dateFormat="yyyy-MM-dd HH:mm:ss"}</td>
 				</tr>
 				<tr>
-					<td>分拣人:${sorting!}</td>
-					<td>配送人:${distribution!}</td>
+					<td>分拣人:${sorting.sortingName!}</td>
+					<td>分拣人电话:${sorting.sortingPhone!}</td>
+				</tr>
+				<tr>
+					<td>配送人:${distribution.distributionName!}</td>
+					<td>配送人电话:${distribution.distributionPhone!}</td>
 				</tr>
 			</tbody>
 		</table>

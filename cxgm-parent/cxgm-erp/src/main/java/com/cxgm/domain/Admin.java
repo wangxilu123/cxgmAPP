@@ -57,6 +57,8 @@ public class Admin implements UserDetails{
     private Integer shopId;
     
     private String shopName;
+    
+    private String phone;
 
     /**
 	 * 角色集合
@@ -118,7 +120,15 @@ public class Admin implements UserDetails{
         return name;
     }
 
-    public void setName(String name) {
+    public String getPhone() {
+		return phone;
+	}
+
+	public void setPhone(String phone) {
+		this.phone = phone;
+	}
+
+	public void setName(String name) {
         this.name = name == null ? null : name.trim();
     }
     public List<Role> getRoleList() {

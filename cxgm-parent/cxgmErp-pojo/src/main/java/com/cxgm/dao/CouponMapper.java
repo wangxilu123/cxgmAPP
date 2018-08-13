@@ -20,5 +20,9 @@ public interface CouponMapper {
     List<Coupon> findCouponsWithParam(Map<String,Object> map);
     
     List<CouponDetail> findCouponsByProduct(Map<String,Object> map);
+    
+    List<CouponDetail> findCouponsByProduct1(Map<String,Object> map);
+    
+    List<CouponDetail> findCouponsByProduct2(Map<String,Object> map);
  
 }

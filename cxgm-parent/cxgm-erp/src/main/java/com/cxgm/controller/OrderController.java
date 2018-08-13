@@ -20,6 +20,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.cxgm.common.RSResult;
 import com.cxgm.domain.Admin;
 import com.cxgm.domain.Order;
+import com.cxgm.domain.OrderAdmin;
 import com.cxgm.service.OrderServiceErp;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
@@ -143,8 +144,8 @@ public class OrderController {
 	@RequestMapping(value = "/order/detail", method = RequestMethod.GET, produces = "text/json;charset=UTF-8")
 	public ModelAndView productDelete(HttpServletRequest request,@RequestParam(value = "orderId") Integer orderId) throws SQLException {
 		Order order = orderService.orderDetail(orderId);
-		String sortingMan = orderService.getAdminName("sorting", order.getId());
-		String distributionMan = orderService.getAdminName("distribution", order.getId());
+		OrderAdmin sortingMan = orderService.getAdminName("sorting", order.getId());
+		OrderAdmin distributionMan = orderService.getAdminName("distribution", order.getId());
 		request.setAttribute("sorting", sortingMan);
 		request.setAttribute("distribution", distributionMan);
 		request.setAttribute("order",order);
