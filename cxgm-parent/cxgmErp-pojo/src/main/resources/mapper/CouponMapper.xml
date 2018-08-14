@@ -148,7 +148,7 @@
   </update>
   
   <select id="findCouponsByProduct" parameterType="map" resultType="com.cxgm.domain.CouponDetail">
-    select cd.id as codeId,cd.`status`,cp.`name`,cp.introduction,cp.begin_date as beginDate,cp.end_date as endDate,cp.product_category_id as categoryId,cp.product_id as productId,cp.price_expression as priceExpression,cp.maximum_price as maximumPrice
+    select cd.id as codeId,cd.`status`,cp.`name`,cp.introduction,cp.begin_date as beginDate,cp.end_date as endDate,cp.product_category_id as categoryId,cp.product_id as productId,cp.price_expression as priceExpression,cp.minimum_price as maximumPrice
     from coupon  as cp left join coupon_code as cd on cp.id=cd.coupon_id where 1=1
       <foreach collection="amountList" item="item" index="index">
            <if test="index == 0">
@@ -162,13 +162,13 @@
   </select>
   
    <select id="findCouponsByProduct1" parameterType="map" resultType="com.cxgm.domain.CouponDetail">
-    select cd.id as codeId,cd.`status`,cp.`name`,cp.introduction,cp.begin_date as beginDate,cp.end_date as endDate,cp.product_category_id as categoryId,cp.product_id as productId,cp.price_expression as priceExpression,cp.maximum_price as maximumPrice
+    select cd.id as codeId,cd.`status`,cp.`name`,cp.introduction,cp.begin_date as beginDate,cp.end_date as endDate,cp.product_category_id as categoryId,cp.product_id as productId,cp.price_expression as priceExpression,cp.minimum_price as maximumPrice
     from coupon  as cp left join coupon_code as cd on cp.id=cd.coupon_id where 1=1
      and cp.product_id=#{productId,jdbcType=INTEGER} and user_id=#{userId,jdbcType=INTEGER} and `status`=0 and <![CDATA[cp.minimum_price<=#{amount,jdbcType=DECIMAL}]]> and cp.product_category_id=0
   </select>
   
   <select id="findCouponsByProduct2" parameterType="map" resultType="com.cxgm.domain.CouponDetail">
-    select cd.id as codeId,cd.`status`,cp.`name`,cp.introduction,cp.begin_date as beginDate,cp.end_date as endDate,cp.product_category_id as categoryId,cp.product_id as productId,cp.price_expression as priceExpression,cp.maximum_price as maximumPrice
+    select cd.id as codeId,cd.`status`,cp.`name`,cp.introduction,cp.begin_date as beginDate,cp.end_date as endDate,cp.product_category_id as categoryId,cp.product_id as productId,cp.price_expression as priceExpression,cp.minimum_price as maximumPrice
     from coupon  as cp left join coupon_code as cd on cp.id=cd.coupon_id where 1=1
       and user_id=#{userId,jdbcType=INTEGER} and `status`=0 and <![CDATA[cp.minimum_price<=#{totalAmount,jdbcType=DECIMAL}]]> and cp.product_category_id=0 and cp.product_id is null
   </select>
