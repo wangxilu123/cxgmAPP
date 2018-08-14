@@ -17,6 +17,7 @@
     <result column="preferential" jdbcType="DECIMAL" property="preferential" />
     <result column="order_resource" jdbcType="VARCHAR" property="orderResource" />
     <result column="haixin_shop_code" jdbcType="VARCHAR" property="haixinShopCode" />
+    <result column="youzan_num" jdbcType="VARCHAR" property="youzanNum" />
   </resultMap>
   <sql id="Example_Where_Clause">
     <where>
@@ -109,10 +110,10 @@
 		</if>
 	</sql>
   <sql id="Base_Column_List">
-    id, user_id, order_num, status, store_id, pay_type, order_time, order_amount, remarks,address_id,receive_time,total_amount,preferential,order_resource
+    id, user_id, order_num, status, store_id, pay_type, order_time, order_amount, remarks,address_id,receive_time,total_amount,preferential,order_resource,youzan_num
   </sql>
    <sql id="Base_Column_List1">
-    id, user_id, order_num, store_id, pay_type, order_time, order_amount, remarks,address_id,receive_time,total_amount,preferential,order_resource
+    id, user_id, order_num, store_id, pay_type, order_time, order_amount, remarks,address_id,receive_time,total_amount,preferential,order_resource,youzan_num
   </sql>
   <select id="selectParseStatus" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select
@@ -149,11 +150,11 @@
   <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.cxgm.domain.Order" useGeneratedKeys="true">
     insert into user_order (user_id, order_num, status, 
       store_id, pay_type, order_time, 
-      order_amount, remarks,address_id,receive_time,total_amount,preferential,order_resource,haixin_shop_code)
+      order_amount, remarks,address_id,receive_time,total_amount,preferential,order_resource,haixin_shop_code,youzan_num)
     values (#{userId,jdbcType=INTEGER}, #{orderNum,jdbcType=VARCHAR}, #{status,jdbcType=VARCHAR}, 
       #{storeId,jdbcType=INTEGER}, #{payType,jdbcType=VARCHAR}, #{orderTime,jdbcType=TIMESTAMP}, 
       #{orderAmount,jdbcType=DECIMAL}, #{remarks,jdbcType=VARCHAR},#{addressId,jdbcType=INTEGER},#{receiveTime,jdbcType=VARCHAR},
-      #{totalAmount,jdbcType=DECIMAL},#{preferential,jdbcType=DECIMAL},#{orderResource,jdbcType=VARCHAR},#{haixinShopCode,jdbcType=VARCHAR})
+      #{totalAmount,jdbcType=DECIMAL},#{preferential,jdbcType=DECIMAL},#{orderResource,jdbcType=VARCHAR},#{haixinShopCode,jdbcType=VARCHAR},#{youzanNum,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="com.cxgm.domain.Order" useGeneratedKeys="true">
     insert into user_order
@@ -200,6 +201,9 @@
       <if test="haixinShopCode != null">
         haixin_shop_code,
       </if>
+      <if test="youzanNum != null">
+        youzan_num,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="userId != null">
@@ -243,6 +247,9 @@
       </if>
        <if test="haixinShopCode != null">
         #{haixinShopCode,jdbcType=VARCHAR},
+      </if>
+      <if test="youzanNum != null">
+        #{youzanNum,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -300,6 +307,9 @@
       <if test="record.haixinShopCode != null">
         haixin_shop_code = #{record.haixinShopCode,jdbcType=VARCHAR},
       </if>
+      <if test="record.youzanNum != null">
+        youzan_num = #{record.youzanNum,jdbcType=VARCHAR},
+      </if>
     </set>
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
@@ -321,7 +331,8 @@
       total_amount = #{record.totalAmount,jdbcType=DECIMAL},
       preferential = #{record.preferential,jdbcType=DECIMAL},
       order_resource = #{record.orderResource,jdbcType=VARCHAR},
-      haixin_shop_code = #{record.haixinShopCode,jdbcType=VARCHAR}
+      haixin_shop_code = #{record.haixinShopCode,jdbcType=VARCHAR},
+      youzan_num = #{record.youzanNum,jdbcType=VARCHAR}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>

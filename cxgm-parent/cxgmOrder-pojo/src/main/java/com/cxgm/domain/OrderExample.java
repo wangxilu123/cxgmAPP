@@ -125,6 +125,11 @@ public class OrderExample {
             addCriterion("id <>", value, "id");
             return (Criteria) this;
         }
+        
+        public Criteria andYouzanNumEqualTo(String value) {
+            addCriterion("youzan_num =", value, "youzanNum");
+            return (Criteria) this;
+        }
 
         public Criteria andIdGreaterThan(Integer value) {
             addCriterion("id >", value, "id");

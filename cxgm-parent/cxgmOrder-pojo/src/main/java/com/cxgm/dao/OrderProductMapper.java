@@ -20,6 +20,8 @@ public interface OrderProductMapper {
     List<OrderProduct> selectByExample(OrderProductExample example);
     
     List<OrderProductTransfer> selectOrderDetail(Integer orderId);
+    
+    List<OrderProductTransfer> selectYouZanOrderDetail(Integer orderId);
 
     int updateByExampleSelective(@Param("record") OrderProduct record, @Param("example") OrderProductExample example);
 

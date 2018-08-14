@@ -10,6 +10,7 @@
     <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
     <result column="good_code" jdbcType="VARCHAR" property="goodCode" />
     <result column="haixin_url" jdbcType="VARCHAR" property="haixinUrl" />
+    <result column="price" jdbcType="DECIMAL" property="price" />
   </resultMap>
   <sql id="Example_Where_Clause">
     <where>
@@ -70,7 +71,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    id, order_id, product_name, product_id, product_num, create_time,good_code,haixin_url
+    id, order_id, product_name, product_id, product_num, create_time,good_code,haixin_url,price
   </sql>
   <select id="selectByExample" parameterType="com.cxgm.domain.OrderProductExample" resultMap="BaseResultMap">
     select
@@ -88,8 +89,14 @@
   </select>
   
   <select id="selectOrderDetail" parameterType="java.lang.Integer" resultType="com.cxgm.domain.OrderProductTransfer">
-    select product_name as productName,pd.good_code as productCode,bar_code as barCode,product_num as productNum,image as productUrl,price,unit,weight,order_amount as amount,original_price as originalPrice,product_id as productId 
+    select product_name as productName,pd.good_code as productCode,bar_code as barCode,product_num as productNum,image as productUrl,pd.price,unit,weight,order_amount as amount,original_price as originalPrice,product_id as productId 
     from order_product as rd LEFT JOIN product as pd on rd.product_id=pd.id left join user_order as od on rd.order_id=od.id
+    where order_id = #{orderId,jdbcType=INTEGER}
+  </select>
+  
+  <select id="selectYouZanOrderDetail" parameterType="java.lang.Integer" resultType="com.cxgm.domain.OrderProductTransfer">
+    select product_name as productName,pd.good_code as productCode,bar_code as barCode,product_num as productNum,price,order_amount as amount
+    from order_product as rd LEFT JOIN haixin_good as pd on rd.good_code=pd.good_code left join user_order as od on rd.order_id=od.id
     where order_id = #{orderId,jdbcType=INTEGER}
   </select>
   
@@ -101,9 +108,9 @@
   </delete>
   <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.cxgm.domain.OrderProduct" useGeneratedKeys="true">
     insert into order_product (order_id, product_name, product_id, 
-      product_num, create_time,good_code,haixin_url)
+      product_num, create_time,good_code,haixin_url,price)
     values (#{orderId,jdbcType=INTEGER}, #{productName,jdbcType=VARCHAR}, #{productId,jdbcType=INTEGER}, 
-      #{productNum,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP},#{goodCode,jdbcType=VARCHAR},#{haixinUrl,jdbcType=VARCHAR})
+      #{productNum,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP},#{goodCode,jdbcType=VARCHAR},#{haixinUrl,jdbcType=VARCHAR},#{price,jdbcType=DECIMAL})
   </insert>
   <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="com.cxgm.domain.OrderProduct" useGeneratedKeys="true">
     insert into order_product
@@ -175,6 +182,9 @@
       <if test="record.haixinUrl != null">
         haixin_url = #{record.haixinUrl,jdbcType=VARCHAR},
       </if>
+      <if test="record.price != null">
+        price = #{record.price,jdbcType=DECIMAL},
+      </if>
     </set>
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
@@ -189,7 +199,8 @@
       product_num = #{record.productNum,jdbcType=INTEGER},
       create_time = #{record.createTime,jdbcType=TIMESTAMP},
       good_code = #{record.goodCode,jdbcType=VARCHAR},
-      haixin_url = #{record.haixinUrl,jdbcType=VARCHAR
+      haixin_url = #{record.haixinUrl,jdbcType=VARCHAR,
+      price = #{record.price,jdbcType=DECIMAL}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>

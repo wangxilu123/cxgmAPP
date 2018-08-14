@@ -14,11 +14,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
 
+import com.cxgm.common.CodeUtil;
+import com.cxgm.common.DateUtil;
 import com.cxgm.dao.OrderMapper;
 import com.cxgm.dao.OrderProductMapper;
 import com.cxgm.dao.ShopMapper;
 import com.cxgm.domain.Order;
+import com.cxgm.domain.OrderExample;
 import com.cxgm.domain.OrderProduct;
+import com.cxgm.domain.OrderProductTransfer;
 import com.cxgm.domain.Shop;
 import com.cxgm.domain.ShopExample;
 import com.youzan.open.sdk.client.auth.Token;
@@ -70,7 +74,7 @@ public class YouzanOrderService {
 		YZClient client = new DefaultYZClient(new Token(oAuthToken.getAccessToken()));
 		YouzanTradesSoldGetParams youzanTradesSoldGetParams = new YouzanTradesSoldGetParams();
 		
-        Date startCreated = new Date(new Date().getTime()-7200000);
+        Date startCreated = new Date(new Date().getTime()-72000000);
 		
 		youzanTradesSoldGetParams.setStartCreated(startCreated);
 		youzanTradesSoldGetParams.setEndCreated(new Date());
@@ -83,7 +87,7 @@ public class YouzanOrderService {
 		List<TradeDetailV2> list = Arrays.asList(tradeDetail);
 		
 		for(TradeDetailV2 tradeDetailV2 : list){
-			
+			String orderNum = DateUtil.formatDateTime2() + CodeUtil.genCodes(6);
 			//根据有赞门店ID查询APP门店信息
 			
 			ShopExample  example = new ShopExample();
@@ -92,69 +96,81 @@ public class YouzanOrderService {
 			
 			List<Shop> shopList = shopMapper.selectByExample(example);
 			
-			Order order = new Order();
+			OrderExample example1 = new OrderExample();
 			
-			order.setOrderAmount(new BigDecimal(tradeDetailV2.getPayment()));
-			order.setTotalAmount(new BigDecimal(tradeDetailV2.getTotalFee()));
-			order.setPreferential(new BigDecimal(tradeDetailV2.getDiscountFee()));
-			order.setRemarks(tradeDetailV2.getBuyerMessage());
-			order.setOrderNum(tradeDetailV2.getTid());
-			order.setOrderTime(tradeDetailV2.getCreated());
+			example1.createCriteria().andYouzanNumEqualTo(tradeDetailV2.getTid());
 			
-			if("WEIXIN".equals(tradeDetailV2.getPayType())){
-				order.setPayType("wx");
-			}
-			if("WEIXIN_DAIXIAO".equals(tradeDetailV2.getPayType())){
-				order.setPayType("wx");
-			}
-			if("ALIPAY".equals(tradeDetailV2.getPayType())){
-				order.setPayType("zfb");
-			}else{
-				order.setPayType("qt");
-			}
+			List<Order>  orderList = orderMapper.selectByExample(example1);
 			
-			order.setStoreId(shopList.size()!=0?shopList.get(0).getId():null);
-			if("WAIT_BUYER_PAY".equals(tradeDetailV2.getStatus())){
-				order.setStatus("0");
-			}
-			if("WAIT_SELLER_SEND_GOODS".equals(tradeDetailV2.getStatus())){
-				order.setStatus("1");
-			}
-			
-			if("WAIT_BUYER_CONFIRM_GOODS".equals(tradeDetailV2.getStatus())){
-				order.setStatus("4");
-			}
-			if("TRADE_BUYER_SIGNED".equals(tradeDetailV2.getStatus())){
-				order.setStatus("5");
-			}
-			if("TRADE_CLOSED".equals(tradeDetailV2.getStatus())){
-				order.setStatus("7");
-			}
-			
-			order.setOrderResource("YOUZAN");
-			orderMapper.insert(order);
-			//查询订单详情商品信息
-			TradeOrderV2[] tradeist = tradeDetailV2.getOrders();
-			
-			for(int i=0;i<tradeist.length; i++){
-				TradeOrderV2 tradeOrderV2 = tradeist[i];
+			if(orderList.size()==0){
+				Order order = new Order();
+				order.setOrderAmount(new BigDecimal(tradeDetailV2.getPayment()));
+				order.setTotalAmount(new BigDecimal(tradeDetailV2.getTotalFee()));
+				order.setPreferential(new BigDecimal(tradeDetailV2.getDiscountFee()));
+				order.setRemarks(tradeDetailV2.getBuyerMessage());
+				order.setOrderNum(orderNum);
+				order.setOrderTime(tradeDetailV2.getCreated());
+				order.setYouzanNum(tradeDetailV2.getTid());
+				if("WEIXIN".equals(tradeDetailV2.getPayType())){
+					order.setPayType("wx");
+				}
+				if("WEIXIN_DAIXIAO".equals(tradeDetailV2.getPayType())){
+					order.setPayType("wx");
+				}
+				if("ALIPAY".equals(tradeDetailV2.getPayType())){
+					order.setPayType("zfb");
+				}else{
+					order.setPayType("qt");
+				}
+				order.setHaixinShopCode(shopList.size()!=0?shopList.get(0).getHxShopId():null);
+				order.setStoreId(shopList.size()!=0?shopList.get(0).getId():null);
+				if("WAIT_BUYER_PAY".equals(tradeDetailV2.getStatus())){
+					order.setStatus("0");
+				}
+				if("WAIT_SELLER_SEND_GOODS".equals(tradeDetailV2.getStatus())){
+					order.setStatus("1");
+				}
 				
-				OrderProduct orderProduct= new OrderProduct();
+				if("WAIT_BUYER_CONFIRM_GOODS".equals(tradeDetailV2.getStatus())){
+					order.setStatus("4");
+				}
+				if("TRADE_BUYER_SIGNED".equals(tradeDetailV2.getStatus())){
+					order.setStatus("5");
+				}
+				if("TRADE_CLOSED".equals(tradeDetailV2.getStatus())){
+					order.setStatus("7");
+				}
 				
-				orderProduct.setOrderId(order.getId());
-				orderProduct.setCreateTime(new Date());
-				orderProduct.setGoodCode(tradeOrderV2.getSkuUniqueCode());
-				orderProduct.setProductName(tradeOrderV2.getTitle());
-				orderProduct.setProductNum(tradeOrderV2.getNum().intValue());
-				orderProduct.setHaixinUrl(tradeOrderV2.getPicPath());
-				orderProductMapper.insert(orderProduct);
+				order.setOrderResource("YOUZAN");
+				orderMapper.insert(order);
+				//查询订单详情商品信息
+				TradeOrderV2[] tradeist = tradeDetailV2.getOrders();
+				
+				for(int i=0;i<tradeist.length; i++){
+					TradeOrderV2 tradeOrderV2 = tradeist[i];
+					
+					OrderProduct orderProduct= new OrderProduct();
+					
+					orderProduct.setOrderId(order.getId());
+					orderProduct.setCreateTime(new Date());
+					orderProduct.setGoodCode(tradeOrderV2.getOuterItemId());
+					orderProduct.setProductName(tradeOrderV2.getTitle());
+					orderProduct.setProductNum(tradeOrderV2.getNum().intValue());
+					orderProduct.setHaixinUrl(tradeOrderV2.getPicPath());
+					BigDecimal bigDecimal = new BigDecimal(tradeOrderV2.getPrice());
+					orderProduct.setPrice(bigDecimal);
+					orderProductMapper.insert(orderProduct);
+				}
+				
+				List<OrderProductTransfer> productList = orderProductMapper.selectYouZanOrderDetail(order.getId());
+				order.setProductDetails(productList);
+				//同步海信业务接口
+				String code = thirdPartyHaixinUplodOrderService.checkOrder(order.getOrderNum());
+				if("1".equals(code)){
+					thirdPartyHaixinUplodGoodsService.upload(order);
+				}
 			}
 			
-			//同步海信业务接口
-			String code = thirdPartyHaixinUplodOrderService.checkOrder(order.getOrderNum());
-			if("1".equals(code)){
-				thirdPartyHaixinUplodGoodsService.upload(order);
-			}
 		}
 		return tradeDetail;
 	}
