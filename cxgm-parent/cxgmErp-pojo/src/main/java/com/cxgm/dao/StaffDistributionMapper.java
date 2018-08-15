@@ -25,4 +25,6 @@ public interface StaffDistributionMapper {
     int updateByExample(@Param("record") StaffDistribution record, @Param("example") StaffDistributionExample example);
     
     FjpsHomePage  selectHomePageNum (Map<String,Object> map);
+    
+    StaffDistribution  findByOrderId(Integer orderId);
 }

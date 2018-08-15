@@ -33,6 +33,9 @@ public class StaffDistribution {
 	
 	@ApiModelProperty(name = "shopId",value = "门店ID")
     private Integer shopId;
+	
+	@ApiModelProperty(name = "psPhone",value = "配送电话")
+    private String psPhone;
 
     
 }

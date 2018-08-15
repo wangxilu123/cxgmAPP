@@ -195,6 +195,7 @@ body, html {
 				<div class="am-tab-panel am-fade app-min-height app-product-image"
 							id="tab2">
 							<ul class="am-avg-sm-2 am-avg-md-4 am-thumbnails" id="file-list">
+							    <%if (isAdd){%>
 								<%for(list in shop.imageUrl!){%>
 								<li>
 									<div class="am-thumbnail">
@@ -230,7 +231,44 @@ body, html {
 											</li>
 										</ul>
 									</div>
-								</li> <%}%>
+								</li> <%}%><%}else{%>
+								
+								<li>
+									<div class="am-thumbnail">
+										<input type="hidden" name="productImageIds" value="${shop.imageUrl}" />
+										<input type="hidden" name="productImageParameterTypes"
+											value="productImageId" /> <img src="${shop.imageUrl}"
+											class="am-img-bdrs">
+										<ul class="am-thumbnail-caption am-avg-sm-3">
+											<li><button type="button"
+													class="am-btn am-btn-default am-text-warning am-btn-xs am-center opr-img-left">
+													<span class="am-icon-chevron-left"></span>
+												</button></li>
+											<li><button type="button"
+													class="am-btn am-btn-default am-text-danger am-btn-xs am-center opr-img-delete">
+													<span class="am-icon-trash"></span>
+												</button></li>
+											<li><button type="button"
+													class="am-btn am-btn-default am-text-warning am-btn-xs am-center opr-img-right">
+													<span class="am-icon-chevron-right"></span>
+												</button></li>
+										</ul>
+										<hr data-am-widget="divider"
+											class="am-divider am-divider-dashed am-margin-0" />
+										<ul class="am-thumbnail-caption am-avg-sm-1">
+											<li>
+												<div class="am-form-group am-form-file">
+													<button type="button"
+														class="am-btn am-btn-success am-btn-xs am-center"
+														disabled="disabled">
+														<i class="am-icon-info-circle"></i> 已经上传
+													</button>
+												</div>
+											</li>
+										</ul>
+									</div>
+								</li>
+								<%}%>
 								<li>
 									<div class="am-thumbnail">
 										<div

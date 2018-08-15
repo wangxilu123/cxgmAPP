@@ -74,7 +74,7 @@ public class YouzanOrderService {
 		YZClient client = new DefaultYZClient(new Token(oAuthToken.getAccessToken()));
 		YouzanTradesSoldGetParams youzanTradesSoldGetParams = new YouzanTradesSoldGetParams();
 		
-        Date startCreated = new Date(new Date().getTime()-72000000);
+        Date startCreated = new Date(new Date().getTime()-7200000);
 		
 		youzanTradesSoldGetParams.setStartCreated(startCreated);
 		youzanTradesSoldGetParams.setEndCreated(new Date());
@@ -165,10 +165,13 @@ public class YouzanOrderService {
 				List<OrderProductTransfer> productList = orderProductMapper.selectYouZanOrderDetail(order.getId());
 				order.setProductDetails(productList);
 				//同步海信业务接口
-				String code = thirdPartyHaixinUplodOrderService.checkOrder(order.getOrderNum());
-				if("1".equals(code)){
-					thirdPartyHaixinUplodGoodsService.upload(order);
+				if(!"0".equals(order.getStatus())||!"7".equals(order.getStatus())){
+					String code = thirdPartyHaixinUplodOrderService.checkOrder(order.getOrderNum());
+					if("1".equals(code)){
+						thirdPartyHaixinUplodGoodsService.upload(order);
+					}
 				}
+				
 			}
 			
 		}

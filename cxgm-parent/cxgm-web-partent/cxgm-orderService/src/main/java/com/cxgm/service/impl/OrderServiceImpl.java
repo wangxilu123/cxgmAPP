@@ -22,6 +22,7 @@ import com.cxgm.dao.ProductMapper;
 import com.cxgm.dao.ReceiptMapper;
 import com.cxgm.dao.ShopCartMapper;
 import com.cxgm.dao.ShopMapper;
+import com.cxgm.dao.StaffDistributionMapper;
 import com.cxgm.dao.UserAddressMapper;
 import com.cxgm.domain.CategoryAndAmount;
 import com.cxgm.domain.CouponCode;
@@ -35,6 +36,7 @@ import com.cxgm.domain.ProductImage;
 import com.cxgm.domain.ProductTransfer;
 import com.cxgm.domain.Shop;
 import com.cxgm.domain.ShopCartExample;
+import com.cxgm.domain.StaffDistribution;
 import com.cxgm.domain.UserAddress;
 import com.cxgm.domain.UserAddressExample;
 import com.cxgm.service.OrderService;
@@ -74,6 +76,9 @@ public class OrderServiceImpl implements OrderService {
 	
 	@Autowired
 	private ProductImageMapper productImageMapper;
+	
+	@Autowired
+	private StaffDistributionMapper distributionMapper;
 
 	@Override
 	public Integer addOrder(Order order) {
@@ -208,7 +213,10 @@ public class OrderServiceImpl implements OrderService {
 			}
 
 			order.setProductDetails(productList);
-
+			//根据订单ID查询配送员信息
+			StaffDistribution distribution = distributionMapper.findByOrderId(order.getId());
+			
+			order.setPsPhone(distribution!=null ? distribution.getPsPhone():null);
 		}
 
 		PageInfo<Order> page = new PageInfo<Order>(list);
@@ -336,6 +344,10 @@ public class OrderServiceImpl implements OrderService {
         	orders.get(0).setShopName(shop!=null?shop.getShopName():"");
         	orders.get(0).setShopAddress(shop!=null?shop.getShopAddress():"");
         	
+        	//根据订单ID查询配送员信息
+			StaffDistribution distribution = distributionMapper.findByOrderId(orderId);
+			
+			orders.get(0).setPsPhone(distribution!=null ? distribution.getPsPhone():null);
         	return orders.get(0);
         }else{
         	return null;

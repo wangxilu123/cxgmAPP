@@ -52,7 +52,7 @@ public class ThirdPartyHaixinUplodGoodsService  {
 	       sb.append("<IMPORTDATA>");  
 	       sb.append("<OPERATION>1</OPERATION>");
 	       sb.append("<BILLHEAD>");
-	       sb.append("<ISEC>1</ISEC>");
+	       sb.append("<ISEC>0</ISEC>");
 	       sb.append("<ISAUTORZ>1</ISAUTORZ>");
 	       sb.append("<BILLNO>"+order.getOrderNum()+"</BILLNO>");
 	       sb.append("<ORGCODE>"+order.getHaixinShopCode()+"</ORGCODE>");

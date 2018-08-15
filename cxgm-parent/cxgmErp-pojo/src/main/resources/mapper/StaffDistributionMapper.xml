@@ -141,6 +141,13 @@
       <include refid="Example_Where_Clause" />
     </if>
   </select>
+  
+  <select id="findByOrderId" parameterType="java.lang.Integer" resultType="com.cxgm.domain.StaffDistribution">
+    select sd.id, sd.admin_id, sd.order_id, sd.status, sd.address_id, sd.create_time,sd.cancel_reason,sd.shop_id,ad.phone as psPhone from staff_distribution as sd 
+    left join admin as ad on sd.admin_id=ad.id where order_id=#{orderId,jdbcType=INTEGER}
+    
+  </select>
+  
   <update id="updateByExampleSelective" parameterType="map">
     update staff_distribution
     <set>

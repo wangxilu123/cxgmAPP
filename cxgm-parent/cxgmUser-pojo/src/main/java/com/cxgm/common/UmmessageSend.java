@@ -34,9 +34,8 @@ public class UmmessageSend{
 	   		iosbroadcast.setBadge( 0);
 	   		iosbroadcast.setSound( "default");
 			// TODO set 'production_mode' to 'true' if your app is under production mode
-	   		iosbroadcast.setTestMode();
+	   		iosbroadcast.setProductionMode();
 			// Set customized fields
-	   		
 	   		iosbroadcast.setCustomizedField(title, content);
 	   		client.send(iosbroadcast);
         }catch(Exception e){
