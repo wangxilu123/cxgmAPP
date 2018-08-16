@@ -73,7 +73,7 @@ public class ThirdPartyHaixinUplodGoodsService  {
 		       sb.append("<PLUCODE>"+product.getProductCode()+"</PLUCODE>");
 		       sb.append("<PLUNAME>"+product.getProductName()+"</PLUNAME>");
 		       sb.append("<BARCODE>"+product.getBarCode()+"</BARCODE>");//未加
-		       sb.append("<PFCOUNT>"+product.getProductNum()+"</PFCOUNT>");
+		       sb.append("<PFCOUNT>"+product.getHaixinNum()+"</PFCOUNT>");
 		       sb.append("<PFPRICE>"+product.getPrice()+"</PFPRICE>");
 		       sb.append("</PLUDATA>");
 		       i++;

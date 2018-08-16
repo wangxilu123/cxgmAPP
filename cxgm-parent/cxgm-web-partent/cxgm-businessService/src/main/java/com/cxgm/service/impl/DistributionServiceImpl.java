@@ -16,12 +16,14 @@ import org.springframework.stereotype.Service;
 import com.cxgm.dao.OrderMapper;
 import com.cxgm.dao.OrderProductMapper;
 import com.cxgm.dao.ProductImageMapper;
+import com.cxgm.dao.ProductMapper;
 import com.cxgm.dao.StaffDistributionMapper;
 import com.cxgm.dao.UserAddressMapper;
 import com.cxgm.domain.DistributionOrder;
 import com.cxgm.domain.Order;
 import com.cxgm.domain.OrderExample;
 import com.cxgm.domain.OrderProductTransfer;
+import com.cxgm.domain.Product;
 import com.cxgm.domain.ProductImage;
 import com.cxgm.domain.StaffDistribution;
 import com.cxgm.domain.StaffDistributionExample;
@@ -51,6 +53,9 @@ public class DistributionServiceImpl implements DistributionService {
 
 	@Autowired
 	private ProductImageMapper productImageMapper;
+	
+	@Autowired
+	private ProductMapper productMapper;
 	
 	@Autowired
 	private ThirdPartyHaixinUplodGoodsService thirdPartyHaixinUplodGoodsService;
@@ -200,6 +205,26 @@ public class DistributionServiceImpl implements DistributionService {
 					ProductImage image  =productImageMapper.findById(Long.parseLong(imageIds[0]));
 					
 					orderDetail.setProductUrl(image!=null?image.getUrl():"");
+				}
+				orderDetail.setHaixinNum(String.valueOf(orderDetail.getProductNum()));
+				//根据商品ID查询商品详情
+				
+				Product product = productMapper.findProductById(Long.valueOf(orderDetail.getProductId()));
+				
+				if("".equals(product.getUnit())&&!"".equals(product.getWeight())){
+					if(product.getWeight().indexOf("Kg")!=-1){
+						Integer weight = Integer.parseInt(product.getWeight().replace("Kg",""));
+						
+						orderDetail.setHaixinNum(String.valueOf(orderDetail.getProductNum()*weight));
+					}else{
+						if(product.getWeight().indexOf("g")==-1){
+							orderDetail.setHaixinNum(String.valueOf(orderDetail.getProductNum()));
+						}else{
+							Integer weight = Integer.parseInt(product.getWeight().replace("g",""));
+							
+							orderDetail.setHaixinNum(String.valueOf(orderDetail.getProductNum()*weight/1000));
+						}
+					}
 				}
 			}
 

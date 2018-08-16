@@ -43,5 +43,6 @@ public class OrderProductTransfer {
 	@ApiModelProperty(name = "weight",value = "商品重量")
     private String weight;
   
-
+	@ApiModelProperty(name = "haixinNum",value = "海信数量")
+    private String haixinNum;
 }

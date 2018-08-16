@@ -101,13 +101,13 @@ public class PushMessageController {
     		Map <String, String> map = new HashMap <String, String>();
       		map.put("content", pushMessage.getDescription());
     		map.put("time", time);
-    		map.put("urlType", pushMessage.getPushType());
+    		map.put("urlType", pushMessage.getUrlType());
     		map.put("notifyUrl", pushMessage.getNotifyUrl()!=null&&!"".equals(pushMessage.getNotifyUrl())?pushMessage.getNotifyUrl():"");
     		map.put("goodcode", pushMessage.getProductId()!=null&&!"".equals(pushMessage.getProductId())?pushMessage.getProductId().toString():"");
     		map.put("shopId", pushMessage.getShopId().toString());
     		JSONArray json = JSONArray.fromObject(map); 
     		
-        	new UmmessageSend().sendMessage(pushMessage.getPushType(),json.toString());
+        	new UmmessageSend().sendMessage(pushMessage.getPushType(),json.toString(),pushMessage.getDescription());
         	
         	pushMessage.setIsPush("1");
         	pushMessageService.updateMessage(pushMessage);

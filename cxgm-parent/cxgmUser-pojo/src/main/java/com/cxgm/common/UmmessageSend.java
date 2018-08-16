@@ -16,7 +16,7 @@ public class UmmessageSend{
 	private PushClient client = new PushClient();
 	
   
-    public void sendMessage(String title,String content) {  
+    public void sendMessage(String title,String content,String description) {  
        try{  
     	    
     	    AndroidBroadcast androidbroadcast = new AndroidBroadcast(appkey,appMasterSecret);
@@ -30,7 +30,7 @@ public class UmmessageSend{
 	   		
 	   		IOSBroadcast iosbroadcast = new IOSBroadcast(iosappkey,iosappMasterSecret);
 	   		
-	   		iosbroadcast.setAlert(title);
+	   		iosbroadcast.setAlert(description);
 	   		iosbroadcast.setBadge( 0);
 	   		iosbroadcast.setSound( "default");
 			// TODO set 'production_mode' to 'true' if your app is under production mode

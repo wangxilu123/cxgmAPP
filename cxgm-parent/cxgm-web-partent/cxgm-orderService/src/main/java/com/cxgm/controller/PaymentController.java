@@ -103,7 +103,7 @@ public class PaymentController {
 			    String json=null;  
 			       
 			    Order order=orderService.findById(Integer.parseInt(orderId));//获取订单数据  
-			    String money = "0.01";//获取订单金额  
+			    String money = order.getOrderAmount().toString();//获取订单金额  
 			    //金额转化为分为单位  
 			    float sessionmoney = Float.parseFloat(money);  
 			    String finalmoney = String.format("%.2f", sessionmoney);  
@@ -123,7 +123,7 @@ public class PaymentController {
 			            String device_info="";  
 			            //随机数   
 			            String nonce_str = strReq;  
-			            String body = "test";  
+			            String body = order.getOrderNum();  
 			            //商户订单号  
 			            String out_trade_no = order.getOrderNum();//订单编号加时间戳  
 			            int intMoney = Integer.parseInt(finalmoney);              
@@ -390,11 +390,11 @@ public class PaymentController {
 			    String orderId= request.getParameter("orderId");  
 			       
 			    Order order=orderService.findById(!"".equals(orderId)?Integer.parseInt(orderId):null);//获取订单数据  
-			    String money = "0.01";//获取订单金额  
-			    //金额转化为分为单位  
+			    String money = order.getOrderAmount().toString();//获取订单金额  
+			   /* //金额转化为分为单位  
 			    float sessionmoney = Float.parseFloat(money);  
 			    String finalmoney = String.format("%.2f", sessionmoney);  
-			    finalmoney = finalmoney.replace(".", "");
+			    finalmoney = finalmoney.replace(".", "");*/
 			    
 			    //实例化客户端
 		        AlipayClient alipayClient = new DefaultAlipayClient("https://openapi.alipay.com/gateway.do", alipay_appId, alipay_private_key , "json", "UTF-8", alipay_public_key, "RSA2");
@@ -403,11 +403,11 @@ public class PaymentController {
 		        AlipayTradeAppPayRequest aliRequest = new AlipayTradeAppPayRequest();
 		        //SDK已经封装掉了公共参数，这里只需要传入业务参数。以下方法为sdk的model入参方式(model和biz_content同时存在的情况下取biz_content)。
 		        AlipayTradeAppPayModel model = new AlipayTradeAppPayModel();
-		        model.setPassbackParams("测试数据");;  //描述信息  添加附加数据
-		        model.setSubject("魅格"); //商品标题
+		        model.setPassbackParams("菜鲜果美订单");;  //描述信息  添加附加数据
+		        model.setSubject("菜鲜果美商品"); //商品标题
 		        model.setOutTradeNo(order!=null?order.getOrderNum():""); //商家订单编号
 		        model.setTimeoutExpress("30m"); //超时关闭该订单时间
-		        model.setTotalAmount("0.01");  //订单总金额
+		        model.setTotalAmount(money);  //订单总金额
 		        model.setProductCode("QUICK_MSECURITY_PAY"); //销售产品码，商家和支付宝签约的产品码，为固定值QUICK_MSECURITY_PAY
 		        aliRequest.setBizModel(model);
 		        aliRequest.setNotifyUrl("https://api.xx.com/receive_notify.htm");  //回调地址

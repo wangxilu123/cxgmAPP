@@ -16,13 +16,17 @@ import org.springframework.stereotype.Service;
 
 import com.cxgm.common.CodeUtil;
 import com.cxgm.common.DateUtil;
+import com.cxgm.dao.HaixinGoodMapper;
 import com.cxgm.dao.OrderMapper;
 import com.cxgm.dao.OrderProductMapper;
 import com.cxgm.dao.ShopMapper;
+import com.cxgm.domain.HaixinGood;
+import com.cxgm.domain.HaixinGoodExample;
 import com.cxgm.domain.Order;
 import com.cxgm.domain.OrderExample;
 import com.cxgm.domain.OrderProduct;
 import com.cxgm.domain.OrderProductTransfer;
+import com.cxgm.domain.Product;
 import com.cxgm.domain.Shop;
 import com.cxgm.domain.ShopExample;
 import com.youzan.open.sdk.client.auth.Token;
@@ -48,6 +52,8 @@ public class YouzanOrderService {
 	@Autowired
 	private ShopMapper shopMapper;
 	
+	@Autowired
+	private HaixinGoodMapper haixinGoodMapper;
 	@Autowired
 	private YouzanShopService youzanShopService;
 	
@@ -163,6 +169,34 @@ public class YouzanOrderService {
 				}
 				
 				List<OrderProductTransfer> productList = orderProductMapper.selectYouZanOrderDetail(order.getId());
+				
+				for (OrderProductTransfer orderDetail : productList) {
+					
+					orderDetail.setHaixinNum(String.valueOf(orderDetail.getProductNum()));
+					//根据商品ID查询商品详情
+					
+					HaixinGoodExample  example4 = new HaixinGoodExample();
+					example4.createCriteria().andGoodCodeEqualTo(orderDetail.getProductCode());
+					List<HaixinGood> haixinGoods = haixinGoodMapper.selectByExample(example4);
+					if(haixinGoods.size()!=0){
+						if("kg".equals(haixinGoods.get(0).getUnit())&&!"".equals(haixinGoods.get(0).getSpecifications())){
+							if(haixinGoods.get(0).getSpecifications().indexOf("kg")!=-1){
+								Integer weight = Integer.parseInt(haixinGoods.get(0).getSpecifications().replace("kg",""));
+								
+								orderDetail.setHaixinNum(String.valueOf(orderDetail.getProductNum()*weight));
+							}else{
+								if(haixinGoods.get(0).getSpecifications().indexOf("g")==-1){
+									orderDetail.setHaixinNum(String.valueOf(orderDetail.getProductNum()));
+								}else{
+									Integer weight = Integer.parseInt(haixinGoods.get(0).getSpecifications().replace("g",""));
+									
+									orderDetail.setHaixinNum(String.valueOf(orderDetail.getProductNum()*weight/1000));
+								}
+							}
+						}
+					}
+					
+				}
 				order.setProductDetails(productList);
 				//同步海信业务接口
 				if(!"0".equals(order.getStatus())||!"7".equals(order.getStatus())){
