@@ -61,6 +61,28 @@ public class HomePageServiceImpl implements HomePageService {
 		List<ProductTransfer> list = productDao.findListAllWithCategory(map);
 		
 		for(ProductTransfer productTransfer : list){
+			if(productTransfer.getStartTime()!=null&&productTransfer.getEndTime()!=null){
+				Calendar date = Calendar.getInstance();
+				
+				date.setTime(new Date());
+
+		        Calendar begin = Calendar.getInstance();
+		        begin.setTime(productTransfer.getStartTime());
+
+		        Calendar end = Calendar.getInstance();
+		        end.setTime(productTransfer.getEndTime());
+				
+				if(date.after(begin) && date.before(end)){
+					productTransfer.setPrice(productTransfer.getPrice());
+					productTransfer.setOriginalPrice(productTransfer.getOriginalPrice());
+				}else{
+					productTransfer.setPrice(productTransfer.getOriginalPrice());
+					productTransfer.setOriginalPrice(null);
+				}
+			}else{
+				productTransfer.setOriginalPrice(null);
+			}
+			
 			if(productTransfer.getImage()!=null&&"".equals(productTransfer.getImage())==false){
 				String[] imageIds = productTransfer.getImage().split(",");
 				
@@ -98,6 +120,28 @@ public class HomePageServiceImpl implements HomePageService {
 		List<ProductTransfer> list = productDao.findHotProduct(map);
 		
 		for(ProductTransfer productTransfer : list){
+			if(productTransfer.getStartTime()!=null&&productTransfer.getEndTime()!=null){
+				Calendar date = Calendar.getInstance();
+				
+				date.setTime(new Date());
+
+		        Calendar begin = Calendar.getInstance();
+		        begin.setTime(productTransfer.getStartTime());
+
+		        Calendar end = Calendar.getInstance();
+		        end.setTime(productTransfer.getEndTime());
+				
+				if(date.after(begin) && date.before(end)){
+					productTransfer.setPrice(productTransfer.getPrice());
+					productTransfer.setOriginalPrice(productTransfer.getOriginalPrice());
+				}else{
+					productTransfer.setPrice(productTransfer.getOriginalPrice());
+					productTransfer.setOriginalPrice(null);
+				}
+			}else{
+				productTransfer.setOriginalPrice(null);
+			}
+			
 			if(productTransfer.getImage()!=null&&"".equals(productTransfer.getImage())==false){
 				String[] imageIds = productTransfer.getImage().split(",");
 				
@@ -135,6 +179,29 @@ public class HomePageServiceImpl implements HomePageService {
 		List<ProductTransfer> list = productDao.findNewProduct(map);
 		
 		for(ProductTransfer productTransfer : list){
+			
+			if(productTransfer.getStartTime()!=null&&productTransfer.getEndTime()!=null){
+				Calendar date = Calendar.getInstance();
+				
+				date.setTime(new Date());
+
+		        Calendar begin = Calendar.getInstance();
+		        begin.setTime(productTransfer.getStartTime());
+
+		        Calendar end = Calendar.getInstance();
+		        end.setTime(productTransfer.getEndTime());
+				
+				if(date.after(begin) && date.before(end)){
+					productTransfer.setPrice(productTransfer.getPrice());
+					productTransfer.setOriginalPrice(productTransfer.getOriginalPrice());
+				}else{
+					productTransfer.setPrice(productTransfer.getOriginalPrice());
+					productTransfer.setOriginalPrice(null);
+				}
+			}else{
+				productTransfer.setOriginalPrice(null);
+			}
+			
 			if(productTransfer.getImage()!=null&&"".equals(productTransfer.getImage())==false){
 				String[] imageIds = productTransfer.getImage().split(",");
 				
@@ -329,6 +396,28 @@ public class HomePageServiceImpl implements HomePageService {
 		List<ProductTransfer> list = productDao.findPushProduct(map);
 		
 		for(ProductTransfer productTransfer : list){
+			if(productTransfer.getStartTime()!=null&&productTransfer.getEndTime()!=null){
+				Calendar date = Calendar.getInstance();
+				
+				date.setTime(new Date());
+
+		        Calendar begin = Calendar.getInstance();
+		        begin.setTime(productTransfer.getStartTime());
+
+		        Calendar end = Calendar.getInstance();
+		        end.setTime(productTransfer.getEndTime());
+				
+				if(date.after(begin) && date.before(end)){
+					productTransfer.setPrice(productTransfer.getPrice());
+					productTransfer.setOriginalPrice(productTransfer.getOriginalPrice());
+				}else{
+					productTransfer.setPrice(productTransfer.getOriginalPrice());
+					productTransfer.setOriginalPrice(null);
+				}
+			}else{
+				productTransfer.setOriginalPrice(null);
+			}
+			
 			if(productTransfer.getImage()!=null&&"".equals(productTransfer.getImage())==false){
 				String[] imageIds = productTransfer.getImage().split(",");
 				

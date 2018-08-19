@@ -509,12 +509,8 @@
       <if test="barCode != null">
         bar_code = #{barCode,jdbcType=VARCHAR},
       </if>
-      <if test="startTime != null">
         start_time = #{startTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="endTime != null">
         end_time = #{endTime,jdbcType=TIMESTAMP},
-      </if>
       <if test="number != null">
         number = #{number,jdbcType=INTEGER},
       </if>

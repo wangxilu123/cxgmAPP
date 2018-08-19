@@ -41,15 +41,18 @@ public class SortingServiceImpl implements SortingService {
 	@Override
 	public PageInfo<Order> orderList(Integer pageNum, Integer pageSize, Integer shopId, String status,Integer adminId) {
 		
-		PageHelper.startPage(pageNum, pageSize);
+		
 
 		OrderExample example = new OrderExample();
 		if("1".equals(status)){
+			PageHelper.startPage(pageNum, pageSize);
 			example.createCriteria().andStoreIdEqualTo(shopId).andStatusEqualTo(status).andOrderResourceTo("APP");
 		}else {
+			PageHelper.startPage(pageNum, pageSize);
 			//根据当前登录者查询订单
 			StaffSortingExample example2 = new StaffSortingExample();
 			example2.createCriteria().andAdminIdEqualTo(adminId).andStatusEqualTo(status);
+			example2.setOrderByClause("create_time desc");
 			List<StaffSorting> staffList = staffSortingMapper.selectByExample(example2);
 			
 			List<Integer> orderIds = new ArrayList<>();

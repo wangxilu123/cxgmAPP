@@ -67,14 +67,17 @@ public class DistributionServiceImpl implements DistributionService {
 	public PageInfo<DistributionOrder> orderList(Integer pageNum, Integer pageSize, Integer shopId, String status ,Integer adminId) {
         
 		// 根据门店ID和状态
-		PageHelper.startPage(pageNum, pageSize);
+		
 		OrderExample example = new OrderExample();
 		if ("3".equals(status)) {
+			PageHelper.startPage(pageNum, pageSize);
 			example.createCriteria().andStoreIdEqualTo(shopId).andStatusEqualTo(status).andOrderResourceTo("APP");
 		} else {
+			PageHelper.startPage(pageNum, pageSize);
 			//根据当前登录者查询订单
 			StaffDistributionExample example2 = new StaffDistributionExample();
 			example2.createCriteria().andAdminIdEqualTo(adminId).andStatusEqualTo(status);
+			example2.setOrderByClause("create_time desc");
 			List<StaffDistribution> staffList = distributionMapper.selectByExample(example2);
 			
 			List<Integer> orderIds = new ArrayList<>();
