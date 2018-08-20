@@ -54,8 +54,8 @@ public class OrderController {
 	@RequestMapping(value = "/order/list", method = RequestMethod.POST)
 	public ModelAndView orderList(HttpServletRequest request,
 			@RequestParam(value = "pageNumber", defaultValue = "1") Integer num,
-			@RequestParam(value = "keyword") String name,
-			@RequestParam(value = "property") String property,
+			@RequestParam(value = "keyword",required=false) String name,
+			@RequestParam(value = "property",required=false) String property,
 			@RequestParam(value = "startDate",required=false) String startDate,
 			@RequestParam(value = "endDate",required=false) String endDate)
 			throws SQLException {

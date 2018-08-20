@@ -5,6 +5,18 @@
 </head>
 <body>
   <div class="admin-content">
+  <div class="am-u-sm-12 am-u-md-4 am-padding-right-0">
+          <div class="am-input-group am-input-group-sm">
+          <form class="am-form" id="listForm" action="/order/list" method="post">
+          <input type="hidden" name="keyword" />
+          <input type="hidden" name="startDate" />
+          <input type="hidden" name="endDate" />
+            <span class="am-input-group-btn">
+              <button id="searchButton" class="am-btn am-btn-default" type="button">返回</button>
+            </span>
+            </form>
+          </div>
+        </div>
     <div class="admin-content-body">
       <article class="page-container">
 		<table class="table" style="position: relative;left:13px">
@@ -74,5 +86,8 @@
 	</article>
     </div>
   </div>
+  
+  <script>
+	</script>
 </body>
 </html>
