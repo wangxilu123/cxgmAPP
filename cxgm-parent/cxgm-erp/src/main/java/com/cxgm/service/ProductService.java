@@ -73,7 +73,7 @@ public class ProductService {
         	product.setStartTime(!"".equals(startTime)?str.parse(startTime):null);
         	product.setEndTime(!"".equals(endTime)?str.parse(endTime):null);
         	ProductCategory firstProductCategory = productCategoryService.findById(Long.valueOf(pidForNumber));
-        	if("0".equals(weight)){
+        	if("0".equals(weight)||"".endsWith(weight)){
         		product.setWeight(haixinGoodList.size()!=0?haixinGoodList.get(0).getSpecifications():"");
         	}else{
         		product.setWeight(weight+"Kg");
@@ -201,7 +201,19 @@ public class ProductService {
         	product.setOriginPlace(originPlace);
         	product.setBrandName(brandName);
         	product.setFullName(fullName);
-        	product.setWeight(weight);
+        	
+        	//根据goodCode查询海信商品信息
+    		HaixinGoodExample  example= new HaixinGoodExample();
+    		
+    		example.createCriteria().andGoodCodeEqualTo(goodCode);
+    		
+    		List<HaixinGood> haixinGoodList = haixinGoodMapper.selectByExample(example);
+    		
+        	if("0".equals(weight)||"".endsWith(weight)){
+        		product.setWeight(haixinGoodList.size()!=0?haixinGoodList.get(0).getSpecifications():"");
+        	}else{
+        		product.setWeight(weight+"Kg");
+        	}
         	product.setStorageCondition(storageCondition);
         	product.setWarrantyPeriod(warrantyPeriod+warrantDays);
         	product.setStartTime(!"".equals(startTime)?str.parse(startTime):null);
