@@ -179,20 +179,25 @@ public class YouzanOrderService {
 					example4.createCriteria().andGoodCodeEqualTo(orderDetail.getProductCode());
 					List<HaixinGood> haixinGoods = haixinGoodMapper.selectByExample(example4);
 					if(haixinGoods.size()!=0){
-						if("kg".equals(haixinGoods.get(0).getUnit())&&!"".equals(haixinGoods.get(0).getSpecifications())){
-							if(haixinGoods.get(0).getSpecifications().indexOf("kg")!=-1){
-								Integer weight = Integer.parseInt(haixinGoods.get(0).getSpecifications().replace("kg",""));
-								
-								orderDetail.setHaixinNum(String.valueOf(orderDetail.getProductNum()*weight));
-							}else{
-								if(haixinGoods.get(0).getSpecifications().indexOf("g")==-1){
-									orderDetail.setHaixinNum(String.valueOf(orderDetail.getProductNum()));
-								}else{
-									Integer weight = Integer.parseInt(haixinGoods.get(0).getSpecifications().replace("g",""));
+						
+						if("kg".equals(haixinGoods.get(0).getUnit())||haixinGoods.get(0).getUnit()==null){
+							
+							if(!"".equals(haixinGoods.get(0).getSpecifications())){
+								if(haixinGoods.get(0).getSpecifications().indexOf("kg")!=-1){
+									Double weight = Double.parseDouble(haixinGoods.get(0).getSpecifications().replace("kg",""));
 									
-									orderDetail.setHaixinNum(String.valueOf(orderDetail.getProductNum()*weight/1000));
+									orderDetail.setHaixinNum(String.valueOf(orderDetail.getProductNum()*weight));
+								}else{
+									if(haixinGoods.get(0).getSpecifications().indexOf("g")==-1){
+										orderDetail.setHaixinNum(String.valueOf(orderDetail.getProductNum()));
+									}else{
+										Double weight = Double.parseDouble(haixinGoods.get(0).getSpecifications().replace("g",""));
+										
+										orderDetail.setHaixinNum(String.valueOf(orderDetail.getProductNum()*weight/1000));
+									}
 								}
 							}
+							
 						}
 					}
 					

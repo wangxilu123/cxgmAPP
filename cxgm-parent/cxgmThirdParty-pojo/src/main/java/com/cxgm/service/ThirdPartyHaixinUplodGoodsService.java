@@ -63,6 +63,8 @@ public class ThirdPartyHaixinUplodGoodsService  {
 	       sb.append("<DATE>"+date+"</DATE>");
 	       sb.append("<TIME>"+time+"</TIME>");
 	       sb.append("<STAFFCODE>9998</STAFFCODE>");
+	       sb.append("<FHMODE>1</FHMODE>");
+	       sb.append("<PRICETYPE>1</PRICETYPE>");
 	       sb.append("</BILLHEAD>");
 	       sb.append("<BILLBODY>");
 	       int i=1;

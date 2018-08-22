@@ -214,18 +214,20 @@ public class DistributionServiceImpl implements DistributionService {
 				
 				Product product = productMapper.findProductById(Long.valueOf(orderDetail.getProductId()));
 				
-				if("".equals(product.getUnit())&&!"".equals(product.getWeight())){
-					if(product.getWeight().indexOf("Kg")!=-1){
-						Integer weight = Integer.parseInt(product.getWeight().replace("Kg",""));
-						
-						orderDetail.setHaixinNum(String.valueOf(orderDetail.getProductNum()*weight));
-					}else{
-						if(product.getWeight().indexOf("g")==-1){
-							orderDetail.setHaixinNum(String.valueOf(orderDetail.getProductNum()));
-						}else{
-							Integer weight = Integer.parseInt(product.getWeight().replace("g",""));
+				if("".equals(product.getUnit())||product.getUnit()==null||product.getUnit().indexOf("g")!=-1){
+					if(!"".equals(product.getWeight())){
+						if(product.getWeight().indexOf("Kg")!=-1){
+							Double weight = Double.parseDouble(product.getWeight().replace("Kg",""));
 							
-							orderDetail.setHaixinNum(String.valueOf(orderDetail.getProductNum()*weight/1000));
+							orderDetail.setHaixinNum(String.valueOf(orderDetail.getProductNum()*weight));
+						}else{
+							if(product.getWeight().indexOf("g")==-1){
+								orderDetail.setHaixinNum(String.valueOf(orderDetail.getProductNum()));
+							}else{
+								Double weight = Double.parseDouble(product.getWeight().replace("g",""));
+								
+								orderDetail.setHaixinNum(String.valueOf(orderDetail.getProductNum()*weight/1000));
+							}
 						}
 					}
 				}

@@ -89,7 +89,7 @@
   </select>
   
   <select id="selectOrderDetail" parameterType="java.lang.Integer" resultType="com.cxgm.domain.OrderProductTransfer">
-    select product_name as productName,pd.good_code as productCode,bar_code as barCode,product_num as productNum,image as productUrl,pd.price,unit,weight,order_amount as amount,original_price as originalPrice,product_id as productId 
+    select pd.`name` as productName,pd.good_code as productCode,bar_code as barCode,product_num as productNum,image as productUrl,pd.price,unit,weight,order_amount as amount,original_price as originalPrice,product_id as productId 
     from order_product as rd LEFT JOIN product as pd on rd.product_id=pd.id left join user_order as od on rd.order_id=od.id
     where order_id = #{orderId,jdbcType=INTEGER}
   </select>
