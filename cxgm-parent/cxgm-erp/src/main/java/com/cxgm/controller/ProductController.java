@@ -219,6 +219,12 @@ public class ProductController {
 	public ModelAndView productEdit(HttpServletRequest request) {
 		String productId = request.getParameter("id");
 		ProductTransfer product = productService.findById(Long.valueOf(productId));
+		if(product.getWeight()!=null&&!"".equals(product.getWeight())){
+			if(product.getWeight().indexOf("Kg")!=-1){
+				product.setWeight(product.getWeight().replace("Kg",""));
+			}
+			
+		}
 		SimpleDateFormat str = new SimpleDateFormat("yyyy-MM-dd"); 
 		product.setNewendTime(product.getEndTime()!=null?str.format(product.getEndTime()):"");
 		product.setNewstartTime(product.getStartTime()!=null?str.format(product.getStartTime()):"");
