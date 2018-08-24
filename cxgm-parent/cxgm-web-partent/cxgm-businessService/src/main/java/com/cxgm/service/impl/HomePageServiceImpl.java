@@ -30,6 +30,7 @@ import com.cxgm.domain.ShopCart;
 import com.cxgm.domain.ShopCartExample;
 import com.cxgm.domain.ShopCategory;
 import com.cxgm.service.HomePageService;
+import com.cxgm.service.ThirdPartyHaixinStockService;
 
 @Primary
 @Service
@@ -54,6 +55,9 @@ public class HomePageServiceImpl implements HomePageService {
 	private ShopCartMapper shopCartMapper;
 	@Autowired
 	private ProductCategoryMapper  productCategoryMapper;
+	
+	@Autowired
+	private ThirdPartyHaixinStockService thirdPartyHaixinStockService;
 	
 	@Override
 	public List<ProductTransfer> findListAllWithCategory(Map<String,Object> map,Integer userId){

@@ -52,7 +52,7 @@ public class SortingServiceImpl implements SortingService {
 			//根据当前登录者查询订单
 			StaffSortingExample example2 = new StaffSortingExample();
 			example2.createCriteria().andAdminIdEqualTo(adminId).andStatusEqualTo(status);
-			example2.setOrderByClause("create_time desc");
+			example2.setOrderByClause("create_time asc");
 			List<StaffSorting> staffList = staffSortingMapper.selectByExample(example2);
 			
 			List<Integer> orderIds = new ArrayList<>();
@@ -68,7 +68,7 @@ public class SortingServiceImpl implements SortingService {
 			}
 			
 		} 
-		example.setOrderByClause("order_time desc");
+		example.setOrderByClause("order_time asc");
 		List<Order> list = orderMapper.selectByExample(example);
 
 		for (Order order : list) {

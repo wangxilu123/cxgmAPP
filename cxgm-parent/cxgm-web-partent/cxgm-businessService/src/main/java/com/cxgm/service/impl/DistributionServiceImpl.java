@@ -77,7 +77,7 @@ public class DistributionServiceImpl implements DistributionService {
 			//根据当前登录者查询订单
 			StaffDistributionExample example2 = new StaffDistributionExample();
 			example2.createCriteria().andAdminIdEqualTo(adminId).andStatusEqualTo(status);
-			example2.setOrderByClause("create_time desc");
+			example2.setOrderByClause("create_time asc");
 			List<StaffDistribution> staffList = distributionMapper.selectByExample(example2);
 			
 			List<Integer> orderIds = new ArrayList<>();
@@ -92,7 +92,7 @@ public class DistributionServiceImpl implements DistributionService {
 				example.createCriteria().andStoreIdEqualTo(shopId).andStatusEqualTo("111").andOrderResourceTo("APP");
 			}
 		}
-		example.setOrderByClause("order_time desc");
+		example.setOrderByClause("order_time asc");
 		List<Order> list = orderMapper.selectByExample(example);
 
 		List<DistributionOrder> distributionOrderList = new ArrayList<DistributionOrder>();

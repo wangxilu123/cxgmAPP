@@ -211,6 +211,13 @@ public class YouzanOrderService {
 					}
 				}
 				
+				//有赞退货
+				if("7".equals(order.getStatus())){
+					//调用海信退货接口
+					
+				}
+				
+				
 			}
 			
 		}
