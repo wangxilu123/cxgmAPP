@@ -116,5 +116,10 @@ public class LoginController{
 			return new ResultDto<>(201, "员工号，姓名或密码错误！");
 		}
 	}
+    
+    @GetMapping("/toH5")
+    public ModelAndView toH5(@RequestParam(required = false) String lang){
+        return new ModelAndView("coupon/index");
+    }
 
 }
