@@ -117,9 +117,9 @@ public class LoginController{
 		}
 	}
     
-    @RequestMapping(value = "/toCouponPage", method = RequestMethod.GET)
-	public ModelAndView motionList(HttpServletRequest request){
-		return new ModelAndView("h5/index");
-	}
+    @GetMapping("/toH5")
+    public ModelAndView toH5(@RequestParam(required = false) String lang){
+        return new ModelAndView("coupon/index");
+    }
 
 }
