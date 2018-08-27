@@ -194,7 +194,7 @@
   
   <select id="selectHomePageNum" parameterType="map" resultType="com.cxgm.domain.FjpsHomePage">
    
- select * from((select count(1) as todayDpsNum from user_order where store_id=#{shopId,jdbcType=INTEGER} and <![CDATA[DATE_FORMAT(order_time, '%Y-%m-%d')=DATE_FORMAT(NOW(), '%Y-%m-%d')]]> and `status`=3) as temp7,
+ select * from((select count(1) as todayDpsNum from user_order where store_id=#{shopId,jdbcType=INTEGER} and <![CDATA[DATE_FORMAT(order_time, '%Y-%m-%d')=DATE_FORMAT(NOW(), '%Y-%m-%d')]]> and `status`=3 and order_resource='APP') as temp7,
 (select count(1) as todayWpsNum from staff_distribution where admin_id=#{adminId,jdbcType=INTEGER} and <![CDATA[DATE_FORMAT(create_time, '%Y-%m-%d')=DATE_FORMAT(NOW(), '%Y-%m-%d')]]> and `status`=5) as temp, 
 
 
@@ -203,7 +203,7 @@
 
 (select count(1) as monthWpsNum from staff_distribution where admin_id=#{adminId,jdbcType=INTEGER} and <![CDATA[DATE_FORMAT((select date_sub(now(),interval 1 month)),'%Y-%m-%d') < DATE_FORMAT(create_time, '%Y-%m-%d')and DATE_FORMAT(create_time, '%Y-%m-%d')<=DATE_FORMAT(NOW(), '%Y-%m-%d')]]> and `status`=5) as temp2,
 
-(select count(1) as todayDfjNum from user_order where store_id=#{shopId,jdbcType=INTEGER} and <![CDATA[DATE_FORMAT(order_time, '%Y-%m-%d')=DATE_FORMAT(NOW(), '%Y-%m-%d')]]> and `status`=1) as temp3,
+(select count(1) as todayDfjNum from user_order where store_id=#{shopId,jdbcType=INTEGER} and <![CDATA[DATE_FORMAT(order_time, '%Y-%m-%d')=DATE_FORMAT(NOW(), '%Y-%m-%d')]]> and `status`=1 and order_resource='APP') as temp3,
 
 
 (select count(1) as todayWfjNum from staff_sorting where admin_id=#{adminId,jdbcType=INTEGER} and <![CDATA[DATE_FORMAT(create_time, '%Y-%m-%d')=DATE_FORMAT(NOW(), '%Y-%m-%d')]]> and `status`=3) as temp4,

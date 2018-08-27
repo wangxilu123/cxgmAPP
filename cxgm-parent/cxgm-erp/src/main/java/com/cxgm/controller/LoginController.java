@@ -116,5 +116,10 @@ public class LoginController{
 			return new ResultDto<>(201, "员工号，姓名或密码错误！");
 		}
 	}
+    
+    @RequestMapping(value = "/toCouponPage", method = RequestMethod.GET)
+	public ModelAndView motionList(HttpServletRequest request){
+		return new ModelAndView("h5/index");
+	}
 
 }

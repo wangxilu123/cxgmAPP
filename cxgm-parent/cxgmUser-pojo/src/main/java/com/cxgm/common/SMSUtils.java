@@ -38,9 +38,9 @@ public class SMSUtils {
         //必填:待发送手机号
         request.setPhoneNumbers(phoneName);
         //必填:短信签名-可在短信控制台中找到
-        request.setSignName("阿里云短信测试专用");
+        request.setSignName("菜鲜果美");
         //必填:短信模板-可在短信控制台中找到
-        request.setTemplateCode("SMS_134145386");
+        request.setTemplateCode("SMS_142953431");
         //可选:模板中的变量替换JSON串,如模板内容为"亲爱的${name},您的验证码为${code}"时,此处的值为
         
         int code = getCode(1,999999);
