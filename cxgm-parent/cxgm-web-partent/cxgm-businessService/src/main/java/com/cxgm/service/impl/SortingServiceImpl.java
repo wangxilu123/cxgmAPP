@@ -110,9 +110,7 @@ public class SortingServiceImpl implements SortingService {
 		// 根据订单ID查询分拣单
 		StaffSortingExample example = new StaffSortingExample();
 
-		example.createCriteria().andOrderIdEqualTo(staffSorting.getOrderId())
-				.andShopIdEqualTo(staffSorting.getShopId());
-
+		example.createCriteria().andOrderIdEqualTo(staffSorting.getOrderId());
 		List<StaffSorting> list = staffSortingMapper.selectByExample(example);
 
 		if (list.size() != 0) {
