@@ -22,6 +22,8 @@ import com.cxgm.service.SortingService;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 
+import lombok.Synchronized;
+
 @Primary
 @Service
 public class SortingServiceImpl implements SortingService {
@@ -105,6 +107,7 @@ public class SortingServiceImpl implements SortingService {
 	}
 
 	@Override
+	@Synchronized
 	public Integer addSorting(StaffSorting staffSorting) {
 
 		// 根据订单ID查询分拣单
@@ -113,11 +116,8 @@ public class SortingServiceImpl implements SortingService {
 		example.createCriteria().andOrderIdEqualTo(staffSorting.getOrderId());
 		List<StaffSorting> list = staffSortingMapper.selectByExample(example);
 
-		if (list.size() != 0) {
-			return 0;
-		} else {
-			
-			staffSorting.setStatus("2");
+		if (list.size() == 0) {
+            staffSorting.setStatus("2");
 			
 			Integer sortingId = staffSortingMapper.insert(staffSorting);
 			
@@ -133,6 +133,9 @@ public class SortingServiceImpl implements SortingService {
 				orderMapper.updateByExample(order, example1);
 			}
 			return sortingId;
+			
+		} else {
+			return 0;
 		}
 	}
 
@@ -142,8 +145,7 @@ public class SortingServiceImpl implements SortingService {
 		// 根据订单ID查询分拣单
 		StaffSortingExample example = new StaffSortingExample();
 
-		example.createCriteria().andOrderIdEqualTo(orderId)
-				.andShopIdEqualTo(shopId);
+		example.createCriteria().andOrderIdEqualTo(orderId);
 
 		List<StaffSorting> list = staffSortingMapper.selectByExample(example);
 		

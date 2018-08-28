@@ -35,6 +35,8 @@ import com.cxgm.service.ThirdPartyHaixinUplodOrderService;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 
+import lombok.Synchronized;
+
 @Primary
 @Service
 public class DistributionServiceImpl implements DistributionService {
@@ -131,6 +133,7 @@ public class DistributionServiceImpl implements DistributionService {
 	}
 
 	@Override
+	@Synchronized
 	public Integer addDistribution(StaffDistribution distribution) {
 
 		// 根据订单ID查询配送单
@@ -140,9 +143,7 @@ public class DistributionServiceImpl implements DistributionService {
 
 		List<StaffDistribution> list = distributionMapper.selectByExample(example);
 
-		if (list.size() != 0) {
-			return 0;
-		} else {
+		if (list.size() == 0) {
 
 			distribution.setStatus("4");
 
@@ -160,6 +161,9 @@ public class DistributionServiceImpl implements DistributionService {
 				orderMapper.updateByExample(order, example1);
 			}
 			return distributionId;
+			
+		} else {
+			return 0;
 		}
 	}
 
