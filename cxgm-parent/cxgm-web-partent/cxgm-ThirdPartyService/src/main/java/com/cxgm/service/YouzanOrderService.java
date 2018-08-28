@@ -80,7 +80,7 @@ public class YouzanOrderService {
 		YZClient client = new DefaultYZClient(new Token(oAuthToken.getAccessToken()));
 		YouzanTradesSoldGetParams youzanTradesSoldGetParams = new YouzanTradesSoldGetParams();
 		
-        Date startCreated = new Date(new Date().getTime()-7200000);
+        Date startCreated = new Date(new Date().getTime()-1200000);
 		
 		youzanTradesSoldGetParams.setStartCreated(startCreated);
 		youzanTradesSoldGetParams.setEndCreated(new Date());

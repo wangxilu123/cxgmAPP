@@ -23,7 +23,7 @@ public class YouzanController {
 	@Autowired
 	private YouzanOrderService youzanOrderService;
 	
-	@Scheduled(cron = "0 */120 * * * ?") // 每两个小时执行一次
+	@Scheduled(cron = "0 */20 * * * ?") // 每两个小时执行一次
 	public void getOrders() throws UnsupportedEncodingException, SOAPException, ServiceException, IOException {
 
 		youzanOrderService.findYouZanOrder();
