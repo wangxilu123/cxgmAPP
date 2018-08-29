@@ -59,11 +59,10 @@ public class ProductCategoryController {
 	
 	@RequestMapping(value = "/productCategory/save", method = RequestMethod.POST)
 	public ModelAndView productCategorySave(HttpServletRequest request,@RequestParam(value="parentId") String parentId,
-			@RequestParam(value="productCategory.name") String name,
-			@RequestParam(value="productCategory.number") Integer number) throws SQLException {
+			@RequestParam(value="productCategory.name") String name) throws SQLException {
 		List<MultipartFile> files = ((MultipartHttpServletRequest) request).getFiles("productImages");
 		try {
-			productCategoryService.insert(Long.valueOf(parentId), name,number, files);
+			productCategoryService.insert(Long.valueOf(parentId), name,files);
 			ModelAndView mv = new ModelAndView("redirect:/admin/productCategory");
 			return mv;
 		}catch(Exception e) {

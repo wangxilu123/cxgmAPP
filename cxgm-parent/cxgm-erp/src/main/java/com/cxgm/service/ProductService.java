@@ -150,7 +150,7 @@ public class ProductService {
                 } 
             }
         	product.setImage(sb.toString());
-        	
+        	productDao.insert(product);
         } catch (Exception e) {
             e.printStackTrace();
         }
