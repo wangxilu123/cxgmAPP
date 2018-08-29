@@ -21,6 +21,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.cxgm.common.PoiUtils;
 import com.cxgm.common.RSResult;
+import com.cxgm.common.constant.StateCode;
 import com.cxgm.domain.Admin;
 import com.cxgm.domain.Coupon;
 import com.cxgm.domain.CouponCode;
@@ -58,8 +59,8 @@ public class CouponController {
 		map.put("shopId", admin.getShopId());
 		List<Coupon> coupons = couponService.findCouponsWithParam(map);
 		for(Coupon coupon:coupons) {
-			int usedNumber = couponService.findCouponCodeListCount(coupon.getId(), 2);
-			int unusedNumber = couponService.findCouponCodeListCount(coupon.getId(), 1);
+			int usedNumber = couponService.findCouponCodeListCount(coupon.getId(), StateCode.MSG_USED_STATE);
+			int unusedNumber = couponService.findCouponCodeListCount(coupon.getId(), StateCode.MSG_UNUSED_STATE);
 			coupon.setUsedNumber(usedNumber);
 			coupon.setUnusedNumber(unusedNumber);
 		}
@@ -260,8 +261,8 @@ public class CouponController {
 	public ModelAndView getCouponCode(HttpServletRequest request,@RequestParam(value = "page", defaultValue = "1") Integer page,
 			@RequestParam(value = "size", defaultValue = "10") Integer size) {
 		String id = request.getParameter("id");
-		int usedNumber = couponService.findCouponCodeListCount(Long.valueOf(id), 2);
-		int unusedNumber = couponService.findCouponCodeListCount(Long.valueOf(id), 1);
+		int usedNumber = couponService.findCouponCodeListCount(Long.valueOf(id), StateCode.MSG_USED_STATE);
+		int unusedNumber = couponService.findCouponCodeListCount(Long.valueOf(id), StateCode.MSG_UNUSED_STATE);
 		PageHelper.startPage(page, size);
 		List<CouponCode> couponCodes = couponService.findCouponCodeById(Long.valueOf(id));
 		PageInfo<CouponCode> pager = new PageInfo<>(couponCodes);
@@ -279,8 +280,8 @@ public class CouponController {
 		PageHelper.startPage(page, size);
 		List<CouponCode> couponCodes = couponService.findCouponCodeById(Long.valueOf(id));
 		PageInfo<CouponCode> pager = new PageInfo<>(couponCodes);
-		int usedNumber = couponService.findCouponCodeListCount(Long.valueOf(id), 2);
-		int unusedNumber = couponService.findCouponCodeListCount(Long.valueOf(id), 1);
+		int usedNumber = couponService.findCouponCodeListCount(Long.valueOf(id), StateCode.MSG_USED_STATE);
+		int unusedNumber = couponService.findCouponCodeListCount(Long.valueOf(id), StateCode.MSG_UNUSED_STATE);
 		request.setAttribute("pager", pager);
 		request.setAttribute("usedNumber", usedNumber);
 		request.setAttribute("unusedNumber", unusedNumber);
