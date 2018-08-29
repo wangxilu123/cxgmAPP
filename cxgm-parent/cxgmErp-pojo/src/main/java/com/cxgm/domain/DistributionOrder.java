@@ -6,7 +6,6 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.ToString;
 
-@Data
 @ToString
 public class DistributionOrder extends UserAddress{
 	

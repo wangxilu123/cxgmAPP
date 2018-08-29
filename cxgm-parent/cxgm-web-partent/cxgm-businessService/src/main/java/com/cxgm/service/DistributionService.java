@@ -13,7 +13,7 @@ import com.github.pagehelper.PageInfo;
 
 public interface DistributionService {
 
-	PageInfo<DistributionOrder> orderList(Integer pageNum, Integer pageSize,Integer shopId ,String status,Integer adminId);
+	PageInfo<Order> orderList(Integer pageNum, Integer pageSize,Integer shopId ,String status,Integer adminId);
 	
 	Integer addDistribution(StaffDistribution distribution);
 	

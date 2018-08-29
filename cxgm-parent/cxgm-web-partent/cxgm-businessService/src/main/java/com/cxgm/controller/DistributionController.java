@@ -53,7 +53,7 @@ public class DistributionController {
         @ApiImplicitParam(name = "adminId", required = false, paramType = "query", dataType = "int")
     })
 	@GetMapping("/findDistribution")
-	public ResultDto<PageInfo<DistributionOrder>> findDistribution(HttpServletRequest request,
+	public ResultDto<PageInfo<Order>> findDistribution(HttpServletRequest request,
 			@RequestParam(value = "pageNum", defaultValue = "1", required = false) Integer pageNum,
 			@RequestParam(value = "pageSize", defaultValue = "10", required = false) Integer pageSize,
 			@RequestParam(value = "status", required = false) String status,
@@ -64,7 +64,7 @@ public class DistributionController {
 
 		if (result == true) {
 
-			PageInfo<DistributionOrder> list = distributionService.orderList(pageNum, pageSize, shopId, status,adminId);
+			PageInfo<Order> list = distributionService.orderList(pageNum, pageSize, shopId, status,adminId);
 
 			return new ResultDto<>(200, "查询成功！", list);
 		} else {
@@ -82,8 +82,12 @@ public class DistributionController {
     	if(result == true){
     	
     	Integer id = distributionService.addDistribution(distribution);
-    	
-        return new ResultDto<>(200,"接单成功！",id);
+    	if(id==0){
+    		return new ResultDto<>(201,"该订单已接！",id);
+    	}else{
+    		return new ResultDto<>(200,"接单成功！",id);
+    	}
+        
     	}else{
     		return new ResultDto<>(403,"token失效请重新登录！");
     	}

@@ -66,7 +66,7 @@ public class DistributionServiceImpl implements DistributionService {
 	private ThirdPartyHaixinUplodOrderService thirdPartyHaixinUplodOrderService;
 
 	@Override
-	public PageInfo<DistributionOrder> orderList(Integer pageNum, Integer pageSize, Integer shopId, String status ,Integer adminId) {
+	public PageInfo<Order> orderList(Integer pageNum, Integer pageSize, Integer shopId, String status ,Integer adminId) {
         
 		// 根据门店ID和状态
 		
@@ -97,8 +97,6 @@ public class DistributionServiceImpl implements DistributionService {
 		example.setOrderByClause("order_time asc");
 		List<Order> list = orderMapper.selectByExample(example);
 
-		List<DistributionOrder> distributionOrderList = new ArrayList<DistributionOrder>();
-
 		for (Order order : list) {
 
 			// 根据addressID查询地址信息
@@ -110,25 +108,10 @@ public class DistributionServiceImpl implements DistributionService {
 			if (userAddressList.size() != 0) {
 				UserAddress userAddress = userAddressList.get(0);
 
-				DistributionOrder distributionOrder = new DistributionOrder();
-
-				distributionOrder.setOrderId(order.getId());
-				distributionOrder.setOrderTime(order.getOrderTime());
-				distributionOrder.setAddress(userAddress.getAddress());
-				distributionOrder.setArea(userAddress.getArea());
-				distributionOrder.setDimension(userAddress.getDimension());
-				distributionOrder.setId(userAddress.getId());
-				distributionOrder.setIsDef(userAddress.getIsDef());
-				distributionOrder.setLongitude(userAddress.getLongitude());
-				distributionOrder.setPhone(userAddress.getPhone());
-				distributionOrder.setRealName(userAddress.getRealName());
-				distributionOrder.setRemarks(userAddress.getRemarks());
-				distributionOrder.setUserId(userAddress.getUserId());
-
-				distributionOrderList.add(distributionOrder);
+				order.setAddress(userAddress);
 			}
 		}
-		PageInfo<DistributionOrder> page = new PageInfo<DistributionOrder>(distributionOrderList);
+		PageInfo<Order> page = new PageInfo<Order>(list);
 		return page;
 	}
 

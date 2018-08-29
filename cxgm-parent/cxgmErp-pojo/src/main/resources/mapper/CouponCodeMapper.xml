@@ -152,7 +152,7 @@
     </if>
     
     <if test="status != null and status==1">
-        <![CDATA[and (co.begin_date >=  NOW()]]> <![CDATA[or co.end_date <=  NOW())]]> or cu.`status`=1
+        <![CDATA[and (co.begin_date >=  NOW()]]> <![CDATA[or co.end_date <=  NOW() or cu.`status`=1)]]> 
     </if>
     
   </select>

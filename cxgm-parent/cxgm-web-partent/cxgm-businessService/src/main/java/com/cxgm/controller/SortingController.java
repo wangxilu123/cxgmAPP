@@ -97,7 +97,11 @@ public class SortingController {
     	
     	Integer sortingId = sortingService.addSorting(staffSorting);
     	
-        return new ResultDto<>(200,"接单成功！",sortingId);
+    	if(sortingId==0){
+    		return new ResultDto<>(201,"该订单已接！",sortingId);
+    	}else{
+    		return new ResultDto<>(200,"接单成功！",sortingId);
+    	}
     	}else{
     		return new ResultDto<>(403,"token失效请重新登录！");
     	}

@@ -59,10 +59,12 @@ public class AdminService {
 		map.put("username", username);
 		
 		Admin admin = adminDao.findAdmin(map);
-		List<AdminRole> adminRole = adminRoleDao.findByAdmins(admin.getId());
 		
-		Role role= roleMapper.findById(adminRole.get(0).getRoles());
 		if(admin!=null){
+			
+			List<AdminRole> adminRole = adminRoleDao.findByAdmins(admin.getId());
+			
+			Role role= roleMapper.findById(adminRole.get(0).getRoles());
 			
 			BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
 			
