@@ -44,8 +44,11 @@
     		and coupon_id=#{couponId,jdbcType=BIGINT}
 		</if>
 		
-		<if test="status !=null and status != ''">
+		<if test="status !=null and status==1">
     		and status=#{status,jdbcType=INTEGER}
+		</if>
+		<if test="status !=null and status==0">
+    		and (status=#{status,jdbcType=INTEGER} or status is null)
 		</if>
 		<if test="type !=null and type != ''">
     		and type=#{type,jdbcType=INTEGER}
