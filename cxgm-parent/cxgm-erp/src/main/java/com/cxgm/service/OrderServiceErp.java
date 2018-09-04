@@ -20,6 +20,8 @@ import com.cxgm.domain.Admin;
 import com.cxgm.domain.Order;
 import com.cxgm.domain.OrderAdmin;
 import com.cxgm.domain.OrderExample;
+import com.cxgm.domain.OrderProduct;
+import com.cxgm.domain.OrderProductExample;
 import com.cxgm.domain.OrderProductTransfer;
 import com.cxgm.domain.ProductImage;
 import com.cxgm.domain.Shop;
@@ -70,6 +72,29 @@ public class OrderServiceErp {
 	
 	public List<Order> findOrdersWithParam(Map<String,Object> map){
 		return orderDao.findOrdersWithParam(map);
+	}
+	
+	public List<Order> findOrders(Map<String,Object> map){
+		
+		List<Order> orders = orderDao.findOrdersWithParam(map);
+
+        for(Order order:orders){
+        	// 根据orderId查询订单详情信息
+        	OrderProductExample example = new OrderProductExample();
+        	example.createCriteria().andOrderIdEqualTo(order.getId());
+        	List<OrderProduct> productList = orderProductMapper.selectByExample(example);
+
+        	StringBuilder sb = new StringBuilder();  
+        	for (OrderProduct orderDetail : productList) {
+        		if(orderDetail.getProductName()!=null){
+        			sb.append(orderDetail.getProductName()+"×"+orderDetail.getProductNum()+",");
+        		}
+        		
+        	}
+        	
+        	order.setOrderProducts(sb.toString());
+        }		
+		return orders;
 	}
 
 	public Long countByExample(OrderExample example) {
