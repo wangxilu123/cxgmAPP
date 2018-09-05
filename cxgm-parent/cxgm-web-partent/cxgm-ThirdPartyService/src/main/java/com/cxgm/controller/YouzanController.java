@@ -2,6 +2,7 @@ package com.cxgm.controller;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.text.ParseException;
 
 import javax.xml.rpc.ServiceException;
 import javax.xml.soap.SOAPException;
@@ -23,8 +24,8 @@ public class YouzanController {
 	@Autowired
 	private YouzanOrderService youzanOrderService;
 	
-	@Scheduled(cron = "0 */20 * * * ?") // 每两个小时执行一次
-	public void getOrders() throws UnsupportedEncodingException, SOAPException, ServiceException, IOException {
+	@Scheduled(cron = "0 */30 * * * ?") // 每两个小时执行一次
+	public void getOrders() throws UnsupportedEncodingException, SOAPException, ServiceException, IOException, ParseException {
 
 		youzanOrderService.findYouZanOrder();
 

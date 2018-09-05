@@ -61,7 +61,7 @@ public class ThirdPartyHaixinUplodGoodsService  {
 	       sb.append("<JSCODE>00</JSCODE>");
 	       sb.append("<DATE>"+date+"</DATE>");
 	       sb.append("<TIME>"+time+"</TIME>");
-	       if(order.getOrderResource().endsWith("APP")){
+	      if(order.getOrderResource().endsWith("APP")){
 	    	   sb.append("<STAFFCODE>9998</STAFFCODE>");
 		       sb.append("<PFCUSTCODE>99998</PFCUSTCODE>");
 		       

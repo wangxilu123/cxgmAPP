@@ -3,6 +3,13 @@ package com.cxgm.service;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.math.BigDecimal;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.Instant;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.time.ZoneId;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
@@ -26,7 +33,6 @@ import com.cxgm.domain.Order;
 import com.cxgm.domain.OrderExample;
 import com.cxgm.domain.OrderProduct;
 import com.cxgm.domain.OrderProductTransfer;
-import com.cxgm.domain.Product;
 import com.cxgm.domain.Shop;
 import com.cxgm.domain.ShopExample;
 import com.youzan.open.sdk.client.auth.Token;
@@ -71,8 +77,9 @@ public class YouzanOrderService {
 	 * @throws ServiceException 
 	 * @throws SOAPException 
 	 * @throws UnsupportedEncodingException 
+	 * @throws ParseException 
 	 */
-	public  TradeDetailV2[] findYouZanOrder() throws UnsupportedEncodingException, SOAPException, ServiceException, IOException {
+	public  List<TradeDetailV2> findYouZanOrder() throws UnsupportedEncodingException, SOAPException, ServiceException, IOException, ParseException {
 		@SuppressWarnings("static-access")
 		OAuthToken oAuthToken = youzanShopService.getToken();
 		
@@ -80,20 +87,31 @@ public class YouzanOrderService {
 		YZClient client = new DefaultYZClient(new Token(oAuthToken.getAccessToken()));
 		YouzanTradesSoldGetParams youzanTradesSoldGetParams = new YouzanTradesSoldGetParams();
 		
-        Date startCreated = new Date(new Date().getTime()-1200000);
+		List<TradeDetailV2> newList= new ArrayList<>();
+		for(int i=1;i<11; i++){
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+			Date date = new Date();
+	
+		    Date startCreated = getStartOfDay(date);
+		    
+		    Date endCreated = getEndOfDay(date);
+			
+			youzanTradesSoldGetParams.setStartCreated(startCreated);
+			youzanTradesSoldGetParams.setEndCreated(endCreated);
+			youzanTradesSoldGetParams.setPageNo(new Long(i));
+			youzanTradesSoldGetParams.setPageSize(new Long(100));
+			YouzanTradesSoldGet youzanTradesSoldGet = new YouzanTradesSoldGet();
+			youzanTradesSoldGet.setAPIParams(youzanTradesSoldGetParams);
+			YouzanTradesSoldGetResult result = client.invoke(youzanTradesSoldGet);
 		
-		youzanTradesSoldGetParams.setStartCreated(startCreated);
-		youzanTradesSoldGetParams.setEndCreated(new Date());
-		YouzanTradesSoldGet youzanTradesSoldGet = new YouzanTradesSoldGet();
-		youzanTradesSoldGet.setAPIParams(youzanTradesSoldGetParams);
-		YouzanTradesSoldGetResult result = client.invoke(youzanTradesSoldGet);
-
-		TradeDetailV2[] tradeDetail = result.getTrades();
-		
-		List<TradeDetailV2> list = Arrays.asList(tradeDetail);
-		
-		for(TradeDetailV2 tradeDetailV2 : list){
-			String orderNum = DateUtil.formatDateTime2() + CodeUtil.genCodes(6);
+			TradeDetailV2[] tradeDetail = result.getTrades();
+			
+			List<TradeDetailV2> list = Arrays.asList(tradeDetail);
+			
+			newList.addAll(list);
+		}
+		for(TradeDetailV2 tradeDetailV2 : newList){
+			
 			//根据有赞门店ID查询APP门店信息
 			
 			ShopExample  example = new ShopExample();
@@ -109,6 +127,8 @@ public class YouzanOrderService {
 			List<Order>  orderList = orderMapper.selectByExample(example1);
 			
 			if(orderList.size()==0){
+				String orderNum = DateUtil.formatDateTime2() + CodeUtil.genCodes(6);
+				
 				Order order = new Order();
 				order.setOrderAmount(new BigDecimal(tradeDetailV2.getPayment()));
 				order.setTotalAmount(new BigDecimal(tradeDetailV2.getTotalFee()));
@@ -174,37 +194,39 @@ public class YouzanOrderService {
 					
 					orderDetail.setHaixinNum(String.valueOf(orderDetail.getProductNum()));
 					//根据商品ID查询商品详情
-					
-					HaixinGoodExample  example4 = new HaixinGoodExample();
-					example4.createCriteria().andGoodCodeEqualTo(orderDetail.getProductCode());
-					List<HaixinGood> haixinGoods = haixinGoodMapper.selectByExample(example4);
-					if(haixinGoods.size()!=0){
-						
-						if("kg".equals(haixinGoods.get(0).getUnit())||haixinGoods.get(0).getUnit()==null){
+					if(orderDetail.getProductCode()!=null){
+						HaixinGoodExample  example4 = new HaixinGoodExample();
+						example4.createCriteria().andGoodCodeEqualTo(orderDetail.getProductCode());
+						List<HaixinGood> haixinGoods = haixinGoodMapper.selectByExample(example4);
+						if(haixinGoods.size()!=0){
 							
-							if(!"".equals(haixinGoods.get(0).getSpecifications())){
-								if(haixinGoods.get(0).getSpecifications().indexOf("kg")!=-1){
-									Double weight = Double.parseDouble(haixinGoods.get(0).getSpecifications().replace("kg",""));
-									
-									orderDetail.setHaixinNum(String.valueOf(orderDetail.getProductNum()*weight));
-								}else{
-									if(haixinGoods.get(0).getSpecifications().indexOf("g")==-1){
-										orderDetail.setHaixinNum(String.valueOf(orderDetail.getProductNum()));
-									}else{
-										Double weight = Double.parseDouble(haixinGoods.get(0).getSpecifications().replace("g",""));
+							if("kg".equals(haixinGoods.get(0).getUnit())||haixinGoods.get(0).getUnit()==null){
+								
+								if(!"".equals(haixinGoods.get(0).getSpecifications())){
+									if(haixinGoods.get(0).getSpecifications().indexOf("kg")!=-1){
+										Double weight = Double.parseDouble(haixinGoods.get(0).getSpecifications().replace("kg",""));
 										
-										orderDetail.setHaixinNum(String.valueOf(orderDetail.getProductNum()*weight/1000));
+										orderDetail.setHaixinNum(String.valueOf(orderDetail.getProductNum()*weight));
+									}else{
+										if(haixinGoods.get(0).getSpecifications().indexOf("g")==-1){
+											orderDetail.setHaixinNum(String.valueOf(orderDetail.getProductNum()));
+										}else{
+											Double weight = Double.parseDouble(haixinGoods.get(0).getSpecifications().replace("g",""));
+											
+											orderDetail.setHaixinNum(String.valueOf(orderDetail.getProductNum()*weight/1000));
+										}
 									}
 								}
+								
 							}
-							
 						}
+						
+					}
 					}
 					
-				}
 				order.setProductDetails(productList);
 				//同步海信业务接口
-				if(!"0".equals(order.getStatus())||!"7".equals(order.getStatus())){
+				if("5".equals(order.getStatus())){
 					String code = thirdPartyHaixinUplodOrderService.checkOrder(order.getOrderNum());
 					if("1".equals(code)){
 						thirdPartyHaixinUplodGoodsService.upload(order);
@@ -218,9 +240,109 @@ public class YouzanOrderService {
 				}
 				
 				
+			}else{
+				Order order = orderList.get(0);
+				
+				if("WEIXIN".equals(tradeDetailV2.getPayType())){
+					order.setPayType("wx");
+				}
+				if("WEIXIN_DAIXIAO".equals(tradeDetailV2.getPayType())){
+					order.setPayType("wx");
+				}
+				if("ALIPAY".equals(tradeDetailV2.getPayType())){
+					order.setPayType("zfb");
+				}else{
+					order.setPayType("qt");
+				}
+				order.setHaixinShopCode(shopList.size()!=0?shopList.get(0).getHxShopId():null);
+				order.setStoreId(shopList.size()!=0?shopList.get(0).getId():null);
+				if("WAIT_BUYER_PAY".equals(tradeDetailV2.getStatus())){
+					order.setStatus("0");
+				}
+				if("WAIT_SELLER_SEND_GOODS".equals(tradeDetailV2.getStatus())){
+					order.setStatus("1");
+				}
+				
+				if("WAIT_BUYER_CONFIRM_GOODS".equals(tradeDetailV2.getStatus())){
+					order.setStatus("4");
+				}
+				if("TRADE_BUYER_SIGNED".equals(tradeDetailV2.getStatus())){
+					order.setStatus("5");
+				}
+				if("TRADE_CLOSED".equals(tradeDetailV2.getStatus())){
+					order.setStatus("7");
+				}
+				OrderExample editexample =  new OrderExample();
+				editexample.createCriteria().andYouzanNumEqualTo(tradeDetailV2.getTid());
+				orderMapper.updateByExample(order, editexample);
+				
+                List<OrderProductTransfer> productList = orderProductMapper.selectYouZanOrderDetail(order.getId());
+				
+				for (OrderProductTransfer orderDetail : productList) {
+					
+					orderDetail.setHaixinNum(String.valueOf(orderDetail.getProductNum()));
+					//根据商品ID查询商品详情
+					if(orderDetail.getProductCode()!=null){
+						HaixinGoodExample  example4 = new HaixinGoodExample();
+						example4.createCriteria().andGoodCodeEqualTo(orderDetail.getProductCode());
+						List<HaixinGood> haixinGoods = haixinGoodMapper.selectByExample(example4);
+						if(haixinGoods.size()!=0){
+							
+							if("kg".equals(haixinGoods.get(0).getUnit())||haixinGoods.get(0).getUnit()==null){
+								
+								if(!"".equals(haixinGoods.get(0).getSpecifications())){
+									if(haixinGoods.get(0).getSpecifications().indexOf("kg")!=-1){
+										Double weight = Double.parseDouble(haixinGoods.get(0).getSpecifications().replace("kg",""));
+										
+										orderDetail.setHaixinNum(String.valueOf(orderDetail.getProductNum()*weight));
+									}else{
+										if(haixinGoods.get(0).getSpecifications().indexOf("g")==-1){
+											orderDetail.setHaixinNum(String.valueOf(orderDetail.getProductNum()));
+										}else{
+											Double weight = Double.parseDouble(haixinGoods.get(0).getSpecifications().replace("g",""));
+											
+											orderDetail.setHaixinNum(String.valueOf(orderDetail.getProductNum()*weight/1000));
+										}
+									}
+								}
+								
+							}
+						}
+						
+					}
+					}
+				order.setProductDetails(productList);
+				
+				//同步海信业务接口
+				if("4".equals(order.getStatus())){
+					String code = thirdPartyHaixinUplodOrderService.checkOrder(order.getOrderNum());
+					if("1".equals(code)){
+						thirdPartyHaixinUplodGoodsService.upload(order);
+					}
+				}
+				
+				//有赞退货
+				if("7".equals(order.getStatus())){
+					//调用海信退货接口
+					
+				}
+				
 			}
 			
 		}
-		return tradeDetail;
+		return newList;
+	}
+	
+	public static Date getEndOfDay(Date date) {
+		LocalDateTime localDateTime = LocalDateTime.ofInstant(Instant.ofEpochMilli(date.getTime()), ZoneId.systemDefault());;
+		LocalDateTime endOfDay = localDateTime.with(LocalTime.MAX);
+		return Date.from(endOfDay.atZone(ZoneId.systemDefault()).toInstant());
+	}
+	
+	// 获得某天最小时间 2017-10-15 00:00:00
+	public static Date getStartOfDay(Date date) {
+		LocalDateTime localDateTime = LocalDateTime.ofInstant(Instant.ofEpochMilli(date.getTime()), ZoneId.systemDefault());
+		LocalDateTime startOfDay = localDateTime.with(LocalTime.MIN);
+		return Date.from(startOfDay.atZone(ZoneId.systemDefault()).toInstant());
 	}
 }
