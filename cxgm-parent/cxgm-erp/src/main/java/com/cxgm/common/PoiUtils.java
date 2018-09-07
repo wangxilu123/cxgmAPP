@@ -144,20 +144,32 @@ public class PoiUtils {
             cell2.setCellStyle(headerStyle);
             
             HSSFCell cell3 = headerRow.createCell(3);
-            cell3.setCellValue("订单金额");
+            cell3.setCellValue("订单总额");
             cell3.setCellStyle(headerStyle);
             
             HSSFCell cell4 = headerRow.createCell(4);
-            cell4.setCellValue("支付方式");
+            cell4.setCellValue("实际金额");
             cell4.setCellStyle(headerStyle);
             
             HSSFCell cell5 = headerRow.createCell(5);
-            cell5.setCellValue("下单时间");
+            cell5.setCellValue("优惠金额");
             cell5.setCellStyle(headerStyle);
             
             HSSFCell cell6 = headerRow.createCell(6);
-            cell6.setCellValue("商品详情");
+            cell6.setCellValue("运费");
             cell6.setCellStyle(headerStyle);
+            
+            HSSFCell cell7 = headerRow.createCell(7);
+            cell7.setCellValue("支付方式");
+            cell7.setCellStyle(headerStyle);
+            
+            HSSFCell cell8 = headerRow.createCell(8);
+            cell8.setCellValue("下单时间");
+            cell8.setCellStyle(headerStyle);
+            
+            HSSFCell cell9 = headerRow.createCell(9);
+            cell9.setCellValue("商品详情");
+            cell9.setCellStyle(headerStyle);
             
             //6.装数据
             for (int i = 0; i < emps.size(); i++) {
@@ -166,10 +178,17 @@ public class PoiUtils {
                 row.createCell(0).setCellValue(i + 1);
                 row.createCell(1).setCellValue(emp.getOrderNum());
                 row.createCell(2).setCellValue(emp.getPhone());
-                row.createCell(3).setCellValue(emp.getOrderAmount().toString());
-                row.createCell(4).setCellValue(emp.getPayType());
-                row.createCell(5).setCellValue(DateKit.dateFormat(emp.getOrderTime(),"yyyy-MM-dd HH:mm:ss"));
-                row.createCell(6).setCellValue(emp.getOrderProducts());
+                row.createCell(3).setCellValue(emp.getTotalAmount().toString());
+                row.createCell(4).setCellValue(emp.getOrderAmount().toString());
+                row.createCell(5).setCellValue(emp.getPreferential().toString());
+                if("APP".equals(emp.getOrderResource())){
+                	row.createCell(6).setCellValue("7.0");
+                }else{
+                	row.createCell(6).setCellValue("0.0");
+                }
+                row.createCell(7).setCellValue(emp.getPayType());
+                row.createCell(8).setCellValue(DateKit.dateFormat(emp.getOrderTime(),"yyyy-MM-dd HH:mm:ss"));
+                row.createCell(9).setCellValue(emp.getOrderProducts());
                
             }
             headers = new HttpHeaders();

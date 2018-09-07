@@ -207,6 +207,9 @@ public class DistributionServiceImpl implements DistributionService {
 							Double weight = Double.parseDouble(product.getWeight().replace("Kg",""));
 							
 							orderDetail.setHaixinNum(String.valueOf(orderDetail.getProductNum()*weight));
+							
+							Double newprice = orderDetail.getPrice().doubleValue();
+							orderDetail.setPrice(new BigDecimal(newprice/weight).setScale(2,BigDecimal.ROUND_HALF_DOWN));
 						}else{
 							if(product.getWeight().indexOf("g")==-1){
 								orderDetail.setHaixinNum(String.valueOf(orderDetail.getProductNum()));
@@ -214,6 +217,9 @@ public class DistributionServiceImpl implements DistributionService {
 								Double weight = Double.parseDouble(product.getWeight().replace("g",""));
 								
 								orderDetail.setHaixinNum(String.valueOf(orderDetail.getProductNum()*weight/1000));
+								
+								Double newprice = orderDetail.getPrice().doubleValue();
+								orderDetail.setPrice(new BigDecimal(newprice/weight/1000).setScale(2,BigDecimal.ROUND_HALF_DOWN));
 							}
 						}
 					}

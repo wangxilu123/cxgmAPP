@@ -199,6 +199,9 @@ public class YouzanOrderService {
 						if(orderDetail.getWeight().indexOf("kg")!=-1){
 							Double weight = Double.parseDouble(orderDetail.getWeight().replace("kg",""));
 							orderDetail.setHaixinNum(String.valueOf(orderDetail.getProductNum()*weight));
+							
+							Double price = orderDetail.getPrice().doubleValue();
+							orderDetail.setPrice(new BigDecimal(price/weight).setScale(2,BigDecimal.ROUND_HALF_DOWN));
 						}
 					}	
 					}
@@ -264,6 +267,9 @@ public class YouzanOrderService {
 						if(orderDetail.getWeight().indexOf("kg")!=-1){
 							Double weight = Double.parseDouble(orderDetail.getWeight().replace("kg",""));
 							orderDetail.setHaixinNum(String.valueOf(orderDetail.getProductNum()*weight));
+							
+							Double price = orderDetail.getPrice().doubleValue();
+							orderDetail.setPrice(new BigDecimal(price/weight).setScale(2,BigDecimal.ROUND_HALF_DOWN));
 						}
 					}		
 					}
