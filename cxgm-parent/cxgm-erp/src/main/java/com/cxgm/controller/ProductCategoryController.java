@@ -2,7 +2,9 @@ package com.cxgm.controller;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -21,9 +23,11 @@ import org.springframework.web.servlet.ModelAndView;
 import com.cxgm.common.RSResult;
 import com.cxgm.common.SystemConfig;
 import com.cxgm.domain.Admin;
+import com.cxgm.domain.Product;
 import com.cxgm.domain.ProductCategory;
 import com.cxgm.domain.ProductImage;
 import com.cxgm.service.ProductCategoryService;
+import com.cxgm.service.ProductService;
 
 import net.sf.json.JSONObject;
 
@@ -32,6 +36,9 @@ public class ProductCategoryController {
 
 	@Autowired
 	ProductCategoryService productCategoryService;
+	
+	@Autowired
+	ProductService productService;
 	
 	
 	@RequestMapping(value = "/admin/productCategory", method = RequestMethod.GET)
@@ -81,6 +88,8 @@ public class ProductCategoryController {
 		String[] productImageIds = request.getParameterValues("productImageIds");
 		try {
 			productCategoryService.update(Long.valueOf(id),Long.valueOf(parentId), name, files, productImageIds);
+			
+			productService.updateCategory(name,id);
 			ModelAndView mv = new ModelAndView("redirect:/admin/productCategory");
 			return mv;
 		}catch(Exception e) {

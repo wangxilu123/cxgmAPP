@@ -185,6 +185,7 @@ public class YouzanOrderService {
 					orderProduct.setHaixinUrl(tradeOrderV2.getPicPath());
 					BigDecimal bigDecimal = new BigDecimal(tradeOrderV2.getPrice());
 					orderProduct.setPrice(bigDecimal);
+					orderProduct.setWeight(tradeOrderV2.getSkuPropertiesName().replace("重量:", ""));
 					orderProductMapper.insert(orderProduct);
 				}
 				
@@ -193,35 +194,13 @@ public class YouzanOrderService {
 				for (OrderProductTransfer orderDetail : productList) {
 					
 					orderDetail.setHaixinNum(String.valueOf(orderDetail.getProductNum()));
-					//根据商品ID查询商品详情
-					if(orderDetail.getProductCode()!=null){
-						HaixinGoodExample  example4 = new HaixinGoodExample();
-						example4.createCriteria().andGoodCodeEqualTo(orderDetail.getProductCode());
-						List<HaixinGood> haixinGoods = haixinGoodMapper.selectByExample(example4);
-						if(haixinGoods.size()!=0){
 							
-							if("kg".equals(haixinGoods.get(0).getUnit())||haixinGoods.get(0).getUnit()==null){
-								
-								if(!"".equals(haixinGoods.get(0).getSpecifications())){
-									if(haixinGoods.get(0).getSpecifications().indexOf("kg")!=-1){
-										Double weight = Double.parseDouble(haixinGoods.get(0).getSpecifications().replace("kg",""));
-										
-										orderDetail.setHaixinNum(String.valueOf(orderDetail.getProductNum()*weight));
-									}else{
-										if(haixinGoods.get(0).getSpecifications().indexOf("g")==-1){
-											orderDetail.setHaixinNum(String.valueOf(orderDetail.getProductNum()));
-										}else{
-											Double weight = Double.parseDouble(haixinGoods.get(0).getSpecifications().replace("g",""));
-											
-											orderDetail.setHaixinNum(String.valueOf(orderDetail.getProductNum()*weight/1000));
-										}
-									}
-								}
-								
-							}
+					if(orderDetail.getWeight()!=null){
+						if(orderDetail.getWeight().indexOf("kg")!=-1){
+							Double weight = Double.parseDouble(orderDetail.getWeight().replace("kg",""));
+							orderDetail.setHaixinNum(String.valueOf(orderDetail.getProductNum()*weight));
 						}
-						
-					}
+					}	
 					}
 					
 				order.setProductDetails(productList);
@@ -278,38 +257,15 @@ public class YouzanOrderService {
 				
                 List<OrderProductTransfer> productList = orderProductMapper.selectYouZanOrderDetail(order.getId());
 				
-				for (OrderProductTransfer orderDetail : productList) {
+                for (OrderProductTransfer orderDetail : productList) {
 					
 					orderDetail.setHaixinNum(String.valueOf(orderDetail.getProductNum()));
-					//根据商品ID查询商品详情
-					if(orderDetail.getProductCode()!=null){
-						HaixinGoodExample  example4 = new HaixinGoodExample();
-						example4.createCriteria().andGoodCodeEqualTo(orderDetail.getProductCode());
-						List<HaixinGood> haixinGoods = haixinGoodMapper.selectByExample(example4);
-						if(haixinGoods.size()!=0){
-							
-							if("kg".equals(haixinGoods.get(0).getUnit())||haixinGoods.get(0).getUnit()==null){
-								
-								if(!"".equals(haixinGoods.get(0).getSpecifications())){
-									if(haixinGoods.get(0).getSpecifications().indexOf("kg")!=-1){
-										Double weight = Double.parseDouble(haixinGoods.get(0).getSpecifications().replace("kg",""));
-										
-										orderDetail.setHaixinNum(String.valueOf(orderDetail.getProductNum()*weight));
-									}else{
-										if(haixinGoods.get(0).getSpecifications().indexOf("g")==-1){
-											orderDetail.setHaixinNum(String.valueOf(orderDetail.getProductNum()));
-										}else{
-											Double weight = Double.parseDouble(haixinGoods.get(0).getSpecifications().replace("g",""));
-											
-											orderDetail.setHaixinNum(String.valueOf(orderDetail.getProductNum()*weight/1000));
-										}
-									}
-								}
-								
-							}
+					if(orderDetail.getWeight()!=null){
+						if(orderDetail.getWeight().indexOf("kg")!=-1){
+							Double weight = Double.parseDouble(orderDetail.getWeight().replace("kg",""));
+							orderDetail.setHaixinNum(String.valueOf(orderDetail.getProductNum()*weight));
 						}
-						
-					}
+					}		
 					}
 				order.setProductDetails(productList);
 				

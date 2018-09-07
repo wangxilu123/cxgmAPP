@@ -61,15 +61,14 @@ public class ThirdPartyHaixinUplodGoodsService  {
 	       sb.append("<JSCODE>00</JSCODE>");
 	       sb.append("<DATE>"+date+"</DATE>");
 	       sb.append("<TIME>"+time+"</TIME>");
-	      if(order.getOrderResource().endsWith("APP")){
+	       if(order.getOrderResource().endsWith("APP")){
 	    	   sb.append("<STAFFCODE>9998</STAFFCODE>");
 		       sb.append("<PFCUSTCODE>99998</PFCUSTCODE>");
 		       
-	       }else{
-	    	   sb.append("<STAFFCODE>8888</STAFFCODE>");
-		       sb.append("<PFCUSTCODE>8888</PFCUSTCODE>");
+	      }else{
+	    	   sb.append("<STAFFCODE>9997</STAFFCODE>");
+		       sb.append("<PFCUSTCODE>99997</PFCUSTCODE>");
 	       }
-	       
 	       sb.append("<FHMODE>1</FHMODE>");
 	       sb.append("<PRICETYPE>1</PRICETYPE>");
 	       sb.append("</BILLHEAD>");

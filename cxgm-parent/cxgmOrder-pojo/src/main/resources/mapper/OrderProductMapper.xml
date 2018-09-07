@@ -11,6 +11,7 @@
     <result column="good_code" jdbcType="VARCHAR" property="goodCode" />
     <result column="haixin_url" jdbcType="VARCHAR" property="haixinUrl" />
     <result column="price" jdbcType="DECIMAL" property="price" />
+    <result column="weight" jdbcType="VARCHAR" property="weight" />
   </resultMap>
   <sql id="Example_Where_Clause">
     <where>
@@ -71,7 +72,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    id, order_id, product_name, product_id, product_num, create_time,good_code,haixin_url,price
+    id, order_id, product_name, product_id, product_num, create_time,good_code,haixin_url,price,weight
   </sql>
   <select id="selectByExample" parameterType="com.cxgm.domain.OrderProductExample" resultMap="BaseResultMap">
     select
@@ -95,7 +96,7 @@
   </select>
   
   <select id="selectYouZanOrderDetail" parameterType="java.lang.Integer" resultType="com.cxgm.domain.OrderProductTransfer">
-    select product_name as productName,pd.good_code as productCode,bar_code as barCode,product_num as productNum,price,order_amount as amount
+    select rd.weight,product_name as productName,pd.good_code as productCode,bar_code as barCode,product_num as productNum,price,order_amount as amount
     from order_product as rd LEFT JOIN haixin_good as pd on rd.good_code=pd.good_code left join user_order as od on rd.order_id=od.id
     where order_id = #{orderId,jdbcType=INTEGER}
   </select>
@@ -108,9 +109,9 @@
   </delete>
   <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.cxgm.domain.OrderProduct" useGeneratedKeys="true">
     insert into order_product (order_id, product_name, product_id, 
-      product_num, create_time,good_code,haixin_url,price)
+      product_num, create_time,good_code,haixin_url,price,weight)
     values (#{orderId,jdbcType=INTEGER}, #{productName,jdbcType=VARCHAR}, #{productId,jdbcType=INTEGER}, 
-      #{productNum,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP},#{goodCode,jdbcType=VARCHAR},#{haixinUrl,jdbcType=VARCHAR},#{price,jdbcType=DECIMAL})
+      #{productNum,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP},#{goodCode,jdbcType=VARCHAR},#{haixinUrl,jdbcType=VARCHAR},#{price,jdbcType=DECIMAL},#{weight,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="com.cxgm.domain.OrderProduct" useGeneratedKeys="true">
     insert into order_product

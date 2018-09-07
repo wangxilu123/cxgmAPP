@@ -26,5 +26,7 @@ public class OrderProduct {
     private String haixinUrl;
     
     private BigDecimal price;
+    
+    private String weight;
 
 }

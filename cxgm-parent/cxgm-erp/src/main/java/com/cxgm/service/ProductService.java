@@ -326,4 +326,46 @@ public class ProductService {
 	public long countByExample(boolean isMarketable) {
 		return productDao.countByExample(isMarketable);
 	}
+	
+	@Transactional
+	public void updateCategory(String name,String id) {
+		
+		Map<String,Object> map= new HashMap<String,Object>();
+		map.put("productCategoryId", id);
+		
+		List<Product> productList  = productDao.findProducts(map);
+		if(productList.size()!=0){
+			for(Product product :productList){
+				product.setProductCategoryName(name);
+				productDao.update(product);
+			}
+				
+		}
+		
+		Map<String,Object> map1= new HashMap<String,Object>();
+		map1.put("productCategoryTwoId", id);
+		
+		List<Product> productList1  = productDao.findProducts(map1);
+		if(productList1.size()!=0){
+			for(Product product :productList1){
+				product.setProductCategoryTwoName(name);
+				productDao.update(product);
+			}
+				
+		}
+		
+		Map<String,Object> map2= new HashMap<String,Object>();
+		map2.put("productCategoryThirdId", id);
+		
+		List<Product> productList2  = productDao.findProducts(map2);
+		if(productList2.size()!=0){
+			for(Product product :productList2){
+				product.setProductCategoryThirdName(name);
+				productDao.update(product);
+			}
+				
+		}
+		
+		
+	}
 }
