@@ -121,5 +121,10 @@ public class LoginController{
     public ModelAndView toH5(@RequestParam(required = false) String lang){
         return new ModelAndView("coupon/index");
     }
+    
+    @GetMapping("/turnLoad")
+    public ModelAndView turnLoad(@RequestParam(required = false) String lang){
+        return new ModelAndView("coupon/turnLoad");
+    }
 
 }

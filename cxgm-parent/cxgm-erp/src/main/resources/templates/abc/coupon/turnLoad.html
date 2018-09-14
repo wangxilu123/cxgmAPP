@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+	<title></title>
+	<meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' name='viewport' charset="utf-8">
+	<style type="text/css">
+		input[type="button"], input[type="submit"], input[type="reset"] {-webkit-appearance: none;}
+		textarea {  -webkit-appearance: none;} 
+		html,body{width: 100%;height: 100%;padding: 0;margin: 0;}
+		.bg{width: 100%;height: 100%;}
+		.bg img{display: block;width: 100%;height: 100%;}
+		.input{width: 50%; height: 35px;line-height: 35px; background: #2ebcfc; border-radius: 500px;color: #fff;position: absolute;left: 50%;bottom: 9%;margin-left: -28%;text-align: center;border: 0;font-size: 16px;}
+	</style>
+</head>
+<body>
+	<div class="bg">
+		<img src="http://cxgm.oss-cn-beijing.aliyuncs.com/data/1536926671887.jpg?Expires=1852286664&OSSAccessKeyId=LTAItzO0XhCesKeP&Signature=F00Ol0t%2BEc3Zdj1Zj0BeqhZiYp4%3D">
+	</div>
+	<input class="input" onclick="submitFn()" value="点击下载" />
+</body>
+</html>
+<script type="text/javascript">
+	function submitFn(){
+	    //判断浏览器
+	    var u = navigator.userAgent;
+	    if(/MicroMessenger/gi.test(u)) {
+	       // 引导用户在浏览器中打开
+	        alert('请在浏览器中打开');
+	        return;
+	    };
+
+	    var d = new Date();
+	    var t0 = d.getTime();
+
+	    if(u.indexOf('Android') > -1 || u.indexOf('Linux') > -1){
+	        //Android
+	        if(openApp('en://startapp')){
+	         openApp('en://startapp');
+	        }else{
+	            
+	            var delay = setInterval(function(){
+	                 var d = new Date();
+	                 var t1 = d.getTime();
+	                 if( t1-t0<3000 && t1-t0>2000){
+	                    //alert('请下载APP');
+	                     window.location.href = "https://fir.im/73qk?openId=oGB0Cj6lDbbdk3ERwmIi8lz_BN7U";
+	                 }
+	                 if(t1-t0>=3000){
+	                      clearInterval(delay);
+	                 }
+	            },1000);
+	        }
+	    }else if(u.indexOf('iPhone') > -1){
+	        //IOS
+	        if(openApp('ios--scheme')){  
+	            openApp('ios--scheme');
+	        }else{
+	            var delay = setInterval(function(){
+	                var d = new Date();
+	                var t1 = d.getTime();
+	                if( t1-t0<3000 && t1-t0>2000){
+	                    //alert('请下载APP');
+	                    window.location.href = "https://active.clewm.net/Cht5fw?qrurl=http%3A%2F%2Fqr19.cn%2FCht5fw&gtype=1&key=e863215afb669ae0736829da3a0055d510d9829199";
+	                }
+	                if(t1-t0>=3000){
+	                    clearInterval(delay);
+	                }
+	            },1000);
+	        }
+	    }    
+	}//submitFn
+	 
+	function openApp(src) {
+		// 通过iframe的方式试图打开APP，如果能正常打开，会直接切换到APP，并自动阻止a标签的默认行为
+		// 否则打开a标签的href链接
+	     var ifr = document.createElement('iframe');
+	     ifr.src = src;
+	     ifr.style.display = 'none';
+	     document.body.appendChild(ifr);
+	     window.setTimeout(function(){
+	          document.body.removeChild(ifr);
+	     },2000);
+	}
+
+</script>
