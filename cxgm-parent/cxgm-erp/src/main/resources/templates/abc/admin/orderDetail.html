@@ -64,6 +64,7 @@
           <thead>
             <tr>
              <th>商品图片</th>
+             <th>商品编码</th>
              <th>商品名称</th>
              <th>商品条码</th>
 			 <th>商品数量</th>
@@ -74,6 +75,7 @@
             <%for(list in order.productDetails){%>
             <tr id="listTr${listLP.index}">
               <td><img class="picture-thumb" src="${list.productUrl}" width="50" height="50"></td>
+              <td>${list.productCode}</td>
               <td>${list.productName}</td>
               <td>${list.barCode}</td>
               <td>${list.productNum}</td>
