@@ -52,7 +52,8 @@ public class ProductController {
 	
 	@RequestMapping(value = "/admin/product/product", method = RequestMethod.GET)
 	public ModelAndView getProduct(HttpServletRequest request,
-			@RequestParam(value = "num", defaultValue = "1") Integer num) throws SQLException {
+			@RequestParam(value = "num", defaultValue = "1") Integer num,
+			@RequestParam(value = "property",required=false) String property) throws SQLException {
 		PageHelper.startPage(num, 10);
 		SecurityContext ctx = SecurityContextHolder.getContext();  
 	    Authentication auth = ctx.getAuthentication(); 
@@ -63,6 +64,7 @@ public class ProductController {
 		PageInfo<ProductTransfer> pager = new PageInfo<>(products);
 		request.setAttribute("pager", pager);
 		request.setAttribute("admin", admin);
+		request.setAttribute("property",property);
 		return new ModelAndView("admin/product_list");
 	}
 	
@@ -72,7 +74,7 @@ public class ProductController {
 			@RequestParam(value = "keyword",required=false) String name,
 			@RequestParam(value = "property",required=false) String property) throws SQLException {
 		if (null != name && !"".equals(name) ) {
-			PageHelper.startPage(1, 10);
+			PageHelper.startPage(num, 10);
 			SecurityContext ctx = SecurityContextHolder.getContext();  
 		    Authentication auth = ctx.getAuthentication(); 
 		    Admin admin = (Admin) auth.getPrincipal();
@@ -83,9 +85,11 @@ public class ProductController {
 			List<ProductTransfer> products = productService.findListAllWithCategory(map);
 			PageInfo<ProductTransfer> pager = new PageInfo<>(products);
 			request.setAttribute("pager", pager);
+			request.setAttribute("property",property);
+			request.setAttribute("keyword",name);
 			return new ModelAndView("admin/product_list");
 		}
-		return this.getProduct(request, num);
+		return this.getProduct(request, num,property);
 	}
 	
 	@RequestMapping(value = "/product/add", method = RequestMethod.GET)

@@ -2,6 +2,7 @@ package com.cxgm.service.impl;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Primary;
@@ -60,5 +61,27 @@ public class CouponServiceImpl implements CouponService {
 			return null;
 		}
 		
+	}
+	
+	@Override
+	public void getCoupons(Integer userId, String couponIds) {
+		String[] couponList = couponIds.split(",");
+		for(int i=0;i<couponList.length;i++){
+			
+			Map<String,Object> map= new HashMap<>();
+			map.put("userId", userId);
+			map.put("couponId", couponList[i]);
+			List<CouponCode> couponCodeList = couponCodeMapper.findCouponsWithParam(map);
+			
+			if(couponCodeList.size()==0){
+				//根据优惠券ID分配兑换码
+				List<CouponCode>  couponCodes = couponCodeMapper.findCouponsWithStatus( Long.valueOf(couponList[i]));
+				if(couponCodes.size()!=0){
+					couponCodes.get(0).setUserId((long)userId);
+					couponCodes.get(0).setStatus(0);
+					couponCodeMapper.update(couponCodes.get(0));
+				}
+			}
+		}
 	}
 }

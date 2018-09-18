@@ -8,5 +8,7 @@ public interface CouponService {
 	PageInfo<CouponDetail> findCouponByUserId(Integer userId,Integer pageNum,Integer pageSize,Integer status);
 	
 	CouponDetail exchangeCoupons(Integer userId,String code);
+
+	void getCoupons(Integer userId, String couponIds);
 	
 }
