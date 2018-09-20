@@ -106,8 +106,17 @@ public class ShopCartServiceImpl implements ShopCartService {
 					String weight = list.get(0).getWeight();
 
 					String unit = list.get(0).getUnit();
+					if(weight==null||"".equals(weight)){
+						shopCart.setSpecifications(unit);
+					}
 					
-					shopCart.setSpecifications((weight!=null&&unit!=null)?(weight + "/" + unit):"");
+					if(unit==null||"".equals(unit)){
+						shopCart.setSpecifications(weight);
+					}
+					
+					if(unit!=null&&!"".equals(unit)&&weight!=null&&!"".equals(weight)){
+						shopCart.setSpecifications(weight + "/" + unit);
+					}
 					
 					if(list.get(0).getImage()!=null&&"".equals(list.get(0).getImage())==false){
 						String[] imageIds = list.get(0).getImage().split(",");
