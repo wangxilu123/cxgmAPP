@@ -99,4 +99,20 @@ public class CouponController {
 			return new ResultDto<>(403, "token失效请重新登录！");
 		}
 	}
+	
+	@ApiOperation(value = "验证是否领取", nickname = "验证是否领取")
+	@GetMapping("/checkGet")
+	public ResultDto checkGet(HttpServletRequest request){
+		
+		AppUser appUser = checkToken.check(request.getHeader("token"));
+
+		if (appUser != null) {
+
+			AppUser user = couponService.getAppUser(appUser.getId());
+
+			return new ResultDto<>(200, "验证成功！",user);
+		} else {
+			return new ResultDto<>(403, "token失效请重新登录！");
+		}
+	}
 }

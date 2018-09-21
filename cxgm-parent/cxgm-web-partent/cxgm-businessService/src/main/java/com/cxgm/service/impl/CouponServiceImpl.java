@@ -9,6 +9,9 @@ import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
 
 import com.cxgm.dao.CouponCodeMapper;
+import com.cxgm.dao.UserMapper;
+import com.cxgm.domain.AppUser;
+import com.cxgm.domain.AppUserExample;
 import com.cxgm.domain.CouponCode;
 import com.cxgm.domain.CouponDetail;
 import com.cxgm.service.CouponService;
@@ -21,6 +24,9 @@ public class CouponServiceImpl implements CouponService {
 
 	@Autowired
 	private CouponCodeMapper couponCodeMapper;
+	
+	@Autowired
+	private UserMapper userMapper;
 	
 	@Override
 	public PageInfo<CouponDetail> findCouponByUserId(Integer userId,Integer pageNum,Integer pageSize,Integer status) {
@@ -83,5 +89,26 @@ public class CouponServiceImpl implements CouponService {
 				}
 			}
 		}
+		
+		AppUserExample example = new AppUserExample();
+		example.createCriteria().andIdEqualTo(userId);
+		
+		List<AppUser> userList = userMapper.selectByExample(example);
+		
+		userList.get(0).setHeadUrl("1");
+		
+		userMapper.updateByPrimaryKey(userList.get(0));
+		
+	}
+
+	@Override
+	public AppUser getAppUser(Integer userId) {
+		
+		AppUserExample example = new AppUserExample();
+		example.createCriteria().andIdEqualTo(userId);
+		
+		List<AppUser> userList = userMapper.selectByExample(example);
+		
+		return userList.get(0);
 	}
 }
