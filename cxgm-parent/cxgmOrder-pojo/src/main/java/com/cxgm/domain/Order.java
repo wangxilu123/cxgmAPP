@@ -101,4 +101,10 @@ public class Order implements Serializable{
 	
 	@ApiModelProperty(name = "orderProducts",value = "对账单商品")
     private String orderProducts;
+	
+	@ApiModelProperty(name = "extractionType",value = "取货方式")
+    private String extractionType;
+	
+	@ApiModelProperty(name = "postage",value = "邮费")
+    private BigDecimal postage;
 }

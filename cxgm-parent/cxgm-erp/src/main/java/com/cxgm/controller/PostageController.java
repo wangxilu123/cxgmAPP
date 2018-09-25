@@ -1,10 +1,14 @@
 package com.cxgm.controller;
 
+import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.math.BigDecimal;
 import java.sql.SQLException;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.xml.rpc.ServiceException;
+import javax.xml.soap.SOAPException;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -16,12 +20,15 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.cxgm.common.RSResult;
 import com.cxgm.domain.Admin;
 import com.cxgm.domain.Postage;
 import com.cxgm.domain.Shop;
 import com.cxgm.service.PostageService;
 import com.cxgm.service.ShopService;
 import com.github.pagehelper.PageInfo;
+
+import net.sf.json.JSONObject;
 
 @RestController
 @RequestMapping("/postage")
@@ -97,7 +104,62 @@ public class PostageController {
 		postage.setSatisfyMoney(new BigDecimal(satisfyMoney));
 		
 		postageService.addPostage(postage);
-		ModelAndView mv = new ModelAndView("redirect:/postage/postage_list");
+		ModelAndView mv = new ModelAndView("redirect:/postage/pageList");
 		return mv;
 	}
+	
+	@RequestMapping(value = "/toEdit", method = RequestMethod.GET)	public ModelAndView toEdit(HttpServletRequest request,
+			@RequestParam(value = "postageId", required = false) Integer postageId) throws SQLException, UnsupportedEncodingException, SOAPException, ServiceException, IOException {
+		
+		Postage postage = postageService.findPostageById(postageId);
+		
+		request.setAttribute("postage", postage);
+		request.setAttribute("postageId", postage.getId());
+		
+		List<Shop> shopList = shopService.findListAll();
+		request.setAttribute("shopList", shopList);
+		
+		return new ModelAndView("postage/postage_add");
+	}
+	
+	@RequestMapping(value = "/update", method = RequestMethod.POST)
+	public ModelAndView update(HttpServletRequest request,
+			@RequestParam(value = "postageId",required=false) Integer postageId,
+			@RequestParam(value = "shopId",required=false) Integer shopId,
+			@RequestParam(value = "reduceMoney",required=false) String reduceMoney,
+			@RequestParam(value = "satisfyMoney",required=false) String satisfyMoney)
+			throws Exception {
+		
+		Postage postage = postageService.findPostageById(postageId);
+        
+		postage.setReduceMoney(new BigDecimal(reduceMoney));
+		postage.setSatisfyMoney(new BigDecimal(satisfyMoney));
+		postage.setShopId(shopId);
+		
+		Shop shop = shopService.findShopById(shopId);
+		postage.setShopName(shop!=null?shop.getShopName():"");
+		
+		postageService.updatePostage(postage);
+		ModelAndView mv = new ModelAndView("redirect:/postage/pageList");
+		return mv;
+	}
+	
+	@RequestMapping(value = "/delete", method = RequestMethod.GET, produces = "text/json;charset=UTF-8")
+	public String productDelete(HttpServletRequest request) throws SQLException {
+		RSResult rr = new RSResult();
+		String[] postageIds = request.getParameterValues("ids");
+		
+		int resultDelete = postageService.delete(postageIds);
+		if (resultDelete == 1) {
+			rr.setMessage("删除成功！");
+			rr.setCode("200");
+			rr.setStatus("success");
+		} else {
+			rr.setMessage("删除失败！");
+			rr.setCode("0");
+			rr.setStatus("failure");
+		}
+		return JSONObject.fromObject(rr).toString();
+	}
+
 }

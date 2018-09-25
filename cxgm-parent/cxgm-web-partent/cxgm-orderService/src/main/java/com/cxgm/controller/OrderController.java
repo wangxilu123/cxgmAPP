@@ -20,6 +20,7 @@ import com.cxgm.common.ResultDto;
 import com.cxgm.domain.AppUser;
 import com.cxgm.domain.CouponDetail;
 import com.cxgm.domain.Order;
+import com.cxgm.domain.Postage;
 import com.cxgm.service.OrderService;
 import com.cxgm.service.impl.CheckToken;
 import com.github.pagehelper.PageInfo;
@@ -231,5 +232,19 @@ public class OrderController {
 			return new ResultDto<>(403, "token失效请重新登录！");
 		}
 	}
+    
+    @ApiOperation(value = "根据门店查询邮费信息", nickname = "根据门店查询邮费信息")
+   	@ApiImplicitParams({
+           @ApiImplicitParam(name = "shopId", value = "门店ID", required = false, paramType = "query", dataType = "int"),
+       })
+   	@GetMapping("/orderPostage")
+   	public ResultDto<Postage> orderPostage(HttpServletRequest request,
+   			@RequestParam(value = "shopId", defaultValue = "1" , required = false) Integer shopId){
+   			
+    	    Postage postage = orderService.orderPostage(shopId);
+   			
+   			return new ResultDto<>(200, "查询成功！",postage);
+   			
+   	}
 
 }

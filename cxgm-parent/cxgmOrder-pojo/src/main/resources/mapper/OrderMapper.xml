@@ -18,6 +18,8 @@
     <result column="order_resource" jdbcType="VARCHAR" property="orderResource" />
     <result column="haixin_shop_code" jdbcType="VARCHAR" property="haixinShopCode" />
     <result column="youzan_num" jdbcType="VARCHAR" property="youzanNum" />
+    <result column="extraction_type" jdbcType="VARCHAR" property="extractionType" />
+    <result column="postage" jdbcType="DECIMAL" property="postage" />
   </resultMap>
   <sql id="Example_Where_Clause">
     <where>
@@ -110,10 +112,10 @@
 		</if>
 	</sql>
   <sql id="Base_Column_List">
-    id, user_id, order_num, status, store_id, pay_type, order_time, order_amount, remarks,address_id,receive_time,total_amount,preferential,order_resource,haixin_shop_code,youzan_num
+    id, user_id, order_num, status, store_id, pay_type, order_time, order_amount, remarks,address_id,receive_time,total_amount,preferential,order_resource,haixin_shop_code,youzan_num,extraction_type,postage
   </sql>
    <sql id="Base_Column_List1">
-    id, user_id, order_num, store_id, pay_type, order_time, order_amount, remarks,address_id,receive_time,total_amount,preferential,order_resource,haixin_shop_code,youzan_num
+    id, user_id, order_num, store_id, pay_type, order_time, order_amount, remarks,address_id,receive_time,total_amount,preferential,order_resource,haixin_shop_code,youzan_num,extraction_type,postage
   </sql>
   <select id="selectParseStatus" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select
@@ -150,11 +152,11 @@
   <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.cxgm.domain.Order" useGeneratedKeys="true">
     insert into user_order (user_id, order_num, status, 
       store_id, pay_type, order_time, 
-      order_amount, remarks,address_id,receive_time,total_amount,preferential,order_resource,haixin_shop_code,youzan_num)
+      order_amount, remarks,address_id,receive_time,total_amount,preferential,order_resource,haixin_shop_code,youzan_num,extraction_type,postage)
     values (#{userId,jdbcType=INTEGER}, #{orderNum,jdbcType=VARCHAR}, #{status,jdbcType=VARCHAR}, 
       #{storeId,jdbcType=INTEGER}, #{payType,jdbcType=VARCHAR}, #{orderTime,jdbcType=TIMESTAMP}, 
       #{orderAmount,jdbcType=DECIMAL}, #{remarks,jdbcType=VARCHAR},#{addressId,jdbcType=INTEGER},#{receiveTime,jdbcType=VARCHAR},
-      #{totalAmount,jdbcType=DECIMAL},#{preferential,jdbcType=DECIMAL},#{orderResource,jdbcType=VARCHAR},#{haixinShopCode,jdbcType=VARCHAR},#{youzanNum,jdbcType=VARCHAR})
+      #{totalAmount,jdbcType=DECIMAL},#{preferential,jdbcType=DECIMAL},#{orderResource,jdbcType=VARCHAR},#{haixinShopCode,jdbcType=VARCHAR},#{youzanNum,jdbcType=VARCHAR},#{extractionType,jdbcType=VARCHAR},#{postage,jdbcType=DECIMAL})
   </insert>
   <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="com.cxgm.domain.Order" useGeneratedKeys="true">
     insert into user_order
@@ -204,6 +206,13 @@
       <if test="youzanNum != null">
         youzan_num,
       </if>
+      <if test="extractionType != null">
+        extraction_type,
+      </if>
+      <if test="postage != null">
+        postage,
+      </if>
+      
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="userId != null">
@@ -250,6 +259,12 @@
       </if>
       <if test="youzanNum != null">
         #{youzanNum,jdbcType=VARCHAR},
+      </if>
+      <if test="extractionType != null">
+        #{extractionType,jdbcType=VARCHAR},
+      </if>
+      <if test="postage != null">
+        #{postage,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -310,6 +325,12 @@
       <if test="record.youzanNum != null">
         youzan_num = #{record.youzanNum,jdbcType=VARCHAR},
       </if>
+      <if test="record.extractionType != null">
+        extraction_type = #{record.extractionType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.postage != null">
+        postage = #{record.postage,jdbcType=DECIMAL},
+      </if>
     </set>
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
@@ -332,7 +353,9 @@
       preferential = #{record.preferential,jdbcType=DECIMAL},
       order_resource = #{record.orderResource,jdbcType=VARCHAR},
       haixin_shop_code = #{record.haixinShopCode,jdbcType=VARCHAR},
-      youzan_num = #{record.youzanNum,jdbcType=VARCHAR}
+      youzan_num = #{record.youzanNum,jdbcType=VARCHAR},
+      extraction_type = #{record.extractionType,jdbcType=VARCHAR},
+      postage = #{record.postage,jdbcType=DECIMAL}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>

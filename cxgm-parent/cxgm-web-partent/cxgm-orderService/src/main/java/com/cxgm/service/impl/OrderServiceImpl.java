@@ -17,6 +17,7 @@ import com.cxgm.dao.CouponCodeMapper;
 import com.cxgm.dao.CouponMapper;
 import com.cxgm.dao.OrderMapper;
 import com.cxgm.dao.OrderProductMapper;
+import com.cxgm.dao.PostageMapper;
 import com.cxgm.dao.ProductImageMapper;
 import com.cxgm.dao.ProductMapper;
 import com.cxgm.dao.ReceiptMapper;
@@ -31,6 +32,8 @@ import com.cxgm.domain.Order;
 import com.cxgm.domain.OrderExample;
 import com.cxgm.domain.OrderProduct;
 import com.cxgm.domain.OrderProductTransfer;
+import com.cxgm.domain.Postage;
+import com.cxgm.domain.PostageExample;
 import com.cxgm.domain.Product;
 import com.cxgm.domain.ProductImage;
 import com.cxgm.domain.ProductTransfer;
@@ -79,6 +82,9 @@ public class OrderServiceImpl implements OrderService {
 	
 	@Autowired
 	private StaffDistributionMapper distributionMapper;
+	
+	@Autowired
+	private PostageMapper postageMapper;
 
 	@Override
 	public Integer addOrder(Order order) {
@@ -366,6 +372,20 @@ public class OrderServiceImpl implements OrderService {
 		
 		List<Order> list = orderMapper.selectByExample(example);
 		return list;
+	}
+
+	@Override
+	public Postage orderPostage(Integer shopId) {
+
+		PostageExample  example = new PostageExample();
+		
+		example.createCriteria().andShopIdEqualTo(shopId);
+		
+		List<Postage>  postageList = postageMapper.selectByExample(example);
+		if(postageList.size()!=0){
+			return postageList.get(0);
+		}
+		return null;
 	}
 
 }

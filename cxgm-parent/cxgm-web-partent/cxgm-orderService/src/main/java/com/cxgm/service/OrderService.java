@@ -7,6 +7,7 @@ import com.cxgm.domain.CategoryAndAmount;
 import com.cxgm.domain.CouponDetail;
 import com.cxgm.domain.Order;
 import com.cxgm.domain.OrderProduct;
+import com.cxgm.domain.Postage;
 import com.github.pagehelper.PageInfo;
 
 public interface OrderService {
@@ -26,4 +27,6 @@ public interface OrderService {
 	Integer returnMoney(Integer orderId);
 
 	Order orderDetail(Integer userId, Integer orderId);
+	
+	Postage  orderPostage(Integer shopId);
 }

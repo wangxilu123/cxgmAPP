@@ -4,8 +4,11 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.cxgm.dao.PostageMapper;
+import com.cxgm.domain.Advertisement;
+import com.cxgm.domain.AdvertisementExample;
 import com.cxgm.domain.Postage;
 import com.cxgm.domain.PostageExample;
 import com.github.pagehelper.PageHelper;
@@ -52,5 +55,40 @@ public class PostageService {
     	PageInfo<Postage> page = new PageInfo<Postage>(list);
     	
 		return page;
+	}
+    
+    public Postage findPostageById(Integer postageId) {
+		
+    	    PostageExample example= new PostageExample();
+	    	
+	    	example.createCriteria().andIdEqualTo(postageId);
+	    	
+	    	List<Postage> postageList = postageMapper.selectByExample(example);
+	    	
+			return postageList.get(0);
+		}
+    
+    public Integer updatePostage(Postage postage) {
+
+    	PostageExample example = new PostageExample();
+	    
+		example.createCriteria().andIdEqualTo(postage.getId());
+		return postageMapper.updateByExample(postage, example);
+	}
+    
+    @Transactional
+	public int delete(String[] postageIds) {
+		int resultDelete = 0;
+		if (postageIds != null && postageIds.length > 0) {
+			for(String postageId : postageIds) {
+				
+				PostageExample example = new PostageExample();
+				
+				example.createCriteria().andIdEqualTo(Integer.parseInt(postageId));
+				postageMapper.deleteByExample(example);
+			}
+		}
+		resultDelete = 1;
+		return resultDelete;
 	}
 }
