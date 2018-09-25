@@ -157,20 +157,20 @@
            <if test="index != 0">
            or
            </if>
-           (cp.product_category_id = #{item.categoryId} and <![CDATA[cp.minimum_price<=#{item.amount}]]> and cp.product_id is null and user_id=#{userId,jdbcType=INTEGER} and `status`=0) 
+           (cp.product_category_id = #{item.categoryId} and <![CDATA[cp.minimum_price<=#{item.amount}]]> and cp.product_id is null and user_id=#{userId,jdbcType=INTEGER} and `status`=0  <![CDATA[and NOW() >=  begin_date and NOW() <= end_date]]>) 
       </foreach>
   </select>
   
    <select id="findCouponsByProduct1" parameterType="map" resultType="com.cxgm.domain.CouponDetail">
     select cd.id as codeId,cd.`status`,cp.`name`,cp.introduction,cp.begin_date as beginDate,cp.end_date as endDate,cp.product_category_id as categoryId,cp.product_id as productId,cp.price_expression as priceExpression,cp.minimum_price as maximumPrice
     from coupon  as cp left join coupon_code as cd on cp.id=cd.coupon_id where 1=1
-     and cp.product_id=#{productId,jdbcType=INTEGER} and user_id=#{userId,jdbcType=INTEGER} and `status`=0 and <![CDATA[cp.minimum_price<=#{amount,jdbcType=DECIMAL}]]> and cp.product_category_id=0
+     and cp.product_id=#{productId,jdbcType=INTEGER} and user_id=#{userId,jdbcType=INTEGER} and `status`=0 and <![CDATA[cp.minimum_price<=#{amount,jdbcType=DECIMAL}]]> and cp.product_category_id=0 <![CDATA[and NOW() >=  begin_date and NOW() <= end_date]]>
   </select>
   
   <select id="findCouponsByProduct2" parameterType="map" resultType="com.cxgm.domain.CouponDetail">
     select cd.id as codeId,cd.`status`,cp.`name`,cp.introduction,cp.begin_date as beginDate,cp.end_date as endDate,cp.product_category_id as categoryId,cp.product_id as productId,cp.price_expression as priceExpression,cp.minimum_price as maximumPrice
     from coupon  as cp left join coupon_code as cd on cp.id=cd.coupon_id where 1=1
-      and user_id=#{userId,jdbcType=INTEGER} and `status`=0 and <![CDATA[cp.minimum_price<=#{totalAmount,jdbcType=DECIMAL}]]> and cp.product_category_id=0 and cp.product_id is null
+      and user_id=#{userId,jdbcType=INTEGER} and `status`=0 and <![CDATA[cp.minimum_price<=#{totalAmount,jdbcType=DECIMAL}]]> and cp.product_category_id=0 and cp.product_id is null  <![CDATA[and NOW() >=  begin_date and NOW() <= end_date]]>
   </select>
   
 </mapper>
