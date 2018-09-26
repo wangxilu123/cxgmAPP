@@ -325,6 +325,26 @@ public class OrderExample {
             addCriterion("status <>", value, "status");
             return (Criteria) this;
         }
+        
+        public Criteria andExtractionTypeNotEqualTo(String value) {
+            addCriterion("extraction_type <>", value, "extractionType");
+            return (Criteria) this;
+        }
+        
+        public Criteria andExtractionTypeNotLike(String value) {
+            addCriterion("extraction_type not like", value, "extractionType");
+            return (Criteria) this;
+        }
+        
+        public Criteria andExtractionTypeEqualTo(String value) {
+        	addCriterion("extraction_type =", value, "extractionType");
+            return (Criteria) this;
+        }
+        
+        public Criteria andExtractionTypeIsNull() {
+            addCriterion("extraction_type is null");
+            return (Criteria) this;
+        }
 
         public Criteria andStatusGreaterThan(String value) {
             addCriterion("status >", value, "status");

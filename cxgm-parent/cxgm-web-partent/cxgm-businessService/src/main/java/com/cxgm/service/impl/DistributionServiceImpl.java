@@ -73,7 +73,16 @@ public class DistributionServiceImpl implements DistributionService {
 		OrderExample example = new OrderExample();
 		if ("3".equals(status)) {
 			PageHelper.startPage(pageNum, pageSize);
-			example.createCriteria().andStoreIdEqualTo(shopId).andStatusEqualTo(status).andOrderResourceTo("APP");
+			
+			OrderExample.Criteria criteria =example.createCriteria();
+			
+			criteria.andStoreIdEqualTo(shopId).andStatusEqualTo(status).andOrderResourceTo("APP").andExtractionTypeEqualTo("配送");
+			
+			OrderExample.Criteria criteria2 =example.createCriteria();
+			
+			criteria2.andStoreIdEqualTo(shopId).andStatusEqualTo(status).andOrderResourceTo("APP").andExtractionTypeIsNull();
+
+            example.or(criteria2);
 		} else {
 			PageHelper.startPage(pageNum, pageSize);
 			//根据当前登录者查询订单
