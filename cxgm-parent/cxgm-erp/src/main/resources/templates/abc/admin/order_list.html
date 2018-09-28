@@ -68,6 +68,7 @@
               <th>状态</th>
               <th>支付方式</th>
               <th>下单时间</th>
+              <th>取货方式</th>
               <th>收货时间</th>
               <th><div class="app-table-td-buttons-width-160">操作</div></th>
             </tr>
@@ -78,8 +79,6 @@
               <td>${listLP.index}</td>              
               <td>${list.phone}</td>
               <td>${list.orderNum}</td>
-              
-              
               <td><%if (list.orderResource == 'APP'){%> APP <%}%>
               <%if (list.orderResource == 'YOUZAN'){%> 有赞 <%}%>
               </td>
@@ -90,6 +89,11 @@
               <%if (list.payType == 'zfb'){%> 支付宝支付 <%}%>
               </td>
               <td>${list.orderTime,dateFormat="yyyy-MM-dd HH:mm:ss"}</td>
+              <td>
+              <%if (list.extractionType == '自取'){%> 自取 <%}%>
+              <%if (list.extractionType == '配送'){%> 配送 <%}%>
+              <%if (list.extractionType == null){%> 配送 <%}%>
+              </td>
               <td>${list.receiveTime}</td>
               <td>
               <!-- 
@@ -97,13 +101,16 @@
               -->
               <%if (list.status == '待退款'){%>
                 <div class="am-btn-group am-btn-group-xs">
-                  <!--    <%if ((list.status != 'completed') && (list.status != 'invalid') && (list.status == 'unpaid') && (list.status == 'unshipped')){%>
-                  <button type="button" class="am-btn am-btn-default am-btn-xs am-text-secondary app-table-button-padding" onclick="location.href='/order/edit?orders.id=${list.id}'">
-                    <span class="am-icon-pencil"> 编辑</span>
-                  </button>
-                  <%}%> -->
                   <button type="button" class="am-btn am-btn-default am-btn-xs am-text-warning app-table-button-padding" onclick="returnMonery('/order/process?orders.id=${list.id}')">
                     <span class="am-icon-hand-o-up"> 处理</span>
+                  </button>
+                </div>
+                <%}%>
+                
+                <%if (list.extractionType == '自取'&& list.status =='分拣完成'){%>
+                <div class="am-btn-group am-btn-group-xs">
+                  <button type="button" class="am-btn am-btn-default am-btn-xs am-text-warning app-table-button-padding" onclick="orderPick('/order/pick?orders.id=${list.id}')">
+                    <span class="am-icon-hand-o-up"> 已取货</span>
                   </button>
                 </div>
                 <%}%>

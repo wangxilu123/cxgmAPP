@@ -126,6 +126,24 @@ function returnMonery(url) {
 		}
 	  });
 	}
+
+function orderPick(url) {
+	  Modal.register(['confirm','alert']);
+	  Modal.confirm("您确定要修改成已取货吗？",{
+	    relatedTarget: this,
+		onConfirm: function(options) {
+	      $.ajax({
+	    	url: url,
+			dataType: "json",
+			async: false,
+			success: function(data) {
+			  Modal.alert(data.message);
+			  window.location.reload(); 
+			}
+		  });
+		}
+	  });
+	}
 function orderDetail(url){
 	  var obj = window; 
 	  var iWidth=1200; //弹出窗口的宽度;

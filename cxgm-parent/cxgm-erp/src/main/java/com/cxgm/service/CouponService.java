@@ -46,10 +46,10 @@ public class CouponService {
 		Map<String,Object> map = new HashMap<>();
 		map.put("name", name);
 		map.put("shopId", shopId);
-		List<Coupon> coupons = couponDao.findCouponsWithParam(map);
+		/*List<Coupon> coupons = couponDao.findCouponsWithParam(map);
 		if(coupons.size()>0) {
 			throw new TipException("已经存在相同的优惠券");
-		}
+		}*/
 		coupon.setName(name);
 		coupon.setPrefix("0");
 		coupon.setBeginDate(DateKit.dateFormat(beginDate,"yyyy-MM-dd HH:mm"));

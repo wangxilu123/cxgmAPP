@@ -122,6 +122,22 @@ public class OrderServiceErp {
 		return null;
 	}
 	
+	
+	public Integer updateOrderPick(Integer id, Integer status) {
+		OrderExample orderExample = new OrderExample();
+		orderExample.createCriteria().andIdEqualTo(id);
+		List<Order> orders = orderDao.selectByExample(orderExample);
+		if(orders.size()>0) {
+			Order order = orders.get(0);
+			order.setStatus(String.valueOf(status));
+			
+			Integer num = orderDao.updateByExample(order, orderExample);
+			
+			return num;
+		}
+		return null;
+	}
+	
 	public Order orderDetail(Integer orderId){
 		
 		OrderExample orderExample = new OrderExample();

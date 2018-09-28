@@ -50,12 +50,24 @@
 					<td style="color: #867777">${order.orderTime,dateFormat="yyyy-MM-dd HH:mm:ss"}</td>
 				</tr>
 				<tr>
-					<td>分拣人:${sorting.sortingName!}</td>
-					<td>分拣人电话:${sorting.sortingPhone!}</td>
+					<td class="text-r">分拣人：</td>
+					<td style="color: #867777">${sorting.sortingName!}</td>
+					<td class="text-r">分拣人电话：</td>
+					<td style="color: #867777">${sorting.sortingPhone!}</td>
 				</tr>
 				<tr>
-					<td>配送人:${distribution.distributionName!}</td>
-					<td>配送人电话:${distribution.distributionPhone!}</td>
+					<td class="text-r">配送人：</td>
+					<td style="color: #867777">${distribution.distributionName!}</td>
+					<td class="text-r">配送人电话：</td>
+					<td style="color: #867777">${distribution.distributionPhone!}</td>
+				</tr>
+				<tr>
+					<td class="text-r">取货方式：</td>
+					<td style="color: #867777"><%if (order.extractionType == '自取'){%> 自取 <%}%>
+              <%if (order.extractionType == '配送'){%> 配送 <%}%>
+              <%if (order.extractionType == null){%> 配送 <%}%></td>
+					<td class="text-r">客户地址：</td>
+					<td style="color: #867777">${order.address.area!}${order.address.address!}</td>
 				</tr>
 			</tbody>
 		</table>

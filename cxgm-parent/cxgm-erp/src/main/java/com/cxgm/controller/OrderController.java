@@ -147,6 +147,23 @@ public class OrderController {
 		return JSONObject.fromObject(rr).toString();
 	}
 	
+	@RequestMapping(value = "/order/pick", method = RequestMethod.GET, produces = "text/json;charset=UTF-8")
+	public String productPick(HttpServletRequest request) throws SQLException {
+		RSResult rr = new RSResult();
+		String orderId = request.getParameter("orders.id");
+		int resultUpdate =  orderService.updateOrderPick(Integer.valueOf(orderId), 5);//5已完成
+		if (resultUpdate == 1) {
+			rr.setMessage("更新成功！");
+			rr.setCode("200");
+			rr.setStatus("success");
+		} else {
+			rr.setMessage("更新失败！");
+			rr.setCode("0");
+			rr.setStatus("failure");
+		}
+		return JSONObject.fromObject(rr).toString();
+	}
+	
 	@RequestMapping(value = "/order/detail", method = RequestMethod.GET, produces = "text/json;charset=UTF-8")
 	public ModelAndView productDelete(HttpServletRequest request,@RequestParam(value = "orderId") Integer orderId) throws SQLException {
 		Order order = orderService.orderDetail(orderId);

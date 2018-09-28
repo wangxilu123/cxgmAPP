@@ -119,7 +119,7 @@
   </sql>
   <select id="selectParseStatus" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select
-   uo.id, user_id, order_num, store_id, pay_type, order_time, order_amount, remarks,address_id,receive_time,total_amount,preferential,order_resource,(case when status=0 then "下单" when status=1 then "已经支付" when status=2 then "分拣中" when status=3 then "分拣完成" when status=4 then "配送中" when status=5 then "配送完成" when status=6 then "待退款" when status=7 then "已退款" when status=8 then "已取消" END) as status,au.mobile as phone
+   uo.id, user_id, order_num,extraction_type,postage,store_id, pay_type, order_time, order_amount, remarks,address_id,receive_time,total_amount,preferential,order_resource,(case when status=0 then "下单" when status=1 then "已经支付" when status=2 then "分拣中" when status=3 then "分拣完成" when status=4 then "配送中" when status=5 then "配送完成" when status=6 then "待退款" when status=7 then "已退款" when status=8 then "已取消" END) as status,au.mobile as phone
     from user_order as uo left join app_user as au on uo.user_id=au.id where 1=1 <include refid="queryMap" /> order by order_time desc
   </select>
   
