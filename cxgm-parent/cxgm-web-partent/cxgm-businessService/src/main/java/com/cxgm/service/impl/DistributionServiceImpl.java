@@ -19,7 +19,6 @@ import com.cxgm.dao.ProductImageMapper;
 import com.cxgm.dao.ProductMapper;
 import com.cxgm.dao.StaffDistributionMapper;
 import com.cxgm.dao.UserAddressMapper;
-import com.cxgm.domain.DistributionOrder;
 import com.cxgm.domain.Order;
 import com.cxgm.domain.OrderExample;
 import com.cxgm.domain.OrderProductTransfer;
@@ -137,9 +136,7 @@ public class DistributionServiceImpl implements DistributionService {
 
 		if (list.size() == 0) {
 
-			distribution.setStatus("4");
-
-			Integer distributionId = distributionMapper.insert(distribution);
+			Integer distributionId =0;
 
 			// 修改订单状态
 			OrderExample example1 = new OrderExample();
@@ -150,7 +147,11 @@ public class DistributionServiceImpl implements DistributionService {
 
 				Order order = orderList.get(0);
 				order.setStatus("4");
-				orderMapper.updateByExample(order, example1);
+				Integer upId=orderMapper.updateByExample(order, example1);
+				if(upId!=0){
+					distribution.setStatus("4");
+					distributionId = distributionMapper.insert(distribution);
+				}
 			}
 			return distributionId;
 			
@@ -170,9 +171,7 @@ public class DistributionServiceImpl implements DistributionService {
 
 		StaffDistribution staffDistribution = list.get(0);
 
-		staffDistribution.setStatus("5");
-
-		Integer num = distributionMapper.updateByExample(staffDistribution, example);
+		Integer num = 0;
 
 		// 修改订单状态
 		OrderExample example1 = new OrderExample();
@@ -183,7 +182,14 @@ public class DistributionServiceImpl implements DistributionService {
 
 			Order order = orderList.get(0);
 			order.setStatus("5");
-			orderMapper.updateByExample(order, example1);
+			Integer upId = orderMapper.updateByExample(order, example1);
+			
+			if(upId!=0){
+				staffDistribution.setStatus("5");
+				
+				num = distributionMapper.updateByExample(staffDistribution, example);
+			}
+			
 			
 			//修改海信库存
 			List<OrderProductTransfer> productList = orderProductMapper.selectOrderDetail(order.getId());
@@ -241,7 +247,6 @@ public class DistributionServiceImpl implements DistributionService {
 			if("1".equals(code)){
 				thirdPartyHaixinUplodGoodsService.upload(order);
 			}
-			
 			
 		}
 

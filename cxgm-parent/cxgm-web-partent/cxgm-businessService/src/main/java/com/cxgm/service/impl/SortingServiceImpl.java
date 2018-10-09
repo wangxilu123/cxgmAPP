@@ -117,9 +117,7 @@ public class SortingServiceImpl implements SortingService {
 		List<StaffSorting> list = staffSortingMapper.selectByExample(example);
 
 		if (list.size() == 0) {
-            staffSorting.setStatus("2");
-			
-			Integer sortingId = staffSortingMapper.insert(staffSorting);
+			Integer sortingId =0;
 			
 			//修改订单状态
 			OrderExample example1 = new OrderExample();
@@ -130,7 +128,13 @@ public class SortingServiceImpl implements SortingService {
 				
 				Order order = orderList.get(0);
 				order.setStatus("2");
-				orderMapper.updateByExample(order, example1);
+				Integer upId = orderMapper.updateByExample(order, example1);
+				if(upId!=0){
+					staffSorting.setStatus("2");
+					
+					sortingId= staffSortingMapper.insert(staffSorting);
+				}
+				
 			}
 			return sortingId;
 			
@@ -140,6 +144,7 @@ public class SortingServiceImpl implements SortingService {
 	}
 
 	@Override
+	@Synchronized
 	public Integer updateStatusByOrderId(Integer orderId,Integer shopId) {
 
 		// 根据订单ID查询分拣单
@@ -151,10 +156,7 @@ public class SortingServiceImpl implements SortingService {
 		
 		StaffSorting staffSorting = list.get(0);
 		
-		
-		staffSorting.setStatus("3");
-		
-		Integer num = staffSortingMapper.updateByExample(staffSorting, example);
+		Integer num = 0;
 		
 		//修改订单状态
 		OrderExample example1 = new OrderExample();
@@ -165,7 +167,13 @@ public class SortingServiceImpl implements SortingService {
 			
 			Order order = orderList.get(0);
 			order.setStatus("3");
-			orderMapper.updateByExample(order, example1);
+			Integer upId = orderMapper.updateByExample(order, example1);
+			
+			if(upId!=0){
+				staffSorting.setStatus("3");
+				num = staffSortingMapper.updateByExample(staffSorting, example);
+			}
+			
 		}
 
 		return num;

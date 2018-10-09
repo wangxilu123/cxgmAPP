@@ -100,13 +100,14 @@ public class OrderServiceImpl implements OrderService {
 		orderMapper.insert(order);
 
 		for (OrderProduct orderProduct : order.getProductList()) {
-
+			Product product = productMapper.findProductById(new Long(orderProduct.getProductId()));
+			
 			orderProduct.setOrderId(order.getId());
 			orderProduct.setCreateTime(new Date());
+			orderProduct.setPrice(product.getPrice());
 			orderProductMapper.insert(orderProduct);
+			
 			// 修改销量
-			Product product = productMapper.findProductById(new Long(orderProduct.getProductId()));
-
 			if (product != null) {
 				product.setSales(product.getSales() != null ? product.getSales()
 						: 0 + (orderProduct.getProductNum() != null ? orderProduct.getProductNum() : 0));
