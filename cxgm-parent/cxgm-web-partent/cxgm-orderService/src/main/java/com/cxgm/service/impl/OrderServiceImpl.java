@@ -10,6 +10,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.cxgm.common.CodeUtil;
 import com.cxgm.common.DateUtil;
@@ -45,6 +46,8 @@ import com.cxgm.domain.UserAddressExample;
 import com.cxgm.service.OrderService;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+
+import lombok.Synchronized;
 
 @Primary
 @Service
@@ -143,11 +146,13 @@ public class OrderServiceImpl implements OrderService {
 	}
 
 	@Override
+	@Synchronized
+	@Transactional
 	public Integer updateOrder(Order order) {
 
 		OrderExample example = new OrderExample();
 
-		example.createCriteria().andUserIdEqualTo(order.getUserId()).andIdEqualTo(order.getId());
+		example.createCriteria().andIdEqualTo(order.getId());
 
 		return orderMapper.updateByExample(order, example);
 	}
@@ -205,9 +210,9 @@ public class OrderServiceImpl implements OrderService {
 				BigDecimal price = orderDetail.getPrice();
 
 				BigDecimal num = new BigDecimal(orderDetail.getProductNum());
-
-				orderDetail.setAmount(price.multiply(num));
-				
+                if(price!=null){
+                	orderDetail.setAmount(price.multiply(num));
+                }
 				if(orderDetail.getProductUrl()!=null&&!"".equals(orderDetail.getProductUrl())){
 					
 					String[] imageIds = orderDetail.getProductUrl().split(",");

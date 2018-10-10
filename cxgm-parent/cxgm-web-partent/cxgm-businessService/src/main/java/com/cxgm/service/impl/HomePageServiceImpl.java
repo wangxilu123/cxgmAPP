@@ -329,58 +329,58 @@ public class HomePageServiceImpl implements HomePageService {
 	@Override
 	public ProductTransfer findProductDetail(Integer productId,Integer shopId,Integer userId) {
 		ProductTransfer product = productDao.findById((long)productId);
-		
-		if(product.getStartTime()!=null&&product.getEndTime()!=null){
-			Calendar date = Calendar.getInstance();
-			
-			date.setTime(new Date());
+		if(product!=null){
+			if(product.getStartTime()!=null&&product.getEndTime()!=null){
+				Calendar date = Calendar.getInstance();
+				
+				date.setTime(new Date());
 
-	        Calendar begin = Calendar.getInstance();
-	        begin.setTime(product.getStartTime());
+		        Calendar begin = Calendar.getInstance();
+		        begin.setTime(product.getStartTime());
 
-	        Calendar end = Calendar.getInstance();
-	        end.setTime(product.getEndTime());
-			
-			if(date.after(begin) && date.before(end)){
-				product.setPrice(product.getPrice());
-				product.setOriginalPrice(product.getOriginalPrice());
+		        Calendar end = Calendar.getInstance();
+		        end.setTime(product.getEndTime());
+				
+				if(date.after(begin) && date.before(end)){
+					product.setPrice(product.getPrice());
+					product.setOriginalPrice(product.getOriginalPrice());
+				}else{
+					product.setPrice(product.getOriginalPrice());
+					product.setOriginalPrice(null);
+				}
 			}else{
-				product.setPrice(product.getOriginalPrice());
 				product.setOriginalPrice(null);
 			}
-		}else{
-			product.setOriginalPrice(null);
-		}
-		
-		if(product.getImage()!=null&&"".equals(product.getImage())==false){
-			String[] imageIds = product.getImage().split(",");
 			
-			List<ProductImage> imageList = new ArrayList<>();
-			
-			for(int i=0;i<imageIds.length;i++){
+			if(product.getImage()!=null&&"".equals(product.getImage())==false){
+				String[] imageIds = product.getImage().split(",");
 				
-				ProductImage productImage = productImageMapper.findById(Long.valueOf(imageIds[i]));
+				List<ProductImage> imageList = new ArrayList<>();
 				
-				imageList.add(productImage);
-			}
-			product.setProductImageList(imageList);
-			product.setImage(imageList.get(0).getUrl());
-		}
-		
-		//根据商品ID和门店ID查询购物车信息
-		if(userId!=null){
-			
-			ShopCartExample example = new ShopCartExample();
-			example.createCriteria().andShopIdEqualTo(shopId).andProductIdEqualTo(productId).andUserIdEqualTo(userId);
-			
-			List<ShopCart> cartList = shopCartMapper.selectByExample(example);
-			if(cartList!=null&&cartList.size()!=0){
-				product.setShopCartNum(cartList.get(0).getGoodNum());
-				product.setShopCartId(cartList.get(0).getId());
+				for(int i=0;i<imageIds.length;i++){
+					
+					ProductImage productImage = productImageMapper.findById(Long.valueOf(imageIds[i]));
+					
+					imageList.add(productImage);
+				}
+				product.setProductImageList(imageList);
+				product.setImage(imageList.get(0).getUrl());
 			}
 			
+			//根据商品ID和门店ID查询购物车信息
+			if(userId!=null){
+				
+				ShopCartExample example = new ShopCartExample();
+				example.createCriteria().andShopIdEqualTo(shopId).andProductIdEqualTo(productId).andUserIdEqualTo(userId);
+				
+				List<ShopCart> cartList = shopCartMapper.selectByExample(example);
+				if(cartList!=null&&cartList.size()!=0){
+					product.setShopCartNum(cartList.get(0).getGoodNum());
+					product.setShopCartId(cartList.get(0).getId());
+				}
+				
+			}
 		}
-		
 		return product;
 	}
 

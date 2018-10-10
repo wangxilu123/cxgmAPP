@@ -7,6 +7,8 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.transaction.event.TransactionalEventListener;
 
 import com.cxgm.dao.OrderMapper;
 import com.cxgm.dao.OrderProductMapper;
@@ -108,6 +110,7 @@ public class SortingServiceImpl implements SortingService {
 
 	@Override
 	@Synchronized
+	@Transactional
 	public Integer addSorting(StaffSorting staffSorting) {
 
 		// 根据订单ID查询分拣单
@@ -129,7 +132,7 @@ public class SortingServiceImpl implements SortingService {
 				Order order = orderList.get(0);
 				order.setStatus("2");
 				Integer upId = orderMapper.updateByExample(order, example1);
-				if(upId!=0){
+				if(upId>0){
 					staffSorting.setStatus("2");
 					
 					sortingId= staffSortingMapper.insert(staffSorting);
@@ -145,6 +148,7 @@ public class SortingServiceImpl implements SortingService {
 
 	@Override
 	@Synchronized
+	@Transactional
 	public Integer updateStatusByOrderId(Integer orderId,Integer shopId) {
 
 		// 根据订单ID查询分拣单
@@ -169,7 +173,7 @@ public class SortingServiceImpl implements SortingService {
 			order.setStatus("3");
 			Integer upId = orderMapper.updateByExample(order, example1);
 			
-			if(upId!=0){
+			if(upId>0){
 				staffSorting.setStatus("3");
 				num = staffSortingMapper.updateByExample(staffSorting, example);
 			}

@@ -8,6 +8,7 @@ import org.springframework.cloud.netflix.feign.EnableFeignClients;
 import org.springframework.context.annotation.Bean;
 import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.session.data.redis.config.annotation.web.http.EnableRedisHttpSession;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
@@ -23,6 +24,7 @@ import org.springframework.web.filter.CorsFilter;
 @EnableFeignClients(basePackages = "com.cxgm.**")
 @EnableAsync
 @RefreshScope
+@EnableTransactionManagement
 public class BusinessServiceApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(BusinessServiceApplication.class, args);

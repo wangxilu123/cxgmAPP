@@ -12,6 +12,7 @@ import javax.xml.soap.SOAPException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.cxgm.dao.OrderMapper;
 import com.cxgm.dao.OrderProductMapper;
@@ -125,6 +126,7 @@ public class DistributionServiceImpl implements DistributionService {
 
 	@Override
 	@Synchronized
+	@Transactional
 	public Integer addDistribution(StaffDistribution distribution) {
 
 		// 根据订单ID查询配送单
@@ -148,7 +150,7 @@ public class DistributionServiceImpl implements DistributionService {
 				Order order = orderList.get(0);
 				order.setStatus("4");
 				Integer upId=orderMapper.updateByExample(order, example1);
-				if(upId!=0){
+				if(upId>0){
 					distribution.setStatus("4");
 					distributionId = distributionMapper.insert(distribution);
 				}
@@ -161,6 +163,8 @@ public class DistributionServiceImpl implements DistributionService {
 	}
 
 	@Override
+	@Synchronized
+	@Transactional
 	public Integer updateStatusByOrderId(Integer orderId) throws UnsupportedEncodingException, SOAPException, ServiceException, IOException {
 		// 根据订单ID查询配送单
 		StaffDistributionExample example = new StaffDistributionExample();
@@ -184,7 +188,7 @@ public class DistributionServiceImpl implements DistributionService {
 			order.setStatus("5");
 			Integer upId = orderMapper.updateByExample(order, example1);
 			
-			if(upId!=0){
+			if(upId>0){
 				staffDistribution.setStatus("5");
 				
 				num = distributionMapper.updateByExample(staffDistribution, example);
@@ -217,7 +221,7 @@ public class DistributionServiceImpl implements DistributionService {
 				Product product = productMapper.findProductById(Long.valueOf(orderDetail.getProductId()));
 				
 				if("".equals(product.getUnit())||product.getUnit()==null||product.getUnit().indexOf("g")!=-1){
-					if(!"".equals(product.getWeight())){
+					if(!"".equals(product.getWeight()) && product.getWeight()!=null){
 						if(product.getWeight().indexOf("Kg")!=-1){
 							Double weight = Double.parseDouble(product.getWeight().replace("Kg",""));
 							
